@@ -47,7 +47,7 @@ def guess_mime (filename):
     """Guess the MIME type of given filename. Uses first mimetypes
     and then file(1) as fallback."""
     mime, encoding = mimedb.guess_type(filename, strict=False)
-    if mime is None:
+    if mime is None and os.path.isfile(filename):
         cmd = ["file", "--brief", "--mime-type", filename]
         try:
             mime = backtick(cmd).strip()
