@@ -47,3 +47,7 @@ test:
 
 doc/patool.txt: doc/patool.1
 	man -l doc/patool.1 | perl -pe 's/.\cH//g' > doc/patool.txt
+
+.PHONY: deb
+deb:
+	git-buildpackage --git-export-dir=../build-area/ --git-upstream-branch=master --git-debian-branch=debian  --git-ignore-new
