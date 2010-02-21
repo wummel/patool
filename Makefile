@@ -1,3 +1,4 @@
+VERSION:=$(shell python setup.py --version)
 PY_FILES_DIRS := patool setup.py patoolib tests
 # This Makefile is only used by developers.
 TESTS ?= tests/
@@ -14,7 +15,7 @@ chmod:
 
 .PHONY: dist
 dist:
-	git archive --format=zip --prefix=patool-devel/ HEAD > $(HOME)/temp/share/patool-devel.zip
+	git archive --format=tar --prefix=patool-$(VERSION)/ HEAD | gzip -9 > ../patool-$(VERSION).tar.gz
 #	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
 
 # The check programs used here are mostly local scripts on my private system.
