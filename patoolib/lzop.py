@@ -14,9 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lzop program."""
-import os
-from . import util
-
 
 def extract_lzop (archive, encoding, cmd, **kwargs):
     """Extract a LZOP archive."""
