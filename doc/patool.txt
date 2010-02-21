@@ -41,6 +41,17 @@ COMMANDS
 
        --help Show help for this command.
 
+   create
+       Create an archive from given files.
+
+       --force
+              Allow overwriting of local archives.
+
+       --verbose
+              Verbose operation (if the helper application supports it).
+
+       --help Show help for this command.
+
    test
        Test files in an archive.
 
@@ -71,8 +82,8 @@ CONFIGURATION
    [<archive format>]
        Supported archive formats are listed by the formats command.
 
-       mode=/usr/bin/mycommand
-              Set the application to handle the archive format for given mode.  mode can be one of extract, list, test.
+       command=/usr/bin/mycommand
+              Set the application to handle the archive format for given command.  command can be one of (extract, list, test, create).
 
 FILES
        /etc/patool.conf, ~/.patool.conf - configuration files
