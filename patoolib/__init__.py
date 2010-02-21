@@ -50,8 +50,8 @@ ArchiveMimetypes = {
     'application/x-lzop': 'lzop',
 }
 
-# List of programs supporting the given archive format and mode.
-# If mode is None, the program supports all modes (list, extract, ...)
+# List of programs supporting the given archive format and command.
+# If command is None, the program supports all commands (list, extract, ...)
 ArchivePrograms = {
     'bzip2': {
         'extract': ('pbzip2', 'bzip2', '7z'),
@@ -136,43 +136,43 @@ def check_archive_format (format, encoding):
         raise util.PatoolError("unkonwn archive encoding `%s'" % encoding)
 
 
-def check_archive_command (mode):
-    if mode not in ArchiveCommands:
-        raise util.PatoolError("invalid command mode `%s'" % mode)
+def check_archive_command (command):
+    if command not in ArchiveCommands:
+        raise util.PatoolError("invalid archive command `%s'" % command)
 
 
-def find_archive_program (format, mode):
+def find_archive_program (format, command):
     """Find suitable archive program for given format and mode."""
-    modes = ArchivePrograms[format]
+    commands = ArchivePrograms[format]
     programs = []
     # first try the universal programs with key None
-    for key in (None, mode):
-        if key in modes:
-            programs.extend(modes[key])
+    for key in (None, command):
+        if key in commands:
+            programs.extend(commands[key])
     # return the first existing program
     for program in programs:
         exe = find_executable(program)
         if exe:
             return exe
     # no programs found
-    raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (mode, format, ",".join(programs)))
+    raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (command, format, ",".join(programs)))
 
 
 def list_formats ():
     for format in ArchiveFormats:
         print format, "files:"
-        for mode in ArchiveCommands:
-            program = find_archive_program(format, mode)
+        for command in ArchiveCommands:
+            program = find_archive_program(format, command)
             if program:
-                print "   %8s: %s" % (mode, program)
+                print "   %8s: %s" % (command, program)
             else:
                 print "   %8s: NOT SUPPORTED"
     return 0
 
 
-def parse_config (format, mode, **kwargs):
+def parse_config (format, command, **kwargs):
     """The configuration determines which program to use for which
-    archive format for the given mode.
+    archive format for the given command.
     """
     config = {
         'verbose': False,
@@ -183,10 +183,10 @@ def parse_config (format, mode, **kwargs):
         config['verbose'] = configfile.getboolean(None, "verbose")
     if configfile.has_option(None, "force"):
         config['verbose'] = configfile.getboolean(None, "force")
-    if configfile.has_option(format, mode):
-        config['cmd'] = configfile.get(format, mode)
+    if configfile.has_option(format, command):
+        config['program'] = configfile.get(format, command)
     else:
-        config['cmd'] = find_archive_program(format, mode)
+        config['program'] = find_archive_program(format, command)
     for key, value in kwargs.items():
         if value is not None:
             config[key] = value
@@ -230,13 +230,13 @@ def move_outdir_orphan (outdir, force):
     return (False, "multiple files in root")
 
 
-def run_archive_cmd (archive_cmd):
+def run_archive_cmdlist (archive_cmdlist):
     """Handle result of archive command function."""
-    # archive_cmd is a command list with optional keyword arguments
-    if isinstance(archive_cmd, tuple):
-        cmdlist, runkwargs = archive_cmd
+    # archive_cmdlist is a command list with optional keyword arguments
+    if isinstance(archive_cmdlist, tuple):
+        cmdlist, runkwargs = archive_cmdlist
     else:
-        cmdlist, runkwargs = archive_cmd, {}
+        cmdlist, runkwargs = archive_cmdlist, {}
     util.run(cmdlist, **runkwargs)
 
 
@@ -254,30 +254,30 @@ def cleanup_outdir (archive, outdir, force):
     return target
 
 
-def _handle_archive (archive, mode, **kwargs):
+def _handle_archive (archive, command, **kwargs):
     util.check_filename(archive)
     encoding = None
     format, encoding = get_archive_format(archive)
     check_archive_format(format, encoding)
-    check_archive_command(mode)
-    config = parse_config(format, mode, **kwargs)
-    cmd = config['cmd']
+    check_archive_command(command)
+    config = parse_config(format, command, **kwargs)
+    program = config['program']
     # get python module for given archive program
-    program = os.path.basename(cmd).lower()
-    module = ProgramModules.get(program, program)
+    key = os.path.basename(program).lower()
+    module = ProgramModules.get(key, key)
     # import archive handler (eg. patoolib.star.extract_tar())
-    exec "from patoolib.%s import %s_%s as func" % (module, mode, format)
-    get_archive_cmd = locals()['func']
+    exec "from patoolib.%s import %s_%s as func" % (module, command, format)
+    get_archive_cmdlist = locals()['func']
     # prepare func() call arguments
     kwargs = dict(verbose=config['verbose'])
     outdir = None
-    if mode == 'extract':
+    if command == 'extract':
         outdir = util.tmpdir(dir=os.getcwd())
         kwargs['outdir'] = outdir
     try:
-        archive_cmd = get_archive_cmd(archive, encoding, cmd, **kwargs)
-        run_archive_cmd(archive_cmd)
-        if mode == 'extract':
+        cmdlist = get_archive_cmdlist(archive, encoding, program, **kwargs)
+        run_archive_cmdlist(cmdlist)
+        if command == 'extract':
             target = cleanup_outdir(archive, outdir, config['force'])
             print "%s: extracted to %s" % (archive, target)
     finally:
@@ -288,10 +288,10 @@ def _handle_archive (archive, mode, **kwargs):
                 pass
 
 
-def handle_archive (archive, mode, **kwargs):
-    """Handle archive file in given mode."""
+def handle_archive (archive, command, **kwargs):
+    """Handle archive file command."""
     try:
-        _handle_archive(archive, mode, **kwargs)
+        _handle_archive(archive, command, **kwargs)
         res = 0
     except util.PatoolError, msg:
         util.log_error(msg)
