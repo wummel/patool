@@ -18,8 +18,8 @@ import shutil
 from distutils.spawn import find_executable
 from . import util
 
-# Supported command modes
-CommandModes = ('list', 'extract')
+# Supported archive commands
+ArchiveCommands = ('list', 'extract')
 
 # Supported archive formats
 ArchiveFormats = ('gzip', 'bzip2', 'tar', 'zip', 'compress', '7z', 'rar',
@@ -136,8 +136,8 @@ def check_archive_format (format, encoding):
         raise util.PatoolError("unkonwn archive encoding `%s'" % encoding)
 
 
-def check_command_mode (mode):
-    if mode not in CommandModes:
+def check_archive_command (mode):
+    if mode not in ArchiveCommands:
         raise util.PatoolError("invalid command mode `%s'" % mode)
 
 
@@ -161,7 +161,7 @@ def find_archive_program (format, mode):
 def list_formats ():
     for format in ArchiveFormats:
         print format, "files:"
-        for mode in CommandModes:
+        for mode in ArchiveCommands:
             program = find_archive_program(format, mode)
             if program:
                 print "   %8s: %s" % (mode, program)
@@ -259,7 +259,7 @@ def _handle_archive (archive, mode, **kwargs):
     encoding = None
     format, encoding = get_archive_format(archive)
     check_archive_format(format, encoding)
-    check_command_mode(mode)
+    check_archive_command(mode)
     config = parse_config(format, mode, **kwargs)
     cmd = config['cmd']
     # get python module for given archive program

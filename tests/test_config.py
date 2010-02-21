@@ -27,7 +27,7 @@ class TestConfiguration (unittest.TestCase):
         # test that the key is an archive format
         self.assertEqual(set(patoolib.ArchiveFormats),
                          set(patoolib.ArchivePrograms.keys()))
-        for modes in patoolib.ArchivePrograms.values():
-            for mode in modes:
-                if mode is not None:
-                    self.assertTrue(mode in patoolib.CommandModes)
+        for commands in patoolib.ArchivePrograms.values():
+            for command in commands:
+                if command is not None:
+                    self.assertTrue(command in patoolib.ArchiveCommands)
