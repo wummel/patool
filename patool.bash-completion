@@ -1,0 +1,55 @@
+# patool completion
+#
+have patool &&
+{
+_patool()
+{
+	local cur prev commands options command
+
+	COMPREPLY=()
+	cur=`_get_cword`
+
+	commands='extract list test create formats'
+
+	if [[ $COMP_CWORD -eq 1 ]] ; then
+		if [[ "$cur" == -* ]]; then
+			COMPREPLY=( $( compgen -W '--help' -- $cur ) )
+		else
+			COMPREPLY=( $( compgen -W "$commands" -- $cur ) )
+		fi
+	else
+
+		command=${COMP_WORDS[1]}
+
+		if [[ "$cur" == -* ]]; then
+			# possible options for the command
+			case $command in
+				extract)
+					options='--verbose --force'
+					;;
+				list)
+					options='--verbose'
+					;;
+				test)
+					options='--verbose'
+					;;
+				create)
+					options='--verbose --force'
+					;;
+				formats)
+					options=''
+					;;
+			esac
+			options="$options --help"
+
+			COMPREPLY=( $( compgen -W "$options" -- $cur ) )
+		else
+			_filedir
+		fi
+	fi
+
+	return 0
+}
+complete -F _patool $filenames patool
+
+}

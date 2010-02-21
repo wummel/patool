@@ -40,5 +40,8 @@ setup (
     maintainer_email = MyEmail,
     license = "GPL",
     packages = ['patoolib', 'patoolib.programs'],
+    data_files = [
+        ('share/man/man1', ['doc/patool.1']),
+    ],
     scripts = ['patool'],
 )
