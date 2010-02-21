@@ -478,7 +478,7 @@ class Baker(object):
             # use that.
             cmd = self.defaultcommand
             if cmd is None:
-                raise CommandError("No command specified")
+                raise CommandError("unknown command `%s' specified" % argv[1])
 
             options = argv[1:]
 
