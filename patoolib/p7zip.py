@@ -82,3 +82,15 @@ test_bzip2 = \
   test_rpm = \
   test_deb = \
   test_7z
+
+
+def create_7z (archive, encoding, cmd, *args, **kwargs):
+    """Create a 7z archive."""
+    cmdlist = [cmd]
+    cmdlist.append('a')
+    if not kwargs['verbose']:
+        cmdlist.append('-bd')
+    cmdlist.append('--')
+    cmdlist.append(archive)
+    cmdlist.extend(args)
+    return cmdlist

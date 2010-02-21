@@ -36,11 +36,13 @@ class TestArchives (ArchiveTest):
     def test_bzip2 (self):
         self.archive_extract('t.bz2', 'bzip2')
         self.archive_test('t.bz2', 'bzip2')
+        self.archive_create('t.bz2', 'bzip2', singlefile=True)
 
     @needs_cmd('pbzip2')
     def test_pbzip2 (self):
         self.archive_extract('t.bz2', 'pbzip2')
         self.archive_test('t.bz2', 'pbzip2')
+        self.archive_create('t.bz2', 'pbzip2', singlefile=True)
 
     @needs_cmd('echo')
     def test_echo (self):
@@ -49,18 +51,26 @@ class TestArchives (ArchiveTest):
 
     @needs_cmd('unzip')
     def test_unzip (self):
-        self.archive_commands('t.zip', 'unzip')
-        self.archive_commands('t.jar', 'unzip')
+        self.archive_extract('t.zip', 'unzip')
+        self.archive_list('t.zip', 'unzip')
+        self.archive_test('t.zip', 'unzip')
+        self.archive_extract('t.jar', 'unzip')
+        self.archive_list('t.jar', 'unzip')
+        self.archive_test('t.jar', 'unzip')
 
     @needs_cmd('gzip')
     def test_gzip (self):
-        self.archive_commands('t.gz', 'gzip')
-        self.archive_commands('t.txt.gz', 'gzip')
+        self.archive_commands('t.gz', 'gzip', singlefile=True)
+        self.archive_commands('t.txt.gz', 'gzip', singlefile=True)
         self.archive_extract('t.Z', 'gzip')
 
     @needs_cmd('uncompress.real')
     def test_uncompress (self):
         self.archive_extract('t.Z', 'uncompress.real')
+
+    @needs_cmd('compress')
+    def test_compress (self):
+        self.archive_create('t.Z', 'compress', singlefile=True)
 
     @needs_cmd('7z')
     def test_p7zip (self):
@@ -109,20 +119,19 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.rar', 'rar')
 
     @needs_cmd('cabextract')
-    def test_capextract (self):
+    def test_cabextract (self):
         self.archive_list('t.cab', 'cabextract')
         self.archive_extract('t.cab', 'cabextract')
 
     @needs_cmd('arj')
     def test_arj (self):
-        self.archive_list('t.arj', 'arj')
-        self.archive_test('t.arj', 'arj')
-        self.archive_extract('t.arj', 'arj')
+        self.archive_commands('t.arj', 'arj')
 
     @needs_cmd('cpio')
     def test_cpio (self):
         self.archive_list('t.cpio', 'cpio')
         self.archive_extract('t.cpio', 'cpio')
+        self.archive_create('t.cpio', 'cpio')
 
     @needs_cmd('rpm')
     def test_rpm (self):
@@ -143,5 +152,5 @@ class TestArchives (ArchiveTest):
 
     @needs_cmd('lzop')
     def test_lzop (self):
-        self.archive_commands('t.lzo', 'lzop')
+        self.archive_commands('t.lzo', 'lzop', singlefile=True)
 

@@ -1,2 +1,2 @@
-- add create mode?
-- add test mode?
+- add create command
+- move all program modules into subpackage

@@ -55,3 +55,16 @@ def test_gzip (archive, encoding, cmd, **kwargs):
     return cmdlist
 
 test_compress = test_gzip
+
+def create_gzip (archive, encoding, cmd, *args, **kwargs):
+    """Create a GZIP archive."""
+    cmdlist = [cmd]
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    cmdlist.append('-c')
+    cmdlist.append('--')
+    cmdlist.extend(args)
+    cmdlist.extend(['>', archive])
+    # note that for shell calls the command must be a string
+    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
+    return (cmd, {'shell': True})

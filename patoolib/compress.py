@@ -13,6 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the pbzip2 program."""
-# bzip2 and pbzip2 are compatible
-from .bzip2 import extract_bzip2, test_bzip2, create_bzip2
+"""Archive commands for the uncompress.real program."""
+from . import util
+
+
+def create_compress (archive, encoding, cmd, *args, **kwargs):
+    """Create a compressed archive."""
+    cmdlist = [cmd]
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    cmdlist.append('-c')
+    cmdlist.extend(args)
+    cmdlist.extend(['>', archive])
+    # note that for shell calls the command must be a string
+    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
+    return (cmd, {'shell': True})

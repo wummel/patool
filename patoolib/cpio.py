@@ -40,3 +40,20 @@ def list_cpio (archive, encoding, cmd, **kwargs):
         cmdlist.append('-v')
     cmdlist.extend(['-F', archive])
     return cmdlist
+
+test_cpio = list_cpio
+
+def create_cpio(archive, encoding, cmd, *args, **kwargs):
+    """Create a CPIO archive."""
+    cmdlist = [cmd, '--create']
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    if len(args) != 0:
+        findcmd = ['find', '-print0']
+        findcmd.extend(args)
+        findcmd.append('|')
+        cmdlist[0:0] = findcmd
+        cmdlist.append('-0')
+    cmdlist.extend([">", archive])
+    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
+    return (cmd, {'shell': True})

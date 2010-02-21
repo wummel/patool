@@ -43,3 +43,14 @@ def test_rar (archive, encoding, cmd, **kwargs):
         cmdlist.append('-c-')
     cmdlist.extend(['--', archive])
     return cmdlist
+
+def create_rar (archive, encoding, cmd, *args, **kwargs):
+    """Create a RAR archive."""
+    cmdlist = [cmd]
+    cmdlist.append('a')
+    if not kwargs['verbose']:
+        cmdlist.append('-c-')
+    cmdlist.extend(['-r', '--', archive])
+    cmdlist.extend(args)
+    return cmdlist
+

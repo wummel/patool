@@ -26,10 +26,11 @@ datadir = os.path.join(basedir, 'data')
 class ArchiveTest (unittest.TestCase):
     """Helper class for achive tests."""
 
-    def archive_commands (self, filename, cmd):
+    def archive_commands (self, filename, cmd, singlefile=False):
         self.archive_list(filename, cmd)
         self.archive_test(filename, cmd)
         self.archive_extract(filename, cmd)
+        self.archive_create(filename, cmd, singlefile=singlefile)
 
     def archive_extract (self, filename, cmd):
         archive = os.path.join(datadir, filename)
@@ -52,6 +53,26 @@ class ArchiveTest (unittest.TestCase):
         archive = os.path.join(datadir, filename)
         patoolib._handle_archive(archive, 'test', program=cmd)
         patoolib._handle_archive(archive, 'test', program=cmd, verbose=True)
+
+    def archive_create (self, filename, cmd, singlefile=False):
+        # the file or directory to pack
+        if singlefile:
+            topack = os.path.join(datadir, 'foo.txt')
+        else:
+            topack = os.path.join(datadir, 'foo')
+        # create a temporary directory for creation
+        tmpdir = patoolib.util.tmpdir(dir=basedir)
+        archive = os.path.join(tmpdir, filename)
+        os.chdir(tmpdir)
+        try:
+            patoolib._handle_archive(archive, 'create', topack, program=cmd)
+            # not all programs can test what they create
+            if cmd == 'compress':
+                cmd = 'gzip'
+            patoolib._handle_archive(archive, 'test', program=cmd)
+        finally:
+            os.chdir(basedir)
+            shutil.rmtree(tmpdir)
 
 
 def needs_cmd (cmd):

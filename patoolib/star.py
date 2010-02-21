@@ -18,6 +18,28 @@
 def extract_tar (archive, encoding, cmd, **kwargs):
     """Extract a TAR archive."""
     cmdlist = [cmd, '-x']
+    add_star_opts(cmdlist, encoding, kwargs['verbose'])
+    cmdlist.extend(['-C', kwargs['outdir'], 'file=%s' % archive])
+    return cmdlist
+
+def list_tar (archive, encoding, cmd, **kwargs):
+    """List a TAR archive."""
+    cmdlist = [cmd, '-n']
+    add_star_opts(cmdlist, encoding, kwargs['verbose'])
+    cmdlist.append("file=%s" % archive)
+    return cmdlist
+
+test_tar = list_tar
+
+def create_tar (archive, encoding, cmd, *args, **kwargs):
+    """Create a TAR archive."""
+    cmdlist = [cmd, '-c']
+    add_star_opts(cmdlist, encoding, kwargs['verbose'])
+    cmdlist.append("file=%s" % archive)
+    cmdlist.extend(args)
+    return cmdlist
+
+def add_star_opts (cmdlist, encoding, verbose):
     # Note that star autodetects encoding compression, but displays a warning
     # which we want to avoie.
     if encoding == 'gzip':
@@ -26,23 +48,5 @@ def extract_tar (archive, encoding, cmd, **kwargs):
         cmdlist.append('-Z')
     elif encoding == 'bzip2':
         cmdlist.append('-bz')
-    if kwargs['verbose']:
+    if verbose:
         cmdlist.append('-v')
-    cmdlist.extend(['-C', kwargs['outdir'], 'file=%s' % archive])
-    return cmdlist
-
-def list_tar (archive, encoding, cmd, **kwargs):
-    """List a TAR archive."""
-    cmdlist = [cmd, '-n']
-    if encoding == 'gzip':
-        cmdlist.append('-z')
-    elif encoding == 'compress':
-        cmdlist.append('-Z')
-    elif encoding == 'bzip2':
-        cmdlist.append('-bz')
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.append("file=%s" % archive)
-    return cmdlist
-
-test_tar = list_tar

@@ -41,3 +41,13 @@ def test_lzop (archive, encoding, cmd, **kwargs):
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
     return cmdlist
+
+def create_lzop (archive, encoding, cmd, *args, **kwargs):
+    """Create a LZOP archive."""
+    cmdlist = [cmd]
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    cmdlist.extend(['-o', archive])
+    cmdlist.append('--')
+    cmdlist.extend(args)
+    return cmdlist

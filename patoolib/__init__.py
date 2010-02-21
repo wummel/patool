@@ -16,7 +16,7 @@
 import os
 import shutil
 from distutils.spawn import find_executable
-from . import util, baker
+from . import util
 
 # Supported archive commands
 ArchiveCommands = ('list', 'extract', 'test', 'create')
@@ -56,6 +56,7 @@ ArchivePrograms = {
     'bzip2': {
         'extract': ('pbzip2', 'bzip2', '7z'),
         'test': ('pbzip2', 'bzip2', '7z'),
+        'create': ('pbzip2', 'bzip2', '7z'),
         'list': ('7z', 'echo',),
     },
     'tar': {
@@ -73,6 +74,7 @@ ArchivePrograms = {
         'extract': ('gzip', '7z', 'uncompress.real'),
         'list': ('7z', 'echo',),
         'test': ('gzip', '7z'),
+        'create': ('compress',),
     },
     '7z': {
         None: ('7z',),
@@ -89,14 +91,16 @@ ArchivePrograms = {
         'test': ('cabextract', '7z'),
     },
     'arj': {
-        'extract': ('arj', '7z'),
-        'list': ('arj', '7z'),
-        'test': ('arj', '7z'),
+        None: ('arj',),
+        'extract': ('7z',),
+        'list': ('7z',),
+        'test': ('7z',),
     },
     'cpio': {
         'extract': ('cpio', '7z'),
         'list': ('cpio', '7z'),
         'test': ('7z',),
+        'create': ('cpio',),
     },
     'rpm': {
         # XXX rpm2cpio depends on cpio which is not checked
@@ -125,7 +129,7 @@ ProgramModules = {
 def get_archive_format (filename):
     """Detect filename archive format."""
     mime, encoding = util.guess_mime(filename)
-    if not mime:
+    if not (mime or encoding):
         raise util.PatoolError("unknown archive format for file `%s'" % filename)
     if mime in ArchiveMimetypes:
         format = ArchiveMimetypes[mime]
@@ -158,6 +162,8 @@ def find_archive_program (format, command):
     for key in (None, command):
         if key in commands:
             programs.extend(commands[key])
+    if not programs:
+        raise util.PatoolError("%s archive format `%s' is not supported" % (command, format))
     # return the first existing program
     for program in programs:
         exe = find_executable(program)
@@ -272,6 +278,10 @@ def _handle_archive (archive, command, *args, **kwargs):
     check_archive_format(format, encoding)
     check_archive_command(command)
     config = parse_config(format, command, **kwargs)
+    if command == 'create':
+        # check if archive already exists
+        if os.path.exists(archive) and not config['force']:
+            raise util.PatoolError("archive `%s' already exists, and --force option was not given" % archive)
     program = config['program']
     # get python module for given archive program
     key = os.path.basename(program).lower()
@@ -286,7 +296,7 @@ def _handle_archive (archive, command, *args, **kwargs):
         outdir = util.tmpdir(dir=os.getcwd())
         kwargs['outdir'] = outdir
     try:
-        cmdlist = get_archive_cmdlist(archive, encoding, program, **kwargs)
+        cmdlist = get_archive_cmdlist(archive, encoding, program, *args, **kwargs)
         run_archive_cmdlist(cmdlist)
         if command == 'extract':
             target = cleanup_outdir(archive, outdir, config['force'])

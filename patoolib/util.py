@@ -26,6 +26,7 @@ mimedb = mimetypes.MimeTypes(strict=False)
 mimedb.encodings_map['.bz2'] = 'bzip2'
 mimedb.suffix_map['.tbz2'] = '.tar.bz2'
 mimedb.add_type('application/x-lzop', '.lzo', strict=False)
+mimedb.add_type('application/x-arj', '.arj', strict=False)
 
 
 class PatoolError (StandardError):
