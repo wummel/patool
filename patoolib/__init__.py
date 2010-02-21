@@ -16,7 +16,7 @@
 import os
 import shutil
 from distutils.spawn import find_executable
-from . import util
+from . import util, baker
 
 # Supported archive commands
 ArchiveCommands = ('list', 'extract')
