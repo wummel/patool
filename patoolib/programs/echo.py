@@ -13,18 +13,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the uncompress.real program."""
-from . import util
+"""Archive commands for the echo program."""
+from .. import util
 
 
-def create_compress (archive, encoding, cmd, *args, **kwargs):
-    """Create a compressed archive."""
-    cmdlist = [cmd]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.append('-c')
-    cmdlist.extend(args)
-    cmdlist.extend(['>', archive])
-    # note that for shell calls the command must be a string
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'shell': True})
+def list_bzip2 (archive, encoding, cmd, **kwargs):
+    """List a BZIP2 archive."""
+    return stripext(cmd, archive)
+
+
+def list_compress (archive, encoding, cmd, **kwargs):
+    """List a compress archive."""
+    return stripext(cmd, archive)
+
+
+def stripext (cmd, archive):
+    """Echo the name without suffix."""
+    return [cmd, util.stripext(archive)]

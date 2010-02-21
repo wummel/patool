@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rpm2cpio program."""
 import os
-from . import util
+from .. import util
 
 def extract_rpm (archive, encoding, cmd, **kwargs):
     """Extract a DEB archive."""

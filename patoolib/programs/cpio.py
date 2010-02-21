@@ -13,44 +13,47 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the bzip2 program."""
-import os
-from . import util
+"""Archive commands for the cpio program."""
+from .. import util
 
-
-def extract_bzip2 (archive, encoding, cmd, **kwargs):
-    """Extract a BZIP2 archive."""
+def extract_cpio (archive, encoding, cmd, **kwargs):
+    """Extract a CPIO archive."""
     cmdlist = [cmd]
+    cmdlist.append('--extract')
+    cmdlist.append('--make-directories')
+    cmdlist.append('--preserve-modification-time')
+    cmdlist.append('--no-absolute-filenames')
+    cmdlist.append('--force-local')
+    cmdlist.extend(['--nonmatching', '"*\.\.*"'])
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-d'])
-    outfile = os.path.join(kwargs['outdir'], util.stripext(archive))
-    cmdlist.append('--')
-    cmdlist.extend([archive, '>', outfile])
-    # note that for shell calls the command must be a string
+    cmdlist.extend(['<', archive])
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'shell': True})
+    return (cmd, {'cwd': kwargs['outdir'], 'shell': True})
 
 
-def test_bzip2 (archive, encoding, cmd, **kwargs):
-    """Test a BZIP2 archive."""
+def list_cpio (archive, encoding, cmd, **kwargs):
+    """List a CPIO archive."""
     cmdlist = [cmd]
+    cmdlist.append('-t')
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['-t', '--'])
-    cmdlist.extend([archive])
+    cmdlist.extend(['-F', archive])
     return cmdlist
 
+test_cpio = list_cpio
 
-def create_bzip2 (archive, encoding, cmd, *args, **kwargs):
-    """Create a BZIP2 archive."""
-    cmdlist = [cmd]
+def create_cpio(archive, encoding, cmd, *args, **kwargs):
+    """Create a CPIO archive."""
+    cmdlist = [cmd, '--create']
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-z'])
-    cmdlist.append('--')
-    cmdlist.extend(args)
-    cmdlist.extend(['>', archive])
-    # note that for shell calls the command must be a string
+    if len(args) != 0:
+        findcmd = ['find', '-print0']
+        findcmd.extend(args)
+        findcmd.append('|')
+        cmdlist[0:0] = findcmd
+        cmdlist.append('-0')
+    cmdlist.extend([">", archive])
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
     return (cmd, {'shell': True})

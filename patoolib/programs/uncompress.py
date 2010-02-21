@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the uncompress.real program."""
 import os
-from . import util
+from .. import util
 
 
 def extract_compress (archive, encoding, cmd, **kwargs):

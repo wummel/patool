@@ -286,8 +286,8 @@ def _handle_archive (archive, command, *args, **kwargs):
     # get python module for given archive program
     key = os.path.basename(program).lower()
     module = ProgramModules.get(key, key)
-    # import archive handler (eg. patoolib.star.extract_tar())
-    exec "from patoolib.%s import %s_%s as func" % (module, command, format)
+    # import archive handler (eg. patoolib.programs.star.extract_tar())
+    exec "from patoolib.programs.%s import %s_%s as func" % (module, command, format)
     get_archive_cmdlist = locals()['func']
     # prepare func() call arguments
     kwargs = dict(verbose=config['verbose'])
