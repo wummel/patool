@@ -32,3 +32,12 @@ def list_lzop (archive, encoding, cmd, **kwargs):
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
     return cmdlist
+
+def test_lzop (archive, encoding, cmd, **kwargs):
+    """Test a LZOP archive."""
+    cmdlist = [cmd]
+    cmdlist.append('--test')
+    if kwargs['verbose']:
+        cmdlist.append('--verbose')
+    cmdlist.extend(['--', archive])
+    return cmdlist

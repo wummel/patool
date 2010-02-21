@@ -21,8 +21,8 @@ def extract_arj (archive, encoding, cmd, **kwargs):
     cmdlist.append('x')
     cmdlist.append('-r')
     cmdlist.append('-y')
-    if kwargs['verbose']:
-        cmdlist.append('-v')
+    if not kwargs['verbose']:
+        cmdlist.append('-i-')
     cmdlist.extend([archive, kwargs['outdir']])
     return cmdlist
 
@@ -33,6 +33,18 @@ def list_arj (archive, encoding, cmd, **kwargs):
         cmdlist.append('v')
     else:
         cmdlist.append('l')
+        cmdlist.append('-i-')
+    cmdlist.append('-r')
+    cmdlist.append('-y')
+    cmdlist.extend([archive])
+    return cmdlist
+
+def test_arj (archive, encoding, cmd, **kwargs):
+    """Test a ARJ archive."""
+    cmdlist = [cmd]
+    cmdlist.append('t')
+    if not kwargs['verbose']:
+        cmdlist.append('-i-')
     cmdlist.append('-r')
     cmdlist.append('-y')
     cmdlist.extend([archive])

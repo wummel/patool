@@ -32,3 +32,10 @@ def list_cab (archive, encoding, cmd, **kwargs):
         cmdlist.append('-v')
     cmdlist.extend([archive])
     return cmdlist
+
+def test_cab (archive, encoding, cmd, **kwargs):
+    """Test a CAB archive."""
+    cmdlist = [cmd]
+    cmdlist.append('-t')
+    cmdlist.extend([archive])
+    return cmdlist

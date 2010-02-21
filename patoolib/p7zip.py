@@ -59,3 +59,26 @@ list_bzip2 = \
   list_rpm = \
   list_deb = \
   list_7z
+
+
+def test_7z (archive, encoding, cmd, **kwargs):
+    """Test a 7z archive."""
+    cmdlist = [cmd]
+    cmdlist.append('t')
+    if not kwargs['verbose']:
+        cmdlist.append('-bd')
+    cmdlist.append('--')
+    cmdlist.append(archive)
+    return cmdlist
+
+test_bzip2 = \
+  test_gzip = \
+  test_zip = \
+  test_compress = \
+  test_rar = \
+  test_cab = \
+  test_arj = \
+  test_cpio = \
+  test_rpm = \
+  test_deb = \
+  test_7z

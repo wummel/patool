@@ -35,6 +35,12 @@ def list (archive, verbose=False):
     return patoolib.handle_archive(archive, 'list')
 
 
+@patoolib.baker.command
+def test (archive, verbose=False):
+    """Test files in an archive."""
+    return patoolib.handle_archive(archive, 'test', verbose=verbose)
+
+
 #@patoolib.baker.command
 #def create (archive, *args):
 #    """Create an archive from given files."""

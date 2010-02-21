@@ -26,8 +26,9 @@ datadir = os.path.join(basedir, 'data')
 class ArchiveTest (unittest.TestCase):
     """Helper class for achive tests."""
 
-    def archive_test (self, filename, cmd):
+    def archive_commands (self, filename, cmd):
         self.archive_list(filename, cmd)
+        self.archive_test(filename, cmd)
         self.archive_extract(filename, cmd)
 
     def archive_extract (self, filename, cmd):
@@ -36,16 +37,21 @@ class ArchiveTest (unittest.TestCase):
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         os.chdir(tmpdir)
         try:
-            patoolib._handle_archive(archive, 'extract', cmd=cmd)
-            patoolib._handle_archive(archive, 'extract', cmd=cmd, force=True)
+            patoolib._handle_archive(archive, 'extract', program=cmd)
+            patoolib._handle_archive(archive, 'extract', program=cmd, force=True)
         finally:
             os.chdir(basedir)
             shutil.rmtree(tmpdir)
 
     def archive_list (self, filename, cmd):
         archive = os.path.join(datadir, filename)
-        patoolib._handle_archive(archive, 'list', cmd=cmd)
-        patoolib._handle_archive(archive, 'list', cmd=cmd, verbose=True)
+        patoolib._handle_archive(archive, 'list', program=cmd)
+        patoolib._handle_archive(archive, 'list', program=cmd, verbose=True)
+
+    def archive_test (self, filename, cmd):
+        archive = os.path.join(datadir, filename)
+        patoolib._handle_archive(archive, 'test', program=cmd)
+        patoolib._handle_archive(archive, 'test', program=cmd, verbose=True)
 
 
 def needs_cmd (cmd):

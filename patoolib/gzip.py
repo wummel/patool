@@ -43,3 +43,15 @@ def list_gzip (archive, encoding, cmd, **kwargs):
     cmdlist.append(archive)
     return cmdlist
 
+
+def test_gzip (archive, encoding, cmd, **kwargs):
+    """Test a GZIP archive."""
+    cmdlist = [cmd]
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    cmdlist.append('-t')
+    cmdlist.append('--')
+    cmdlist.append(archive)
+    return cmdlist
+
+test_compress = test_gzip

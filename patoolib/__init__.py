@@ -19,7 +19,7 @@ from distutils.spawn import find_executable
 from . import util, baker
 
 # Supported archive commands
-ArchiveCommands = ('list', 'extract')
+ArchiveCommands = ('list', 'extract', 'test')
 
 # Supported archive formats
 ArchiveFormats = ('gzip', 'bzip2', 'tar', 'zip', 'compress', '7z', 'rar',
@@ -55,6 +55,7 @@ ArchiveMimetypes = {
 ArchivePrograms = {
     'bzip2': {
         'extract': ('pbzip2', 'bzip2', '7z'),
+        'test': ('pbzip2', 'bzip2', '7z'),
         'list': ('7z', 'echo',),
     },
     'tar': {
@@ -63,6 +64,7 @@ ArchivePrograms = {
     'zip': {
         'extract': ('unzip', '7z'),
         'list': ('unzip', '7z'),
+        'test': ('unzip', '7z'),
     },
     'gzip': {
         None: ('gzip', '7z'),
@@ -70,6 +72,7 @@ ArchivePrograms = {
     'compress': {
         'extract': ('gzip', '7z', 'uncompress.real'),
         'list': ('7z', 'echo',),
+        'test': ('gzip', '7z'),
     },
     '7z': {
         None: ('7z',),
@@ -78,27 +81,33 @@ ArchivePrograms = {
         None: ('rar',),
         'extract': ('unrar', '7z'),
         'list': ('unrar', '7z'),
+        'test': ('unrar', '7z'),
     },
     'cab': {
         'extract': ('cabextract', '7z'),
         'list': ('cabextract', '7z'),
+        'test': ('cabextract', '7z'),
     },
     'arj': {
         'extract': ('arj', '7z'),
         'list': ('arj', '7z'),
+        'test': ('arj', '7z'),
     },
     'cpio': {
         'extract': ('cpio', '7z'),
         'list': ('cpio', '7z'),
+        'test': ('7z',),
     },
     'rpm': {
         # XXX rpm2cpio depends on cpio which is not checked
         'extract': ('rpm2cpio', '7z'),
         'list': ('rpm', '7z'),
+        'test': ('rpm', '7z'),
     },
     'deb': {
         'extract': ('dpkg-deb', '7z'),
         'list': ('dpkg-deb', '7z'),
+        'test': ('dpkg-deb', '7z'),
     },
     'lzop': {
         None: ('lzop',),

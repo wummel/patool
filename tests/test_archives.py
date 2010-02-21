@@ -26,19 +26,21 @@ class TestArchives (ArchiveTest):
         self.tar_test('star')
 
     def tar_test (self, cmd):
-        self.archive_test('t.tar', cmd)
-        self.archive_test('t.tar.gz', cmd)
-        self.archive_test('t.tar.Z', cmd)
-        self.archive_test('t.tar.bz2', cmd)
-        self.archive_test('t.tbz2', cmd)
+        self.archive_commands('t.tar', cmd)
+        self.archive_commands('t.tar.gz', cmd)
+        self.archive_commands('t.tar.Z', cmd)
+        self.archive_commands('t.tar.bz2', cmd)
+        self.archive_commands('t.tbz2', cmd)
 
     @needs_cmd('bzip2')
     def test_bzip2 (self):
         self.archive_extract('t.bz2', 'bzip2')
+        self.archive_test('t.bz2', 'bzip2')
 
     @needs_cmd('pbzip2')
     def test_pbzip2 (self):
         self.archive_extract('t.bz2', 'pbzip2')
+        self.archive_test('t.bz2', 'pbzip2')
 
     @needs_cmd('echo')
     def test_echo (self):
@@ -47,13 +49,13 @@ class TestArchives (ArchiveTest):
 
     @needs_cmd('unzip')
     def test_unzip (self):
-        self.archive_test('t.zip', 'unzip')
-        self.archive_test('t.jar', 'unzip')
+        self.archive_commands('t.zip', 'unzip')
+        self.archive_commands('t.jar', 'unzip')
 
     @needs_cmd('gzip')
     def test_gzip (self):
-        self.archive_test('t.gz', 'gzip')
-        self.archive_test('t.txt.gz', 'gzip')
+        self.archive_commands('t.gz', 'gzip')
+        self.archive_commands('t.txt.gz', 'gzip')
         self.archive_extract('t.Z', 'gzip')
 
     @needs_cmd('uncompress.real')
@@ -62,7 +64,7 @@ class TestArchives (ArchiveTest):
 
     @needs_cmd('7z')
     def test_p7zip (self):
-        self.archive_test('t.7z', '7z')
+        self.archive_commands('t.7z', '7z')
         self.archive_list('t.gz', '7z')
         self.archive_list('t.bz2', '7z')
         self.archive_list('t.zip', '7z')
@@ -85,6 +87,17 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.cpio', '7z')
         self.archive_extract('t.rpm', '7z')
         self.archive_extract('t.deb', '7z')
+        self.archive_test('t.gz', '7z')
+        self.archive_test('t.bz2', '7z')
+        self.archive_test('t.zip', '7z')
+        self.archive_test('t.jar', '7z')
+        self.archive_test('t.Z', '7z')
+        self.archive_test('t.rar', '7z')
+        self.archive_test('t.cab', '7z')
+        self.archive_test('t.arj', '7z')
+        self.archive_test('t.cpio', '7z')
+        self.archive_test('t.rpm', '7z')
+        self.archive_test('t.deb', '7z')
 
     @needs_cmd('unrar')
     def test_unrar (self):
@@ -93,7 +106,7 @@ class TestArchives (ArchiveTest):
 
     @needs_cmd('rar')
     def test_rar (self):
-        self.archive_test('t.rar', 'rar')
+        self.archive_commands('t.rar', 'rar')
 
     @needs_cmd('cabextract')
     def test_capextract (self):
@@ -103,6 +116,7 @@ class TestArchives (ArchiveTest):
     @needs_cmd('arj')
     def test_arj (self):
         self.archive_list('t.arj', 'arj')
+        self.archive_test('t.arj', 'arj')
         self.archive_extract('t.arj', 'arj')
 
     @needs_cmd('cpio')
@@ -113,6 +127,8 @@ class TestArchives (ArchiveTest):
     @needs_cmd('rpm')
     def test_rpm (self):
         self.archive_list('t.rpm', 'rpm')
+        # the rpm test fails on non-rpm system with missing dependencies
+        #self.archive_test('t.rpm', 'rpm')
 
     @needs_cmd('rpm2cpio')
     @needs_cmd('cpio')
@@ -123,8 +139,9 @@ class TestArchives (ArchiveTest):
     def test_dpkg (self):
         self.archive_list('t.deb', 'dpkg')
         self.archive_extract('t.deb', 'dpkg')
+        self.archive_test('t.deb', 'dpkg')
 
     @needs_cmd('lzop')
     def test_lzop (self):
-        self.archive_test('t.lzo', 'lzop')
+        self.archive_commands('t.lzo', 'lzop')
 

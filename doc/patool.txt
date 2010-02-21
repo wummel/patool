@@ -6,20 +6,23 @@ NAME
        patool - simple manager for file archives of various types
 
 SYNOPSIS
-       patool <command> [options] <archive-file>
+        patool (extract|list|test) [options] <archive-file>
+        patool create [options] <archive-file> [files..]
+        patool formats [options]
 
 DESCRIPTION
-       Various archive types can be created, extracted and listed by patool.  The archive format is determined by the archive file extension and as a fallback with file(1).
+       Various  archive  types  can  be created, extracted, tested and listed by patool.  The archive format is determined by the archive file extension and as a fallback with
+       file(1).
 
-       patool  supports  7z  (.7z),  ZIP  (.zip, .jar), GZIP (.gz), compress (.Z), BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB (.cab), CPIO (.cpio), RPM (.rpm), DEB (.deb), LZOP
+       patool supports 7z (.7z), ZIP (.zip, .jar), GZIP (.gz), compress (.Z), BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB (.cab), CPIO (.cpio),  RPM  (.rpm),  DEB  (.deb),  LZOP
        (.lzo)and RAR (.rar) formats.  It relies on helper applications to handle those archive formats (for example bzip2 for BZIP2 archives).
 
 COMMANDS
        Several commands and options are available.
 
    extract
-       Extract files from an archive4. Often one wants to extract all files in an archive to a single subdirectory.  However, some archives contain  multiple  files  in  their
-       root  directories. The patool program overcomes this problem by first extracting files to a unique (temporary) directory, and then moving its contents back if possible.
+       Extract  files  from  an  archive4. Often one wants to extract all files in an archive to a single subdirectory.  However, some archives contain multiple files in their
+       root directories. The patool program overcomes this problem by first extracting files to a unique (temporary) directory, and then moving its contents back if  possible.
        This also prevents local files from being overwritten by mistake.
 
        --force
@@ -35,6 +38,14 @@ COMMANDS
 
        --verbose
               Verbose archive listing (if the helper application supports it).
+
+       --help Show help for this command.
+
+   test
+       Test files in an archive.
+
+       --verbose
+              Verbose archive testing (if the helper application supports it).
 
        --help Show help for this command.
 
@@ -61,7 +72,7 @@ CONFIGURATION
        Supported archive formats are listed by the formats command.
 
        mode=/usr/bin/mycommand
-              Set the application to handle the archive format for given mode.  mode can be one of extract, list.
+              Set the application to handle the archive format for given mode.  mode can be one of extract, list, test.
 
 FILES
        /etc/patool.conf, ~/.patool.conf - configuration files
