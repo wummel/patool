@@ -39,6 +39,6 @@ setup (
     maintainer = MyName,
     maintainer_email = MyEmail,
     license = "GPL",
-    packages = ['patoolib'],
+    packages = ['patoolib', 'patoolib.programs'],
     scripts = ['patool'],
 )
