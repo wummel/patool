@@ -33,3 +33,6 @@ def list_deb (archive, encoding, cmd, **kwargs):
     cmdlist.append('--')
     cmdlist.extend([archive])
     return cmdlist
+
+test_deb = list_deb
+

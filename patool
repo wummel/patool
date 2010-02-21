@@ -20,17 +20,16 @@ patool [extract|list] [sub-command-options] <archive-file>
 import sys
 if not hasattr(sys, "version_info") or sys.version_info < (2, 5, 0, "final", 0):
     raise SystemExit("Error, this script needs Python >= 2.5 installed")
-import baker
 import patoolib
 
 
-@baker.command
+@patoolib.baker.command
 def extract (archive, verbose=False, force=False):
     """Extract files from an archive."""
     return patoolib.handle_archive(archive, 'extract')
 
 
-@baker.command
+@patoolib.baker.command
 def list (archive, verbose=False):
     """List files in an archive."""
     return patoolib.handle_archive(archive, 'list')
@@ -42,9 +41,18 @@ def create (archive, *args):
     return patoolib.handle_archive(archive, 'create', *args)
 
 
-@baker.command
+@patoolib.baker.command
+def test (archive, verbose=False):
+    """Test files in an archive."""
+    return patoolib.handle_archive(archive, 'test', verbose=verbose)
+
+
+@patoolib.baker.command
 def formats ():
     return patoolib.list_formats()
 
-
-sys.exit(baker.run())
+try:
+    sys.exit(patoolib.baker.run())
+except patoolib.baker.CommandError, msg:
+    print >>sys.stderr, "patool error:", msg
+    sys.exit(1)

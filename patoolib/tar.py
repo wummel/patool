@@ -35,6 +35,8 @@ def list_tar (archive, encoding, cmd, **kwargs):
     cmdlist.extend(["--file", archive])
     return cmdlist
 
+test_tar = list_tar
+
 def create_tar (archive, encoding, cmd, **kwargs):
     """Create a TAR archive."""
     print "XXX create", archive, encoding, cmd, kwargs

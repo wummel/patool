@@ -44,3 +44,5 @@ def list_tar (archive, encoding, cmd, **kwargs):
         cmdlist.append('-v')
     cmdlist.append("file=%s" % archive)
     return cmdlist
+
+test_tar = list_tar

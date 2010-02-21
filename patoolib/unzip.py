@@ -31,3 +31,12 @@ def list_zip (archive, encoding, cmd, **kwargs):
         cmdlist.append('-v')
     cmdlist.extend(['--', archive])
     return cmdlist
+
+def test_zip (archive, encoding, cmd, **kwargs):
+    """Test a ZIP archive."""
+    cmdlist = [cmd]
+    cmdlist.append('-t')
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    cmdlist.extend(['--', archive])
+    return cmdlist
