@@ -177,11 +177,11 @@ def list_formats ():
     for format in ArchiveFormats:
         print format, "files:"
         for command in ArchiveCommands:
-            program = find_archive_program(format, command)
-            if program:
+            try:
+                program = find_archive_program(format, command)
                 print "   %8s: %s" % (command, program)
-            else:
-                print "   %8s: NOT SUPPORTED"
+            except util.PatoolError:
+                print "   %8s: - (not supported)" % command
     return 0
 
 
