@@ -19,7 +19,7 @@ from distutils.spawn import find_executable
 from . import util
 
 # Supported archive commands
-ArchiveCommands = ('list', 'extract')
+ArchiveCommands = ('list', 'extract', 'create')
 
 # Supported archive formats
 ArchiveFormats = ('gzip', 'bzip2', 'tar', 'zip', 'compress', '7z', 'rar',
@@ -254,8 +254,10 @@ def cleanup_outdir (archive, outdir, force):
     return target
 
 
-def _handle_archive (archive, command, **kwargs):
-    util.check_filename(archive)
+def _handle_archive (archive, command, *args, **kwargs):
+    if command != 'create':
+        # check that archive is a regular file
+        util.check_filename(archive)
     encoding = None
     format, encoding = get_archive_format(archive)
     check_archive_format(format, encoding)
@@ -288,10 +290,10 @@ def _handle_archive (archive, command, **kwargs):
                 pass
 
 
-def handle_archive (archive, command, **kwargs):
+def handle_archive (archive, command, *args, **kwargs):
     """Handle archive file command."""
     try:
-        _handle_archive(archive, command, **kwargs)
+        _handle_archive(archive, command, *args, **kwargs)
         res = 0
     except util.PatoolError, msg:
         util.log_error(msg)

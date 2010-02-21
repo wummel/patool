@@ -54,6 +54,17 @@ Verbose archive listing (if the helper application supports it).
 .TP
 \fB\-\-help\fP
 Show help for this command.
+.SS \fBcreate\fP
+Create an archive from given files.
+.TP
+\fB--force\fP
+Allow overwriting of local archives.
+.TP
+\fB\-\-verbose\fP
+Verbose operation (if the helper application supports it).
+.TP
+\fB\-\-help\fP
+Show help for this command.
 .SS \fBformats\fP
 Show all supported archive formats.
 .TP
@@ -81,7 +92,7 @@ Supported archive formats are listed by the \fBformats\fP command.
 .TP
 \fImode\fP\fB=/usr/bin/mycommand\fP
 Set the application to handle the archive format for given mode.
-\fImode\fP can be one of \fBextract\fP, \fBlist\fP.
+\fImode\fP can be one of (\fBextract\fP, \fBlist\fP, \fBcreate\fP).
 .SH FILES
 \fB/etc/patool.conf\fP, \fB~/.patool.conf\fP -
 configuration files

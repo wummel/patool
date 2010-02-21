@@ -34,3 +34,7 @@ def list_tar (archive, encoding, cmd, **kwargs):
         cmdlist.append('--verbose')
     cmdlist.extend(["--file", archive])
     return cmdlist
+
+def create_tar (archive, encoding, cmd, **kwargs):
+    """Create a TAR archive."""
+    print "XXX create", archive, encoding, cmd, kwargs

@@ -36,10 +36,10 @@ def list (archive, verbose=False):
     return patoolib.handle_archive(archive, 'list')
 
 
-#@baker.command
-#def create (archive, *args):
-#    """Create an archive from given files."""
-#    return patoolib.handle_archive(archive, 'create', *args)
+@baker.command
+def create (archive, *args):
+    """Create an archive from given files."""
+    return patoolib.handle_archive(archive, 'create', *args)
 
 
 @baker.command
