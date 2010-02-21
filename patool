@@ -45,5 +45,8 @@ def list (archive, verbose=False):
 def formats ():
     return patoolib.list_formats()
 
-
-sys.exit(patoolib.baker.run())
+try:
+    sys.exit(patoolib.baker.run())
+except patoolib.baker.CommandError, msg:
+    print >>sys.stderr, "patool error:", msg
+    sys.exit(1)
