@@ -1,0 +1,91 @@
+.\"                                      -*- nroff -*-
+.\" Copyright (C) 2010 Bastian Kleineidam
+.\"
+.\" This program is free software: you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.TH PATOOL "1" "February 2010" "patool"
+.SH NAME
+patool - simple manager for file archives of various types
+.SH SYNOPSIS
+\fBpatool\fP <\fIcommand\fP> [\fIoptions\fP] <\fIarchive-file\fP>
+.SH DESCRIPTION
+Various archive types can be created, extracted and listed by
+\fBpatool\fP.
+The archive format is determined by the archive file extension and
+as a fallback with file(1).
+.PP
+\fBpatool\fP supports 7z (.7z), ZIP (.zip, .jar), GZIP (.gz), compress (.Z),
+BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB (.cab), CPIO (.cpio),
+RPM (.rpm), DEB (.deb), LZOP (.lzo)and RAR (.rar) formats.
+It relies on helper applications to handle those archive formats
+(for example bzip2 for BZIP2 archives).
+.SH COMMANDS
+Several commands and options are available.
+.SS \fBextract\fP
+Extract files from an archive4. Often one wants
+to extract all files in an archive to a single subdirectory.
+However, some archives contain multiple files in their root
+directories. The patool program overcomes this problem by
+first extracting files to a unique (temporary) directory, and
+then moving its contents back if possible. This also prevents
+local files from being overwritten by mistake.
+.TP
+\fB--force\fP
+Allow overwriting of local files.
+.TP
+\fB\-\-verbose\fP
+Be verbose when extracting (if the helper application supports it).
+.TP
+\fB\-\-help\fP
+Show help for this command.
+.SS \fBlist\fP
+List files in an archive.
+.TP
+\fB\-\-verbose\fP
+Verbose archive listing (if the helper application supports it).
+.TP
+\fB\-\-help\fP
+Show help for this command.
+.SS \fBformats\fP
+Show all supported archive formats.
+.TP
+\fB\-\-help\fP
+Show help for this command.
+.SH CONFIGURATION
+The configuration files (see FILES) can specify which program to use
+for each archive format. Per default a list of programs are searched
+and the first one will be used for an archive.
+.br
+Additionally, default options like verbosity and force overwrite can
+be configured.
+.br
+The configuration format is the Windows INI format.
+
+.SS \fB[DEFAULT]\fP
+.TP
+\fBforce=0\fP
+Set the force option to 1 or 0.
+.TP
+\fBverbose=0\fP
+Set the verbose option to 1 or 0.
+.SS \fB[\fP\fI<archive format>\fP\fB]\fP
+Supported archive formats are listed by the \fBformats\fP command.
+.TP
+\fImode\fP\fB=/usr/bin/mycommand\fP
+Set the application to handle the archive format for given mode.
+\fImode\fP can be one of \fBextract\fP, \fBlist\fP.
+.SH FILES
+\fB/etc/patool.conf\fP, \fB~/.patool.conf\fP -
+configuration files
+.SH AUTHOR
+Bastian Kleineidam <calvin@users.sourceforge.net>
+.SH COPYRIGHT
+Copyright \(co 2010 Bastian Kleineidam

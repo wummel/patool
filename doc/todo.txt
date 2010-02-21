@@ -1,0 +1,3 @@
+- add project to github
+- add create mode?
+- add test mode?
