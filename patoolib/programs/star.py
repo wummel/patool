@@ -48,5 +48,8 @@ def add_star_opts (cmdlist, encoding, verbose):
         cmdlist.append('-Z')
     elif encoding == 'bzip2':
         cmdlist.append('-bz')
+    elif encoding in ('lzma', 'xz'):
+        # use compress-program option
+        cmdlist.append('compress-program=%s' % encoding)
     if verbose:
         cmdlist.append('-v')

@@ -31,8 +31,8 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.Z', cmd)
         self.archive_commands('t.tar.bz2', cmd)
         self.archive_commands('t.tbz2', cmd)
-        # XXXself.archive_commands('t.tar.lzma', cmd)
-        # XXXself.archive_command('t.tar.xz', cmd)
+        self.archive_commands('t.tar.lzma', cmd)
+        self.archive_commands('t.tar.xz', cmd)
 
     @needs_cmd('bzip2')
     def test_bzip2 (self):
