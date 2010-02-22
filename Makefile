@@ -1,6 +1,7 @@
+# This Makefile is only used by developers.
 VERSION:=$(shell python setup.py --version)
 PY_FILES_DIRS := patool setup.py patoolib tests
-# This Makefile is only used by developers.
+# which test modules to run
 TESTS ?= tests/
 # set test options, eg. to "--nologcapture"
 TESTOPTS=
