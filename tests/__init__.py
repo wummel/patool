@@ -26,35 +26,41 @@ datadir = os.path.join(basedir, 'data')
 class ArchiveTest (unittest.TestCase):
     """Helper class for achive tests."""
 
-    def archive_commands (self, filename, cmd, singlefile=False):
-        self.archive_list(filename, cmd)
-        self.archive_test(filename, cmd)
-        self.archive_extract(filename, cmd)
-        self.archive_create(filename, cmd, singlefile=singlefile)
+    def __init__ (self, *args):
+        super(ArchiveTest, self).__init__(*args)
+        # set program to use for archive handling
+        self.program = None
 
-    def archive_extract (self, filename, cmd):
+    def archive_commands (self, filename, singlefile=False):
+        self.archive_list(filename)
+        self.archive_test(filename)
+        self.archive_extract(filename)
+        self.archive_create(filename, singlefile=singlefile)
+
+    def archive_extract (self, filename):
         archive = os.path.join(datadir, filename)
         # create a temporary directory for extraction
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         os.chdir(tmpdir)
         try:
-            patoolib._handle_archive(archive, 'extract', program=cmd)
-            patoolib._handle_archive(archive, 'extract', program=cmd, force=True)
+            patoolib._handle_archive(archive, 'extract', program=self.program)
+            patoolib._handle_archive(archive, 'extract', program=self.program, force=True)
         finally:
             os.chdir(basedir)
             shutil.rmtree(tmpdir)
 
-    def archive_list (self, filename, cmd):
+    def archive_list (self, filename):
         archive = os.path.join(datadir, filename)
-        patoolib._handle_archive(archive, 'list', program=cmd)
-        patoolib._handle_archive(archive, 'list', program=cmd, verbose=True)
+        patoolib._handle_archive(archive, 'list', program=self.program)
+        patoolib._handle_archive(archive, 'list', program=self.program, verbose=True)
 
-    def archive_test (self, filename, cmd):
+    def archive_test (self, filename):
         archive = os.path.join(datadir, filename)
-        patoolib._handle_archive(archive, 'test', program=cmd)
-        patoolib._handle_archive(archive, 'test', program=cmd, verbose=True)
+        print "XXX1", self.program
+        patoolib._handle_archive(archive, 'test', program=self.program)
+        patoolib._handle_archive(archive, 'test', program=self.program, verbose=True)
 
-    def archive_create (self, filename, cmd, singlefile=False):
+    def archive_create (self, filename, singlefile=False):
         # the file or directory to pack
         if singlefile:
             topack = os.path.join(datadir, 'foo.txt')
@@ -65,22 +71,24 @@ class ArchiveTest (unittest.TestCase):
         archive = os.path.join(tmpdir, filename)
         os.chdir(tmpdir)
         try:
-            patoolib._handle_archive(archive, 'create', topack, program=cmd)
+            patoolib._handle_archive(archive, 'create', topack, program=self.program)
             # not all programs can test what they create
-            if cmd == 'compress':
-                cmd = 'gzip'
-            patoolib._handle_archive(archive, 'test', program=cmd)
+            if self.program == 'compress':
+                program = 'gzip'
+            else:
+                program = self.program
+            patoolib._handle_archive(archive, 'test', program=program)
         finally:
             os.chdir(basedir)
             shutil.rmtree(tmpdir)
 
 
-def needs_cmd (cmd):
-    """Decorator skipping test if given command is not available."""
+def needs_program (program):
+    """Decorator skipping test if given program is not available."""
     def check_prog (f):
         def newfunc (*args, **kwargs):
-            if not find_executable(cmd):
-                raise nose.SkipTest("command `%s' not available" % cmd)
+            if not find_executable(program):
+                raise nose.SkipTest("program `%s' not available" % program)
             return f(*args, **kwargs)
         newfunc.func_name = f.func_name
         return newfunc

@@ -13,159 +13,185 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from . import ArchiveTest, needs_cmd
+from . import ArchiveTest, needs_program
 
 class TestArchives (ArchiveTest):
 
-    @needs_cmd('tar')
+    @needs_program('tar')
     def test_tar (self):
-        self.tar_test('tar')
+        self.program = 'tar'
+        self.tar_test()
 
-    @needs_cmd('star')
+    @needs_program('star')
     def test_star (self):
-        self.tar_test('star')
+        self.program = 'star'
+        self.tar_test()
 
-    def tar_test (self, cmd):
-        self.archive_commands('t.tar', cmd)
-        self.archive_commands('t.tar.gz', cmd)
-        self.archive_commands('t.tar.Z', cmd)
-        self.archive_commands('t.tar.bz2', cmd)
-        self.archive_commands('t.tbz2', cmd)
-        self.archive_commands('t.tar.lzma', cmd)
-        self.archive_commands('t.tar.xz', cmd)
+    def tar_test (self):
+        self.archive_commands('t.tar')
+        self.archive_commands('t.tar.gz')
+        self.archive_commands('t.tar.Z')
+        self.archive_commands('t.tar.bz2')
+        self.archive_commands('t.tbz2')
+        self.archive_commands('t.tar.lzma')
+        self.archive_commands('t.tar.xz')
 
-    @needs_cmd('bzip2')
+    @needs_program('bzip2')
     def test_bzip2 (self):
-        self.archive_extract('t.bz2', 'bzip2')
-        self.archive_test('t.bz2', 'bzip2')
-        self.archive_create('t.bz2', 'bzip2', singlefile=True)
+        self.program = 'bzip2'
+        self.archive_extract('t.bz2')
+        self.archive_test('t.bz2')
+        self.archive_create('t.bz2', singlefile=True)
 
-    @needs_cmd('pbzip2')
+    @needs_program('pbzip2')
     def test_pbzip2 (self):
-        self.archive_extract('t.bz2', 'pbzip2')
-        self.archive_test('t.bz2', 'pbzip2')
-        self.archive_create('t.bz2', 'pbzip2', singlefile=True)
+        self.program = 'pbzip2'
+        self.archive_extract('t.bz2')
+        self.archive_test('t.bz2')
+        self.archive_create('t.bz2', singlefile=True)
 
-    @needs_cmd('echo')
+    @needs_program('echo')
     def test_echo (self):
-        self.archive_list('t.bz2', 'echo')
-        self.archive_list('t.Z', 'echo')
-        self.archive_list('t.lzma', 'echo')
+        self.program = 'echo'
+        self.archive_list('t.bz2')
+        self.archive_list('t.Z')
+        self.archive_list('t.lzma')
 
-    @needs_cmd('unzip')
+    @needs_program('unzip')
     def test_unzip (self):
-        self.archive_extract('t.zip', 'unzip')
-        self.archive_list('t.zip', 'unzip')
-        self.archive_test('t.zip', 'unzip')
-        self.archive_extract('t.jar', 'unzip')
-        self.archive_list('t.jar', 'unzip')
-        self.archive_test('t.jar', 'unzip')
+        self.program = 'unzip'
+        self.archive_extract('t.zip')
+        self.archive_list('t.zip')
+        self.archive_test('t.zip')
+        self.archive_extract('t.jar')
+        self.archive_list('t.jar')
+        self.archive_test('t.jar')
 
-    @needs_cmd('gzip')
+    @needs_program('gzip')
     def test_gzip (self):
-        self.archive_commands('t.gz', 'gzip', singlefile=True)
-        self.archive_commands('t.txt.gz', 'gzip', singlefile=True)
-        self.archive_extract('t.Z', 'gzip')
+        self.program = 'gzip'
+        self.archive_commands('t.gz', singlefile=True)
+        self.archive_commands('t.txt.gz', singlefile=True)
+        self.archive_extract('t.Z')
 
-    @needs_cmd('uncompress.real')
+    @needs_program('uncompress.real')
     def test_uncompress (self):
-        self.archive_extract('t.Z', 'uncompress.real')
+        self.program = 'uncompress.real'
+        self.archive_extract('t.Z')
 
-    @needs_cmd('compress')
+    @needs_program('compress')
     def test_compress (self):
-        self.archive_create('t.Z', 'compress', singlefile=True)
+        self.program = 'compress'
+        self.archive_create('t.Z', singlefile=True)
 
-    @needs_cmd('7z')
+    @needs_program('7z')
     def test_p7zip (self):
-        self.archive_commands('t.7z', '7z')
-        self.archive_list('t.gz', '7z')
-        self.archive_list('t.bz2', '7z')
-        self.archive_list('t.zip', '7z')
-        self.archive_list('t.jar', '7z')
-        self.archive_list('t.Z', '7z')
-        self.archive_list('t.rar', '7z')
-        self.archive_list('t.cab', '7z')
-        self.archive_list('t.arj', '7z')
-        self.archive_list('t.cpio', '7z')
-        self.archive_list('t.rpm', '7z')
-        self.archive_list('t.deb', '7z')
-        self.archive_extract('t.gz', '7z')
-        self.archive_extract('t.bz2', '7z')
-        self.archive_extract('t.zip', '7z')
-        self.archive_extract('t.jar', '7z')
-        self.archive_extract('t.Z', '7z')
-        self.archive_extract('t.rar', '7z')
-        self.archive_extract('t.cab', '7z')
-        self.archive_extract('t.arj', '7z')
-        self.archive_extract('t.cpio', '7z')
-        self.archive_extract('t.rpm', '7z')
-        self.archive_extract('t.deb', '7z')
-        self.archive_test('t.gz', '7z')
-        self.archive_test('t.bz2', '7z')
-        self.archive_test('t.zip', '7z')
-        self.archive_test('t.jar', '7z')
-        self.archive_test('t.Z', '7z')
-        self.archive_test('t.rar', '7z')
-        self.archive_test('t.cab', '7z')
-        self.archive_test('t.arj', '7z')
-        self.archive_test('t.cpio', '7z')
-        self.archive_test('t.rpm', '7z')
-        self.archive_test('t.deb', '7z')
+        self.program = '7z'
+        self.archive_commands('t.7z')
+        self.archive_list('t.gz')
+        self.archive_list('t.bz2')
+        self.archive_list('t.zip')
+        self.archive_list('t.jar')
+        self.archive_list('t.Z')
+        self.archive_list('t.cab')
+        self.archive_list('t.arj')
+        self.archive_list('t.cpio')
+        self.archive_list('t.rpm')
+        self.archive_list('t.deb')
+        self.archive_extract('t.gz')
+        self.archive_extract('t.bz2')
+        self.archive_extract('t.zip')
+        self.archive_extract('t.jar')
+        self.archive_extract('t.Z')
+        self.archive_extract('t.cab')
+        self.archive_extract('t.arj')
+        self.archive_extract('t.cpio')
+        self.archive_extract('t.rpm')
+        self.archive_extract('t.deb')
+        self.archive_test('t.gz')
+        self.archive_test('t.bz2')
+        self.archive_test('t.zip')
+        self.archive_test('t.jar')
+        self.archive_test('t.Z')
+        self.archive_test('t.cab')
+        self.archive_test('t.arj')
+        self.archive_test('t.cpio')
+        self.archive_test('t.rpm')
+        self.archive_test('t.deb')
 
-    @needs_cmd('unrar')
+    @needs_program('7z')
+    def test_p7zip_rar (self):
+        # only succeeds with the rar module for 7z installed
+        self.program = '7z'
+        self.archive_list('t.rar')
+        self.archive_extract('t.rar')
+        self.archive_test('t.rar')
+
+    @needs_program('unrar')
     def test_unrar (self):
-        self.archive_list('t.rar', 'unrar')
-        self.archive_extract('t.rar', 'unrar')
+        self.program = 'unrar'
+        self.archive_list('t.rar')
+        self.archive_extract('t.rar')
 
-    @needs_cmd('rar')
+    @needs_program('rar')
     def test_rar (self):
-        self.archive_commands('t.rar', 'rar')
+        self.program = 'rar'
+        self.archive_commands('t.rar')
 
-    @needs_cmd('cabextract')
+    @needs_program('cabextract')
     def test_cabextract (self):
-        self.archive_list('t.cab', 'cabextract')
-        self.archive_extract('t.cab', 'cabextract')
+        self.program = 'cabextract'
+        self.archive_list('t.cab')
+        self.archive_extract('t.cab')
 
-    @needs_cmd('arj')
+    @needs_program('arj')
     def test_arj (self):
-        self.archive_commands('t.arj', 'arj')
+        self.program = 'arj'
+        self.archive_commands('t.arj')
 
-    @needs_cmd('cpio')
+    @needs_program('cpio')
     def test_cpio (self):
-        self.archive_list('t.cpio', 'cpio')
-        self.archive_extract('t.cpio', 'cpio')
-        self.archive_create('t.cpio', 'cpio')
+        self.program = 'cpio'
+        self.archive_list('t.cpio')
+        self.archive_extract('t.cpio')
+        self.archive_create('t.cpio')
 
-    @needs_cmd('rpm')
+    @needs_program('rpm')
     def test_rpm (self):
-        self.archive_list('t.rpm', 'rpm')
+        self.program = 'rpm'
+        self.archive_list('t.rpm')
         # the rpm test fails on non-rpm system with missing dependencies
-        #self.archive_test('t.rpm', 'rpm')
+        #self.archive_test('t.rpm')
 
-    @needs_cmd('rpm2cpio')
-    @needs_cmd('cpio')
+    @needs_program('rpm2cpio')
+    @needs_program('cpio')
     def test_rpm_extract (self):
-        self.archive_extract('t.rpm', 'rpm2cpio')
+        self.program = 'rpm2cpio'
+        self.archive_extract('t.rpm')
 
-    @needs_cmd('dpkg-deb')
+    @needs_program('dpkg-deb')
     def test_dpkg (self):
-        self.archive_list('t.deb', 'dpkg')
-        self.archive_extract('t.deb', 'dpkg')
-        self.archive_test('t.deb', 'dpkg')
+        self.program = 'dpkg'
+        self.archive_list('t.deb')
+        self.archive_extract('t.deb')
+        self.archive_test('t.deb')
 
-    @needs_cmd('lzop')
+    @needs_program('lzop')
     def test_lzop (self):
-        self.archive_commands('t.lzo', 'lzop', singlefile=True)
+        self.program = 'lzop'
+        self.archive_commands('t.lzo', singlefile=True)
 
-    @needs_cmd('lzma')
+    @needs_program('lzma')
     def test_lzma (self):
-        self.archive_test('t.lzma', 'lzma')
-        self.archive_extract('t.lzma', 'lzma')
-        self.archive_create('t.lzma', 'lzma', singlefile=True)
+        self.program = 'lzma'
+        self.archive_test('t.lzma')
+        self.archive_extract('t.lzma')
+        self.archive_create('t.lzma', singlefile=True)
 
-    @needs_cmd('xz')
+    @needs_program('xz')
     def test_xz (self):
-        self.archive_test('t.xz', 'xz')
-        self.archive_extract('t.xz', 'xz')
-        self.archive_create('t.xz', 'xz', singlefile=True)
+        self.program = 'xz'
+        self.archive_test('t.xz')
+        self.archive_extract('t.xz')
+        self.archive_create('t.xz', singlefile=True)
 
