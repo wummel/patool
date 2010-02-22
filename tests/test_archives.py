@@ -31,6 +31,7 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.Z', cmd)
         self.archive_commands('t.tar.bz2', cmd)
         self.archive_commands('t.tbz2', cmd)
+        # XXXself.archive_commands('t.tar.lzma', cmd)
 
     @needs_cmd('bzip2')
     def test_bzip2 (self):
@@ -48,6 +49,7 @@ class TestArchives (ArchiveTest):
     def test_echo (self):
         self.archive_list('t.bz2', 'echo')
         self.archive_list('t.Z', 'echo')
+        self.archive_list('t.lzma', 'echo')
 
     @needs_cmd('unzip')
     def test_unzip (self):
@@ -153,4 +155,10 @@ class TestArchives (ArchiveTest):
     @needs_cmd('lzop')
     def test_lzop (self):
         self.archive_commands('t.lzo', 'lzop', singlefile=True)
+
+    @needs_cmd('lzma')
+    def test_lzma (self):
+        self.archive_test('t.lzma', 'lzma')
+        self.archive_extract('t.lzma', 'lzma')
+        self.archive_create('t.lzma', 'lzma', singlefile=True)
 

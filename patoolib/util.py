@@ -22,11 +22,13 @@ import tempfile
 import traceback
 
 mimedb = mimetypes.MimeTypes(strict=False)
-# add missing encodings for Python <=2.5
+# add missing encodings and mimetypes
 mimedb.encodings_map['.bz2'] = 'bzip2'
+mimedb.encodings_map['.lzma'] = 'lzma'
 mimedb.suffix_map['.tbz2'] = '.tar.bz2'
 mimedb.add_type('application/x-lzop', '.lzo', strict=False)
 mimedb.add_type('application/x-arj', '.arj', strict=False)
+mimedb.add_type('application/x-lzma', '.lzma', strict=False)
 
 
 class PatoolError (StandardError):

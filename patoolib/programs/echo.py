@@ -26,6 +26,9 @@ def list_compress (archive, encoding, cmd, **kwargs):
     """List a compress archive."""
     return stripext(cmd, archive)
 
+def list_lzma (archive, encoding, cmd, **kwargs):
+    """List a LZMA archive."""
+    return stripext(cmd, archive)
 
 def stripext (cmd, archive):
     """Echo the name without suffix."""
