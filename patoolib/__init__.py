@@ -191,11 +191,28 @@ def list_formats ():
     for format in ArchiveFormats:
         print format, "files:"
         for command in ArchiveCommands:
+            programs = ArchivePrograms[format]
+            if command not in programs and None not in programs:
+                print "   %8s: - (not supported)" % command
+                continue
             try:
                 program = find_archive_program(format, command)
-                print "   %8s: %s" % (command, program)
+                print "   %8s: %s" % (command, program),
+                basename = os.path.basename(program)
+                if format == 'tar':
+                    encs = [x for x in ArchiveEncodings if find_executable(x)]
+                    if encs:
+                        print "(supported encodings: %s)" % ", ".join(encs),
+                elif format == '7z':
+                    if os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so'):
+                        print "(rar archives supported)",
+                    else:
+                        print "(rar archives not supported)",
+                print
             except util.PatoolError:
-                print "   %8s: - (not supported)" % command
+                handlers = programs.get(None, programs[command])
+                print "   %8s: - (no program found; install one of %s)" % \
+                      (command, ", ".join(handlers))
     return 0
 
 
