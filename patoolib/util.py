@@ -25,10 +25,12 @@ mimedb = mimetypes.MimeTypes(strict=False)
 # add missing encodings and mimetypes
 mimedb.encodings_map['.bz2'] = 'bzip2'
 mimedb.encodings_map['.lzma'] = 'lzma'
+mimedb.encodings_map['.xz'] = 'xz'
 mimedb.suffix_map['.tbz2'] = '.tar.bz2'
 mimedb.add_type('application/x-lzop', '.lzo', strict=False)
 mimedb.add_type('application/x-arj', '.arj', strict=False)
 mimedb.add_type('application/x-lzma', '.lzma', strict=False)
+mimedb.add_type('application/x-xz', '.xz', strict=False)
 
 
 class PatoolError (StandardError):

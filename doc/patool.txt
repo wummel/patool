@@ -17,9 +17,9 @@ DESCRIPTION
 
        patool  supports 7z (.7z), ZIP (.zip, .jar), GZIP (.gz), compress (.Z),
        BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB  (.cab),  CPIO  (.cpio),  RPM
-       (.rpm),  DEB  (.deb), LZOP (.lzo), LZMA (.lzma) and RAR (.rar) formats.
-       It relies on helper applications to handle those archive  formats  (for
-       example bzip2 for BZIP2 archives).
+       (.rpm),  DEB (.deb), LZOP (.lzo), LZMA (.lzma), XZ (.xz) and RAR (.rar)
+       formats.  It relies on helper applications to handle those archive for‐
+       mats (for example bzip2 for BZIP2 archives).
 
 COMMANDS
        Several commands and options are available.

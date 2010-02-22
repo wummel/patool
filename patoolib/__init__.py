@@ -23,11 +23,11 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
 ArchiveFormats = ('gzip', 'bzip2', 'tar', 'zip', 'compress', '7z', 'rar',
-  'cab', 'arj', 'cpio', 'rpm', 'deb', 'lzop', 'lzma')
+  'cab', 'arj', 'cpio', 'rpm', 'deb', 'lzop', 'lzma', 'xz')
 
 # Supported encodings (used with tar for example)
 # Note that all encodings must also be archive formats
-ArchiveEncodings = ('gzip', 'bzip2', 'compress', 'lzma')
+ArchiveEncodings = ('gzip', 'bzip2', 'compress', 'lzma', 'xz')
 
 # Map MIME types to archive format
 ArchiveMimetypes = {
@@ -48,7 +48,8 @@ ArchiveMimetypes = {
     'application/x-rpm': 'rpm',
     'application/x-debian-package': 'deb',
     'application/x-lzop': 'lzop',
-    'application/xxx': 'lzma',
+    'application/x-lzma': 'lzma',
+    'application/x-xz': 'xz',
 }
 
 # List of programs supporting the given archive format and command.
@@ -104,7 +105,7 @@ ArchivePrograms = {
         'create': ('cpio',),
     },
     'rpm': {
-        # XXX rpm2cpio depends on cpio which is not checked
+        # XXX rpm2cpio depends on cpio whose availability is not checked
         'extract': ('rpm2cpio', '7z'),
         'list': ('rpm', '7z'),
         'test': ('rpm', '7z'),
@@ -122,6 +123,12 @@ ArchivePrograms = {
         'list': ('echo',),
         'test': ('lzma',),
         'create': ('lzma',),
+    },
+    'xz': {
+        'extract': ('xz',),
+        'list': ('echo',),
+        'test': ('xz',),
+        'create': ('xz',),
     },
 }
 
