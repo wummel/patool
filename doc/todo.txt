@@ -1,0 +1,2 @@
+- Check and list the supported encoding options for tar files
+  in the "formats" command.

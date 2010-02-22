@@ -26,7 +26,7 @@ if not (hasattr(sys, 'version_info') or
 from distutils.core import setup
 
 AppName = "patool"
-AppVersion = "0.1"
+AppVersion = "0.2"
 MyName = "Bastian Kleineidam"
 MyEmail = "calvin@users.sourceforge.net"
 
