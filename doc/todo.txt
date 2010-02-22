@@ -1,1 +1,1 @@
-- Add debian directory for .deb creation
+- Support XZ and LZMA archives
