@@ -13,27 +13,70 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from . import ArchiveTest, needs_program
+from . import ArchiveTest, needs_program, needs_codec
 
 class TestArchives (ArchiveTest):
 
     @needs_program('tar')
     def test_tar (self):
         self.program = 'tar'
-        self.tar_test()
+        self.archive_commands('t.tar')
+
+    @needs_codec('tar', 'gzip')
+    def test_tar_gz (self):
+        self.program = 'tar'
+        self.archive_commands('t.tar.gz')
+
+    @needs_codec('tar', 'compress')
+    def test_tar_z (self):
+        self.program = 'tar'
+        self.archive_commands('t.tar.Z')
+
+    @needs_codec('tar', 'bzip2')
+    def test_tar_bz2 (self):
+        self.program = 'tar'
+        self.archive_commands('t.tar.bz2')
+        self.archive_commands('t.tbz2')
+
+    @needs_codec('tar', 'lzma')
+    def test_tar_lzma (self):
+        self.program = 'tar'
+        self.archive_commands('t.tar.lzma')
+
+    @needs_codec('tar', 'xz')
+    def test_tar_xz (self):
+        self.program = 'tar'
+        self.archive_commands('t.tar.xz')
 
     @needs_program('star')
     def test_star (self):
         self.program = 'star'
-        self.tar_test()
-
-    def tar_test (self):
         self.archive_commands('t.tar')
+
+    @needs_codec('tar', 'gzip')
+    def test_star_gz (self):
+        self.program = 'star'
         self.archive_commands('t.tar.gz')
+
+    @needs_codec('tar', 'compress')
+    def test_star_z (self):
+        self.program = 'star'
         self.archive_commands('t.tar.Z')
+
+    @needs_codec('tar', 'bzip2')
+    def test_star_bz2 (self):
+        self.program = 'star'
         self.archive_commands('t.tar.bz2')
         self.archive_commands('t.tbz2')
+
+    @needs_codec('tar', 'lzma')
+    def test_star_lzma (self):
+        self.program = 'star'
         self.archive_commands('t.tar.lzma')
+
+    @needs_codec('tar', 'xz')
+    def test_star_xz (self):
+        self.program = 'star'
         self.archive_commands('t.tar.xz')
 
     @needs_program('bzip2')
@@ -120,6 +163,7 @@ class TestArchives (ArchiveTest):
         self.archive_test('t.deb')
 
     @needs_program('7z')
+    @needs_codec('7z', 'rar')
     def test_p7zip_rar (self):
         # only succeeds with the rar module for 7z installed
         self.program = '7z'

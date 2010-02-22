@@ -93,3 +93,23 @@ def needs_program (program):
         newfunc.func_name = f.func_name
         return newfunc
     return check_prog
+
+
+def needs_codec (program, codec):
+    """Decorator skipping test if given program codec is not available."""
+    def check_prog (f):
+        def newfunc (*args, **kwargs):
+            if not find_codec(program, codec):
+                raise nose.SkipTest("codec `%s' for program `%s' not available" % (codec, program))
+            return f(*args, **kwargs)
+        newfunc.func_name = f.func_name
+        return newfunc
+    return check_prog
+
+
+def find_codec (program, codec):
+    if program == '7z' and codec == 'rar':
+        return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
+    if program == 'tar':
+        return find_executable(codec)
+    return False
