@@ -1,1 +1,1 @@
-- Support XZ and LZMA archives
+- Support XZ archives
