@@ -52,6 +52,16 @@ ArchiveMimetypes = {
     'application/x-xz': 'xz',
 }
 
+# List of programs supporting the given encoding
+
+EncodingPrograms = {
+    'gzip': ('gzip',),
+    'bzip2': ('pbzip2', 'bzip2'),
+    'compress': ('compress',),
+    'lzma': ('lzma',),
+    'xz': ('xz',),
+}
+
 # List of programs supporting the given archive format and command.
 # If command is None, the program supports all commands (list, extract, ...)
 ArchivePrograms = {
@@ -141,7 +151,7 @@ ProgramModules = {
 
 
 def get_archive_format (filename):
-    """Detect filename archive format."""
+    """Detect filename archive format and optional encoding."""
     mime, encoding = util.guess_mime(filename)
     if not (mime or encoding):
         raise util.PatoolError("unknown archive format for file `%s'" % filename)
@@ -153,6 +163,9 @@ def get_archive_format (filename):
         format, encoding = encoding, None
     else:
         raise util.PatoolError("unknown archive format for file `%s' (mime-type is `%s')" % (filename, mime))
+    if format == encoding:
+        # file cannot be in same format encoded
+        encoding = None
     return format, encoding
 
 
@@ -182,9 +195,27 @@ def find_archive_program (format, command):
     for program in programs:
         exe = find_executable(program)
         if exe:
+            if program == '7z' and format == 'rar' and not p7zip_supports_rar():
+                continue
             return exe
     # no programs found
     raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (command, format, ",".join(programs)))
+
+
+def find_encoding_program (program, encoding):
+    """Find suitable encoding program and return it. Returns None if
+    no encoding program could be found"""
+    if program in ('tar', 'star'):
+        for enc_program in EncodingPrograms[encoding]:
+            found = find_executable(enc_program)
+            if found:
+                return found
+    return None
+
+
+def p7zip_supports_rar ():
+    """Determine if the RAR codec is installed for 7z program."""
+    return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
 
 
 def list_formats ():
@@ -204,7 +235,7 @@ def list_formats ():
                     if encs:
                         print "(supported encodings: %s)" % ", ".join(encs),
                 elif format == '7z':
-                    if os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so'):
+                    if p7zip_supports_rar():
                         print "(rar archives supported)",
                     else:
                         print "(rar archives not supported)",
@@ -216,7 +247,7 @@ def list_formats ():
     return 0
 
 
-def parse_config (format, encoding, command, **kwargs):
+def parse_config (archive, format, encoding, command, **kwargs):
     """The configuration determines which program to use for which
     archive format for the given command.
     @raises: PatoolError if command for given format and encoding
@@ -238,10 +269,9 @@ def parse_config (format, encoding, command, **kwargs):
     for key, value in kwargs.items():
         if value is not None:
             config[key] = value
-    if encoding:
-        program = os.path.basename(config['program'])
-        if program in ('tar', 'star') and not find_executable(encoding):
-            raise util.PatoolError("cannot %s archive because program `%s' was not found" % (command, encoding))
+    program = os.path.basename(config['program'])
+    if encoding and not find_encoding_program(program, encoding):
+        raise util.PatoolError("cannot %s archive `%s': encoding `%s' not supported by %s" % (archive, command, encoding, program))
     return config
 
 
@@ -314,7 +344,7 @@ def _handle_archive (archive, command, *args, **kwargs):
     format, encoding = get_archive_format(archive)
     check_archive_format(format, encoding)
     check_archive_command(command)
-    config = parse_config(format, encoding, command, **kwargs)
+    config = parse_config(archive, format, encoding, command, **kwargs)
     if command == 'create':
         # check if archive already exists
         if os.path.exists(archive) and not config['force']:

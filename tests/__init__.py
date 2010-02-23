@@ -110,7 +110,5 @@ def needs_codec (program, codec):
 
 def find_codec (program, codec):
     if program == '7z' and codec == 'rar':
-        return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
-    if program == 'tar':
-        return find_executable(codec)
-    return False
+        return patoolib.p7zip_supports_rar()
+    return patoolib.find_encoding_program(program, codec)

@@ -31,3 +31,7 @@ class TestConfiguration (unittest.TestCase):
             for command in commands:
                 if command is not None:
                     self.assertTrue(command in patoolib.ArchiveCommands)
+
+    def test_encoding_programs (self):
+        self.assertEqual(set(patoolib.ArchiveEncodings),
+                         set(patoolib.EncodingPrograms.keys()))
