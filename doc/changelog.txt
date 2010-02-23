@@ -1,3 +1,7 @@
-0.1 "Hard Boiled" (released xx.xx.2010)
+0.2 "Birdy" (released 22.2.2010)
+
+  * Add support for LZMA and XZ archives.
+
+0.1 "Hard Boiled" (released 21.2.2010)
 
   * Initial release.
