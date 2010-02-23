@@ -56,7 +56,6 @@ class ArchiveTest (unittest.TestCase):
 
     def archive_test (self, filename):
         archive = os.path.join(datadir, filename)
-        print "XXX1", self.program
         patoolib._handle_archive(archive, 'test', program=self.program)
         patoolib._handle_archive(archive, 'test', program=self.program, verbose=True)
 
@@ -99,6 +98,8 @@ def needs_codec (program, codec):
     """Decorator skipping test if given program codec is not available."""
     def check_prog (f):
         def newfunc (*args, **kwargs):
+            if not find_executable(program):
+                raise nose.SkipTest("program `%s' not available" % program)
             if not find_codec(program, codec):
                 raise nose.SkipTest("codec `%s' for program `%s' not available" % (codec, program))
             return f(*args, **kwargs)
