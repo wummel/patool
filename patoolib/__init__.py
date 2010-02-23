@@ -216,9 +216,11 @@ def list_formats ():
     return 0
 
 
-def parse_config (format, command, **kwargs):
+def parse_config (format, encoding, command, **kwargs):
     """The configuration determines which program to use for which
     archive format for the given command.
+    @raises: PatoolError if command for given format and encoding
+       is not supported.
     """
     config = {
         'verbose': False,
@@ -236,6 +238,10 @@ def parse_config (format, command, **kwargs):
     for key, value in kwargs.items():
         if value is not None:
             config[key] = value
+    if encoding:
+        program = os.path.basename(config['program'])
+        if program in ('tar', 'star') and not find_executable(encoding):
+            raise util.PatoolError("cannot %s archive because program `%s' was not found" % (command, encoding))
     return config
 
 
@@ -308,7 +314,7 @@ def _handle_archive (archive, command, *args, **kwargs):
     format, encoding = get_archive_format(archive)
     check_archive_format(format, encoding)
     check_archive_command(command)
-    config = parse_config(format, command, **kwargs)
+    config = parse_config(format, encoding, command, **kwargs)
     if command == 'create':
         # check if archive already exists
         if os.path.exists(archive) and not config['force']:
