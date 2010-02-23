@@ -1,4 +1,4 @@
-0.3 "" (released xx.x.2010)
+0.3 "Management" (released 23.2.2010)
 
   * Better test if encodings of archive commands are supported
     (for example .tar.Z needs a decompress program).
