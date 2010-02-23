@@ -30,6 +30,10 @@ def list_lzma (archive, encoding, cmd, **kwargs):
     """List a LZMA archive."""
     return stripext(cmd, archive)
 
+def list_xz (archive, encoding, cmd, **kwargs):
+    """List a XZ archive."""
+    return stripext(cmd, archive)
+
 def stripext (cmd, archive):
     """Echo the name without suffix."""
     return [cmd, util.stripext(archive)]
