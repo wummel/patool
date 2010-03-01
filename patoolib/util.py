@@ -46,6 +46,31 @@ class PatoolError (StandardError):
     pass
 
 
+class memoized (object):
+    """Decorator that caches a function's return value each time it is called.
+    If called later with the same arguments, the cached value is returned, and
+    not re-evaluated."""
+
+    def __init__(self, func):
+        self.func = func
+        self.cache = {}
+
+    def __call__(self, *args):
+        try:
+            return self.cache[args]
+        except KeyError:
+            self.cache[args] = value = self.func(*args)
+            return value
+        except TypeError:
+            # uncachable -- for instance, passing a list as an argument.
+            # Better to not cache than to blow up entirely.
+            return self.func(*args)
+
+    def __repr__(self):
+        """Return the function's docstring."""
+        return self.func.__doc__
+
+
 def backtick (cmd):
     """Return output from command."""
     return subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
@@ -56,6 +81,7 @@ def run (cmd, **kwargs):
     subprocess.check_call(cmd, **kwargs)
 
 
+@memoized
 def guess_mime (filename):
     """Guess the MIME type of given filename. Uses first mimetypes
     and then file(1) as fallback."""
@@ -119,9 +145,9 @@ def p7zip_supports_rar ():
     return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
 
 
+@memoized
 def find_program (program):
     """Look for program in environment PATH variable."""
-    # XXX memoize result of this function
     path = os.environ['PATH']
     if os.name == 'nt':
         path = append_to_path(path, get_nt_7z_dir())
