@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import shutil
-from distutils.spawn import find_executable
 from . import util
 
 # Supported archive commands
@@ -195,7 +194,7 @@ def find_archive_program (format, command):
         raise util.PatoolError("%s archive format `%s' is not supported" % (command, format))
     # return the first existing program
     for program in programs:
-        exe = find_executable(program)
+        exe = util.find_program(program)
         if exe:
             if program == '7z' and format == 'rar' and not util.p7zip_supports_rar():
                 continue
@@ -209,7 +208,7 @@ def find_encoding_program (program, encoding):
     no encoding program could be found"""
     if program in ('tar', 'star'):
         for enc_program in EncodingPrograms[encoding]:
-            found = find_executable(enc_program)
+            found = util.find_program(enc_program)
             if found:
                 return found
     return None
@@ -228,7 +227,7 @@ def list_formats ():
                 print "   %8s: %s" % (command, program),
                 basename = os.path.basename(program)
                 if format == 'tar':
-                    encs = [x for x in ArchiveEncodings if find_executable(x)]
+                    encs = [x for x in ArchiveEncodings if util.find_program(x)]
                     if encs:
                         print "(supported encodings: %s)" % ", ".join(encs),
                 elif format == '7z':

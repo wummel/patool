@@ -20,6 +20,7 @@ import subprocess
 import mimetypes
 import tempfile
 import traceback
+from distutils.spawn import find_executable
 
 mimedb = mimetypes.MimeTypes(strict=False)
 # add missing encodings and mimetypes
@@ -103,3 +104,10 @@ def log_internal_error (out=sys.stderr):
 def p7zip_supports_rar ():
     """Determine if the RAR codec is installed for 7z program."""
     return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
+
+
+def find_program (program):
+    """Look for program in environment PATH variable."""
+    # XXX memoize result of this function
+    path = os.environ['PATH']
+    return find_executable(program, path=path)

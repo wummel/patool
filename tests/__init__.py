@@ -18,7 +18,6 @@ import os
 import shutil
 import nose
 import patoolib
-from distutils.spawn import find_executable
 
 basedir = os.path.dirname(__file__)
 datadir = os.path.join(basedir, 'data')
@@ -86,7 +85,7 @@ def needs_program (program):
     """Decorator skipping test if given program is not available."""
     def check_prog (f):
         def newfunc (*args, **kwargs):
-            if not find_executable(program):
+            if not patoolib.util.find_program(program):
                 raise nose.SkipTest("program `%s' not available" % program)
             return f(*args, **kwargs)
         newfunc.func_name = f.func_name
@@ -98,7 +97,7 @@ def needs_codec (program, codec):
     """Decorator skipping test if given program codec is not available."""
     def check_prog (f):
         def newfunc (*args, **kwargs):
-            if not find_executable(program):
+            if not patoolib.util.find_program(program):
                 raise nose.SkipTest("program `%s' not available" % program)
             if not find_codec(program, codec):
                 raise nose.SkipTest("codec `%s' for program `%s' not available" % (codec, program))
