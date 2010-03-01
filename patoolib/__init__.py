@@ -264,6 +264,10 @@ def parse_config (archive, format, encoding, command, **kwargs):
         config['program'] = find_archive_program(format, command)
     for key, value in kwargs.items():
         if value is not None:
+            if key == 'program':
+                program = util.find_program(value)
+                if program:
+                    value = program
             config[key] = value
     program = os.path.basename(config['program'])
     if encoding and not find_encoding_program(program, encoding):
