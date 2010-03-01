@@ -26,7 +26,7 @@ import os
 from distutils.core import setup
 
 AppName = "patool"
-AppVersion = "0.3"
+AppVersion = "0.4"
 MyName = "Bastian Kleineidam"
 MyEmail = "calvin@users.sourceforge.net"
 
