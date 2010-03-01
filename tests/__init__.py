@@ -110,5 +110,5 @@ def needs_codec (program, codec):
 
 def find_codec (program, codec):
     if program == '7z' and codec == 'rar':
-        return patoolib.p7zip_supports_rar()
+        return patoolib.util.p7zip_supports_rar()
     return patoolib.find_encoding_program(program, codec)

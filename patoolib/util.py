@@ -98,3 +98,8 @@ def log_internal_error (out=sys.stderr):
     traceback.print_exc()
     print >> out, "System info:"
     print >> out, "Python %s on %s" % (sys.version, sys.platform)
+
+
+def p7zip_supports_rar ():
+    """Determine if the RAR codec is installed for 7z program."""
+    return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')

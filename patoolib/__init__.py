@@ -197,7 +197,7 @@ def find_archive_program (format, command):
     for program in programs:
         exe = find_executable(program)
         if exe:
-            if program == '7z' and format == 'rar' and not p7zip_supports_rar():
+            if program == '7z' and format == 'rar' and not util.p7zip_supports_rar():
                 continue
             return exe
     # no programs found
@@ -213,11 +213,6 @@ def find_encoding_program (program, encoding):
             if found:
                 return found
     return None
-
-
-def p7zip_supports_rar ():
-    """Determine if the RAR codec is installed for 7z program."""
-    return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
 
 
 def list_formats ():
@@ -237,7 +232,7 @@ def list_formats ():
                     if encs:
                         print "(supported encodings: %s)" % ", ".join(encs),
                 elif format == '7z':
-                    if p7zip_supports_rar():
+                    if util.p7zip_supports_rar():
                         print "(rar archives supported)",
                     else:
                         print "(rar archives not supported)",
