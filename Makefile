@@ -43,7 +43,7 @@ count:
 clean:
 	find . -name \*.pyc -delete
 	find . -name \*.pyo -delete
-	rm -rf build
+	rm -rf build dist
 
 .PHONY: test
 test:

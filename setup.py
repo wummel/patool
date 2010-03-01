@@ -22,13 +22,19 @@ import sys
 if not (hasattr(sys, 'version_info') or
         sys.version_info < (2, 5, 0, 'final', 0)):
     raise SystemExit("This program requires Python 2.5 or later.")
-
+import os
 from distutils.core import setup
 
 AppName = "patool"
 AppVersion = "0.3"
 MyName = "Bastian Kleineidam"
 MyEmail = "calvin@users.sourceforge.net"
+
+data_files = []
+if os.name == 'nt':
+    data_files.append(('share', ['doc/patool.txt']))
+else:
+    data_files.append(('share/man/man1', ['doc/patool.1']))
 
 setup (
     name = AppName,
@@ -40,8 +46,6 @@ setup (
     maintainer_email = MyEmail,
     license = "GPL",
     packages = ['patoolib', 'patoolib.programs'],
-    data_files = [
-        ('share/man/man1', ['doc/patool.1']),
-    ],
+    data_files = data_files,
     scripts = ['patool'],
 )
