@@ -99,7 +99,7 @@ def needs_codec (program, codec):
         def newfunc (*args, **kwargs):
             if not patoolib.util.find_program(program):
                 raise nose.SkipTest("program `%s' not available" % program)
-            if not find_codec(program, codec):
+            if not has_codec(program, codec):
                 raise nose.SkipTest("codec `%s' for program `%s' not available" % (codec, program))
             return f(*args, **kwargs)
         newfunc.func_name = f.func_name
@@ -107,7 +107,7 @@ def needs_codec (program, codec):
     return check_prog
 
 
-def find_codec (program, codec):
+def has_codec (program, codec):
     if program == '7z' and codec == 'rar':
         return patoolib.util.p7zip_supports_rar()
     return patoolib.find_encoding_program(program, codec)
