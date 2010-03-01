@@ -170,6 +170,7 @@ def get_archive_format (filename):
 
 
 def check_archive_format (format, encoding):
+    """Make sure format and encoding is known."""
     if format not in ArchiveFormats:
         raise util.PatoolError("unknown archive format `%s'" % format)
     if encoding is not None and encoding not in ArchiveEncodings:
@@ -177,6 +178,7 @@ def check_archive_format (format, encoding):
 
 
 def check_archive_command (command):
+    """Make sure archive command is valid."""
     if command not in ArchiveCommands:
         raise util.PatoolError("invalid archive command `%s'" % command)
 
@@ -313,7 +315,7 @@ def move_outdir_orphan (outdir, force):
 
 
 def run_archive_cmdlist (archive_cmdlist):
-    """Handle result of archive command function."""
+    """Run archive command."""
     # archive_cmdlist is a command list with optional keyword arguments
     if isinstance(archive_cmdlist, tuple):
         cmdlist, runkwargs = archive_cmdlist
@@ -337,6 +339,7 @@ def cleanup_outdir (archive, outdir, force):
 
 
 def _handle_archive (archive, command, *args, **kwargs):
+    """Handle archive command; raising PatoolError on errors."""
     if command != 'create':
         # check that archive is a regular file
         util.check_filename(archive)
@@ -377,7 +380,7 @@ def _handle_archive (archive, command, *args, **kwargs):
 
 
 def handle_archive (archive, command, *args, **kwargs):
-    """Handle archive file command."""
+    """Handle archive file command; with nice error reporting."""
     try:
         _handle_archive(archive, command, *args, **kwargs)
         res = 0

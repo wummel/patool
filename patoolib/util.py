@@ -87,10 +87,12 @@ def stripext (filename):
 
 
 def log_error (msg, out=sys.stderr):
+    """Print error message to stderr (or any other given output)."""
     print >> out, "patool error:", msg
 
 
 def log_internal_error (out=sys.stderr):
+    """Print internal error message to stderr."""
     print >> out, "patool: internal error"
     etype, value = sys.exc_info()[:2]
     traceback.print_exc()

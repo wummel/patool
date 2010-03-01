@@ -49,6 +49,7 @@ def test (archive, verbose=False):
 
 @baker.command
 def formats ():
+    """List supported and available archive formats."""
     return list_formats()
 
 try:
