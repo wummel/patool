@@ -54,11 +54,14 @@ def guess_mime (filename):
     and then file(1) as fallback."""
     mime, encoding = mimedb.guess_type(filename, strict=False)
     if mime is None and os.path.isfile(filename):
-        cmd = ["file", "--brief", "--mime-type", filename]
-        try:
-            mime = backtick(cmd).strip()
-        except OSError, msg:
-            pass
+        file_prog = find_program("file")
+        if file_prog:
+            cmd = [file_prog, "--brief", "--mime-type", filename]
+            try:
+                mime = backtick(cmd).strip()
+            except OSError, msg:
+                # ignore errors, as file(1) is only a fallback
+                pass
     return mime, encoding
 
 
