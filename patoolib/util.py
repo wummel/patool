@@ -32,6 +32,12 @@ mimedb.add_type('application/x-lzop', '.lzo', strict=False)
 mimedb.add_type('application/x-arj', '.arj', strict=False)
 mimedb.add_type('application/x-lzma', '.lzma', strict=False)
 mimedb.add_type('application/x-xz', '.xz', strict=False)
+mimedb.add_type('application/java-archive', '.jar', strict=False)
+mimedb.add_type('application/x-rar', '.rar', strict=False)
+mimedb.add_type('application/x-7z-compressed', '.7z', strict=False)
+mimedb.add_type('application/x-cab', '.cab', strict=False)
+mimedb.add_type('application/x-rpm', '.rpm', strict=False)
+mimedb.add_type('application/x-debian-package', '.deb', strict=False)
 
 
 class PatoolError (StandardError):
