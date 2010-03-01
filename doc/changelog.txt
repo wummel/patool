@@ -1,6 +1,7 @@
 0.4 "" (released xx.xx.2010)
 
   * Improved listing of available archive formats.
+  * Added support for Windows systems.
 
 0.3 "Management" (released 23.2.2010)
 

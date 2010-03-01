@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Utility functions."""
+from __future__ import with_statement
 import os
 import sys
 import subprocess
@@ -112,6 +113,9 @@ def log_internal_error (out=sys.stderr):
 
 def p7zip_supports_rar ():
     """Determine if the RAR codec is installed for 7z program."""
+    if os.name == 'nt':
+        # Assume RAR support is compiled into the binary.
+        return True
     return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
 
 
@@ -119,7 +123,28 @@ def find_program (program):
     """Look for program in environment PATH variable."""
     # XXX memoize result of this function
     path = os.environ['PATH']
+    if os.name == 'nt':
+        path = append_to_path(path, get_nt_7z_dir())
     return find_executable(program, path=path)
+
+
+def append_to_path (path, directory):
+    """Add a directory to the PATH env variable, if it is a valid directory."""
+    if not os.path.isdir(directory) or directory in path:
+        return path
+    if not path.endswith(os.pathsep):
+        path += os.pathsep
+    return path + directory
+
+
+def get_nt_7z_dir ():
+    """Return 7-Zip directory from registry, or an empty string."""
+    try:
+        import _winreg
+        with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip") as key:
+            return _winreg.QueryValueEx(key, "Path")[0]
+    except WindowsError:
+        return ""
 
 
 def strlist_with_or (list):

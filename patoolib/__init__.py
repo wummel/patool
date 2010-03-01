@@ -352,7 +352,7 @@ def _handle_archive (archive, command, *args, **kwargs):
             raise util.PatoolError("archive `%s' already exists, and --force option was not given" % archive)
     program = config['program']
     # get python module for given archive program
-    key = os.path.basename(program).lower()
+    key = util.stripext(os.path.basename(program).lower())
     module = ProgramModules.get(key, key)
     # import archive handler (eg. patoolib.programs.star.extract_tar())
     exec "from patoolib.programs.%s import %s_%s as func" % (module, command, format)
