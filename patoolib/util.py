@@ -120,3 +120,10 @@ def find_program (program):
     # XXX memoize result of this function
     path = os.environ['PATH']
     return find_executable(program, path=path)
+
+
+def strlist_with_or (list):
+    """Return comma separated string, and last entry appended with ' or '."""
+    if len(list) > 1:
+        return "%s or %s" % (", ".join(list[:-1]), list[-1])
+    return ", ".join(list)

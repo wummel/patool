@@ -238,8 +238,8 @@ def list_formats ():
                 print
             except util.PatoolError:
                 handlers = programs.get(None, programs.get(command))
-                print "   %8s: - (no program found; install one of %s)" % \
-                      (command, ", ".join(handlers))
+                print "   %8s: - (no program found; install %s)" % \
+                      (command, util.strlist_with_or(handlers))
     return 0
 
 
