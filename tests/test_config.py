@@ -35,3 +35,13 @@ class TestConfiguration (unittest.TestCase):
     def test_encoding_programs (self):
         self.assertEqual(set(patoolib.ArchiveEncodings),
                          set(patoolib.EncodingPrograms.keys()))
+
+    def test_encoding_mimes (self):
+        self.assertEqual(set(patoolib.ArchiveEncodings),
+                         set(patoolib.util.Encoding2Mime.keys()))
+        for mime in patoolib.util.Encoding2Mime.values():
+            self.assertTrue(mime in patoolib.ArchiveMimetypes)
+
+    def test_filetext_mime (self):
+        for mime in patoolib.util.FileText2Mime.values():
+            self.assertTrue(mime in patoolib.ArchiveMimetypes)
