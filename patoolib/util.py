@@ -83,19 +83,120 @@ def run (cmd, **kwargs):
 
 @memoized
 def guess_mime (filename):
-    """Guess the MIME type of given filename. Uses first mimetypes
-    and then file(1) as fallback."""
-    mime, encoding = mimedb.guess_type(filename, strict=False)
-    if mime is None and os.path.isfile(filename):
+    """Guess the MIME type of given filename using three methods:
+     (a) using file(1) --mime
+     (b) using file(1) and look the result string
+     (c) looking at the filename extension with the Python mimetypes module
+
+    Of course only (c) will be eventually successful if the system does not
+    have the file(1) program installed or the given file is not readable.
+    The encoding is determined by method (c).
+
+    The result of this function is cached.
+    """
+    mime, encoding = None, None
+    if os.path.isfile(filename):
         file_prog = find_program("file")
         if file_prog:
-            cmd = [file_prog, "--brief", "--mime-type", filename]
-            try:
-                mime = backtick(cmd).strip()
-            except OSError, msg:
-                # ignore errors, as file(1) is only a fallback
-                pass
+            mime, encoding = guess_mime_file_mime(file_prog, filename)
+            if mime is None:
+                mime = guess_mime_file(file_prog, filename)
+    if mime is None:
+        mime, encoding = guess_mime_mimedb(filename)
+    assert mime is not None or encoding is None
     return mime, encoding
+
+
+Encoding2Mime = {
+    'gzip': "application/x-gzip",
+    'bzip2': "application/x-bzip2",
+    'compress': "application/x-compress",
+    'lzma': "application/x-lzma",
+    'xz': "application/x-xz",
+}
+Mime2Encoding = dict([(value, key) for key, value in Encoding2Mime.items()])
+
+
+def guess_mime_mimedb (filename):
+    """Guess MIME type from given filename."""
+    mime, encoding = mimedb.guess_type(filename, strict=False)
+    from patoolib import ArchiveMimetypes, ArchiveEncodings
+    if mime not in ArchiveMimetypes and encoding in ArchiveEncodings:
+        # Files like 't.txt.gz' are recognized with encoding as format, and
+        # an unsupported mime-type like 'text/plain'. Fix this.
+        mime = Encoding2Mime[encoding]
+        encoding = None
+    return mime, encoding
+
+
+def guess_mime_file_mime (file_prog, filename):
+    """Determine MIME type of filename with file(1) and --mime option."""
+    mime, encoding = None, None
+    cmd = [file_prog, "--brief", "--mime-type", filename]
+    try:
+        mime = backtick(cmd).strip()
+    except OSError, msg:
+        # ignore errors, as file(1) is only a fallback
+        return mime, encoding
+    from patoolib import ArchiveMimetypes
+    if mime in Encoding2Mime.values():
+        # try to look inside compressed archives
+        cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]
+        try:
+            outparts = backtick(cmd).strip().split(";")
+        except OSError, msg:
+            # ignore errors, as file(1) is only a fallback
+            return mime, encoding
+        mime2 = outparts[0]
+        if mime2 in ArchiveMimetypes:
+            mime = mime2
+            encoding = get_file_mime_encoding(outparts)
+    if mime not in ArchiveMimetypes:
+        mime, encoding = None, None
+    return mime, encoding
+
+
+def get_file_mime_encoding (parts):
+    """Get encoding value from splitted output of file --mime --uncompress."""
+    for part in parts:
+        for subpart in part.split(" "):
+            if subpart.startswith("compressed-encoding="):
+                mime = subpart.split("=")[1].strip()
+                return Mime2Encoding.get(mime)
+    return None
+
+
+# Match file(1) output text to mime types
+FileText2Mime = {
+    "7-zip archive data": "application/x-7z-compressed",
+    "ARJ archive data": "application/x-arj",
+    "bzip2 compressed data": "application/x-bzip2",
+    "cpio archive": "application/x-cpio",
+    "Debian binary package": "application/x-debian-package",
+    "gzip compressed data": "application/x-gzip",
+    "lzop compressed data": "application/x-lzop",
+    "Microsoft Cabinet archive data": "application/vnd.ms-cab-compressed",
+    "RAR archive data": "application/x-rar",
+    "RPM ": "application/x-redhat-package-manager",
+    "POSIX tar archive": "application/x-tar",
+    "xz compressed data": "application/x-xz",
+    "Zip archive data": "application/zip",
+    "compress'd data": "application/x-compress",
+}
+
+def guess_mime_file (file_prog, filename):
+    """Determine MIME type of filename with file(1)."""
+    cmd = [file_prog, "--brief", filename]
+    try:
+        output = backtick(cmd).strip()
+    except OSError, msg:
+        # ignore errors, as file(1) is only a fallback
+        return None
+    # match output against known strings
+    for matcher, mime in FileText2Mime.items():
+        if output.startswith(matcher):
+            return mime
+    return None
 
 
 def check_filename (filename):

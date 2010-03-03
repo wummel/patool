@@ -156,10 +156,6 @@ def get_archive_format (filename):
         raise util.PatoolError("unknown archive format for file `%s'" % filename)
     if mime in ArchiveMimetypes:
         format = ArchiveMimetypes[mime]
-    elif encoding in ArchiveEncodings:
-        # Files like 't.txt.gz' are recognized with encoding as format, and
-        # an unsupported mime-type like 'text/plain'. Fix this.
-        format, encoding = encoding, None
     else:
         raise util.PatoolError("unknown archive format for file `%s' (mime-type is `%s')" % (filename, mime))
     if format == encoding:
