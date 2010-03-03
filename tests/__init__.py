@@ -26,17 +26,21 @@ class ArchiveTest (unittest.TestCase):
     """Helper class for achive tests."""
 
     def __init__ (self, *args):
+        """Initialize this archive test."""
         super(ArchiveTest, self).__init__(*args)
         # set program to use for archive handling
         self.program = None
 
-    def archive_commands (self, filename, singlefile=False):
+    def archive_commands (self, filename, **kwargs):
+        """Run archive commands list, test, extract and create.
+        All keyword arguments are delegated to the create test function."""
         self.archive_list(filename)
         self.archive_test(filename)
         self.archive_extract(filename)
-        self.archive_create(filename, singlefile=singlefile)
+        self.archive_create(filename, **kwargs)
 
     def archive_extract (self, filename):
+        """Test archive extraction."""
         archive = os.path.join(datadir, filename)
         # create a temporary directory for extraction
         tmpdir = patoolib.util.tmpdir(dir=basedir)
@@ -49,16 +53,19 @@ class ArchiveTest (unittest.TestCase):
             shutil.rmtree(tmpdir)
 
     def archive_list (self, filename):
+        """Test archive listing."""
         archive = os.path.join(datadir, filename)
         patoolib._handle_archive(archive, 'list', program=self.program)
         patoolib._handle_archive(archive, 'list', program=self.program, verbose=True)
 
     def archive_test (self, filename):
+        """Test archive testing."""
         archive = os.path.join(datadir, filename)
         patoolib._handle_archive(archive, 'test', program=self.program)
         patoolib._handle_archive(archive, 'test', program=self.program, verbose=True)
 
-    def archive_create (self, filename, singlefile=False):
+    def archive_create (self, filename, singlefile=False, format=None, encoding=None):
+        """Test archive creation."""
         # the file or directory to pack
         if singlefile:
             topack = os.path.join(datadir, 'foo.txt')
@@ -68,8 +75,15 @@ class ArchiveTest (unittest.TestCase):
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         archive = os.path.join(tmpdir, filename)
         os.chdir(tmpdir)
+        # The format and encoding arguments are needed for creating
+        # archives with unusual file extensions.
+        kwargs = dict(
+            program=self.program,
+            format=format,
+            encoding=encoding
+        )
         try:
-            patoolib._handle_archive(archive, 'create', topack, program=self.program)
+            patoolib._handle_archive(archive, 'create', topack, **kwargs)
             # not all programs can test what they create
             if self.program == 'compress':
                 program = 'gzip'
@@ -108,6 +122,7 @@ def needs_codec (program, codec):
 
 
 def has_codec (program, codec):
+    """Test if program supports given codec."""
     if program == '7z' and codec == 'rar':
         return patoolib.util.p7zip_supports_rar()
     return patoolib.find_encoding_program(program, codec)
