@@ -166,7 +166,6 @@ class TestArchives (ArchiveTest):
         self.archive_test('t.rpm')
         self.archive_test('t.deb')
 
-    @needs_program('7z')
     @needs_codec('7z', 'rar')
     def test_p7zip_rar (self):
         # only succeeds with the rar module for 7z installed
@@ -208,7 +207,9 @@ class TestArchives (ArchiveTest):
     def test_rpm (self):
         self.program = 'rpm'
         self.archive_list('t.rpm')
-        # the rpm test fails on non-rpm system with missing dependencies
+        # The rpm test fails on non-rpm system with missing dependencies.
+        # I am too lazy to build a tiny rpm with one file
+        # and no dependency.
         #self.archive_test('t.rpm')
 
     @needs_program('rpm2cpio')
