@@ -87,6 +87,8 @@ class ArchiveTest (unittest.TestCase):
             # not all programs can test what they create
             if self.program == 'compress':
                 program = 'gzip'
+            elif self.program == 'zip':
+                program = 'unzip'
             else:
                 program = self.program
             patoolib._handle_archive(archive, 'test', program=program)

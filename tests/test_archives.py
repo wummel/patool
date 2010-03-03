@@ -114,6 +114,11 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.jar')
         self.archive_test('t.jar')
 
+    @needs_program('zip')
+    def test_zip (self):
+        self.program = 'zip'
+        self.archive_create('t.zip')
+
     @needs_program('gzip')
     def test_gzip (self):
         self.program = 'gzip'
