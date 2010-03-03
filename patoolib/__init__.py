@@ -243,6 +243,17 @@ def list_formats ():
     return 0
 
 
+AllowedConfigKeys = ("verbose", "force", "program")
+
+def clean_config_keys (kwargs):
+    """Remove invalid configuration keys from arguments."""
+    config_kwargs = dict(kwargs)
+    for key in kwargs:
+        if key not in AllowedConfigKeys:
+            del config_kwargs[key]
+    return config_kwargs
+
+
 def parse_config (archive, format, encoding, command, **kwargs):
     """The configuration determines which program to use for which
     archive format for the given command.
@@ -341,11 +352,13 @@ def _handle_archive (archive, command, *args, **kwargs):
     if command != 'create':
         # check that archive is a regular file
         util.check_filename(archive)
-    encoding = None
-    format, encoding = get_archive_format(archive)
+    format, encoding = kwargs.get("format"), kwargs.get("encoding")
+    if format is None:
+        format, encoding = get_archive_format(archive)
     check_archive_format(format, encoding)
     check_archive_command(command)
-    config = parse_config(archive, format, encoding, command, **kwargs)
+    config_kwargs = clean_config_keys(kwargs)
+    config = parse_config(archive, format, encoding, command, **config_kwargs)
     if command == 'create':
         # check if archive already exists
         if os.path.exists(archive) and not config['force']:
