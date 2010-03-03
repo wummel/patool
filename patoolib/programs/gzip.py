@@ -25,7 +25,7 @@ def extract_gzip (archive, encoding, cmd, **kwargs):
         cmdlist.append('-v')
     cmdlist.extend(['-c', '-d'])
     cmdlist.append('--')
-    outfile = os.path.join(kwargs['outdir'], util.stripext(archive))
+    outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend([archive, '>', outfile])
     # note that for shell calls the command must be a string
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])

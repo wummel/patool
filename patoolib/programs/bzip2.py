@@ -24,7 +24,7 @@ def extract_bzip2 (archive, encoding, cmd, **kwargs):
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['-c', '-d'])
-    outfile = os.path.join(kwargs['outdir'], util.stripext(archive))
+    outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.append('--')
     cmdlist.extend([archive, '>', outfile])
     # note that for shell calls the command must be a string

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lzop program."""
 import os
-from patoolib import util
+from .. import util
 
 
 def extract_lzop (archive, encoding, cmd, **kwargs):
@@ -25,9 +25,7 @@ def extract_lzop (archive, encoding, cmd, **kwargs):
     if kwargs['verbose']:
         cmdlist.append('--verbose')
     cmdlist.append('--')
-    outfile = os.path.join(kwargs['outdir'], util.stripext(archive))
-    if archive == outfile:
-        outfile = archive + ".raw"
+    outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend([archive, '>', outfile])
     # note that for shell calls the command must be a string
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])

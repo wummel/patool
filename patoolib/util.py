@@ -224,6 +224,15 @@ def stripext (filename):
     return os.path.splitext(os.path.basename(filename))[0]
 
 
+def get_single_outfile (directory, archive):
+    """Get output filename if archive is in a single file format like gzip."""
+    outfile = os.path.join(directory, stripext(archive))
+    if archive == outfile:
+        # prevent overwriting the archive itself
+        outfile += ".raw"
+    return outfile
+
+
 def log_error (msg, out=sys.stderr):
     """Print error message to stderr (or any other given output)."""
     print >> out, "patool error:", msg
