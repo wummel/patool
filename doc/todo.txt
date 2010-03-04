@@ -1,0 +1,2 @@
+- Support lzip archives
+- Support zoo archives

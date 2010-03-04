@@ -1,5 +1,7 @@
 0.5 "" (released xx.xx.2010)
 
+  * Ported to Python 2.4.
+
 0.4 "Nikita" (released 3.3.2010)
 
   * Added support for Windows systems.
