@@ -25,7 +25,7 @@ dist:
 .PHONY: release
 release: clean releasecheck dist
 	@echo "Register at Python Package Index..."
-	$(PYTHON) setup.py register
+	python setup.py register
 
 
 .PHONY: releasecheck
