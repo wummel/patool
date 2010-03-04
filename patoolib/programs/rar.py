@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the unrar program."""
+"""Archive commands for the rar program."""
 
 def extract_rar (archive, encoding, cmd, **kwargs):
     """Extract a RAR archive."""
