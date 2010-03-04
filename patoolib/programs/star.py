@@ -41,14 +41,14 @@ def create_tar (archive, encoding, cmd, *args, **kwargs):
 
 def add_star_opts (cmdlist, encoding, verbose):
     # Note that star autodetects encoding compression, but displays a warning
-    # which we want to avoie.
+    # which we want to avoid.
     if encoding == 'gzip':
         cmdlist.append('-z')
     elif encoding == 'compress':
         cmdlist.append('-Z')
     elif encoding == 'bzip2':
         cmdlist.append('-bz')
-    elif encoding in ('lzma', 'xz'):
+    elif encoding in ('lzma', 'xz', 'lzip'):
         # use compress-program option
         cmdlist.append('compress-program=%s' % encoding)
     if verbose:

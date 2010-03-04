@@ -52,6 +52,12 @@ class TestArchives (ArchiveTest):
     #    self.archive_commands('t.tar.lzma.foo', format="tar", encoding="lzma")
 
     @needs_program('file')
+    @needs_codec('tar', 'lzip')
+    def test_tar_lzip (self):
+        self.program = 'tar'
+        self.archive_commands('t.tar.lz.foo', format="tar", encoding="lzip")
+
+    @needs_program('file')
     @needs_codec('tar', 'xz')
     def test_tar_xz (self):
         self.program = 'tar'
@@ -92,6 +98,12 @@ class TestArchives (ArchiveTest):
     #    self.archive_commands('t.tar.lzma.foo', format="tar", encoding="lzma")
 
     @needs_program('file')
+    @needs_codec('tar', 'lzip')
+    def test_star_lzip (self):
+        self.program = 'star'
+        self.archive_commands('t.tar.lz.foo', format="tar", encoding="lzip")
+
+    @needs_program('file')
     @needs_codec('tar', 'xz')
     def test_star_xz (self):
         self.program = 'star'
@@ -121,6 +133,7 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.Z.foo')
         # file(1) does not recognize .lzma files
         #self.archive_list('t.lzma.foo')
+        self.archive_list('t.txt.lz.foo')
 
     @needs_program('file')
     @needs_program('unzip')
@@ -277,6 +290,14 @@ class TestArchives (ArchiveTest):
     #    self.archive_test('t.lzma.foo')
     #    self.archive_extract('t.lzma.foo')
     #    self.archive_create('t.lzma.foo', format="lzma", singlefile=True)
+
+    @needs_program('file')
+    @needs_program('lzip')
+    def test_lzip (self):
+        self.program = 'lzip'
+        self.archive_test('t.txt.lz.foo')
+        self.archive_extract('t.txt.lz.foo')
+        self.archive_create('t.txt.lz.foo', format="lzip", singlefile=True)
 
     @needs_program('file')
     @needs_program('xz')

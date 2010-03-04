@@ -49,6 +49,8 @@ class TestMime (unittest.TestCase):
         self.mime_test("t.lzma", "application/x-lzma", None)
         # file(1) does not recognize .lzma files
         #self.mime_test("t.lzma.foo", "application/x-lzma", None)
+        self.mime_test("t.txt.lz", "application/x-lzip", None)
+        self.mime_test("t.txt.lz.foo", "application/x-lzip", None)
         self.mime_test("t.lzo", "application/x-lzop", None)
         self.mime_test("t.lzo.foo", "application/x-lzop", None)
         self.mime_test("t.rar", "application/x-rar", None)
@@ -66,6 +68,8 @@ class TestMime (unittest.TestCase):
         #self.mime_test("t.tar.lzma.foo", "application/x-tar", "lzma")
         self.mime_test("t.tar.xz", "application/x-tar", "xz")
         self.mime_test("t.tar.xz.foo", "application/x-tar", "xz")
+        self.mime_test("t.tar.lz", "application/x-tar", "lzip")
+        self.mime_test("t.tar.lz.foo", "application/x-tar", "lzip")
         self.mime_test("t.tar.Z", "application/x-tar", "compress")
         self.mime_test("t.tar.Z.foo", "application/x-tar", "compress")
         self.mime_test("t.taz", "application/x-tar", "compress")

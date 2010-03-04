@@ -27,6 +27,7 @@ mimedb = mimetypes.MimeTypes(strict=False)
 mimedb.encodings_map['.bz2'] = 'bzip2'
 mimedb.encodings_map['.lzma'] = 'lzma'
 mimedb.encodings_map['.xz'] = 'xz'
+mimedb.encodings_map['.lz'] = 'lzip'
 mimedb.suffix_map['.tbz2'] = '.tar.bz2'
 mimedb.add_type('application/x-lzop', '.lzo', strict=False)
 mimedb.add_type('application/x-arj', '.arj', strict=False)
@@ -115,6 +116,7 @@ Encoding2Mime = {
     'bzip2': "application/x-bzip2",
     'compress': "application/x-compress",
     'lzma': "application/x-lzma",
+    'lzip': "application/x-lzip",
     'xz': "application/x-xz",
 }
 Mime2Encoding = dict([(value, key) for key, value in Encoding2Mime.items()])
@@ -185,6 +187,7 @@ FileText2Mime = {
     "xz compressed data": "application/x-xz",
     "Zip archive data": "application/zip",
     "compress'd data": "application/x-compress",
+    "lzip compressed data": "application/x-lzip",
 }
 
 def guess_mime_file (file_prog, filename):

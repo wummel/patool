@@ -22,11 +22,11 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
 ArchiveFormats = ('gzip', 'bzip2', 'tar', 'zip', 'compress', '7z', 'rar',
-  'cab', 'arj', 'cpio', 'rpm', 'deb', 'lzop', 'lzma', 'xz')
+  'cab', 'arj', 'cpio', 'rpm', 'deb', 'lzop', 'lzma', 'xz', 'lzip')
 
 # Supported encodings (used with tar for example)
 # Note that all encodings must also be archive formats
-ArchiveEncodings = ('gzip', 'bzip2', 'compress', 'lzma', 'xz')
+ArchiveEncodings = ('gzip', 'bzip2', 'compress', 'lzma', 'xz', 'lzip')
 
 # Map MIME types to archive format
 ArchiveMimetypes = {
@@ -49,6 +49,7 @@ ArchiveMimetypes = {
     'application/x-lzop': 'lzop',
     'application/x-lzma': 'lzma',
     'application/x-xz': 'xz',
+    'application/x-lzip': 'lzip',
 }
 
 # List of programs supporting the given encoding
@@ -59,6 +60,7 @@ EncodingPrograms = {
     'compress': ('compress',),
     'lzma': ('lzma',),
     'xz': ('xz',),
+    'lzip': ('lzip',),
 }
 
 # List of programs supporting the given archive format and command.
@@ -81,6 +83,12 @@ ArchivePrograms = {
     },
     'gzip': {
         None: ('gzip', '7z'),
+    },
+    'lzip': {
+        'extract': ('lzip',),
+        'list': ('echo',),
+        'test': ('lzip',),
+        'create': ('lzip',),
     },
     'compress': {
         'extract': ('gzip', '7z', 'uncompress.real'),

@@ -45,6 +45,11 @@ class TestArchives (ArchiveTest):
         self.program = 'tar'
         self.archive_commands('t.tar.lzma')
 
+    @needs_codec('tar', 'lzip')
+    def test_tar_lzip (self):
+        self.program = 'tar'
+        self.archive_commands('t.tar.lz')
+
     @needs_codec('tar', 'xz')
     def test_tar_xz (self):
         self.program = 'tar'
@@ -78,6 +83,11 @@ class TestArchives (ArchiveTest):
         self.program = 'star'
         self.archive_commands('t.tar.lzma')
 
+    @needs_codec('tar', 'lzip')
+    def test_star_lzip (self):
+        self.program = 'star'
+        self.archive_commands('t.tar.lz')
+
     @needs_codec('tar', 'xz')
     def test_star_xz (self):
         self.program = 'star'
@@ -103,6 +113,7 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.bz2')
         self.archive_list('t.Z')
         self.archive_list('t.lzma')
+        self.archive_list('t.txt.lz')
 
     @needs_program('unzip')
     def test_unzip (self):
@@ -242,10 +253,16 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.lzma')
         self.archive_create('t.lzma', singlefile=True)
 
+    @needs_program('lzip')
+    def test_lzip (self):
+        self.program = 'lzip'
+        self.archive_test('t.txt.lz')
+        self.archive_extract('t.txt.lz')
+        self.archive_create('t.txt.lz', singlefile=True)
+
     @needs_program('xz')
     def test_xz (self):
         self.program = 'xz'
         self.archive_test('t.xz')
         self.archive_extract('t.xz')
         self.archive_create('t.xz', singlefile=True)
-

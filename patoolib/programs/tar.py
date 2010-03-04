@@ -18,20 +18,14 @@
 def extract_tar (archive, encoding, cmd, **kwargs):
     """Extract a TAR archive."""
     cmdlist = [cmd, '--extract']
-    if encoding:
-        cmdlist.append('--%s' % encoding)
-    if kwargs['verbose']:
-        cmdlist.append('--verbose')
+    add_tar_opts(cmdlist, encoding, kwargs['verbose'])
     cmdlist.extend(["--file", archive, '--directory', kwargs['outdir']])
     return cmdlist
 
 def list_tar (archive, encoding, cmd, **kwargs):
     """List a TAR archive."""
     cmdlist = [cmd, '--list']
-    if encoding:
-        cmdlist.append('--%s' % encoding)
-    if kwargs['verbose']:
-        cmdlist.append('--verbose')
+    add_tar_opts(cmdlist, encoding, kwargs['verbose'])
     cmdlist.extend(["--file", archive])
     return cmdlist
 
@@ -40,8 +34,17 @@ test_tar = list_tar
 def create_tar (archive, encoding, cmd, *args, **kwargs):
     """Create a TAR archive."""
     cmdlist = [cmd, '--create']
-    if encoding:
-        cmdlist.append('--%s' % encoding)
+    add_tar_opts(cmdlist, encoding, kwargs['verbose'])
     cmdlist.extend(["--file", archive, '--'])
     cmdlist.extend(args)
     return cmdlist
+
+
+def add_tar_opts (cmdlist, encoding, verbose):
+    if encoding == 'lzip':
+        # use compress-program option
+        cmdlist.extend(['--use-compress-program', encoding])
+    elif encoding:
+        cmdlist.append('--%s' % encoding)
+    if verbose:
+        cmdlist.append('--verbose')
