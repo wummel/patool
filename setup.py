@@ -39,6 +39,19 @@ setup (
     name = AppName,
     version = AppVersion,
     description = "simple manager for file archives of various types",
+    long_description = """Various archive types can be created, extracted, tested and listed by
+patool. The advantage of patool is its simplicity in handling archive
+files without having to remember a myriad of programs and options.
+
+The archive format is determined by the file(1) program and as a
+fallback by the archive file extension.
+
+patool supports 7z (.7z), ZIP (.zip, .jar), GZIP (.gz), compress  (.Z),
+BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB (.cab), CPIO (.cpio), RPM
+(.rpm), DEB (.deb), LZIP (.lz), LZOP (.lzo), LZMA (.lzma), RAR (.rar)
+and XZ (.xz) formats. It relies on helper applications to handle those
+archive formats (for example bzip2 for BZIP2 archives).
+""",
     author = MyName,
     author_email = MyEmail,
     maintainer = MyName,
