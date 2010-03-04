@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the bzip2 program."""
-from .. import util
+from patoolib import util
 
 
 def extract_bzip2 (archive, encoding, cmd, **kwargs):

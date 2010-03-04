@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Utility functions."""
-from __future__ import with_statement
 import os
 import sys
 import subprocess
@@ -277,8 +276,11 @@ def get_nt_7z_dir ():
     """Return 7-Zip directory from registry, or an empty string."""
     try:
         import _winreg
-        with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip") as key:
+        key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip")
+        try:
             return _winreg.QueryValueEx(key, "Path")[0]
+        finally:
+            _winreg.CloseKey(key)
     except WindowsError:
         return ""
 
