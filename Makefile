@@ -2,6 +2,7 @@
 VERSION:=$(shell python setup.py --version)
 ARCHIVE:=patool-$(VERSION).tar.gz
 PY_FILES_DIRS := patool setup.py patoolib tests
+NUMCPUS := $(shell grep -c '^process' /proc/cpuinfo)
 # which test modules to run
 TESTS ?= tests/
 # set test options, eg. to "--nologcapture"
@@ -59,7 +60,7 @@ clean:
 
 .PHONY: test
 test:
-	nosetests -v -m "^test_.*" $(TESTOPTS) $(TESTS)
+	nosetests -v --processes=$(NUMCPUS) -m "^test_.*" $(TESTOPTS) $(TESTS)
 
 doc/patool.txt: doc/patool.1
 	man -l doc/patool.1 | perl -pe 's/.\cH//g' > doc/patool.txt
