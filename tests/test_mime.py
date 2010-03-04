@@ -16,7 +16,7 @@
 import unittest
 import os
 import patoolib
-from . import needs_program, datadir
+from tests import needs_program, datadir
 
 
 class TestMime (unittest.TestCase):
