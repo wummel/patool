@@ -76,8 +76,12 @@ def backtick (cmd):
 
 
 def run (cmd, **kwargs):
-    """Run command and raise subprocess.CalledProcessError on error."""
-    subprocess.check_call(cmd, **kwargs)
+    """Run command and raise PatoolError on error."""
+    retcode = subprocess.call(cmd, **kwargs)
+    if retcode:
+        msg = "Command `%s' returned non-zero exit status %d" % (cmd, retcode)
+        raise PatoolError(msg)
+    return retcode
 
 
 @memoized
