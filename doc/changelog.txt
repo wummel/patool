@@ -1,4 +1,6 @@
-0.4 "" (released xx.xx.2010)
+0.5 "" (released xx.xx.2010)
+
+0.4 "Nikita" (released 3.3.2010)
 
   * Added support for Windows systems.
   * Added support for creating ZIP files.
