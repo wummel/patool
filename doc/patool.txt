@@ -16,15 +16,16 @@ DESCRIPTION
 
        The archive format is determined by the archive file extension and as a fallback with file(1).
 
-       patool supports 7z (.7z), ZIP (.zip, .jar), GZIP (.gz), compress (.Z), BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB (.cab), CPIO (.cpio),  RPM  (.rpm),  DEB  (.deb),  LZOP
-       (.lzo), LZMA (.lzma), XZ (.xz) and RAR (.rar) formats.  It relies on helper applications to handle those archive formats (for example bzip2 for BZIP2 archives).
+       patool supports 7z (.7z), ZIP (.zip, .jar), GZIP (.gz), compress (.Z), BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB (.cab), CPIO (.cpio),  RPM  (.rpm),  DEB  (.deb),  LZIP
+       (.lz),  LZOP  (.lzo),  LZMA (.lzma), RAR (.rar) and XZ (.xz) formats.  It relies on helper applications to handle those archive formats (for example bzip2 for BZIP2 ar‐
+       chives).
 
 COMMANDS
        Several commands and options are available.
 
    extract
-       Extract  files  from  an  archive4. Often one wants to extract all files in an archive to a single subdirectory.  However, some archives contain multiple files in their
-       root directories. The patool program overcomes this problem by first extracting files to a unique (temporary) directory, and then moving its contents back if  possible.
+       Extract files from an archive4. Often one wants to extract all files in an archive to a single subdirectory.  However, some archives contain  multiple  files  in  their
+       root  directories. The patool program overcomes this problem by first extracting files to a unique (temporary) directory, and then moving its contents back if possible.
        This also prevents local files from being overwritten by mistake.
 
        --force
