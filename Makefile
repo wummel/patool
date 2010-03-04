@@ -21,6 +21,18 @@ dist:
 	sha1sum ../$(ARCHIVE) > ../$(ARCHIVE).sha1
 #	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
 
+.PHONY: release
+release: clean releasecheck dist
+	@echo "Register at Python Package Index..."
+	$(PYTHON) setup.py register
+
+
+.PHONY: releasecheck
+releasecheck: check test
+	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
+	  echo "Could not release: edit doc/changelog.txt release date"; false; \
+	fi
+
 # The check programs used here are mostly local scripts on my private system.
 # So for other developers there is no need to execute this target.
 .PHONY: check
