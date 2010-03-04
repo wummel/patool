@@ -269,15 +269,7 @@ def parse_config (archive, format, encoding, command, **kwargs):
         'verbose': False,
         'force': False,
     }
-    configfile = parse_config_file()
-    if configfile.has_option(None, "verbose"):
-        config['verbose'] = configfile.getboolean(None, "verbose")
-    if configfile.has_option(None, "force"):
-        config['verbose'] = configfile.getboolean(None, "force")
-    if configfile.has_option(format, command):
-        config['program'] = configfile.get(format, command)
-    else:
-        config['program'] = find_archive_program(format, command)
+    config['program'] = find_archive_program(format, command)
     for key, value in kwargs.items():
         if value is not None:
             if key == 'program':
@@ -288,21 +280,6 @@ def parse_config (archive, format, encoding, command, **kwargs):
     program = os.path.basename(config['program'])
     if encoding and not find_encoding_program(program, encoding):
         raise util.PatoolError("cannot %s archive `%s': encoding `%s' not supported by %s" % (archive, command, encoding, program))
-    return config
-
-
-def parse_config_file ():
-    """Parse system-wide and then user-specific configuration."""
-    import ConfigParser
-    config = ConfigParser.RawConfigParser()
-    files = []
-    # system wide config settings
-    files.append("/etc/patool.conf")
-    # per user config settings
-    files.append(os.path.expanduser("~/.patool.conf"))
-    # weed out invalid files
-    files = [f for f in files if os.path.isfile(f) and os.path.exists(f)]
-    config.read(files)
     return config
 
 

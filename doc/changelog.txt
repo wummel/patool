@@ -1,7 +1,8 @@
-0.5 "" (released xx.xx.2010)
+0.5 "Vanishing Point" (released 4.3.2010)
 
   * Ported to Python 2.4.
   * Added support for LZIP (.lz) archives.
+  * Removed support for setting options via config file.
 
 0.4 "Nikita" (released 3.3.2010)
 

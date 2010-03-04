@@ -83,32 +83,6 @@ Show all supported archive formats.
 .TP
 \fB\-\-help\fP
 Show help for this command.
-.SH CONFIGURATION
-The configuration files (see FILES) can specify which program to use
-for each archive format. Per default a list of programs are searched
-and the first one will be used for an archive.
-.br
-Additionally, default options like verbosity and force overwrite can
-be configured.
-.br
-The configuration format is the Windows INI format.
-
-.SS \fB[DEFAULT]\fP
-.TP
-\fBforce=0\fP
-Set the force option to 1 or 0.
-.TP
-\fBverbose=0\fP
-Set the verbose option to 1 or 0.
-.SS \fB[\fP\fI<archive format>\fP\fB]\fP
-Supported archive formats are listed by the \fBformats\fP command.
-.TP
-\fIcommand\fP\fB=/usr/bin/mycommand\fP
-Set the application to handle the archive format for given command.
-\fIcommand\fP can be one of (\fBextract\fP, \fBlist\fP, \fBtest\fP, \fBcreate\fP).
-.SH FILES
-\fB/etc/patool.conf\fP, \fB~/.patool.conf\fP -
-configuration files
 .SH AUTHOR
 Bastian Kleineidam <calvin@users.sourceforge.net>
 .SH COPYRIGHT

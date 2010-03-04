@@ -68,29 +68,6 @@ COMMANDS
 
        --help Show help for this command.
 
-CONFIGURATION
-       The configuration files (see FILES) can specify which program to use for each archive format. Per default a list of programs are searched and the first one will be used
-       for an archive.
-       Additionally, default options like verbosity and force overwrite can be configured.
-       The configuration format is the Windows INI format.
-
-
-   [DEFAULT]
-       force=0
-              Set the force option to 1 or 0.
-
-       verbose=0
-              Set the verbose option to 1 or 0.
-
-   [<archive format>]
-       Supported archive formats are listed by the formats command.
-
-       command=/usr/bin/mycommand
-              Set the application to handle the archive format for given command.  command can be one of (extract, list, test, create).
-
-FILES
-       /etc/patool.conf, ~/.patool.conf - configuration files
-
 AUTHOR
        Bastian Kleineidam <calvin@users.sourceforge.net>
 
