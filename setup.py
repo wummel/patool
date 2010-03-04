@@ -44,6 +44,8 @@ setup (
     maintainer = MyName,
     maintainer_email = MyEmail,
     license = "GPL",
+    url = "http://patool.sourceforge.net/",
+    download_url="http://sourceforge.net/projects/patool/files/",
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],
