@@ -47,4 +47,13 @@ setup (
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],
+    keywords = "archive,manager",
+    classifiers = [
+        'Environment :: Console',
+        'Topic :: System :: Archiving',
+        'Development Status :: 4 - Beta',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Programming Language :: Python',
+        'Operating System :: OS Independent',
+    ],
 )
