@@ -38,10 +38,13 @@ def list (archive, verbose=False):
     return handle_archive(archive, 'list')
 
 
-@baker.command
-def create (archive, *args):
+@baker.command(shortopts={"verbose": "v"}, params={
+    "verbose": "Verbose archive listing (if the helper application supports it).",
+})
+def create (archive, file1, *files, **kwargs):
     """Create an archive from given files."""
-    return handle_archive(archive, 'create', *args)
+    allfiles = (file1,)+files
+    return handle_archive(archive, 'create', *allfiles, **kwargs)
 
 
 @baker.command(shortopts={"verbose": "v"}, params={

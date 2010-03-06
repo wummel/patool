@@ -47,6 +47,7 @@ class ArchiveTest (unittest.TestCase):
         os.chdir(tmpdir)
         try:
             patoolib._handle_archive(archive, 'extract', program=self.program)
+            patoolib._handle_archive(archive, 'extract', program=self.program, verbose=True)
         finally:
             os.chdir(basedir)
             shutil.rmtree(tmpdir)
@@ -70,10 +71,6 @@ class ArchiveTest (unittest.TestCase):
             topack = os.path.join(datadir, 'foo.txt')
         else:
             topack = os.path.join(datadir, 'foo')
-        # create a temporary directory for creation
-        tmpdir = patoolib.util.tmpdir(dir=basedir)
-        archive = os.path.join(tmpdir, filename)
-        os.chdir(tmpdir)
         # The format and encoding arguments are needed for creating
         # archives with unusual file extensions.
         kwargs = dict(
@@ -81,6 +78,16 @@ class ArchiveTest (unittest.TestCase):
             format=format,
             encoding=encoding
         )
+        self._archive_create(filename, topack, kwargs)
+        kwargs['verbose'] = True
+        self._archive_create(filename, topack, kwargs)
+
+    def _archive_create (self, filename, topack, kwargs):
+        """Create archive from filename."""
+        # create a temporary directory for creation
+        tmpdir = patoolib.util.tmpdir(dir=basedir)
+        archive = os.path.join(tmpdir, filename)
+        os.chdir(tmpdir)
         try:
             patoolib._handle_archive(archive, 'create', topack, **kwargs)
             # not all programs can test what they create

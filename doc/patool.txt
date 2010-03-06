@@ -6,8 +6,8 @@ NAME
        patool - simple manager for file archives of various types
 
 SYNOPSIS
-        patool (extract|list|test) [options] <archive-file>
-        patool create [options] <archive-file> [files..]
+        patool (extract|list|test) [options] <archive-file>...
+        patool create [options] <archive-file> [files...]
         patool formats [options]
 
 DESCRIPTION
@@ -23,6 +23,12 @@ DESCRIPTION
        (.rpm), DEB (.deb), LZIP (.lz), LZOP (.lzo), LZMA (.lzma),  RAR  (.rar)
        and XZ (.xz) formats.  It relies on helper applications to handle those
        archive formats (for example bzip2 for BZIP2 archives).
+
+EXAMPLES
+         patool extract archive.zip
+         patool test --verbose dist.tar.gz
+         patool list package.deb
+         patool create --verbose myfiles.zip file1.txt dir/
 
 COMMANDS
        Several commands and options are available.
@@ -52,7 +58,11 @@ COMMANDS
        --help Show help for this command.
 
    create
-       Create an archive from given files.
+       Create  an  archive from given files. At least on of the given files to
+       add to the archive has to exist.
+
+       -v, --verbose
+              Verbose operation (if the helper application supports it).
 
        --help Show help for this command.
 
