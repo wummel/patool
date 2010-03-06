@@ -3,9 +3,10 @@
   * Remove the --force option. Local files are now never overwritten.
   * Added option alias -v for --verbose.
   * Added --verbose option to create command.
-  * Added support for Extract, list and test multiple archives.
+  * Added support for extracting, listing and testing multiple archives.
   * Fix permissions of extracted files: make them readable by the
     current user.
+  * Added support for ACE (.ace) archives.
 
 0.5 "Vanishing Point" (released 4.3.2010)
 

@@ -219,6 +219,13 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.cpio')
         self.archive_create('t.cpio')
 
+    @needs_program('unace')
+    def test_unace (self):
+        self.program = 'unace'
+        self.archive_list('t.ace')
+        self.archive_test('t.ace')
+        self.archive_extract('t.ace')
+
     @needs_program('rpm')
     def test_rpm (self):
         self.program = 'rpm'

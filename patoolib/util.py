@@ -39,6 +39,7 @@ mimedb.add_type('application/x-7z-compressed', '.7z', strict=False)
 mimedb.add_type('application/x-cab', '.cab', strict=False)
 mimedb.add_type('application/x-rpm', '.rpm', strict=False)
 mimedb.add_type('application/x-debian-package', '.deb', strict=False)
+mimedb.add_type('application/x-ace', '.ace', strict=False)
 
 
 class PatoolError (StandardError):
@@ -174,6 +175,7 @@ def get_file_mime_encoding (parts):
 # Match file(1) output text to mime types
 FileText2Mime = {
     "7-zip archive data": "application/x-7z-compressed",
+    "ACE archive data": "application/x-ace",
     "ARJ archive data": "application/x-arj",
     "bzip2 compressed data": "application/x-bzip2",
     "cpio archive": "application/x-cpio",

@@ -1,3 +1,2 @@
-- Support ace (unace) archives.
 - Support ar archives.
 - Support lha archives.
