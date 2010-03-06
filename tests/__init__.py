@@ -90,6 +90,7 @@ class ArchiveTest (unittest.TestCase):
         os.chdir(tmpdir)
         try:
             patoolib._handle_archive(archive, 'create', topack, **kwargs)
+            self.assertTrue(os.path.isfile(archive))
             # not all programs can test what they create
             if self.program == 'compress':
                 program = 'gzip'
