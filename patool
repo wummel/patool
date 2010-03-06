@@ -22,19 +22,18 @@ if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
     raise SystemExit("This program requires Python 2.4 or later.")
 from patoolib import handle_archive, list_formats, baker
 
-# parameter help
-params_force = {"force": "Overwrite files if they exist."}
-params_verbose = {"verbose": "Print verbose output."}
-params_verbose_force = dict(params_verbose.items() + params_force.items())
-
-
-@baker.command(params=params_verbose_force)
+@baker.command(default=True, params={
+    "force": "Allow overwriting of local files.",
+    "verbose": "Be verbose when extracting (if the helper application supports it)."
+})
 def extract (archive, verbose=False, force=False):
     """Extract files from archives."""
     return handle_archive(archive, 'extract')
 
 
-@baker.command(params=params_verbose)
+@baker.command(params={
+    "verbose": "Verbose archive listing (if the helper application supports it).",
+})
 def list (archive, verbose=False):
     """List files in an archive."""
     return handle_archive(archive, 'list')
@@ -46,7 +45,9 @@ def create (archive, *args):
     return handle_archive(archive, 'create', *args)
 
 
-@baker.command(params=params_verbose)
+@baker.command(params={
+    "verbose": "Verbose operation (if the helper application supports it).",
+})
 def test (archive, verbose=False):
     """Test files in an archive."""
     return handle_archive(archive, 'test', verbose=verbose)

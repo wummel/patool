@@ -28,18 +28,20 @@ COMMANDS
        Several commands and options are available.
 
    extract
-       Extract files from an archive. Often one wants to extract all files  in
-       an  archive  to  a single subdirectory.  However, some archives contain
-       multiple files in their root directories. The patool program  overcomes
-       this  problem  by first extracting files to a unique (temporary) direc‐
-       tory, and then moving its contents back if possible. This also prevents
-       local files from being overwritten by mistake.
+       Extract files from an archive. This is the default command if  no  com‐
+       mand was given.
+       Often  one  wants to extract all files in an archive to a single subdi‐
+       rectory.  However, some archives contain multiple files in  their  root
+       directories.  The  patool  program  overcomes  this  problem  by  first
+       extracting files to a unique (temporary) directory, and then moving its
+       contents  back  if  possible. This also prevents local files from being
+       overwritten by mistake.
 
        --force
               Allow overwriting of local files.
 
        --verbose
-              Be  verbose  when extracting (if the helper application supports
+              Be verbose when extracting (if the helper  application  supports
               it).
 
        --help Show help for this command.
@@ -54,12 +56,6 @@ COMMANDS
 
    create
        Create an archive from given files.
-
-       --force
-              Allow overwriting of local archives.
-
-       --verbose
-              Verbose operation (if the helper application supports it).
 
        --help Show help for this command.
 
