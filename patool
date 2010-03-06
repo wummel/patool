@@ -20,6 +20,7 @@ patool [extract|list|create|formats] [sub-command-options] <command-args>
 import sys
 if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
     raise SystemExit("This program requires Python 2.4 or later.")
+import os
 from patoolib import handle_archive, list_formats, baker
 
 # parameter help and short options
@@ -32,11 +33,16 @@ shortopts = {"verbose": "v"}
 def handle_multi_archive(archives, cmd, **kwargs):
     """Handle a multi-archive command."""
     res = 0
-    for archive in archives:
-        newres = handle_archive(archive, cmd, **kwargs)
-        # return error if one of the archives could not be extracted
-        if newres:
-            res = newres
+    archives = [x for x in archives if os.path.exists(x)]
+    if archives:
+        for archive in archives:
+            newres = handle_archive(archive, cmd, **kwargs)
+            # return error if one of the archives could not be extracted
+            if newres:
+                res = newres
+    else:
+        print >>sys.stderr, "patool error: none of the given archive files exist"
+        res = 1
     return res
 
 
