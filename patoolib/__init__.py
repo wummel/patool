@@ -248,7 +248,7 @@ def list_formats ():
     return 0
 
 
-AllowedConfigKeys = ("verbose", "force", "program")
+AllowedConfigKeys = ("verbose", "program")
 
 def clean_config_keys (kwargs):
     """Remove invalid configuration keys from arguments."""
@@ -267,7 +267,6 @@ def parse_config (archive, format, encoding, command, **kwargs):
     """
     config = {
         'verbose': False,
-        'force': False,
     }
     config['program'] = find_archive_program(format, command)
     for key, value in kwargs.items():
@@ -283,9 +282,9 @@ def parse_config (archive, format, encoding, command, **kwargs):
     return config
 
 
-def move_outdir_orphan (outdir, force):
+def move_outdir_orphan (outdir):
     """Move a single file or directory inside outdir a level up.
-    Overwrite files if force evaluates True.
+    Never overwrite files.
     Return (True, outfile) if successful, (False, reason) if not."""
     entries = os.listdir(outdir)
     reason = ""
@@ -293,12 +292,7 @@ def move_outdir_orphan (outdir, force):
         src = os.path.join(outdir, entries[0])
         dst = os.path.join(os.path.dirname(outdir), entries[0])
         if os.path.exists(dst):
-            if not force:
-                return (False, "local file exists")
-            if os.path.isdir(dst):
-                shutil.rmtree(dst)
-            else:
-                os.unlink(dst)
+            return (False, "local file exists")
         shutil.move(src, dst)
         os.rmdir(outdir)
         return (True, entries[0])
@@ -315,11 +309,11 @@ def run_archive_cmdlist (archive_cmdlist):
     util.run(cmdlist, **runkwargs)
 
 
-def cleanup_outdir (archive, outdir, force):
+def cleanup_outdir (archive, outdir):
     """Cleanup outdir after extraction and return target file name."""
     if outdir:
         # move single directory or file in outdir
-        (res, msg) = move_outdir_orphan(outdir, force)
+        (res, msg) = move_outdir_orphan(outdir)
         if res:
             target = "`%s'" % msg
         else:
@@ -341,10 +335,9 @@ def _handle_archive (archive, command, *args, **kwargs):
     check_archive_command(command)
     config_kwargs = clean_config_keys(kwargs)
     config = parse_config(archive, format, encoding, command, **config_kwargs)
-    if command == 'create':
-        # check if archive already exists
-        if os.path.exists(archive) and not config['force']:
-            raise util.PatoolError("archive `%s' already exists, and --force option was not given" % archive)
+    # check if archive already exists
+    if command == 'create' and os.path.exists(archive):
+        raise util.PatoolError("archive `%s' already exists" % archive)
     program = config['program']
     # get python module for given archive program
     key = util.stripext(os.path.basename(program).lower())
@@ -362,7 +355,7 @@ def _handle_archive (archive, command, *args, **kwargs):
         cmdlist = get_archive_cmdlist(archive, encoding, program, *args, **kwargs)
         run_archive_cmdlist(cmdlist)
         if command == 'extract':
-            target = cleanup_outdir(archive, outdir, config['force'])
+            target = cleanup_outdir(archive, outdir)
             print "%s: extracted to %s" % (archive, target)
     finally:
         if outdir:

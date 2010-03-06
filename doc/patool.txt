@@ -37,9 +37,6 @@ COMMANDS
        contents  back  if  possible. This also prevents local files from being
        overwritten by mistake.
 
-       --force
-              Allow overwriting of local files.
-
        --verbose
               Be verbose when extracting (if the helper  application  supports
               it).

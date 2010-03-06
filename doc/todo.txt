@@ -1,3 +1,2 @@
 - Add ability to extract multiple archives.
-- Remove the --force option. Lesser options make it easier.
 - Add short option -v for verbosity.

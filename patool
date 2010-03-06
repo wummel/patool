@@ -23,10 +23,9 @@ if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
 from patoolib import handle_archive, list_formats, baker
 
 @baker.command(default=True, params={
-    "force": "Allow overwriting of local files.",
     "verbose": "Be verbose when extracting (if the helper application supports it)."
 })
-def extract (archive, verbose=False, force=False):
+def extract (archive, verbose=False):
     """Extract files from archives."""
     return handle_archive(archive, 'extract')
 

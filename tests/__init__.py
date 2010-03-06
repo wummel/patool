@@ -47,7 +47,6 @@ class ArchiveTest (unittest.TestCase):
         os.chdir(tmpdir)
         try:
             patoolib._handle_archive(archive, 'extract', program=self.program)
-            patoolib._handle_archive(archive, 'extract', program=self.program, force=True)
         finally:
             os.chdir(basedir)
             shutil.rmtree(tmpdir)
