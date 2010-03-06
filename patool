@@ -15,21 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-patool [extract|list] [sub-command-options] <archive-file>
+patool [extract|list|create|formats] [sub-command-options] <command-args>
 """
 import sys
 if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
     raise SystemExit("This program requires Python 2.4 or later.")
 from patoolib import handle_archive, list_formats, baker
 
+# parameter help
+params_force = {"force": "Overwrite files if they exist."}
+params_verbose = {"verbose": "Print verbose output."}
+params_verbose_force = dict(params_verbose.items() + params_force.items())
 
-@baker.command
+
+@baker.command(params=params_verbose_force)
 def extract (archive, verbose=False, force=False):
-    """Extract files from an archive."""
+    """Extract files from archives."""
     return handle_archive(archive, 'extract')
 
 
-@baker.command
+@baker.command(params=params_verbose)
 def list (archive, verbose=False):
     """List files in an archive."""
     return handle_archive(archive, 'list')
@@ -41,7 +46,7 @@ def create (archive, *args):
     return handle_archive(archive, 'create', *args)
 
 
-@baker.command
+@baker.command(params=params_verbose)
 def test (archive, verbose=False):
     """Test files in an archive."""
     return handle_archive(archive, 'test', verbose=verbose)
