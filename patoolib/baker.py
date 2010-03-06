@@ -162,50 +162,49 @@ class Baker(object):
             return lambda fn: self.command(fn, default=default,
                                            params=params,
                                            shortopts=shortopts)
-        else:
-            name = name or fn.__name__
+        name = name or fn.__name__
 
-            # Inspect the argument signature of the function
-            arglist, vargsname, kwargsname, defaults = getargspec(fn)
-            has_varargs = bool(vargsname)
-            has_kwargs = bool(kwargsname)
+        # Inspect the argument signature of the function
+        arglist, vargsname, kwargsname, defaults = getargspec(fn)
+        has_varargs = bool(vargsname)
+        has_kwargs = bool(kwargsname)
 
-            # Get the function's docstring
-            docstring = fn.__doc__ or ""
+        # Get the function's docstring
+        docstring = fn.__doc__ or ""
 
-            # If the user didn't specify parameter help in the decorator
-            # arguments, try to get it from parameter annotations (Python 3.x)
-            # or RST-style :param: lines in the docstring
-            if params is None:
-                if hasattr(fn, "func_annotations") and fn.func_annotations:
-                    params = fn.func_annotations
-                else:
-                    params = find_param_docs(docstring)
-                    docstring = remove_param_docs(docstring)
-
-            # If the user didn't specify
-            shortopts = shortopts or {}
-
-            # Zip up the keyword argument names with their defaults
-            if defaults:
-                keywords = dict(zip(arglist[0-len(defaults):], defaults))
+        # If the user didn't specify parameter help in the decorator
+        # arguments, try to get it from parameter annotations (Python 3.x)
+        # or RST-style :param: lines in the docstring
+        if params is None:
+            if hasattr(fn, "func_annotations") and fn.func_annotations:
+                params = fn.func_annotations
             else:
-                keywords = {}
+                params = find_param_docs(docstring)
+                docstring = remove_param_docs(docstring)
 
-            # If this is a method, remove 'self' from the argument list
-            if arglist and arglist[0] == "self":
-                arglist.pop(0)
+        # If the user didn't specify
+        shortopts = shortopts or {}
 
-            # Create a Cmd object to represent this command and store it
-            cmd = Cmd(name, fn, arglist, keywords, shortopts,
-                      has_varargs, has_kwargs,
-                      docstring, params)
-            self.commands[cmd.name] = cmd
+        # Zip up the keyword argument names with their defaults
+        if defaults:
+            keywords = dict(zip(arglist[0-len(defaults):], defaults))
+        else:
+            keywords = {}
 
-            # If default is True, set this as the default command
-            if default: self.defaultcommand = cmd
+        # If this is a method, remove 'self' from the argument list
+        if arglist and arglist[0] == "self":
+            arglist.pop(0)
 
-            return fn
+        # Create a Cmd object to represent this command and store it
+        cmd = Cmd(name, fn, arglist, keywords, shortopts,
+                  has_varargs, has_kwargs,
+                  docstring, params)
+        self.commands[cmd.name] = cmd
+
+        # If default is True, set this as the default command
+        if default: self.defaultcommand = cmd
+
+        return fn
 
     def print_top_help(self, scriptname, file=sys.stdout):
         """Prints the documentation for the script and exits.
