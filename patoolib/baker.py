@@ -185,9 +185,12 @@ class Baker(object):
         # If the user didn't specify
         shortopts = shortopts or {}
 
-        # Zip up the keyword argument names with their defaults
         if defaults:
+            # Zip up the keyword argument names with their defaults
             keywords = dict(zip(arglist[0-len(defaults):], defaults))
+        elif has_kwargs:
+            # allow keyword arguments specified by params
+            keywords = dict(zip(params.keys(), [""]*len(params)))
         else:
             keywords = {}
 
