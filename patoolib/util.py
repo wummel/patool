@@ -90,24 +90,13 @@ def run (cmd, **kwargs):
 
 @memoized
 def guess_mime (filename):
-    """Guess the MIME type of given filename using three methods:
-     (a) using file(1) --mime
-     (b) using file(1) and look the result string
-     (c) looking at the filename extension with the Python mimetypes module
-
-    Of course only (c) will be eventually successful if the system does not
-    have the file(1) program installed or the given file is not readable.
-    The encoding is determined by method (c).
+    """Guess the MIME type of given filename using file(1) and if that
+    fails by looking at the filename extension with the Python mimetypes
+    module.
 
     The result of this function is cached.
     """
-    mime, encoding = None, None
-    if os.path.isfile(filename):
-        file_prog = find_program("file")
-        if file_prog:
-            mime, encoding = guess_mime_file_mime(file_prog, filename)
-            if mime is None:
-                mime = guess_mime_file(file_prog, filename)
+    mime, encoding = guess_mime_file(filename)
     if mime is None:
         mime, encoding = guess_mime_mimedb(filename)
     assert mime is not None or encoding is None
@@ -134,6 +123,21 @@ def guess_mime_mimedb (filename):
         # an unsupported mime-type like 'text/plain'. Fix this.
         mime = Encoding2Mime[encoding]
         encoding = None
+    return mime, encoding
+
+
+def guess_mime_file (filename):
+    """Determine MIME type of filename with file(1):
+     (a) using file(1) --mime
+     (b) using file(1) and look the result string
+    """
+    mime, encoding = None, None
+    if os.path.isfile(filename):
+        file_prog = find_program("file")
+        if file_prog:
+            mime, encoding = guess_mime_file_mime(file_prog, filename)
+            if mime is None:
+                mime = guess_mime_file_text(file_prog, filename)
     return mime, encoding
 
 
@@ -195,7 +199,7 @@ FileText2Mime = {
     "current ar archive": "application/x-archive",
 }
 
-def guess_mime_file (file_prog, filename):
+def guess_mime_file_text (file_prog, filename):
     """Determine MIME type of filename with file(1)."""
     cmd = [file_prog, "--brief", filename]
     try:
