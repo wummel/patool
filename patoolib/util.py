@@ -215,6 +215,20 @@ def check_filename (filename):
         raise PatoolError("File `%s' not readable." % filename)
 
 
+def set_mode (filename, flags):
+    """Set mode flags for given filename if not already set."""
+    try:
+        mode = os.lstat(filename).st_mode
+    except OSError:
+        # ignore
+        return
+    if not (mode & flags):
+        try:
+            os.chmod(filename, flags | mode)
+        except OSError, msg:
+            log_error("could not set mode flags for `%s': %s" % (filename, msg))
+
+
 def tmpdir (dir=None):
     """Return a temporary directory for extraction."""
     return tempfile.mkdtemp(suffix='', prefix='Unpack_', dir=dir)

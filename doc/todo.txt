@@ -1,1 +1,3 @@
-- fix permissions (unreadable files) in extracted files (honor umask)
+- Support ace (unace) archives.
+- Support ar archives.
+- Support lha archives.

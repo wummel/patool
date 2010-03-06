@@ -42,9 +42,11 @@ COMMANDS
        extracting files to a unique (temporary) directory, and then moving its
        contents  back  if  possible. This also prevents local files from being
        overwritten by mistake.
+       All extracted files are checked that they are readable by  the  current
+       user.
 
        -v, --verbose
-              Be verbose when extracting (if the helper  application  supports
+              Be  verbose  when extracting (if the helper application supports
               it).
 
        --help Show help for this command.
@@ -58,7 +60,7 @@ COMMANDS
        --help Show help for this command.
 
    create
-       Create  an  archive from given files. At least on of the given files to
+       Create an archive from given files. At least on of the given  files  to
        add to the archive has to exist.
 
        -v, --verbose

@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import shutil
+import stat
 from patoolib import util
 
 # Supported archive commands
@@ -309,8 +310,30 @@ def run_archive_cmdlist (archive_cmdlist):
     util.run(cmdlist, **runkwargs)
 
 
+def make_file_readable (filename):
+    """Make file user readable if it is not a link."""
+    if not os.path.islink(filename):
+        util.set_mode(filename, stat.S_IRUSR)
+
+
+def make_dir_readable (filename):
+    """Make directory user readable and executable."""
+    util.set_mode(filename, stat.S_IRUSR|stat.S_IXUSR)
+
+
+def make_user_readable (directory):
+    """Make all files in given directory user readable. Also recurse into
+    subdirectories."""
+    for root, dirs, files in os.walk(directory, onerror=util.log_error):
+        for filename in files:
+            make_file_readable(os.path.join(root, filename))
+        for dirname in dirs:
+            make_dir_readable(os.path.join(root, dirname))
+
+
 def cleanup_outdir (archive, outdir):
     """Cleanup outdir after extraction and return target file name."""
+    make_user_readable(outdir)
     if outdir:
         # move single directory or file in outdir
         (res, msg) = move_outdir_orphan(outdir)

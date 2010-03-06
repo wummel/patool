@@ -4,6 +4,8 @@
   * Added option alias -v for --verbose.
   * Added --verbose option to create command.
   * Added support for Extract, list and test multiple archives.
+  * Fix permissions of extracted files: make them readable by the
+    current user.
 
 0.5 "Vanishing Point" (released 4.3.2010)
 
