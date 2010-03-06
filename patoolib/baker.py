@@ -373,7 +373,8 @@ class Baker(object):
                     except TypeError:
                         pass
                 else:
-                    # The argument was not specified with an equals sign...
+                    # The argument was not specified with a value, assuming
+                    # this is a flag
                     name = arg[2:]
                     default = keywords.get(name)
 
@@ -383,19 +384,9 @@ class Baker(object):
                         # opposite of the default".
                         value = not default
                     else:
-                        # The next item in the argument list is the value, i.e.
-                        # --keyword value
-                        if not argv or argv[0].startswith("-"):
-                            # Oops, there isn't a value available... just use
-                            # True, assuming this is a flag.
-                            value = True
-                        else:
-                            value = argv.pop(0)
-
-                        try:
-                            value = totype(value, default)
-                        except TypeError:
-                            pass
+                        # Option is specified via the params value, assuming
+                        # a True value
+                        value = True
 
                 # Store this option
                 kwargs[name] = value
