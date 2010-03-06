@@ -326,3 +326,12 @@ class TestArchives (ArchiveTest):
     def test_lha (self):
         self.program = 'lha'
         self.archive_commands('t.lha.foo', format="lzh")
+
+    # file(1) does not recognize .alz files
+    #@needs_program('file')
+    #@needs_program('unalz')
+    #def test_unalz (self):
+    #    self.program = 'unalz'
+    #    self.archive_test('t.alz.foo')
+    #    self.archive_list('t.alz.foo')
+    #    self.archive_extract('t.alz.foo')

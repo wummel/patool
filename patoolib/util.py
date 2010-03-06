@@ -42,6 +42,7 @@ mimedb.add_type('application/x-debian-package', '.deb', strict=False)
 mimedb.add_type('application/x-ace', '.ace', strict=False)
 # Since .a is already a common type, strict=True must be used.
 mimedb.add_type('application/x-archive', '.a', strict=True)
+mimedb.add_type('application/x-alzip', '.alz', strict=False)
 
 
 class PatoolError (StandardError):

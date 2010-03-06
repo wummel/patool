@@ -1,6 +1,6 @@
 0.7 "" (released xx.xx.xxxx)
 
-  *
+  * Added support for ALZIP (.alz) archives.
 
 0.6 "Waking Ned" (released 6.3.2010)
 

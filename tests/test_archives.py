@@ -272,6 +272,13 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.txt.lz')
         self.archive_create('t.txt.lz', singlefile=True)
 
+    @needs_program('unalz')
+    def test_unalz (self):
+        self.program = 'unalz'
+        self.archive_test('t.alz')
+        self.archive_list('t.alz')
+        self.archive_extract('t.alz')
+
     @needs_program('xz')
     def test_xz (self):
         self.program = 'xz'
