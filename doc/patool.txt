@@ -37,7 +37,7 @@ COMMANDS
        contents  back  if  possible. This also prevents local files from being
        overwritten by mistake.
 
-       --verbose
+       -v, --verbose
               Be verbose when extracting (if the helper  application  supports
               it).
 
@@ -46,7 +46,7 @@ COMMANDS
    list
        List files in an archive.
 
-       --verbose
+       -v, --verbose
               Verbose archive listing (if the helper application supports it).
 
        --help Show help for this command.
@@ -59,7 +59,7 @@ COMMANDS
    test
        Test files in an archive.
 
-       --verbose
+       -v, --verbose
               Verbose archive testing (if the helper application supports it).
 
        --help Show help for this command.

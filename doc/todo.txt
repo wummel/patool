@@ -1,2 +1,1 @@
 - Add ability to extract multiple archives.
-- Add short option -v for verbosity.

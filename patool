@@ -22,7 +22,7 @@ if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
     raise SystemExit("This program requires Python 2.4 or later.")
 from patoolib import handle_archive, list_formats, baker
 
-@baker.command(default=True, params={
+@baker.command(default=True, shortopts={"verbose": "v"}, params={
     "verbose": "Be verbose when extracting (if the helper application supports it)."
 })
 def extract (archive, verbose=False):
@@ -30,7 +30,7 @@ def extract (archive, verbose=False):
     return handle_archive(archive, 'extract')
 
 
-@baker.command(params={
+@baker.command(shortopts={"verbose": "v"}, params={
     "verbose": "Verbose archive listing (if the helper application supports it).",
 })
 def list (archive, verbose=False):
@@ -44,7 +44,7 @@ def create (archive, *args):
     return handle_archive(archive, 'create', *args)
 
 
-@baker.command(params={
+@baker.command(shortopts={"verbose": "v"}, params={
     "verbose": "Verbose operation (if the helper application supports it).",
 })
 def test (archive, verbose=False):
