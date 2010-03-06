@@ -287,12 +287,11 @@ class Baker(object):
                 file.write(format_paras(paras[1:], 76, indent=4))
             file.write("\n")
 
+        # Get a sorted list of keyword argument names
+        keynames = sorted([key for key, value in cmd.keywords.items() if value is not None])
         # Print documentation for keyword options
-        if cmd.keywords:
+        if keynames:
             file.write("Options:\n\n")
-
-            # Get a sorted list of keyword argument names
-            keynames = sorted(cmd.keywords.keys())
 
             # Make formatted headings, e.g. " -k --keyword  ", and put them in
             # a list like [(name, heading), ...]
