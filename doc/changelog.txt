@@ -1,4 +1,4 @@
-0.6 "" (released xx.xx.2010)
+0.6 "Waking Ned" (released 6.3.2010)
 
   * Remove the --force option. Local files are now never overwritten.
   * Added option alias -v for --verbose.
