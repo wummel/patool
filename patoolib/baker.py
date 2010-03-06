@@ -510,7 +510,7 @@ class Baker(object):
 
         # Rearrange the arguments into the order Python expects
         newargs = []
-        newkwargs = {}
+        newkwargs = dict(kwargs)
         for name in cmd.argnames:
             if args and cmd.keywords.get(name) is None:
                 # This argument is required or optional and we have a bare arg
