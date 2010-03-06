@@ -278,3 +278,8 @@ class TestArchives (ArchiveTest):
         self.archive_test('t.xz')
         self.archive_extract('t.xz')
         self.archive_create('t.xz', singlefile=True)
+
+    @needs_program('lha')
+    def test_lha (self):
+        self.program = 'lha'
+        self.archive_commands('t.lha')
