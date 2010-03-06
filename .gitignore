@@ -2,3 +2,4 @@
 *.pyo
 /build
 /dist
+/.achievements
