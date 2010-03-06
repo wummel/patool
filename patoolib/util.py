@@ -197,6 +197,7 @@ FileText2Mime = {
     "compress'd data": "application/x-compress",
     "lzip compressed data": "application/x-lzip",
     "current ar archive": "application/x-archive",
+    "LHa ": "application/x-lha",
 }
 
 def guess_mime_file_text (file_prog, filename):

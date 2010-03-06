@@ -8,6 +8,7 @@
     current user.
   * Added support for ACE (.ace) archives.
   * Added support for AR (.a) archives.
+  * Added support for LZH (.lha, .lzh) archives.
 
 0.5 "Vanishing Point" (released 4.3.2010)
 
