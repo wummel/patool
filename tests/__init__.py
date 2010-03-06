@@ -76,7 +76,7 @@ class ArchiveTest (unittest.TestCase):
         kwargs = dict(
             program=self.program,
             format=format,
-            encoding=encoding
+            encoding=encoding,
         )
         self._archive_create(filename, topack, kwargs)
         kwargs['verbose'] = True

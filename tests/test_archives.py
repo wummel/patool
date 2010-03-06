@@ -212,6 +212,11 @@ class TestArchives (ArchiveTest):
         self.program = 'arj'
         self.archive_commands('t.arj')
 
+    @needs_program('ar')
+    def test_ar (self):
+        self.program = 'ar'
+        self.archive_commands('t.a', singlefile=True)
+
     @needs_program('cpio')
     def test_cpio (self):
         self.program = 'cpio'

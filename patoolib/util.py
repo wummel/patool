@@ -40,6 +40,8 @@ mimedb.add_type('application/x-cab', '.cab', strict=False)
 mimedb.add_type('application/x-rpm', '.rpm', strict=False)
 mimedb.add_type('application/x-debian-package', '.deb', strict=False)
 mimedb.add_type('application/x-ace', '.ace', strict=False)
+# Since .a is already a common type, strict=True must be used.
+mimedb.add_type('application/x-archive', '.a', strict=True)
 
 
 class PatoolError (StandardError):
@@ -190,6 +192,7 @@ FileText2Mime = {
     "Zip archive data": "application/zip",
     "compress'd data": "application/x-compress",
     "lzip compressed data": "application/x-lzip",
+    "current ar archive": "application/x-archive",
 }
 
 def guess_mime_file (file_prog, filename):

@@ -23,7 +23,8 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
 ArchiveFormats = ('gzip', 'bzip2', 'tar', 'zip', 'compress', '7z', 'rar',
-  'cab', 'arj', 'cpio', 'rpm', 'deb', 'lzop', 'lzma', 'xz', 'lzip', 'ace')
+  'cab', 'arj', 'cpio', 'rpm', 'deb', 'lzop', 'lzma', 'xz', 'lzip', 'ace',
+  'ar')
 
 # Supported encodings (used with tar for example)
 # Note that all encodings must also be archive formats
@@ -52,6 +53,7 @@ ArchiveMimetypes = {
     'application/x-xz': 'xz',
     'application/x-lzip': 'lzip',
     'application/x-ace': 'ace',
+    'application/x-archive': 'ar',
 }
 
 # List of programs supporting the given encoding
@@ -72,6 +74,9 @@ ArchivePrograms = {
         'extract': ('unace',),
         'test': ('unace',),
         'list': ('unace',),
+    },
+    'ar': {
+        None: ('ar',),
     },
     'bzip2': {
         'extract': ('pbzip2', 'bzip2', '7z'),

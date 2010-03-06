@@ -7,6 +7,7 @@
   * Fix permissions of extracted files: make them readable by the
     current user.
   * Added support for ACE (.ace) archives.
+  * Added support for AR (.a) archives.
 
 0.5 "Vanishing Point" (released 4.3.2010)
 

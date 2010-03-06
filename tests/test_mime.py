@@ -88,3 +88,5 @@ class TestMime (unittest.TestCase):
         self.mime_test("t.zip.foo", "application/zip", None)
         self.mime_test("t.ace", "application/x-ace", None)
         self.mime_test("t.ace.foo", "application/x-ace", None)
+        self.mime_test("t.a", "application/x-archive", None)
+        self.mime_test("t.a.foo", "application/x-archive", None)

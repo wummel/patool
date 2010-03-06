@@ -1,2 +1,1 @@
-- Support ar archives.
 - Support lha archives.
