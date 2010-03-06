@@ -3,6 +3,7 @@
   * Remove the --force option. Local files are now never overwritten.
   * Added option alias -v for --verbose.
   * Added --verbose option to create command.
+  * Added support for Extract, list and test multiple archives.
 
 0.5 "Vanishing Point" (released 4.3.2010)
 

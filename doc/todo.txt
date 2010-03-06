@@ -1,2 +1,1 @@
-- Add ability to extract multiple archives.
 - fix permissions (unreadable files) in extracted files (honor umask)

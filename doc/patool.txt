@@ -25,7 +25,7 @@ DESCRIPTION
        archive formats (for example bzip2 for BZIP2 archives).
 
 EXAMPLES
-         patool extract archive.zip
+         patool extract archive.zip otherarchive.rar
          patool test --verbose dist.tar.gz
          patool list package.deb
          patool create --verbose myfiles.zip file1.txt dir/

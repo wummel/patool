@@ -22,37 +22,49 @@ if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
     raise SystemExit("This program requires Python 2.4 or later.")
 from patoolib import handle_archive, list_formats, baker
 
-@baker.command(default=True, shortopts={"verbose": "v"}, params={
-    "verbose": "Be verbose when extracting (if the helper application supports it)."
-})
-def extract (archive, verbose=False):
-    """Extract files from archives."""
-    return handle_archive(archive, 'extract')
+# parameter help and short options
+params = {
+    "verbose": "Verbose operation (if the helper application supports it).",
+}
+shortopts = {"verbose": "v"}
 
 
-@baker.command(shortopts={"verbose": "v"}, params={
-    "verbose": "Verbose archive listing (if the helper application supports it).",
-})
-def list (archive, verbose=False):
-    """List files in an archive."""
-    return handle_archive(archive, 'list')
+def handle_multi_archive(archives, cmd, **kwargs):
+    """Handle a multi-archive command."""
+    res = 0
+    for archive in archives:
+        newres = handle_archive(archive, cmd, **kwargs)
+        # return error if one of the archives could not be extracted
+        if newres:
+            res = newres
+    return res
 
 
-@baker.command(shortopts={"verbose": "v"}, params={
-    "verbose": "Verbose archive listing (if the helper application supports it).",
-})
-def create (archive, file1, *files, **kwargs):
-    """Create an archive from given files."""
-    allfiles = (file1,)+files
-    return handle_archive(archive, 'create', *allfiles, **kwargs)
+@baker.command(default=True, shortopts=shortopts, params=params)
+def extract (archive, *archives, **kwargs):
+    """Extract files from archive(s)."""
+    return handle_multi_archive((archive,)+archives, 'extract', **kwargs)
+
+
+@baker.command(shortopts=shortopts, params=params)
+def list (archive, *archives, **kwargs):
+    """List files in archive(s)."""
+    return handle_multi_archive((archive,)+archives, 'list', **kwargs)
+
+
+@baker.command(shortopts=shortopts, params=params)
+def test (archive, *archives, **kwargs):
+    """Test files in archive(s)."""
+    return handle_multi_archive((archive,)+archives, 'test', **kwargs)
 
 
 @baker.command(shortopts={"verbose": "v"}, params={
     "verbose": "Verbose operation (if the helper application supports it).",
 })
-def test (archive, verbose=False):
-    """Test files in an archive."""
-    return handle_archive(archive, 'test', verbose=verbose)
+def create (archive, file1, *files, **kwargs):
+    """Create an archive from given files."""
+    allfiles = (file1,)+files
+    return handle_archive(archive, 'create', *allfiles, **kwargs)
 
 
 @baker.command
