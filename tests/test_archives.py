@@ -290,3 +290,8 @@ class TestArchives (ArchiveTest):
     def test_lha (self):
         self.program = 'lha'
         self.archive_commands('t.lha')
+
+    @needs_program('arc')
+    def test_arc (self):
+        self.program = 'arc'
+        self.archive_commands('t.arc', singlefile=True)

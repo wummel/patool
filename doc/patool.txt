@@ -18,12 +18,12 @@ DESCRIPTION
        The  archive format is determined by the file(1) program and as a fall‐
        back by the archive file extension.
 
-       patool supports 7z (.7z),  ACE  (.ace),  ALZIP  (.alz),  AR  (.a),  ARJ
-       (.arj),  BZIP2  (.bz2),  CAB  (.cab),  compress (.Z), CPIO (.cpio), DEB
-       (.deb), GZIP (.gz), LZH (.lha, .lzh), LZIP (.lz),  LZMA  (.lzma),  LZOP
-       (.lzo),  RPM  (.rpm),  RAR  (.rar), TAR (.tar), XZ (.xz) and ZIP (.zip,
-       .jar) formats.  It relies on helper applications to  handle  those  ar‐
-       chive formats (for example bzip2 for BZIP2 archives).
+       patool supports 7z (.7z),  ACE  (.ace),  ALZIP  (.alz),  AR  (.a),  ARC
+       (.arc),  ARJ  (.arj),  BZIP2  (.bz2),  CAB  (.cab), compress (.Z), CPIO
+       (.cpio), DEB (.deb), GZIP (.gz), LZH (.lha,  .lzh),  LZIP  (.lz),  LZMA
+       (.lzma),  LZOP (.lzo), RPM (.rpm), RAR (.rar), TAR (.tar), XZ (.xz) and
+       ZIP (.zip, .jar) formats.  It relies on helper applications  to  handle
+       those archive formats (for example bzip2 for BZIP2 archives).
 
 EXAMPLES
          patool extract archive.zip otherarchive.rar

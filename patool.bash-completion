@@ -23,21 +23,10 @@ _patool()
 
 		if [[ "$cur" == -* ]]; then
 			# possible options for the command
+			options=''
 			case $command in
-				extract)
-					options='--verbose --force'
-					;;
-				list)
+				extract|list|test|create)
 					options='--verbose'
-					;;
-				test)
-					options='--verbose'
-					;;
-				create)
-					options='--verbose --force'
-					;;
-				formats)
-					options=''
 					;;
 			esac
 			options="$options --help"

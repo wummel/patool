@@ -22,13 +22,13 @@ from patoolib import util
 ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
-ArchiveFormats = ('gzip', 'bzip2', 'tar', 'zip', 'compress', '7z', 'rar',
-  'cab', 'arj', 'cpio', 'rpm', 'deb', 'lzop', 'lzma', 'xz', 'lzip', 'ace',
-  'ar', 'lzh', 'alzip')
+ArchiveFormats = ('7z', 'ace', 'alzip', 'ar', 'arc', 'arj', 'bzip2',
+    'cab', 'compress', 'cpio', 'deb', 'gzip', 'lzh', 'lzip', 'lzma',
+    'lzop', 'rar', 'rpm', 'tar', 'xz', 'zip')
 
 # Supported encodings (used with tar for example)
 # Note that all encodings must also be archive formats
-ArchiveEncodings = ('gzip', 'bzip2', 'compress', 'lzma', 'xz', 'lzip')
+ArchiveEncodings = ('bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz')
 
 # Map MIME types to archive format
 ArchiveMimetypes = {
@@ -57,6 +57,7 @@ ArchiveMimetypes = {
     'application/x-lha': 'lzh',
     'application/x-lzh': 'lzh',
     'application/x-alzip': 'alzip',
+    'application/x-arc': 'arc',
 }
 
 # List of programs supporting the given encoding
@@ -85,6 +86,9 @@ ArchivePrograms = {
     },
     'ar': {
         None: ('ar',),
+    },
+    'arc': {
+        None: ('arc',),
     },
     'bzip2': {
         'extract': ('pbzip2', 'bzip2', '7z'),
@@ -393,15 +397,23 @@ def _handle_archive (archive, command, *args, **kwargs):
     # prepare func() call arguments
     kwargs = dict(verbose=config['verbose'])
     outdir = None
+    origarchive = None
     if command == 'extract':
         outdir = util.tmpdir(dir=os.getcwd())
         kwargs['outdir'] = outdir
+    elif command == 'create' and os.path.basename(program) == 'arc' and \
+         ".arc" in archive and not archive.endswith(".arc"):
+        # the arc program mangles the archive name if it contains ".arc"
+        origarchive = archive
+        archive = util.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
     try:
         cmdlist = get_archive_cmdlist(archive, encoding, program, *args, **kwargs)
         run_archive_cmdlist(cmdlist)
         if command == 'extract':
             target = cleanup_outdir(archive, outdir)
             print "%s: extracted to %s" % (archive, target)
+        elif command == 'create' and origarchive:
+            shutil.move(archive, origarchive)
     finally:
         if outdir:
             try:

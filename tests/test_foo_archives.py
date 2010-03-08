@@ -335,3 +335,8 @@ class TestArchives (ArchiveTest):
     #    self.archive_test('t.alz.foo')
     #    self.archive_list('t.alz.foo')
     #    self.archive_extract('t.alz.foo')
+
+    @needs_program('arc')
+    def test_arc (self):
+        self.program = 'arc'
+        self.archive_commands('t.arc.foo', format="arc", singlefile=True)

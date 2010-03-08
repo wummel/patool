@@ -43,6 +43,7 @@ mimedb.add_type('application/x-ace', '.ace', strict=False)
 # Since .a is already a common type, strict=True must be used.
 mimedb.add_type('application/x-archive', '.a', strict=True)
 mimedb.add_type('application/x-alzip', '.alz', strict=False)
+mimedb.add_type('application/x-arc', '.arc', strict=False)
 
 
 class PatoolError (StandardError):
@@ -199,6 +200,7 @@ FileText2Mime = {
     "lzip compressed data": "application/x-lzip",
     "current ar archive": "application/x-archive",
     "LHa ": "application/x-lha",
+    "ARC archive data": "application/x-arc",
 }
 
 def guess_mime_file_text (file_prog, filename):
@@ -243,6 +245,11 @@ def set_mode (filename, flags):
 def tmpdir (dir=None):
     """Return a temporary directory for extraction."""
     return tempfile.mkdtemp(suffix='', prefix='Unpack_', dir=dir)
+
+
+def tmpfile (dir=None, prefix="temp", suffix=None):
+    """Return a temporary file."""
+    return tempfile.mkstemp(suffix=suffix, prefix=prefix, dir=dir)[1]
 
 
 def shell_quote (value):
