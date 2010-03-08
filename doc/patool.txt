@@ -20,10 +20,11 @@ DESCRIPTION
 
        patool supports 7z (.7z),  ACE  (.ace),  ALZIP  (.alz),  AR  (.a),  ARC
        (.arc),  ARJ  (.arj),  BZIP2  (.bz2),  CAB  (.cab), compress (.Z), CPIO
-       (.cpio), DEB (.deb), GZIP (.gz), LZH (.lha,  .lzh),  LZIP  (.lz),  LZMA
-       (.lzma),  LZOP (.lzo), RPM (.rpm), RAR (.rar), TAR (.tar), XZ (.xz) and
-       ZIP (.zip, .jar) formats.  It relies on helper applications  to  handle
-       those archive formats (for example bzip2 for BZIP2 archives).
+       (.cpio), DEB (.deb), GZIP (.gz), LRZIP (.lrz), LZH (.lha,  .lzh),  LZIP
+       (.lz),  LZMA  (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar), TAR (.tar),
+       XZ (.xz) and ZIP (.zip, .jar) formats.  It relies  on  helper  applica‐
+       tions  to handle those archive formats (for example bzip2 for BZIP2 ar‐
+       chives).
 
 EXAMPLES
          patool extract archive.zip otherarchive.rar
@@ -35,19 +36,19 @@ COMMANDS
        Several commands and options are available.
 
    extract
-       Extract  files  from an archive. This is the default command if no com‐
+       Extract files from an archive. This is the default command if  no  com‐
        mand was given.
-       Often one wants to extract all files in an archive to a  single  subdi‐
-       rectory.   However,  some archives contain multiple files in their root
+       Often  one  wants to extract all files in an archive to a single subdi‐
+       rectory.  However, some archives contain multiple files in  their  root
        directories.  The  patool  program  overcomes  this  problem  by  first
        extracting files to a unique (temporary) directory, and then moving its
-       contents back if possible. This also prevents local  files  from  being
+       contents  back  if  possible. This also prevents local files from being
        overwritten by mistake.
-       All  extracted  files are checked that they are readable by the current
+       All extracted files are checked that they are readable by  the  current
        user.
 
        -v, --verbose
-              Be verbose when extracting (if the helper  application  supports
+              Be  verbose  when extracting (if the helper application supports
               it).
 
        --help Show help for this command.
@@ -61,7 +62,7 @@ COMMANDS
        --help Show help for this command.
 
    create
-       Create  an  archive from given files. At least on of the given files to
+       Create an archive from given files. At least on of the given  files  to
        add to the archive has to exist.
 
        -v, --verbose

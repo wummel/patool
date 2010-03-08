@@ -1,6 +1,7 @@
-0.7 "" (released xx.xx.xxxx)
+0.7 "3000 Miles to Graceland" (released 8.3.2010)
 
   * Added support for ALZIP (.alz) archives.
+  * Added support for LRZIP (.lrz) archives.
   * Added support for ARC (.arc) archives.
 
 0.6 "Waking Ned" (released 6.3.2010)
