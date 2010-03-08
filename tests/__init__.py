@@ -44,12 +44,13 @@ class ArchiveTest (unittest.TestCase):
         archive = os.path.join(datadir, filename)
         # create a temporary directory for extraction
         tmpdir = patoolib.util.tmpdir(dir=basedir)
+        olddir = os.getcwd()
         os.chdir(tmpdir)
         try:
             patoolib._handle_archive(archive, 'extract', program=self.program)
             patoolib._handle_archive(archive, 'extract', program=self.program, verbose=True)
         finally:
-            os.chdir(basedir)
+            os.chdir(olddir)
             shutil.rmtree(tmpdir)
 
     def archive_list (self, filename):
