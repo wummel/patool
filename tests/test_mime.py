@@ -26,8 +26,12 @@ class TestMime (unittest.TestCase):
         given function."""
         archive = os.path.join(datadir, filename)
         file_mime, file_encoding = func(archive)
-        fail_msg = "MIME type for archive `%s' should be (%s, %s), but was (%s, %s)" % (filename, mime, encoding, file_mime, file_encoding)
-        self.assertEqual((file_mime, file_encoding), (mime, encoding), fail_msg)
+        fail_msg = "%s for archive `%s' should be %s, but was %s"
+        if isinstance(mime, tuple):
+            self.assertTrue(file_mime in mime, fail_msg % ("MIME type", filename, "in %s" % str(mime), file_mime))
+        else:
+            self.assertEqual(file_mime, mime, fail_msg % ("MIME type", filename, mime, file_mime))
+        self.assertEqual(file_encoding, encoding, fail_msg % ("Encoding", filename, encoding, file_encoding))
 
     def mime_test_file (self, filename, mime, encoding):
         """Test that file has given mime and encoding as determined by
@@ -127,8 +131,8 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.lzma", "application/x-lzma", None)
         self.mime_test_mimedb("t.txt.lz", "application/x-lzip", None)
         self.mime_test_mimedb("t.lzo", "application/x-lzop", None)
-        self.mime_test_mimedb("t.rar", "application/rar", None)
-        self.mime_test_mimedb("t.rpm", "application/x-redhat-package-manager", None)
+        self.mime_test_mimedb("t.rar", ("application/rar", "application/x-rar"), None)
+        self.mime_test_mimedb("t.rpm", ("application/x-redhat-package-manager", "application/x-rpm"), None)
         self.mime_test_mimedb("t.tar", "application/x-tar", None)
         self.mime_test_mimedb("t.tar.bz2", "application/x-tar", "bzip2")
         self.mime_test_mimedb("t.tar.gz", "application/x-tar", "gzip")
