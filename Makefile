@@ -20,10 +20,16 @@ chmod:
 dist:
 	git archive --format=tar --prefix=patool-$(VERSION)/ HEAD | gzip -9 > ../$(ARCHIVE)
 	sha1sum ../$(ARCHIVE) > ../$(ARCHIVE).sha1
+	[ ! -f ../$(ARCHIVE).asc ] && gpg --detach-sign --armor ../$(ARCHIVE)
 #	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
 
+.PHONY: upload
+upload:
+	rsync -avP -e ssh ../$(ARCHIVE)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
+
+
 .PHONY: release
-release: clean releasecheck dist
+release: clean releasecheck dist upload
 	@echo "Register at Python Package Index..."
 	python setup.py register
 
