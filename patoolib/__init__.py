@@ -89,6 +89,9 @@ ArchivePrograms = {
     },
     'arc': {
         None: ('arc',),
+        'extract': ('nomarch',),
+        'test': ('nomarch',),
+        'list': ('nomarch',),
     },
     'bzip2': {
         'extract': ('pbzip2', 'bzip2', '7z'),
