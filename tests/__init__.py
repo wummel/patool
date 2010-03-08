@@ -105,6 +105,18 @@ class ArchiveTest (unittest.TestCase):
             shutil.rmtree(tmpdir)
 
 
+def needs_os (name):
+    """Decorator skipping test if given program is not available."""
+    def check_prog (f):
+        def newfunc (*args, **kwargs):
+            if os.name != name:
+                raise nose.SkipTest("operating system %s not found" % name)
+            return f(*args, **kwargs)
+        newfunc.func_name = f.func_name
+        return newfunc
+    return check_prog
+
+
 def needs_program (program):
     """Decorator skipping test if given program is not available."""
     def check_prog (f):

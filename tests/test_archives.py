@@ -213,6 +213,7 @@ class TestArchives (ArchiveTest):
         self.program = 'arj'
         self.archive_commands('t.arj')
 
+    @needs_os('posix')
     @needs_program('ar')
     def test_ar (self):
         self.program = 'ar'

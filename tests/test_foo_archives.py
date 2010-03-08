@@ -243,6 +243,7 @@ class TestArchives (ArchiveTest):
         self.program = 'arj'
         self.archive_commands('t.arj.foo', format="arj")
 
+    @needs_os('posix')
     @needs_program('file')
     @needs_program('ar')
     def test_ar (self):
