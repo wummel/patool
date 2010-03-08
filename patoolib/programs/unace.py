@@ -17,13 +17,11 @@
 
 def extract_ace (archive, encoding, cmd, **kwargs):
     """Extract a ACE archive."""
-    cmdlist = [cmd]
-    cmdlist.append('x')
+    cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
         cmdlist.append('-c-')
     cmdlist.extend([archive, kwargs['outdir']])
     return cmdlist
-
 
 def list_ace (archive, encoding, cmd, **kwargs):
     """List a ACE archive."""
@@ -33,15 +31,13 @@ def list_ace (archive, encoding, cmd, **kwargs):
     else:
         cmdlist.append('l')
         cmdlist.append('-c-')
-    cmdlist.extend([archive])
+    cmdlist.append(archive)
     return cmdlist
-
 
 def test_ace (archive, encoding, cmd, **kwargs):
     """Test a ACE archive."""
-    cmdlist = [cmd]
-    cmdlist.append('t')
+    cmdlist = [cmd, 't']
     if not kwargs['verbose']:
         cmdlist.append('-c-')
-    cmdlist.extend([archive])
+    cmdlist.append(archive)
     return cmdlist

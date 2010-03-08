@@ -18,13 +18,9 @@ from patoolib import util
 
 def extract_cpio (archive, encoding, cmd, **kwargs):
     """Extract a CPIO archive."""
-    cmdlist = [cmd]
-    cmdlist.append('--extract')
-    cmdlist.append('--make-directories')
-    cmdlist.append('--preserve-modification-time')
-    cmdlist.append('--no-absolute-filenames')
-    cmdlist.append('--force-local')
-    cmdlist.extend(['--nonmatching', '"*\.\.*"'])
+    cmdlist = [cmd, '--extract', '--make-directories',
+        '--preserve-modification-time', '--no-absolute-filenames',
+        '--force-local', '--nonmatching', '"*\.\.*"']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['<', archive])
@@ -34,8 +30,7 @@ def extract_cpio (archive, encoding, cmd, **kwargs):
 
 def list_cpio (archive, encoding, cmd, **kwargs):
     """List a CPIO archive."""
-    cmdlist = [cmd]
-    cmdlist.append('-t')
+    cmdlist = [cmd, '-t']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['-F', archive])

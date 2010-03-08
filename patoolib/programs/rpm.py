@@ -17,8 +17,7 @@
 
 def list_rpm (archive, encoding, cmd, **kwargs):
     """List a RPM archive."""
-    cmdlist = [cmd]
-    cmdlist.extend(['-q', '-l'])
+    cmdlist = [cmd, '-q', '-l']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['-p', '--', archive])
@@ -26,8 +25,7 @@ def list_rpm (archive, encoding, cmd, **kwargs):
 
 def test_rpm (archive, encoding, cmd, **kwargs):
     """Test a RPM archive."""
-    cmdlist = [cmd]
-    cmdlist.append('-V')
+    cmdlist = [cmd, 'V']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['-p', '--', archive])

@@ -17,8 +17,7 @@
 
 def extract_rar (archive, encoding, cmd, **kwargs):
     """Extract a RAR archive."""
-    cmdlist = [cmd]
-    cmdlist.append('x')
+    cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
         cmdlist.append('-c-')
     cmdlist.extend(['-r', '--', archive, kwargs['outdir']])
@@ -37,8 +36,7 @@ def list_rar (archive, encoding, cmd, **kwargs):
 
 def test_rar (archive, encoding, cmd, **kwargs):
     """Test a RAR archive."""
-    cmdlist = [cmd]
-    cmdlist.append('t')
+    cmdlist = [cmd, 't']
     if not kwargs['verbose']:
         cmdlist.append('-c-')
     cmdlist.extend(['--', archive])

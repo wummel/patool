@@ -19,21 +19,18 @@ from patoolib import util
 
 def extract_lzop (archive, encoding, cmd, **kwargs):
     """Extract a LZOP archive."""
-    cmdlist = [cmd]
-    cmdlist.extend(['-c', '-d'])
+    cmdlist = [cmd, '-c', '-d']
     if kwargs['verbose']:
         cmdlist.append('--verbose')
-    cmdlist.append('--')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend([archive, '>', outfile])
+    cmdlist.extend(['--', archive, '>', outfile])
     # note that for shell calls the command must be a string
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
     return (cmd, {'shell': True})
 
 def list_lzop (archive, encoding, cmd, **kwargs):
     """List a LZOP archive."""
-    cmdlist = [cmd]
-    cmdlist.append('--list')
+    cmdlist = [cmd, '--list']
     if kwargs['verbose']:
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
@@ -41,8 +38,7 @@ def list_lzop (archive, encoding, cmd, **kwargs):
 
 def test_lzop (archive, encoding, cmd, **kwargs):
     """Test a LZOP archive."""
-    cmdlist = [cmd]
-    cmdlist.append('--test')
+    cmdlist = [cmd, '--test']
     if kwargs['verbose']:
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
@@ -53,7 +49,6 @@ def create_lzop (archive, encoding, cmd, *args, **kwargs):
     cmdlist = [cmd]
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['-o', archive])
-    cmdlist.append('--')
+    cmdlist.extend(['-o', archive, '--'])
     cmdlist.extend(args)
     return cmdlist

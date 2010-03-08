@@ -39,7 +39,6 @@ def create_tar (archive, encoding, cmd, *args, **kwargs):
     cmdlist.extend(args)
     return cmdlist
 
-
 def add_tar_opts (cmdlist, encoding, verbose):
     if encoding == 'lzip':
         # use compress-program option

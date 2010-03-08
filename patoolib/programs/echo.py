@@ -21,7 +21,6 @@ def list_bzip2 (archive, encoding, cmd, **kwargs):
     """List a BZIP2 archive."""
     return stripext(cmd, archive)
 
-
 def list_compress (archive, encoding, cmd, **kwargs):
     """List a compress archive."""
     return stripext(cmd, archive)

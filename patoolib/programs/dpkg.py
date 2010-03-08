@@ -22,17 +22,11 @@ def extract_deb (archive, encoding, cmd, **kwargs):
         cmdlist.append('--vextract')
     else:
         cmdlist.append('--extract')
-    cmdlist.append('--')
-    cmdlist.extend([archive, kwargs['outdir']])
+    cmdlist.extend(['--', archive, kwargs['outdir']])
     return cmdlist
 
 def list_deb (archive, encoding, cmd, **kwargs):
     """List a DEB archive."""
-    cmdlist = [cmd]
-    cmdlist.append('--contents')
-    cmdlist.append('--')
-    cmdlist.extend([archive])
-    return cmdlist
+    return [cmd, '--contents', '--', archive]
 
 test_deb = list_deb
-

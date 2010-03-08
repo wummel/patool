@@ -17,13 +17,10 @@
 
 def extract_7z (archive, encoding, cmd, **kwargs):
     """Extract a 7z archive."""
-    cmdlist = [cmd]
-    cmdlist.append('x')
+    cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
         cmdlist.append('-bd')
-    cmdlist.extend(['-o%s' % kwargs['outdir']])
-    cmdlist.append('--')
-    cmdlist.append(archive)
+    cmdlist.extend(['-o%s' % kwargs['outdir'], '--', archive])
     return cmdlist
 
 extract_bzip2 = \
@@ -40,8 +37,7 @@ extract_bzip2 = \
 
 def list_7z (archive, encoding, cmd, **kwargs):
     """List a 7z archive."""
-    cmdlist = [cmd]
-    cmdlist.append('l')
+    cmdlist = [cmd, 'l']
     if not kwargs['verbose']:
         cmdlist.append('-bd')
     cmdlist.append('--')
@@ -63,8 +59,7 @@ list_bzip2 = \
 
 def test_7z (archive, encoding, cmd, **kwargs):
     """Test a 7z archive."""
-    cmdlist = [cmd]
-    cmdlist.append('t')
+    cmdlist = [cmd, 't']
     if not kwargs['verbose']:
         cmdlist.append('-bd')
     cmdlist.append('--')
@@ -86,8 +81,7 @@ test_bzip2 = \
 
 def create_7z (archive, encoding, cmd, *args, **kwargs):
     """Create a 7z archive."""
-    cmdlist = [cmd]
-    cmdlist.append('a')
+    cmdlist = [cmd, 'a']
     if not kwargs['verbose']:
         cmdlist.append('-bd')
     cmdlist.append('--')

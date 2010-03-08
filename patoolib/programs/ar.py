@@ -17,31 +17,25 @@
 
 def extract_ar (archive, encoding, cmd, **kwargs):
     """Extract a AR archive."""
-    cmdlist = [cmd]
     opts = 'x'
     if kwargs['verbose']:
         opts += 'v'
-    cmdlist.extend([opts, archive, kwargs['outdir']])
-    return cmdlist
+    return [cmd, opts, archive, kwargs['outdir']]
 
 def list_ar (archive, encoding, cmd, **kwargs):
     """List a AR archive."""
-    cmdlist = [cmd]
     opts = 't'
     if kwargs['verbose']:
         opts += 'v'
-    cmdlist.extend([opts, archive])
-    return cmdlist
+    return [cmd, opts, archive]
 
 test_ar = list_ar
 
 def create_ar (archive, encoding, cmd, *args, **kwargs):
     """Create a AR archive."""
-    cmdlist = [cmd]
     opts = 'rc'
     if kwargs['verbose']:
         opts += 'v'
-    cmdlist.extend([opts, archive])
+    cmdlist = [cmd, opts, archive]
     cmdlist.extend(args)
     return cmdlist
-

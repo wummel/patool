@@ -17,13 +17,11 @@
 
 def extract_lzh (archive, encoding, cmd, **kwargs):
     """Extract a LZH archive."""
-    cmdlist = [cmd]
     opts = 'x'
     if kwargs['verbose']:
         opts += 'v'
     opts += "w=%s" % kwargs['outdir']
-    cmdlist.extend([opts, archive])
-    return cmdlist
+    return [cmd, opts, archive]
 
 def list_lzh (archive, encoding, cmd, **kwargs):
     """List a LZH archive."""
@@ -37,20 +35,16 @@ def list_lzh (archive, encoding, cmd, **kwargs):
 
 def test_lzh (archive, encoding, cmd, **kwargs):
     """Test a LZH archive."""
-    cmdlist = [cmd]
     opts = 't'
     if kwargs['verbose']:
         opts += 'v'
-    cmdlist.extend([opts, archive])
-    return cmdlist
+    return [cmd, opts, archive]
 
 def create_lzh (archive, encoding, cmd, *args, **kwargs):
     """Create a LZH archive."""
-    cmdlist = [cmd]
     opts = 'a'
     if kwargs['verbose']:
         opts += 'v'
-    cmdlist.extend([opts, archive])
+    cmdlist = [cmd, opts, archive]
     cmdlist.extend(args)
     return cmdlist
-

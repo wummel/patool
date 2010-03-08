@@ -24,8 +24,7 @@ def extract_bzip2 (archive, encoding, cmd, **kwargs):
         cmdlist.append('-v')
     cmdlist.extend(['-c', '-d'])
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.append('--')
-    cmdlist.extend([archive, '>', outfile])
+    cmdlist.extend(['--', archive, '>', outfile])
     # note that for shell calls the command must be a string
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
     return (cmd, {'shell': True})
@@ -36,8 +35,7 @@ def test_bzip2 (archive, encoding, cmd, **kwargs):
     cmdlist = [cmd]
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['-t', '--'])
-    cmdlist.extend([archive])
+    cmdlist.extend(['-t', '--', archive])
     return cmdlist
 
 
@@ -46,8 +44,7 @@ def create_bzip2 (archive, encoding, cmd, *args, **kwargs):
     cmdlist = [cmd]
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-z'])
-    cmdlist.append('--')
+    cmdlist.extend(['-c', '-z', '--'])
     cmdlist.extend(args)
     cmdlist.extend(['>', archive])
     # note that for shell calls the command must be a string

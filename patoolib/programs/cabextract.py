@@ -17,8 +17,7 @@
 
 def extract_cab (archive, encoding, cmd, **kwargs):
     """Extract a CAB archive."""
-    cmdlist = [cmd]
-    cmdlist.extend(['-d', kwargs['outdir']])
+    cmdlist = [cmd, '-d', kwargs['outdir']]
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.append(archive)
@@ -26,16 +25,12 @@ def extract_cab (archive, encoding, cmd, **kwargs):
 
 def list_cab (archive, encoding, cmd, **kwargs):
     """List a CAB archive."""
-    cmdlist = [cmd]
-    cmdlist.append('-l')
+    cmdlist = [cmd, '-l']
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend([archive])
+    cmdlist.append(archive)
     return cmdlist
 
 def test_cab (archive, encoding, cmd, **kwargs):
     """Test a CAB archive."""
-    cmdlist = [cmd]
-    cmdlist.append('-t')
-    cmdlist.extend([archive])
-    return cmdlist
+    return [cmd, '-t', archive]

@@ -22,10 +22,8 @@ def extract_xz (archive, encoding, cmd, **kwargs):
     cmdlist = [cmd]
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-d'])
-    cmdlist.append('--')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend([archive, '>', outfile])
+    cmdlist.extend(['-c', '-d', '--', archive, '>', outfile])
     # note that for shell calls the command must be a string
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
     return (cmd, {'shell': True})
@@ -35,9 +33,7 @@ def test_xz (archive, encoding, cmd, **kwargs):
     cmdlist = [cmd]
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.append('-t')
-    cmdlist.append('--')
-    cmdlist.append(archive)
+    cmdlist.extend(['-t', '--', archive])
     return cmdlist
 
 def create_xz (archive, encoding, cmd, *args, **kwargs):
@@ -52,4 +48,3 @@ def create_xz (archive, encoding, cmd, *args, **kwargs):
     # note that for shell calls the command must be a string
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
     return (cmd, {'shell': True})
-

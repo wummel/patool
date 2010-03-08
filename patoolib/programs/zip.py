@@ -17,9 +17,8 @@
 
 def create_zip (archive, encoding, cmd, *args, **kwargs):
     """Create a ZIP archive."""
-    cmdlist = [cmd]
     # XXX if archive already exists, use zip -u (update)?
-    cmdlist.append('-r')
+    cmdlist = [cmd, '-r']
     if kwargs['verbose']:
         cmdlist.append('--verbose')
     cmdlist.append(archive)

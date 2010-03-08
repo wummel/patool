@@ -25,8 +25,7 @@ def extract_zip (archive, encoding, cmd, **kwargs):
 
 def list_zip (archive, encoding, cmd, **kwargs):
     """List a ZIP archive."""
-    cmdlist = [cmd]
-    cmdlist.append('-l')
+    cmdlist = [cmd, '-l']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['--', archive])
@@ -34,8 +33,7 @@ def list_zip (archive, encoding, cmd, **kwargs):
 
 def test_zip (archive, encoding, cmd, **kwargs):
     """Test a ZIP archive."""
-    cmdlist = [cmd]
-    cmdlist.append('-t')
+    cmdlist = [cmd, '-t']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['--', archive])

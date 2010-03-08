@@ -19,15 +19,10 @@ from patoolib import util
 
 def extract_rpm (archive, encoding, cmd, **kwargs):
     """Extract a DEB archive."""
-    cmdlist = [cmd]
-    cmdlist.extend([os.path.abspath(archive), "|"])
-    cmdlist.append('cpio')
-    cmdlist.append('--extract')
-    cmdlist.append('--make-directories')
-    cmdlist.append('--preserve-modification-time')
-    cmdlist.append('--no-absolute-filenames')
-    cmdlist.append('--force-local')
-    cmdlist.extend(['--nonmatching', '"*\.\.*"'])
+    cmdlist = [cmd, os.path.abspath(archive), "|", 'cpio', '--extract',
+        '--make-directories', '--preserve-modification-time',
+        '--no-absolute-filenames', '--force-local', '--nonmatching',
+        '"*\.\.*"']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])

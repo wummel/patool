@@ -22,9 +22,8 @@ def extract_compress (archive, encoding, cmd, **kwargs):
     cmdlist = [cmd]
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.append('-c')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend([archive, '>', outfile])
+    cmdlist.extend(['-c', archive, '>', outfile])
     # note that for shell calls the command must be a string
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
     return (cmd, {'shell': True})
