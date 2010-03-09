@@ -46,12 +46,12 @@ files without having to remember a myriad of programs and options.
 The archive format is determined by the file(1) program and as a
 fallback by the archive file extension.
 
-patool supports 7z (.7z), ZIP (.zip, .jar), GZIP (.gz), compress  (.Z),
-BZIP2 (.bz2), TAR (.tar), ARJ (.arj), CAB (.cab), CPIO (.cpio), RPM
-(.rpm), DEB (.deb), LZIP (.lz), LZOP (.lzo), LZMA (.lzma), RAR (.rar)
-and XZ (.xz) formats. It relies on helper applications to handle those
-archive formats (for example bzip2 for BZIP2 archives).
-""",
+patool supports 7z (.7z), ACE (.ace), ALZIP (.alz), AR (.a), ARC (.arc),
+ARJ (.arj), BZIP2 (.bz2), CAB (.cab), compress (.Z), CPIO (.cpio),
+DEB (.deb), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh), LZIP (.lz),
+LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar), TAR (.tar), XZ (.xz)
+and ZIP (.zip, .jar) formats. It relies on helper  applications to handle
+those archive formats (for example bzip2 for BZIP2 archives).""",
     author = MyName,
     author_email = MyEmail,
     maintainer = MyName,
