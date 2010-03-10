@@ -48,8 +48,14 @@ class TestBaker (unittest.TestCase):
         self.assertEqual(res, ('argvalue1', 'argvalue2', True))
 
     def test_func_kwargs_params (self):
-        @baker.command(params={"verbose": "Be verbose"})
+        @baker.command(shortopts={"verbose": "v"}, params={"verbose": "Be verbose"})
         def func(*args, **kwargs):
             return kwargs['verbose']
-        res = baker.run(argv=[__file__, 'func', '--verbose'])
+        res = baker.run(argv=[__file__, 'func', '--verbose', 'arg1'])
+        self.assertEqual(res, True)
+        res = baker.run(argv=[__file__, 'func', 'arg1', '--verbose'])
+        self.assertEqual(res, True)
+        res = baker.run(argv=[__file__, 'func', '-v'])
+        self.assertEqual(res, True)
+        res = baker.run(argv=[__file__, 'func', '-v', 'arg1'])
         self.assertEqual(res, True)

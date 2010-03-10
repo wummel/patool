@@ -120,6 +120,7 @@ class Cmd(object):
         self.has_kwargs = has_kwargs
         self.docstring = docstring
         self.paramdocs = paramdocs
+        self.param_keywords = False
 
 
 class Baker(object):
@@ -189,8 +190,10 @@ class Baker(object):
             # Zip up the keyword argument names with their defaults
             keywords = dict(zip(arglist[0-len(defaults):], defaults))
         elif has_kwargs:
-            # allow keyword arguments specified by params
+            # Allow keyword arguments specified by params.
             keywords = dict(zip(params.keys(), [""]*len(params)))
+            # But set a flag to detect this
+            self.param_keywords = True
         else:
             keywords = {}
 
@@ -350,14 +353,14 @@ class Baker(object):
             # Take the next argument
             arg = argv.pop(0)
 
-            if arg == "-":
-                # All arguments following a single hyphen are treated as
+            if arg == "--":
+                # All arguments following a double hyphen are treated as
                 # positional arguments
                 vargs.extend(argv)
                 break
 
-            elif arg == "--":
-                # What to do with a bare --? Right now, it's ignored.
+            elif arg == "-":
+                # What to do with a bare -? Right now, it's ignored.
                 continue
 
             elif arg.startswith("--"):
@@ -384,9 +387,19 @@ class Baker(object):
                         # opposite of the default".
                         value = not default
                     else:
-                        # Option is specified via the params value, assuming
-                        # a True value
-                        value = True
+                        # The next item in the argument list is the value, i.e.
+                        # --keyword value
+                        if not argv or argv[0].startswith("-") or self.param_keywords:
+                            # There isn't a value available, or its derived
+                            # from parameters. Just use True, assuming this
+                            # is a flag.
+                            value = True
+                        else:
+                            value = argv.pop(0)
+                        try:
+                            value = totype(value, default)
+                        except TypeError:
+                            pass
 
                 # Store this option
                 kwargs[name] = value
@@ -411,15 +424,23 @@ class Baker(object):
                         kwargs[name] = not default
                     else:
                         # This option requires a value...
-                        if i == len(arg)-1:
-                            # This is the last character in the list, so the
-                            # next argument on the command line is the value.
-                            value = argv.pop(0)
-                        else:
+                        if self.param_keywords:
+                            # It's derived from parameters. Just use True,
+                            # assuming this is a flag.
+                            value = True
+                        elif i < len(arg)-1:
                             # There are other characters after this one, so
                             # the rest of the characters must represent the
                             # value (i.e. old-style UNIX option like -Nname)
                             value = totype(arg[i+1:], default)
+                        elif argv:
+                            # This is the last character in the list, so the
+                            # next argument on the command line is the value.
+                            value = argv.pop(0)
+                        else:
+                            # There is no value available. Just use True,
+                            # assuming this is a flag.
+                            value = True
 
                         try:
                             kwargs[name] = totype(value, default)
