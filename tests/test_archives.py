@@ -60,35 +60,35 @@ class TestArchives (ArchiveTest):
         self.program = 'star'
         self.archive_commands('t.tar')
 
-    @needs_codec('tar', 'gzip')
+    @needs_codec('star', 'gzip')
     def test_star_gz (self):
         self.program = 'star'
         self.archive_commands('t.tar.gz')
         self.archive_commands('t.tgz')
 
-    @needs_codec('tar', 'compress')
+    @needs_codec('star', 'compress')
     def test_star_z (self):
         self.program = 'star'
         self.archive_commands('t.tar.Z')
         self.archive_commands('t.taz')
 
-    @needs_codec('tar', 'bzip2')
+    @needs_codec('star', 'bzip2')
     def test_star_bz2 (self):
         self.program = 'star'
         self.archive_commands('t.tar.bz2')
         self.archive_commands('t.tbz2')
 
-    @needs_codec('tar', 'lzma')
+    @needs_codec('star', 'lzma')
     def test_star_lzma (self):
         self.program = 'star'
         self.archive_commands('t.tar.lzma')
 
-    @needs_codec('tar', 'lzip')
+    @needs_codec('star', 'lzip')
     def test_star_lzip (self):
         self.program = 'star'
         self.archive_commands('t.tar.lz')
 
-    @needs_codec('tar', 'xz')
+    @needs_codec('star', 'xz')
     def test_star_xz (self):
         self.program = 'star'
         self.archive_commands('t.tar.xz')
