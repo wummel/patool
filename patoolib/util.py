@@ -45,6 +45,7 @@ mimedb.add_type('application/x-archive', '.a', strict=True)
 mimedb.add_type('application/x-alzip', '.alz', strict=False)
 mimedb.add_type('application/x-arc', '.arc', strict=False)
 mimedb.add_type('application/x-lrzip', '.lrz', strict=False)
+mimedb.add_type('application/x-lha', '.lha', strict=False)
 
 
 class PatoolError (StandardError):
