@@ -64,9 +64,7 @@ def test (archive, *archives, **kwargs):
     return handle_multi_archive((archive,)+archives, 'test', **kwargs)
 
 
-@baker.command(shortopts={"verbose": "v"}, params={
-    "verbose": "Verbose operation (if the helper application supports it).",
-})
+@baker.command(shortopts=shortopts, params=params)
 def create (archive, file1, *files, **kwargs):
     """Create an archive from given files."""
     allfiles = (file1,)+files
