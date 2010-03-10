@@ -46,9 +46,11 @@ class ArchiveTest (unittest.TestCase):
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         olddir = os.getcwd()
         os.chdir(tmpdir)
+        # archive name relative to tmpdir
+        relarchive = os.path.join("..", archive[len(basedir)+1:])
         try:
             patoolib._handle_archive(archive, 'extract', program=self.program)
-            patoolib._handle_archive(archive, 'extract', program=self.program, verbose=True)
+            patoolib._handle_archive(relarchive, 'extract', program=self.program, verbose=True)
         finally:
             os.chdir(olddir)
             shutil.rmtree(tmpdir)
