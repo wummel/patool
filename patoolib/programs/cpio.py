@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the cpio program."""
+import os
 from patoolib import util
 
 def extract_cpio (archive, encoding, cmd, **kwargs):
@@ -23,7 +24,7 @@ def extract_cpio (archive, encoding, cmd, **kwargs):
         '--force-local', '--nonmatching', '"*\.\.*"']
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['<', archive])
+    cmdlist.extend(['<', os.path.abspath(archive)])
     cmd = " ".join([util.shell_quote(x) for x in cmdlist])
     return (cmd, {'cwd': kwargs['outdir'], 'shell': True})
 

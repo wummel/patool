@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lrzip program."""
+import os
 from patoolib import util
 
 def extract_lrzip (archive, encoding, cmd, **kwargs):
@@ -24,7 +25,7 @@ def extract_lrzip (archive, encoding, cmd, **kwargs):
     if kwargs['verbose']:
         cmdlist.append('-v')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(["-o", outfile, archive])
+    cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
     return (cmdlist, {'cwd': kwargs['outdir']})
 
 def test_lrzip (archive, encoding, cmd, **kwargs):

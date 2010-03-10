@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the arc program."""
+import os
 
 def extract_arc (archive, encoding, cmd, **kwargs):
     """Extract a ARC archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
-    cmdlist = [cmd, 'x', archive]
+    cmdlist = [cmd, 'x', os.path.abspath(archive)]
     return (cmdlist, {'cwd': kwargs['outdir']})
 
 def list_arc (archive, encoding, cmd, **kwargs):
