@@ -160,7 +160,6 @@ ArchivePrograms = {
         'create': ('cpio',),
     },
     'rpm': {
-        # XXX rpm2cpio depends on cpio whose availability is not checked
         'extract': ('rpm2cpio', '7z'),
         'list': ('rpm', '7z'),
         'test': ('rpm', '7z'),
@@ -367,19 +366,17 @@ def make_user_readable (directory):
             make_dir_readable(os.path.join(root, dirname))
 
 
-def cleanup_outdir (archive, outdir):
-    """Cleanup outdir after extraction and return target file name."""
+def cleanup_outdir (outdir):
+    """Cleanup outdir after extraction and return target file name and
+    result string."""
     make_user_readable(outdir)
-    if outdir:
-        # move single directory or file in outdir
-        (res, msg) = move_outdir_orphan(outdir)
-        if res:
-            target = "`%s'" % msg
-        else:
-            target = "`%s' (%s)" % (outdir, msg)
-    else:
-        target = "`%s'" % util.stripext(archive)
-    return target
+    # move single directory or file in outdir
+    (success, msg) = move_outdir_orphan(outdir)
+    if success:
+        # msg is a single directory or filename
+        return msg, "`%s'" % msg
+    # outdir remains unchanged
+    return outdir, "`%s' (%s)" % (outdir, msg)
 
 
 def _handle_archive (archive, command, *args, **kwargs):
@@ -404,30 +401,37 @@ def _handle_archive (archive, command, *args, **kwargs):
     # import archive handler (eg. patoolib.programs.star.extract_tar())
     exec "from patoolib.programs.%s import %s_%s as func" % (module, command, format)
     get_archive_cmdlist = locals()['func']
-    # prepare func() call arguments
-    kwargs = dict(verbose=config['verbose'])
-    outdir = None
+    # prepare keyword arguments for command list
+    cmd_kwargs = dict(verbose=config['verbose'])
     origarchive = None
     if command == 'extract':
-        outdir = util.tmpdir(dir=os.getcwd())
-        kwargs['outdir'] = outdir
+        if "outdir" in kwargs:
+            cmd_kwargs["outdir"] = kwargs["outdir"]
+            do_cleanup_outdir = False
+        else:
+            cmd_kwargs['outdir'] = util.tmpdir(dir=os.getcwd())
+            do_cleanup_outdir = True
     elif command == 'create' and os.path.basename(program) == 'arc' and \
          ".arc" in archive and not archive.endswith(".arc"):
         # the arc program mangles the archive name if it contains ".arc"
         origarchive = archive
         archive = util.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
     try:
-        cmdlist = get_archive_cmdlist(archive, encoding, program, *args, **kwargs)
+        cmdlist = get_archive_cmdlist(archive, encoding, program, *args, **cmd_kwargs)
         run_archive_cmdlist(cmdlist)
         if command == 'extract':
-            target = cleanup_outdir(archive, outdir)
-            print "%s: extracted to %s" % (archive, target)
+            if do_cleanup_outdir:
+                target, msg = cleanup_outdir(cmd_kwargs["outdir"])
+                print "%s: extracted to %s" % (archive, msg)
+            else:
+                target, msg = cmd_kwargs["outdir"], "`%s'" % cmd_kwargs["outdir"]
+            return target
         elif command == 'create' and origarchive:
             shutil.move(archive, origarchive)
     finally:
-        if outdir:
+        if command == "extract":
             try:
-                os.rmdir(outdir)
+                os.rmdir(cmd_kwargs["outdir"])
             except OSError:
                 pass
 
@@ -435,7 +439,10 @@ def _handle_archive (archive, command, *args, **kwargs):
 def handle_archive (archive, command, *args, **kwargs):
     """Handle archive file command; with nice error reporting."""
     try:
-        _handle_archive(archive, command, *args, **kwargs)
+        if command == "diff":
+            _diff_archives(archive, args[0])
+        else:
+            _handle_archive(archive, command, *args, **kwargs)
         res = 0
     except util.PatoolError, msg:
         util.log_error(msg)
@@ -444,3 +451,18 @@ def handle_archive (archive, command, *args, **kwargs):
         util.log_internal_error()
         res = 1
     return res
+
+
+def _diff_archives (archive1, archive2):
+    diff = util.find_program("diff")
+    if not diff:
+        raise util.PatoolError("diff(1) is required for showing archive differences, please install it")
+    tmpdir1 = util.tmpdir(dir=os.getcwd())
+    tmpdir2 = util.tmpdir(dir=os.getcwd())
+    try:
+        dir1 = _handle_archive(archive1, 'extract', outdir=tmpdir1)
+        dir2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
+        util.run([diff, "-BurN", dir1, dir2])
+    finally:
+        shutil.rmtree(tmpdir1, onerror=util.log_error)
+        shutil.rmtree(tmpdir2, onerror=util.log_error)

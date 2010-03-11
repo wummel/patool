@@ -3,6 +3,8 @@
   * Fix path error by using absolute pathname for archive when changing
     the current working directory to the unpack directory.
   * Fix parsing of the "-v" short option.
+  * Added new command "patool diff" to show differences between two
+    archives.
 
 0.7 "3000 Miles to Graceland" (released 8.3.2010)
 

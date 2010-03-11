@@ -9,7 +9,7 @@ _patool()
 	COMPREPLY=()
 	cur=`_get_cword`
 
-	commands='extract list test create formats'
+	commands='extract list test create diff formats'
 
 	if [[ $COMP_CWORD -eq 1 ]] ; then
 		if [[ "$cur" == -* ]]; then

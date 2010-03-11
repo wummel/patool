@@ -8,6 +8,7 @@ NAME
 SYNOPSIS
         patool (extract|list|test) [options] <archive-file>...
         patool create [options] <archive-file> [files...]
+        patool diff [options] <archive1> <archive2>
         patool formats [options]
 
 DESCRIPTION
@@ -31,6 +32,7 @@ EXAMPLES
          patool test --verbose dist.tar.gz
          patool list package.deb
          patool create --verbose myfiles.zip file1.txt dir/
+         patool diff release1.0.tar.gz release2.0.zip
 
 COMMANDS
        Several commands and options are available.
@@ -75,6 +77,11 @@ COMMANDS
 
        -v, --verbose
               Verbose archive testing (if the helper application supports it).
+
+       --help Show help for this command.
+
+   diff
+       Show differences between two archives.
 
        --help Show help for this command.
 

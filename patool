@@ -70,6 +70,10 @@ def create (archive, file1, *files, **kwargs):
     allfiles = (file1,)+files
     return handle_archive(archive, 'create', *allfiles, **kwargs)
 
+@baker.command
+def diff (archive1, archive2):
+    """Show differences between two archives."""
+    return handle_archive(archive1, "diff", archive2)
 
 @baker.command
 def formats ():
