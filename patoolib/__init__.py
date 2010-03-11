@@ -444,6 +444,9 @@ def handle_archive (archive, command, *args, **kwargs):
         else:
             _handle_archive(archive, command, *args, **kwargs)
         res = 0
+    except KeyboardInterrupt, msg:
+        util.log_info("aborted")
+        res = 1
     except util.PatoolError, msg:
         util.log_error(msg)
         res = 1
@@ -457,8 +460,8 @@ def _diff_archives (archive1, archive2):
     diff = util.find_program("diff")
     if not diff:
         raise util.PatoolError("diff(1) is required for showing archive differences, please install it")
-    tmpdir1 = util.tmpdir(dir=os.getcwd())
-    tmpdir2 = util.tmpdir(dir=os.getcwd())
+    tmpdir1 = util.tmpdir()
+    tmpdir2 = util.tmpdir()
     try:
         dir1 = _handle_archive(archive1, 'extract', outdir=tmpdir1)
         dir2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
