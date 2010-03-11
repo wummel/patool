@@ -8,7 +8,8 @@ NAME
 SYNOPSIS
         patool (extract|list|test) [options] <archive-file>...
         patool create [options] <archive-file> [files...]
-        patool diff [options] <archive1> <archive2>
+        patool diff <archive1> <archive2>
+        patool repack <archive1> <archive2>
         patool formats [options]
 
 DESCRIPTION
@@ -33,6 +34,7 @@ EXAMPLES
          patool list package.deb
          patool create --verbose myfiles.zip file1.txt dir/
          patool diff release1.0.tar.gz release2.0.zip
+         patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 
 COMMANDS
        Several commands and options are available.
@@ -82,6 +84,11 @@ COMMANDS
 
    diff
        Show differences between two archives.
+
+       --help Show help for this command.
+
+   repack
+       Repackage archive to a different format.
 
        --help Show help for this command.
 

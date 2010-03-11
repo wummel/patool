@@ -441,6 +441,8 @@ def handle_archive (archive, command, *args, **kwargs):
     try:
         if command == "diff":
             res = _diff_archives(archive, args[0])
+        elif command == "repack":
+            res = _repack_archive(archive, args[0])
         else:
             _handle_archive(archive, command, *args, **kwargs)
             res = 0
@@ -457,15 +459,29 @@ def handle_archive (archive, command, *args, **kwargs):
 
 
 def _diff_archives (archive1, archive2):
+    """Show differences between two archives."""
     diff = util.find_program("diff")
     if not diff:
         raise util.PatoolError("diff(1) is required for showing archive differences, please install it")
     tmpdir1 = util.tmpdir()
     tmpdir2 = util.tmpdir()
     try:
-        dir1 = _handle_archive(archive1, 'extract', outdir=tmpdir1)
-        dir2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
-        return util.run([diff, "-BurN", dir1, dir2])
+        path1 = _handle_archive(archive1, 'extract', outdir=tmpdir1)
+        path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
+        return util.run([diff, "-BurN", path1, path2])
     finally:
         shutil.rmtree(tmpdir1, onerror=util.log_error)
         shutil.rmtree(tmpdir2, onerror=util.log_error)
+
+
+def _repack_archive (archive1, archive2):
+    """Repackage an archive to a different format."""
+    tmpdir = util.tmpdir()
+    try:
+        _handle_archive(archive1, 'extract', outdir=tmpdir)
+        archive = os.path.abspath(archive2)
+        files = tuple(os.listdir(tmpdir))
+        os.chdir(tmpdir)
+        _handle_archive(archive, 'create', *files)
+    finally:
+        shutil.rmtree(tmpdir, onerror=util.log_error)

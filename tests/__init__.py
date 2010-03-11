@@ -131,6 +131,21 @@ def needs_program (program):
     return check_prog
 
 
+def needs_one_program (programs):
+    """Decorator skipping test if not one of given programs are available."""
+    def check_prog (f):
+        def newfunc (*args, **kwargs):
+            for program in programs:
+                if patoolib.util.find_program(program):
+                    break
+            else:
+                raise nose.SkipTest("None of programs %s available" % programs)
+            return f(*args, **kwargs)
+        newfunc.func_name = f.func_name
+        return newfunc
+    return check_prog
+
+
 def needs_codec (program, codec):
     """Decorator skipping test if given program codec is not available."""
     def check_prog (f):

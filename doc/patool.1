@@ -17,7 +17,8 @@ patool - simple manager for file archives of various types
 .SH SYNOPSIS
  \fBpatool\fP (\fBextract\fP|\fBlist\fP|\fBtest\fP) [\fIoptions\fP] <\fIarchive-file\fP>...
  \fBpatool\fP \fBcreate\fP [\fIoptions\fP] <\fIarchive-file\fP> [\fIfiles\fP...]
- \fBpatool\fP \fBdiff\fP [\fIoptions\fP] <\fIarchive1\fP> <\fIarchive2\fP>
+ \fBpatool\fP \fBdiff\fP <\fIarchive1\fP> <\fIarchive2\fP>
+ \fBpatool\fP \fBrepack\fP <\fIarchive1\fP> <\fIarchive2\fP>
  \fBpatool\fP \fBformats\fP [\fIoptions\fP]
 .SH DESCRIPTION
 Various archive types can be created, extracted, tested and listed by
@@ -40,6 +41,7 @@ It relies on helper applications to handle those archive formats
   \fBpatool list package.deb\fP
   \fPpatool create --verbose myfiles.zip file1.txt dir/\fP
   \fBpatool diff release1.0.tar.gz release2.0.zip\fP
+  \fBpatool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2\fP
 .SH COMMANDS
 Several commands and options are available.
 .SS \fBextract\fP
@@ -89,6 +91,11 @@ Verbose archive testing (if the helper application supports it).
 Show help for this command.
 .SS \fBdiff\fP
 Show differences between two archives.
+.TP
+\fB\-\-help\fP
+Show help for this command.
+.SS \fBrepack\fP
+Repackage archive to a different format.
 .TP
 \fB\-\-help\fP
 Show help for this command.

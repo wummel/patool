@@ -5,6 +5,8 @@
   * Fix parsing of the "-v" short option.
   * Added new command "patool diff" to show differences between two
     archives.
+  * Added new command "patool repack" to repackage archives in another
+    format.
 
 0.7 "3000 Miles to Graceland" (released 8.3.2010)
 

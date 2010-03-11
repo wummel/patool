@@ -76,6 +76,11 @@ def diff (archive1, archive2):
     return handle_archive(archive1, "diff", archive2)
 
 @baker.command
+def repack (archive1, archive2):
+    """Repackage one archive in another format."""
+    return handle_archive(archive1, "repack", archive2)
+
+@baker.command
 def formats ():
     """List supported and available archive formats."""
     return list_formats()
