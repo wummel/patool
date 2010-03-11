@@ -86,12 +86,16 @@ def backtick (cmd):
 
 def run (cmd, **kwargs):
     """Run command and raise PatoolError on error."""
+    return subprocess.call(cmd, **kwargs)
+
+
+def run_checked (cmd, **kwargs):
+    """Run command and raise PatoolError on error."""
     retcode = subprocess.call(cmd, **kwargs)
     if retcode:
         msg = "Command `%s' returned non-zero exit status %d" % (cmd, retcode)
         raise PatoolError(msg)
     return retcode
-
 
 @memoized
 def guess_mime (filename):

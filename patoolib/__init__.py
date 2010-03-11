@@ -342,7 +342,7 @@ def run_archive_cmdlist (archive_cmdlist):
         cmdlist, runkwargs = archive_cmdlist
     else:
         cmdlist, runkwargs = archive_cmdlist, {}
-    util.run(cmdlist, **runkwargs)
+    util.run_checked(cmdlist, **runkwargs)
 
 
 def make_file_readable (filename):
@@ -440,10 +440,10 @@ def handle_archive (archive, command, *args, **kwargs):
     """Handle archive file command; with nice error reporting."""
     try:
         if command == "diff":
-            _diff_archives(archive, args[0])
+            res = _diff_archives(archive, args[0])
         else:
             _handle_archive(archive, command, *args, **kwargs)
-        res = 0
+            res = 0
     except KeyboardInterrupt, msg:
         util.log_info("aborted")
         res = 1
@@ -465,7 +465,7 @@ def _diff_archives (archive1, archive2):
     try:
         dir1 = _handle_archive(archive1, 'extract', outdir=tmpdir1)
         dir2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
-        util.run([diff, "-BurN", dir1, dir2])
+        return util.run([diff, "-BurN", dir1, dir2])
     finally:
         shutil.rmtree(tmpdir1, onerror=util.log_error)
         shutil.rmtree(tmpdir2, onerror=util.log_error)
