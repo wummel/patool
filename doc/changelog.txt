@@ -1,4 +1,4 @@
-0.8 "" (released xx.xx.xxxx)
+0.8 "Storage" (released 11.3.2010)
 
   * Fix path error by using absolute pathname for archive when changing
     the current working directory to the unpack directory.
