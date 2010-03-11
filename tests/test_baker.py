@@ -23,29 +23,33 @@ class TestBaker (unittest.TestCase):
         @baker.command
         def func(a, b, c):
             return (a, b, c)
-        res = baker.run(argv=[__file__, 'func', '1', '2', '3'])
-        self.assertEqual(res, ('1', '2', '3'))
+        argv = [__file__, 'func', '1', '2', '3']
+        self.assertEqual(baker.test(argv=argv), "func('1','2','3')")
+        self.assertEqual(baker.run(argv=argv), ('1','2','3'))
 
     def test_func_noargs (self):
         @baker.command
         def func():
             return 42
-        res = baker.run(argv=[__file__, 'func'])
-        self.assertEqual(res, 42)
+        argv = [__file__, 'func']
+        self.assertEqual(baker.test(argv=argv), "func()")
+        self.assertEqual(baker.run(argv=argv), 42)
 
     def test_func_kwargs (self):
         @baker.command
         def func(arg1, arg2, *args, **kwargs):
             return arg1, arg2, kwargs['verbose']
-        res = baker.run(argv=[__file__, 'func', 'argvalue1', 'argvalue2', '--verbose'])
-        self.assertEqual(res, ('argvalue1', 'argvalue2', True))
+        argv = [__file__, 'func', 'argvalue1', 'argvalue2', '--verbose']
+        self.assertEqual(baker.test(argv=argv), "func('argvalue1','argvalue2',verbose=True)")
+        self.assertEqual(baker.run(argv=argv), ('argvalue1', 'argvalue2', True))
 
     def test_func_kwargs_revorder (self):
         @baker.command
         def func(arg1, arg2, *args, **kwargs):
             return arg1, arg2, kwargs['verbose']
-        res = baker.run(argv=[__file__, 'func', 'argvalue1', '--verbose', 'argvalue2'])
-        self.assertEqual(res, ('argvalue1', 'argvalue2', True))
+        argv = [__file__, 'func', 'argvalue1', '--verbose', 'argvalue2']
+        self.assertEqual(baker.test(argv=argv), "func('argvalue1','argvalue2',verbose=True)")
+        self.assertEqual(baker.run(argv=argv), ('argvalue1', 'argvalue2', True))
 
     def test_func_kwargs_params (self):
         @baker.command(shortopts={"verbose": "v"}, params={"verbose": "Be verbose"})
