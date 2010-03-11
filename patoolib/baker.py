@@ -550,7 +550,7 @@ class Baker(object):
 
     def test(self, argv=None):
         """Takes a list of command line arguments, parses it into a command
-        name and options, and prints what the resulting function call would
+        name and options, and returns what the resulting function call would
         look like. This may be useful for testing how command line arguments
         would be passed to your functions.
 
@@ -560,10 +560,10 @@ class Baker(object):
         cmd, args, kwargs = self.parse(argv)
         result = "%s(%s" % (cmd.name, ",".join(repr(a) for a in args))
         if kwargs:
-            kws = ", ".join("%s=%r" % (k, v) for k, v in kwargs.iteritems())
-            result += ", " + kws
+            kws = ",".join("%s=%r" % (k, v) for k, v in kwargs.iteritems())
+            result += "," + kws
         result += ")"
-        print result
+        return result
 
 
 _baker = Baker()
