@@ -38,7 +38,7 @@ else:
 setup (
     name = AppName,
     version = AppVersion,
-    description = "simple manager for file archives of various types",
+    description = "portable command line manager archive file manager",
     long_description = """Various archive types can be created, extracted, tested and listed by
 patool. The advantage of patool is its simplicity in handling archive
 files without having to remember a myriad of programs and options.

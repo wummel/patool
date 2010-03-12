@@ -3,7 +3,7 @@ PATOOL(1)                                                            PATOOL(1)
 
 
 NAME
-       patool - simple manager for file archives of various types
+       patool - portable command line archive file manager
 
 SYNOPSIS
         patool (extract|list|test) [options] <archive-file>...
