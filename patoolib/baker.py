@@ -342,7 +342,7 @@ class Baker(object):
 
         # shortopts maps long option names to characters. To look up short
         # options, we need to create a reverse mapping.
-        shortchars = dict((v, k) for k, v in shortopts.iteritems())
+        shortchars = dict((v, k) for k, v in shortopts.items())
 
         # The *vargs list and **kwargs dict to build up from the command line
         # arguments
@@ -515,7 +515,7 @@ class Baker(object):
             raise CommandError("Too many arguments to %s: %s" % (cmd.name, " ".join(args)))
 
         if not cmd.has_kwargs:
-            for k in sorted(kwargs.iterkeys()):
+            for k in sorted(kwargs.keys()):
                 if k not in cmd.keywords:
                     raise CommandError("Unknown option --%s" % k)
 
@@ -560,7 +560,7 @@ class Baker(object):
         cmd, args, kwargs = self.parse(argv)
         result = "%s(%s" % (cmd.name, ",".join(repr(a) for a in args))
         if kwargs:
-            kws = ",".join("%s=%r" % (k, v) for k, v in kwargs.iteritems())
+            kws = ",".join("%s=%r" % (k, v) for k, v in kwargs.items())
             result += "," + kws
         result += ")"
         return result
