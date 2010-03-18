@@ -1,3 +1,7 @@
+0.9 "" (released xx.xx.2010)
+
+  * Do not use the diff -B option when comparing archives.
+
 0.8 "Storage" (released 11.3.2010)
 
   * Fix path error by using absolute pathname for archive when changing

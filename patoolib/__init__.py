@@ -468,7 +468,7 @@ def _diff_archives (archive1, archive2):
     try:
         path1 = _handle_archive(archive1, 'extract', outdir=tmpdir1)
         path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
-        return util.run([diff, "-BurN", path1, path2])
+        return util.run([diff, "-urN", path1, path2])
     finally:
         shutil.rmtree(tmpdir1, onerror=util.log_error)
         shutil.rmtree(tmpdir2, onerror=util.log_error)
