@@ -1,6 +1,7 @@
 0.9 "" (released xx.xx.2010)
 
   * Do not use the diff -B option when comparing archives.
+  * Improved documentation: explain commands in more detail.
 
 0.8 "Storage" (released 11.3.2010)
 
