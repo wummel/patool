@@ -70,7 +70,7 @@ test:
 	nosetests -v --processes=$(NUMCPUS) -m "^test_.*" $(TESTOPTS) $(TESTS)
 
 doc/patool.txt: doc/patool.1
-	cols=`stty size | cut -d" " -f2`; stty cols 80; man -l doc/patool.1 | perl -pe 's/.\cH//g' > doc/patool.txt; stty cols $$cols
+	cols=`stty size | cut -d" " -f2`; stty cols 72; man -l doc/patool.1 | perl -pe 's/.\cH//g' > doc/patool.txt; stty cols $$cols
 
 .PHONY: deb
 deb:
