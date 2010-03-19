@@ -50,14 +50,15 @@ be removed and is left as it is.
 .br
 This is the default command if no command was given.
 .PP
-Files are always extracted to a unique temporary directory (in the
-current working directory). If the archive contains exactly one
+Files are always extracted to a unique temporary directory in the
+current working directory. If the archive contains exactly one
 file or directory, the archive contents are moved to the current
 working directory and the temporary directory will be removed.
 .br
-This ensures that always one entry will be extracted.
+This prevents cluttering the current working directory with a lot
+of files from the extracted archive.
 .PP
-All extracted files are checked that they are readable by the
+All extracted files are ensured that they are readable by the
 current user.
 .TP
 \fB\-v\fP, \fB\-\-verbose\fP

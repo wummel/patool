@@ -1,4 +1,4 @@
-PATOOL(1)                                                            PATOOL(1)
+PATOOL(1)                                                    PATOOL(1)
 
 
 
@@ -13,20 +13,21 @@ SYNOPSIS
         patool formats
 
 DESCRIPTION
-       Various  archive  types can be created, extracted, tested and listed by
-       patool. The advantage of patool is its simplicity in  handling  archive
-       files without having to remember a myriad of programs and options.
+       Various  archive  types  can  be created, extracted, tested and
+       listed by patool. The advantage of patool is its simplicity  in
+       handling  archive  files without having to remember a myriad of
+       programs and options.
 
-       The  archive format is determined by the file(1) program and as a fall‐
-       back by the archive file extension.
+       The archive format is determined by the file(1) program and  as
+       a fallback by the archive file extension.
 
-       patool supports 7z (.7z),  ACE  (.ace),  ALZIP  (.alz),  AR  (.a),  ARC
-       (.arc),  ARJ  (.arj),  BZIP2  (.bz2),  CAB  (.cab), compress (.Z), CPIO
-       (.cpio), DEB (.deb), GZIP (.gz), LRZIP (.lrz), LZH (.lha,  .lzh),  LZIP
-       (.lz),  LZMA  (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar), TAR (.tar),
-       XZ (.xz) and ZIP (.zip, .jar) formats.  It relies  on  helper  applica‐
-       tions  to handle those archive formats (for example bzip2 for BZIP2 ar‐
-       chives).
+       patool  supports  7z  (.7z), ACE (.ace), ALZIP (.alz), AR (.a),
+       ARC (.arc), ARJ (.arj),  BZIP2  (.bz2),  CAB  (.cab),  compress
+       (.Z),  CPIO  (.cpio), DEB (.deb), GZIP (.gz), LRZIP (.lrz), LZH
+       (.lha, .lzh),  LZIP  (.lz),  LZMA  (.lzma),  LZOP  (.lzo),  RPM
+       (.rpm),  RAR  (.rar), TAR (.tar), XZ (.xz) and ZIP (.zip, .jar)
+       formats.  It relies on helper applications to handle those  ar‐
+       chive formats (for example bzip2 for BZIP2 archives).
 
 EXAMPLES
          patool extract archive.zip otherarchive.rar
@@ -40,60 +41,65 @@ COMMANDS
        Several commands and options are available.
 
    extract
-       Extract files from an archive.  The  original  archive  will  never  be
-       removed and is left as it is.
+       Extract  files from an archive. The original archive will never
+       be removed and is left as it is.
        This is the default command if no command was given.
 
-       Files are always extracted to a unique temporary directory (in the cur‐
-       rent working directory). If the archive contains exactly  one  file  or
-       directory, the archive contents are moved to the current working direc‐
-       tory and the temporary directory will be removed.
-       This ensures that always one entry will be extracted.
+       Files are always extracted to a unique temporary  directory  in
+       the  current working directory. If the archive contains exactly
+       one file or directory, the archive contents are  moved  to  the
+       current  working  directory and the temporary directory will be
+       removed.
+       This prevents cluttering the current working directory  with  a
+       lot of files from the extracted archive.
 
-       All extracted files are checked that they are readable by  the  current
-       user.
+       All  extracted  files are ensured that they are readable by the
+       current user.
 
        -v, --verbose
-              Be  verbose  when extracting (if the helper application supports
-              it).
+              Be verbose when extracting (if  the  helper  application
+              supports it).
 
    list
        List files in an archive.
 
        -v, --verbose
-              Verbose archive listing (if the helper application supports it).
+              Verbose  archive listing (if the helper application sup‐
+              ports it).
 
    create
-       Create an archive from given files. At least on of the given  files  to
-       add  to the archive has to exist (non-existing files are ignored).  The
-       format of the archive to create  is  determined  by  the  archive  file
-       extension.
+       Create an archive from given files. At least on  of  the  given
+       files  to  add  to the archive has to exist (non-existing files
+       are ignored).  The format of the archive to  create  is  deter‐
+       mined by the archive file extension.
 
        -v, --verbose
-              Verbose operation (if the helper application supports it).
+              Verbose  operation  (if  the helper application supports
+              it).
 
    test
-       Test  files  in  an archive. If the helper application does not support
-       testing, the archive contents are listed instead.
+       Test files in an archive. If the helper  application  does  not
+       support testing, the archive contents are listed instead.
 
        -v, --verbose
-              Verbose archive testing (if the helper application supports it).
+              Verbose  archive testing (if the helper application sup‐
+              ports it).
 
    diff
-       Show differences between two archives with the  diff(1)  utility.   The
-       diff options used are -urN.
+       Show differences between two archives with the diff(1) utility.
+       The diff options used are -urN.
 
    repack
-       Repackage  archive  to a different format. The target archive format is
-       determined by the file extension.
+       Repackage  archive  to  a  different format. The target archive
+       format is determined by the file extension.
 
    formats
-       Show all supported archive formats (ie. which helper  applications  are
-       available).
+       Show all supported archive formats (ie. which  helper  applica‐
+       tions are available).
 
 HELP OPTION
-       Specifying  the  help option displays help for patool itself, or a com‐
-       mand.
+       Specifying  the help option displays help for patool itself, or
+       a command.
        For example:
          patool --help - display help for patool
          patool extract --help - display help for the extract command
@@ -106,4 +112,4 @@ COPYRIGHT
 
 
 
-patool                           February 2010                       PATOOL(1)
+patool                       February 2010                   PATOOL(1)
