@@ -47,6 +47,7 @@ mimedb.add_type('application/x-arc', '.arc', strict=False)
 mimedb.add_type('application/x-lrzip', '.lrz', strict=False)
 mimedb.add_type('application/x-lha', '.lha', strict=False)
 mimedb.add_type('application/x-lzh', '.lzh', strict=False)
+mimedb.add_type('application/x-rzip', '.rz', strict=False)
 
 
 class PatoolError (StandardError):
@@ -205,6 +206,7 @@ FileText2Mime = {
     "Zip archive data": "application/zip",
     "compress'd data": "application/x-compress",
     "lzip compressed data": "application/x-lzip",
+    "rzip compressed data": "application/x-rzip",
     "current ar archive": "application/x-archive",
     "LHa ": "application/x-lha",
     "ARC archive data": "application/x-arc",

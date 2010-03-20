@@ -2,6 +2,7 @@
 
   * Do not use the diff -B option when comparing archives.
   * Improved documentation: explain commands in more detail.
+  * Added support for RZIP (.rz) archives.
 
 0.8 "Storage" (released 11.3.2010)
 

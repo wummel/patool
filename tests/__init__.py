@@ -94,14 +94,18 @@ class ArchiveTest (unittest.TestCase):
         try:
             patoolib._handle_archive(archive, 'create', topack, **kwargs)
             self.assertTrue(os.path.isfile(archive))
-            # not all programs can test what they create
+            # test the created archive
+            command = 'test'
+            program = self.program
+            # special case for programs that cannot test what they create
             if self.program == 'compress':
                 program = 'gzip'
             elif self.program == 'zip':
                 program = 'unzip'
-            else:
-                program = self.program
-            patoolib._handle_archive(archive, 'test', program=program)
+            elif self.program == 'rzip':
+                program = 'echo'
+                command = 'list'
+            patoolib._handle_archive(archive, command, program=program)
         finally:
             os.chdir(basedir)
             shutil.rmtree(tmpdir)

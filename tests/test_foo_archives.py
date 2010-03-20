@@ -349,10 +349,16 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.arc.foo')
         self.archive_extract('t.arc.foo')
 
-    # file(1) does not recognize .alz files
+    # file(1) does not recognize .lrz files
     #@needs_program('lrzip')
     #def test_lrzip (self):
     #    self.program = 'lrzip'
     #    self.archive_test('t.txt.lrz.foo')
     #    self.archive_extract('t.txt.lrz.foo')
     #    self.archive_create('t.txt.lrz.foo', format="lrzip", singlefile=True)
+
+    @needs_program('rzip')
+    def test_rzip (self):
+        self.program = 'rzip'
+        self.archive_extract('t.txt.rz.foo')
+        self.archive_create('t.txt.rz.foo', format="rzip", singlefile=True)

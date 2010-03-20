@@ -115,6 +115,7 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.lzma')
         self.archive_list('t.txt.lz')
         self.archive_list('t.txt.lrz')
+        self.archive_list('t.txt.rz')
 
     @needs_program('unzip')
     def test_unzip (self):
@@ -311,3 +312,9 @@ class TestArchives (ArchiveTest):
         self.archive_test('t.txt.lrz')
         self.archive_extract('t.txt.lrz')
         self.archive_create('t.txt.lrz', singlefile=True)
+
+    @needs_program('rzip')
+    def test_rzip (self):
+        self.program = 'rzip'
+        self.archive_extract('t.txt.rz')
+        self.archive_create('t.txt.rz', singlefile=True)
