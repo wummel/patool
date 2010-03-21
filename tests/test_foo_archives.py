@@ -362,3 +362,8 @@ class TestArchives (ArchiveTest):
         self.program = 'rzip'
         self.archive_extract('t.txt.rz.foo')
         self.archive_create('t.txt.rz.foo', format="rzip", singlefile=True)
+
+    @needs_program('zoo')
+    def test_zoo (self):
+        self.program = 'zoo'
+        self.archive_commands('t.zoo.foo', format="zoo", singlefile=True)
