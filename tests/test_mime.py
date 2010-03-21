@@ -111,13 +111,15 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.lzh", "application/x-lha", None)
         self.mime_test_file("t.lha.foo", "application/x-lha", None)
         # file(1) does not recognize .alz files
-        #self.mime_test_mimedb("t.alz", "application/x-alzip", None)
-        #self.mime_test_mimedb("t.alz.foo", "application/x-alzip", None)
+        #self.mime_test_file("t.alz", "application/x-alzip", None)
+        #self.mime_test_file("t.alz.foo", "application/x-alzip", None)
         self.mime_test_file("t.arc", "application/x-arc", None)
         self.mime_test_file("t.arc.foo", "application/x-arc", None)
         # file(1) does not recognize .lrz files
-        #self.mime_test_mimedb("t.lrz", "application/x-lrzip", None)
-        #self.mime_test_mimedb("t.lrz.foo", "application/x-lrzip", None)
+        #self.mime_test_file("t.txt.lrz", "application/x-lrzip", None)
+        #self.mime_test_file("t.txt.lrz.foo", "application/x-lrzip", None)
+        self.mime_test_file("t.txt.rz", "application/x-rzip", None)
+        self.mime_test_file("t.txt.rz.foo", "application/x-rzip", None)
 
     def test_mime_mimedb (self):
         self.mime_test_mimedb("t.7z", "application/x-7z-compressed", None)
@@ -154,3 +156,4 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.alz", "application/x-alzip", None)
         self.mime_test_mimedb("t.arc", "application/x-arc", None)
         self.mime_test_mimedb("t.lrz", "application/x-lrzip", None)
+        self.mime_test_mimedb("t.rz", "application/x-rzip", None)
