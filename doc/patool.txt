@@ -25,9 +25,10 @@ DESCRIPTION
        ARC (.arc), ARJ (.arj),  BZIP2  (.bz2),  CAB  (.cab),  compress
        (.Z),  CPIO  (.cpio), DEB (.deb), GZIP (.gz), LRZIP (.lrz), LZH
        (.lha, .lzh),  LZIP  (.lz),  LZMA  (.lzma),  LZOP  (.lzo),  RPM
-       (.rpm),  RAR  (.rar), TAR (.tar), XZ (.xz) and ZIP (.zip, .jar)
-       formats.  It relies on helper applications to handle those  ar‐
-       chive formats (for example bzip2 for BZIP2 archives).
+       (.rpm),  RAR  (.rar),  RZIP  (.rz),  TAR  (.tar), XZ (.xz), ZIP
+       (.zip, .jar) and ZOO  (.zoo)  formats.   It  relies  on  helper
+       applications to handle those archive formats (for example bzip2
+       for BZIP2 archives).
 
 EXAMPLES
          patool extract archive.zip otherarchive.rar
@@ -41,48 +42,48 @@ COMMANDS
        Several commands and options are available.
 
    extract
-       Extract  files from an archive. The original archive will never
+       Extract files from an archive. The original archive will  never
        be removed and is left as it is.
        This is the default command if no command was given.
 
-       Files are always extracted to a unique temporary  directory  in
-       the  current working directory. If the archive contains exactly
-       one file or directory, the archive contents are  moved  to  the
-       current  working  directory and the temporary directory will be
+       Files  are  always extracted to a unique temporary directory in
+       the current working directory. If the archive contains  exactly
+       one  file  or  directory, the archive contents are moved to the
+       current working directory and the temporary directory  will  be
        removed.
-       This prevents cluttering the current working directory  with  a
+       This  prevents  cluttering the current working directory with a
        lot of files from the extracted archive.
 
-       All  extracted  files are ensured that they are readable by the
+       All extracted files are ensured that they are readable  by  the
        current user.
 
        -v, --verbose
-              Be verbose when extracting (if  the  helper  application
+              Be  verbose  when  extracting (if the helper application
               supports it).
 
    list
        List files in an archive.
 
        -v, --verbose
-              Verbose  archive listing (if the helper application sup‐
+              Verbose archive listing (if the helper application  sup‐
               ports it).
 
    create
-       Create an archive from given files. At least on  of  the  given
-       files  to  add  to the archive has to exist (non-existing files
-       are ignored).  The format of the archive to  create  is  deter‐
+       Create  an  archive  from given files. At least on of the given
+       files to add to the archive has to  exist  (non-existing  files
+       are  ignored).   The  format of the archive to create is deter‐
        mined by the archive file extension.
 
        -v, --verbose
-              Verbose  operation  (if  the helper application supports
+              Verbose operation (if the  helper  application  supports
               it).
 
    test
-       Test files in an archive. If the helper  application  does  not
+       Test  files  in  an archive. If the helper application does not
        support testing, the archive contents are listed instead.
 
        -v, --verbose
-              Verbose  archive testing (if the helper application sup‐
+              Verbose archive testing (if the helper application  sup‐
               ports it).
 
    diff
@@ -90,15 +91,15 @@ COMMANDS
        The diff options used are -urN.
 
    repack
-       Repackage  archive  to  a  different format. The target archive
+       Repackage archive to a different  format.  The  target  archive
        format is determined by the file extension.
 
    formats
-       Show all supported archive formats (ie. which  helper  applica‐
+       Show  all  supported archive formats (ie. which helper applica‐
        tions are available).
 
 HELP OPTION
-       Specifying  the help option displays help for patool itself, or
+       Specifying the help option displays help for patool itself,  or
        a command.
        For example:
          patool --help - display help for patool
