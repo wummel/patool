@@ -1,6 +1,7 @@
 # This Makefile is only used by developers.
 VERSION:=$(shell python setup.py --version)
 ARCHIVE:=patool-$(VERSION).tar.gz
+ARCHIVE_WIN32:=patool-$(VERSION).win32.exe
 PY_FILES_DIRS := patool setup.py patoolib tests
 NUMCPUS := $(shell grep -c '^process' /proc/cpuinfo)
 # which test modules to run
@@ -24,13 +25,15 @@ chmod:
 .PHONY: dist
 dist:
 	git archive --format=tar --prefix=patool-$(VERSION)/ HEAD | gzip -9 > ../$(ARCHIVE)
-	sha1sum ../$(ARCHIVE) > ../$(ARCHIVE).sha1
-	[ ! -f ../$(ARCHIVE).asc ] && gpg --detach-sign --armor ../$(ARCHIVE)
+	[ -f ../$(ARCHIVE).sha1 ] || sha1sum ../$(ARCHIVE) > ../$(ARCHIVE).sha1
+	[ -f ../$(ARCHIVE).asc ] || gpg --detach-sign --armor ../$(ARCHIVE)
+	[ -f ../$(ARCHIVE_WIN32).sha1 ] || sha1sum ../$(ARCHIVE_WIN32) > ../$(ARCHIVE_WIN32).sha1
+	[ -f ../$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor ../$(ARCHIVE_WIN32)
 #	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
 
 .PHONY: upload
 upload:
-	rsync -avP -e ssh ../$(ARCHIVE)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
+	rsync -avP -e ssh ../$(ARCHIVE)* ../$(ARCHIVE_WIN32)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
 
 
 .PHONY: release
