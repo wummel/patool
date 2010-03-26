@@ -1,4 +1,4 @@
-0.9 "" (released xx.xx.2010)
+0.9 "Cargo" (released 26.3.2010)
 
   * Do not use the diff -B option when comparing archives.
   * Improved documentation: explain commands in more detail.
