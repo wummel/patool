@@ -19,11 +19,11 @@ from patoolib import util
 
 def extract_compress (archive, encoding, cmd, **kwargs):
     """Extract a compressed archive."""
-    cmdlist = [cmd]
+    cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:
         cmdlist.append('-v')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(['-c', archive, '>', outfile])
+    cmdlist.extend(['-c', util.shell_quote(archive), '>',
+                    util.shell_quote(outfile)])
     # note that for shell calls the command must be a string
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'shell': True})
+    return (" ".join(cmdlist), {'shell': True})

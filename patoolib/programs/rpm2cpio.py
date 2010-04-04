@@ -18,16 +18,16 @@ import os
 from patoolib import util
 
 def extract_rpm (archive, encoding, cmd, **kwargs):
-    """Extract a DEB archive."""
+    """Extract a RPM archive."""
     # also check cpio
     cpio = util.find_program("cpio")
     if not cpio:
         raise util.PatoolError("cpio(1) is required for rpm2cpio extraction; please install it")
-    cmdlist = [cmd, os.path.abspath(archive), "|", cpio, '--extract',
-        '--make-directories', '--preserve-modification-time',
+    path = util.shell_quote(os.path.abspath(archive))
+    cmdlist = [util.shell_quote(cmd), path, "|", util.shell_quote(cpio),
+        '--extract', '--make-directories', '--preserve-modification-time',
         '--no-absolute-filenames', '--force-local', '--nonmatching',
-        '"*\.\.*"']
+        r'"*\.\.*"']
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'cwd': kwargs['outdir'], 'shell': True})
+    return (" ".join(cmdlist), {'cwd': kwargs['outdir'], 'shell': True})

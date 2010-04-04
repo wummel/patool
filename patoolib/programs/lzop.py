@@ -19,14 +19,14 @@ from patoolib import util
 
 def extract_lzop (archive, encoding, cmd, **kwargs):
     """Extract a LZOP archive."""
-    cmdlist = [cmd, '-c', '-d']
+    cmdlist = [util.shell_quote(cmd), '-c', '-d']
     if kwargs['verbose']:
         cmdlist.append('--verbose')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(['--', archive, '>', outfile])
+    cmdlist.extend(['--', util.shell_quote(archive), '>',
+        util.shell_quote(outfile)])
     # note that for shell calls the command must be a string
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'shell': True})
+    return (" ".join(cmdlist), {'shell': True})
 
 def list_lzop (archive, encoding, cmd, **kwargs):
     """List a LZOP archive."""

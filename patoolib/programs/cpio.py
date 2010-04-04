@@ -19,14 +19,13 @@ from patoolib import util
 
 def extract_cpio (archive, encoding, cmd, **kwargs):
     """Extract a CPIO archive."""
-    cmdlist = [cmd, '--extract', '--make-directories',
+    cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
         '--preserve-modification-time', '--no-absolute-filenames',
-        '--force-local', '--nonmatching', '"*\.\.*"']
+        '--force-local', '--nonmatching', r'"*\.\.*"']
     if kwargs['verbose']:
         cmdlist.append('-v')
-    cmdlist.extend(['<', os.path.abspath(archive)])
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'cwd': kwargs['outdir'], 'shell': True})
+    cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
+    return (" ".join(cmdlist), {'cwd': kwargs['outdir'], 'shell': True})
 
 
 def list_cpio (archive, encoding, cmd, **kwargs):
@@ -41,15 +40,14 @@ test_cpio = list_cpio
 
 def create_cpio(archive, encoding, cmd, *args, **kwargs):
     """Create a CPIO archive."""
-    cmdlist = [cmd, '--create']
+    cmdlist = [util.shell_quote(cmd), '--create']
     if kwargs['verbose']:
         cmdlist.append('-v')
     if len(args) != 0:
         findcmd = ['find', '-print0']
-        findcmd.extend(args)
+        findcmd.extend([util.shell_quote(x) for x in args])
         findcmd.append('|')
         cmdlist[0:0] = findcmd
         cmdlist.append('-0')
-    cmdlist.extend([">", archive])
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'shell': True})
+    cmdlist.extend([">", util.shell_quote(archive)])
+    return (" ".join(cmdlist), {'shell': True})

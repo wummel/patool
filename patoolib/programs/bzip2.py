@@ -19,15 +19,15 @@ from patoolib import util
 
 def extract_bzip2 (archive, encoding, cmd, **kwargs):
     """Extract a BZIP2 archive."""
-    cmdlist = [cmd]
+    cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['-c', '-d'])
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(['--', archive, '>', outfile])
+    cmdlist.extend(['--', util.shell_quote(archive), '>',
+                   util.shell_quote(outfile)])
     # note that for shell calls the command must be a string
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'shell': True})
+    return (" ".join(cmdlist), {'shell': True})
 
 
 def test_bzip2 (archive, encoding, cmd, **kwargs):
@@ -41,12 +41,11 @@ def test_bzip2 (archive, encoding, cmd, **kwargs):
 
 def create_bzip2 (archive, encoding, cmd, *args, **kwargs):
     """Create a BZIP2 archive."""
-    cmdlist = [cmd]
+    cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['-c', '-z', '--'])
-    cmdlist.extend(args)
-    cmdlist.extend(['>', archive])
+    cmdlist.extend([util.shell_quote(x) for x in args])
+    cmdlist.extend(['>', util.shell_quote(archive)])
     # note that for shell calls the command must be a string
-    cmd = " ".join([util.shell_quote(x) for x in cmdlist])
-    return (cmd, {'shell': True})
+    return (" ".join(cmdlist), {'shell': True})
