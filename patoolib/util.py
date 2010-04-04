@@ -87,13 +87,14 @@ def backtick (cmd):
 
 
 def run (cmd, **kwargs):
-    """Run command and raise PatoolError on error."""
+    """Run command without error checking.
+    @return: command return code"""
     return subprocess.call(cmd, **kwargs)
 
 
 def run_checked (cmd, **kwargs):
     """Run command and raise PatoolError on error."""
-    retcode = subprocess.call(cmd, **kwargs)
+    retcode = run(cmd, **kwargs)
     if retcode:
         msg = "Command `%s' returned non-zero exit status %d" % (cmd, retcode)
         raise PatoolError(msg)
@@ -126,7 +127,9 @@ Mime2Encoding = dict([(value, key) for key, value in Encoding2Mime.items()])
 
 
 def guess_mime_mimedb (filename):
-    """Guess MIME type from given filename."""
+    """Guess MIME type from given filename.
+    @return: tuple (mime, encoding)
+    """
     mime, encoding = mimedb.guess_type(filename, strict=False)
     from patoolib import ArchiveMimetypes, ArchiveEncodings
     if mime not in ArchiveMimetypes and encoding in ArchiveEncodings:
@@ -141,6 +144,7 @@ def guess_mime_file (filename):
     """Determine MIME type of filename with file(1):
      (a) using file(1) --mime
      (b) using file(1) and look the result string
+    @return: tuple (mime, encoding)
     """
     mime, encoding = None, None
     if os.path.isfile(filename):
@@ -153,7 +157,9 @@ def guess_mime_file (filename):
 
 
 def guess_mime_file_mime (file_prog, filename):
-    """Determine MIME type of filename with file(1) and --mime option."""
+    """Determine MIME type of filename with file(1) and --mime option.
+    @return: tuple (mime, encoding)
+    """
     mime, encoding = None, None
     cmd = [file_prog, "--brief", "--mime-type", filename]
     try:
@@ -265,7 +271,7 @@ def tmpfile (dir=None, prefix="temp", suffix=None):
 
 def shell_quote (value):
     """Quote all shell metacharacters in given string value."""
-    return '%s' % value
+    return "'%s'" % value.replace("'", r"\'")
 
 
 def stripext (filename):
