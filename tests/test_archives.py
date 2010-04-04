@@ -96,21 +96,21 @@ class TestArchives (ArchiveTest):
     @needs_program('bzip2')
     def test_bzip2 (self):
         self.program = 'bzip2'
-        self.archive_extract('t.bz2')
-        self.archive_test('t.bz2')
-        self.archive_create('t.bz2', singlefile=True)
+        self.archive_extract('t .bz2')
+        self.archive_test('t .bz2')
+        self.archive_create('t .bz2', singlefile=True)
 
     @needs_program('pbzip2')
     def test_pbzip2 (self):
         self.program = 'pbzip2'
-        self.archive_extract('t.bz2')
-        self.archive_test('t.bz2')
-        self.archive_create('t.bz2', singlefile=True)
+        self.archive_extract('t .bz2')
+        self.archive_test('t .bz2')
+        self.archive_create('t .bz2', singlefile=True)
 
     @needs_program('echo')
     def test_echo (self):
         self.program = 'echo'
-        self.archive_list('t.bz2')
+        self.archive_list('t .bz2')
         self.archive_list('t.Z')
         self.archive_list('t.lzma')
         self.archive_list('t.txt.lz')
@@ -154,7 +154,7 @@ class TestArchives (ArchiveTest):
         self.program = '7z'
         self.archive_commands('t.7z')
         self.archive_list('t.gz')
-        self.archive_list('t.bz2')
+        self.archive_list('t .bz2')
         self.archive_list('t.zip')
         self.archive_list('t.jar')
         self.archive_list('t.Z')
@@ -164,7 +164,7 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.rpm')
         self.archive_list('t.deb')
         self.archive_extract('t.gz')
-        self.archive_extract('t.bz2')
+        self.archive_extract('t .bz2')
         self.archive_extract('t.zip')
         self.archive_extract('t.jar')
         self.archive_extract('t.Z')
@@ -174,7 +174,7 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.rpm')
         self.archive_extract('t.deb')
         self.archive_test('t.gz')
-        self.archive_test('t.bz2')
+        self.archive_test('t .bz2')
         self.archive_test('t.zip')
         self.archive_test('t.jar')
         self.archive_test('t.Z')
@@ -285,9 +285,9 @@ class TestArchives (ArchiveTest):
     @needs_program('xz')
     def test_xz (self):
         self.program = 'xz'
-        self.archive_test('t.xz')
-        self.archive_extract('t.xz')
-        self.archive_create('t.xz', singlefile=True)
+        self.archive_test('t \'".xz')
+        self.archive_extract('t \'".xz')
+        self.archive_create('t \'".xz', singlefile=True)
 
     @needs_program('lha')
     def test_lha (self):

@@ -69,11 +69,11 @@ class ArchiveTest (unittest.TestCase):
 
     def archive_create (self, filename, singlefile=False, format=None, encoding=None):
         """Test archive creation."""
-        # the file or directory to pack
+        # the file or directory to pack (note that they have spaces)
         if singlefile:
-            topack = os.path.join(datadir, 'foo.txt')
+            topack = os.path.join(datadir, 'foo .txt')
         else:
-            topack = os.path.join(datadir, 'foo')
+            topack = os.path.join(datadir, 'foo ')
         # The format and encoding arguments are needed for creating
         # archives with unusual file extensions.
         kwargs = dict(
