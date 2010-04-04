@@ -270,8 +270,9 @@ def tmpfile (dir=None, prefix="temp", suffix=None):
 
 
 def shell_quote (value):
-    """Quote all shell metacharacters in given string value."""
-    return "'%s'" % value.replace("'", r"\'")
+    """Quote all shell metacharacters in given string value with strong
+    (ie. single) quotes, handling the single quote especially."""
+    return "'%s'" % value.replace("'", r"'\''")
 
 
 def stripext (filename):
