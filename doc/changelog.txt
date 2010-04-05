@@ -1,3 +1,8 @@
+0.10 "" (released xx.xx.2010)
+
+  * Correct shell quoting of commandline arguments. Now files with
+    spaces or other special characters are handled correctly.
+
 0.9 "Cargo" (released 26.3.2010)
 
   * Do not use the diff -B option when comparing archives.
