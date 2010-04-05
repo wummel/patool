@@ -272,7 +272,17 @@ def tmpfile (dir=None, prefix="temp", suffix=None):
 def shell_quote (value):
     """Quote all shell metacharacters in given string value with strong
     (ie. single) quotes, handling the single quote especially."""
+    if os.name == 'nt':
+        return shell_quote_nt(value)
     return "'%s'" % value.replace("'", r"'\''")
+
+
+def shell_quote_nt (value):
+    """Quote argument for Windows system. Modeled after distutils
+    _nt_quote_args() function."""
+    if " " in value:
+        return '"%s"' % value
+    return value
 
 
 def stripext (filename):
