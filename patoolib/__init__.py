@@ -470,11 +470,10 @@ def handle_archive (archive, command, *args, **kwargs):
     return res
 
 
-def rmtree_log_error (func, path, exc):
-    """Error log function for shutil.rmtree(). Re-raises the exception"""
+def rmtree_error (func, path, exc):
+    """Error function for shutil.rmtree(). Raises a PatoolError."""
     msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
-    util.log_error(msg)
-    raise
+    raise util.PatoolError(msg)
 
 
 def _diff_archives (archive1, archive2):
@@ -489,8 +488,8 @@ def _diff_archives (archive1, archive2):
         path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
         return util.run([diff, "-urN", path1, path2])
     finally:
-        shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
-        shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
+        shutil.rmtree(tmpdir1, onerror=rmtree_error)
+        shutil.rmtree(tmpdir2, onerror=rmtree_error)
 
 
 def _repack_archive (archive1, archive2):
@@ -503,4 +502,4 @@ def _repack_archive (archive1, archive2):
         os.chdir(tmpdir)
         _handle_archive(archive, 'create', *files)
     finally:
-        shutil.rmtree(tmpdir, onerror=rmtree_log_error)
+        shutil.rmtree(tmpdir, onerror=rmtree_error)
