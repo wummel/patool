@@ -123,7 +123,7 @@ Encoding2Mime = {
     'lzip': "application/x-lzip",
     'xz': "application/x-xz",
 }
-Mime2Encoding = dict([(value, key) for key, value in Encoding2Mime.items()])
+Mime2Encoding = dict([(_val, _key) for _key, _val in Encoding2Mime.items()])
 
 
 def guess_mime_mimedb (filename):
@@ -164,7 +164,7 @@ def guess_mime_file_mime (file_prog, filename):
     cmd = [file_prog, "--brief", "--mime-type", filename]
     try:
         mime = backtick(cmd).strip()
-    except OSError, msg:
+    except OSError:
         # ignore errors, as file(1) is only a fallback
         return mime, encoding
     from patoolib import ArchiveMimetypes
@@ -312,7 +312,6 @@ def log_info (msg, out=sys.stderr):
 def log_internal_error (out=sys.stderr):
     """Print internal error message to stderr."""
     print >> out, "patool: internal error"
-    etype, value = sys.exc_info()[:2]
     traceback.print_exc()
     print >> out, "System info:"
     print >> out, "Python %s on %s" % (sys.version, sys.platform)
@@ -336,7 +335,8 @@ def find_program (program):
 
 
 def append_to_path (path, directory):
-    """Add a directory to the PATH env variable, if it is a valid directory."""
+    """Add a directory to the PATH environment variable, if it is a valid
+    directory."""
     if not os.path.isdir(directory) or directory in path:
         return path
     if not path.endswith(os.pathsep):
@@ -357,8 +357,8 @@ def get_nt_7z_dir ():
         return ""
 
 
-def strlist_with_or (list):
+def strlist_with_or (alist):
     """Return comma separated string, and last entry appended with ' or '."""
-    if len(list) > 1:
-        return "%s or %s" % (", ".join(list[:-1]), list[-1])
-    return ", ".join(list)
+    if len(alist) > 1:
+        return "%s or %s" % (", ".join(alist[:-1]), alist[-1])
+    return ", ".join(alist)

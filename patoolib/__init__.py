@@ -266,6 +266,7 @@ def find_encoding_program (program, encoding):
 
 
 def list_formats ():
+    """Print information about available archive formats to stdout."""
     for format in ArchiveFormats:
         print format, "files:"
         for command in ArchiveCommands:
@@ -276,7 +277,6 @@ def list_formats ():
             try:
                 program = find_archive_program(format, command)
                 print "   %8s: %s" % (command, program),
-                basename = os.path.basename(program)
                 if format == 'tar':
                     encs = [x for x in ArchiveEncodings if util.find_program(x)]
                     if encs:
@@ -324,7 +324,7 @@ def parse_config (archive, format, encoding, command, **kwargs):
             config[key] = value
     program = os.path.basename(config['program'])
     if encoding and not find_encoding_program(program, encoding):
-        msg = "cannot %s archive `%s': encoding `%s' not supported by %s" %\
+        msg = "cannot %s archive `%s': encoding `%s' not supported by %s" % \
               (command, archive, encoding, program)
         raise util.PatoolError(msg)
     return config
@@ -335,7 +335,6 @@ def move_outdir_orphan (outdir):
     Never overwrite files.
     Return (True, outfile) if successful, (False, reason) if not."""
     entries = os.listdir(outdir)
-    reason = ""
     if len(entries) == 1:
         src = os.path.join(outdir, entries[0])
         dst = os.path.join(os.path.dirname(outdir), entries[0])
@@ -470,10 +469,10 @@ def handle_archive (archive, command, *args, **kwargs):
     return res
 
 
-def rmtree_error (func, path, exc):
+def rmtree_log_error (func, path, exc):
     """Error function for shutil.rmtree(). Raises a PatoolError."""
     msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
-    raise util.PatoolError(msg)
+    util.log_error(msg)
 
 
 def _diff_archives (archive1, archive2):
@@ -488,8 +487,8 @@ def _diff_archives (archive1, archive2):
         path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
         return util.run([diff, "-urN", path1, path2])
     finally:
-        shutil.rmtree(tmpdir1, onerror=rmtree_error)
-        shutil.rmtree(tmpdir2, onerror=rmtree_error)
+        shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
+        shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
 
 
 def _repack_archive (archive1, archive2):
@@ -501,5 +500,6 @@ def _repack_archive (archive1, archive2):
         files = tuple(os.listdir(tmpdir))
         os.chdir(tmpdir)
         _handle_archive(archive, 'create', *files)
+        return 0
     finally:
-        shutil.rmtree(tmpdir, onerror=rmtree_error)
+        shutil.rmtree(tmpdir, onerror=rmtree_log_error)

@@ -40,6 +40,7 @@ def create_tar (archive, encoding, cmd, *args, **kwargs):
     return cmdlist
 
 def add_star_opts (cmdlist, encoding, verbose):
+    """Add default options for the star program."""
     # Note that star autodetects encoding compression, but displays a warning
     # which we want to avoid.
     if encoding == 'gzip':
