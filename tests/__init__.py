@@ -73,7 +73,7 @@ class ArchiveTest (unittest.TestCase):
         if singlefile:
             topack = os.path.join(datadir, 'foo .txt')
         else:
-            topack = os.path.join(datadir, 'foo ')
+            topack = os.path.join(datadir, 'foo dir')
         # The format and encoding arguments are needed for creating
         # archives with unusual file extensions.
         kwargs = dict(
