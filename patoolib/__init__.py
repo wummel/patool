@@ -468,6 +468,12 @@ def handle_archive (archive, command, *args, **kwargs):
     return res
 
 
+def rmtree_log_error (func, path, exc):
+    """Error log function for shutil.rmtree()."""
+    msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
+    util.log_error(msg)
+
+
 def _diff_archives (archive1, archive2):
     """Show differences between two archives."""
     diff = util.find_program("diff")
@@ -480,8 +486,8 @@ def _diff_archives (archive1, archive2):
         path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2)
         return util.run([diff, "-urN", path1, path2])
     finally:
-        shutil.rmtree(tmpdir1, onerror=util.log_error)
-        shutil.rmtree(tmpdir2, onerror=util.log_error)
+        shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
+        shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
 
 
 def _repack_archive (archive1, archive2):
@@ -494,4 +500,4 @@ def _repack_archive (archive1, archive2):
         os.chdir(tmpdir)
         _handle_archive(archive, 'create', *files)
     finally:
-        shutil.rmtree(tmpdir, onerror=util.log_error)
+        shutil.rmtree(tmpdir, onerror=rmtree_log_error)
