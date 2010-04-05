@@ -324,7 +324,9 @@ def parse_config (archive, format, encoding, command, **kwargs):
             config[key] = value
     program = os.path.basename(config['program'])
     if encoding and not find_encoding_program(program, encoding):
-        raise util.PatoolError("cannot %s archive `%s': encoding `%s' not supported by %s" % (archive, command, encoding, program))
+        msg = "cannot %s archive `%s': encoding `%s' not supported by %s" %\
+              (command, archive, encoding, program)
+        raise util.PatoolError(msg)
     return config
 
 
@@ -469,9 +471,10 @@ def handle_archive (archive, command, *args, **kwargs):
 
 
 def rmtree_log_error (func, path, exc):
-    """Error log function for shutil.rmtree()."""
+    """Error log function for shutil.rmtree(). Re-raises the exception"""
     msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
     util.log_error(msg)
+    raise
 
 
 def _diff_archives (archive1, archive2):
