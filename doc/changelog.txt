@@ -2,6 +2,8 @@
 
   * Correct shell quoting of commandline arguments. Now files with
     spaces or other special characters are handled correctly.
+  * Use correct error routine on rmtree() errors. The previous
+    one did not have the correct number of arguments.
 
 0.9 "Cargo" (released 26.3.2010)
 
