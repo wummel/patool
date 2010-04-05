@@ -14,19 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lzop program."""
-from patoolib import util
+from patoolib.programs import extract_singlefile_standard
 
 
-def extract_lzop (archive, encoding, cmd, **kwargs):
-    """Extract a LZOP archive."""
-    cmdlist = [util.shell_quote(cmd), '-c', '-d']
-    if kwargs['verbose']:
-        cmdlist.append('--verbose')
-    outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(['--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
+extract_lzop = extract_singlefile_standard
+
 
 def list_lzop (archive, encoding, cmd, **kwargs):
     """List a LZOP archive."""

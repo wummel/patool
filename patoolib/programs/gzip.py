@@ -14,21 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the gzip program."""
-from patoolib import util
+from patoolib.programs import extract_singlefile_standard, \
+    test_singlefile_standard, create_singlefile_standard
 
-
-def extract_gzip (archive, encoding, cmd, **kwargs):
-    """Extract a GZIP archive."""
-    cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
-
-extract_compress = extract_gzip
+extract_gzip = extract_compress = extract_singlefile_standard
+test_gzip = test_compress = test_singlefile_standard
+create_gzip = create_singlefile_standard
 
 def list_gzip (archive, encoding, cmd, **kwargs):
     """List a GZIP archive."""
@@ -37,25 +28,3 @@ def list_gzip (archive, encoding, cmd, **kwargs):
         cmdlist.append('-v')
     cmdlist.extend(['-l', '--', archive])
     return cmdlist
-
-def test_gzip (archive, encoding, cmd, **kwargs):
-    """Test a GZIP archive."""
-    cmdlist = [cmd]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.extend(['-t', '--', archive])
-    return cmdlist
-
-test_compress = test_gzip
-
-def create_gzip (archive, encoding, cmd, *args, **kwargs):
-    """Create a GZIP archive."""
-    cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.append('-c')
-    cmdlist.append('--')
-    cmdlist.extend([util.shell_quote(x) for x in args])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})

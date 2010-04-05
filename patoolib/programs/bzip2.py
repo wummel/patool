@@ -15,29 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the bzip2 program."""
 from patoolib import util
+from patoolib.programs import extract_singlefile_standard, \
+    test_singlefile_standard
 
-
-def extract_bzip2 (archive, encoding, cmd, **kwargs):
-    """Extract a BZIP2 archive."""
-    cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.extend(['-c', '-d'])
-    outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(['--', util.shell_quote(archive), '>',
-                   util.shell_quote(outfile)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
-
-
-def test_bzip2 (archive, encoding, cmd, **kwargs):
-    """Test a BZIP2 archive."""
-    cmdlist = [cmd]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.extend(['-t', '--', archive])
-    return cmdlist
-
+extract_bzip2 = extract_singlefile_standard
+test_bzip2 = test_singlefile_standard
 
 def create_bzip2 (archive, encoding, cmd, *args, **kwargs):
     """Create a BZIP2 archive."""

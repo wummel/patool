@@ -14,36 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lzma program."""
-from patoolib import util
+from patoolib.programs import extract_singlefile_standard, \
+    test_singlefile_standard, create_singlefile_standard
 
 
-def extract_lzma (archive, encoding, cmd, **kwargs):
-    """Extract a LZMA archive."""
-    cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
-
-def test_lzma (archive, encoding, cmd, **kwargs):
-    """Test a LZMA archive."""
-    cmdlist = [cmd]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.extend(['-t', '--', archive])
-    return cmdlist
-
-def create_lzma (archive, encoding, cmd, *args, **kwargs):
-    """Create a LZMA archive."""
-    cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbose']:
-        cmdlist.append('-v')
-    cmdlist.append('-c')
-    cmdlist.append('--')
-    cmdlist.extend([util.shell_quote(x) for x in args])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
+extract_lzma = extract_singlefile_standard
+test_lzma = test_singlefile_standard
+create_lzma = create_singlefile_standard
