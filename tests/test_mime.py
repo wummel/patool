@@ -45,7 +45,7 @@ class TestMime (unittest.TestCase):
 
     @needs_program('file')
     def test_mime_file (self):
-        self.mime_test_file("t.7z", "application/x-7z-compressed", None)
+        self.mime_test_file("t .7z", "application/x-7z-compressed", None)
         self.mime_test_file("t.7z.foo", "application/x-7z-compressed", None)
         self.mime_test_file("t.arj", "application/x-arj", None)
         self.mime_test_file("t.arj.foo", "application/x-arj", None)
@@ -124,7 +124,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.zoo.foo", "application/x-zoo", None)
 
     def test_mime_mimedb (self):
-        self.mime_test_mimedb("t.7z", "application/x-7z-compressed", None)
+        self.mime_test_mimedb("t .7z", "application/x-7z-compressed", None)
         self.mime_test_mimedb("t.arj", "application/x-arj", None)
         self.mime_test_mimedb("t .bz2", "application/x-bzip2", None)
         self.mime_test_mimedb("t.cab", "application/x-cab", None)
