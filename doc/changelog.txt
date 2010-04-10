@@ -1,4 +1,4 @@
-0.10 "" (released xx.xx.2010)
+0.10 "Matchpoint" (released 10.4.2010)
 
   * Correct shell quoting of commandline arguments. Now files with
     spaces or other special characters are handled correctly.
