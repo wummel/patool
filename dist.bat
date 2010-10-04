@@ -13,7 +13,7 @@
 :: You should have received a copy of the GNU General Public License
 :: along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @echo off
-set PYDIR=c:\python26
+set PYDIR=c:\python27
 rd build /s /q
 rd dist /s /q
 %PYDIR%\python.exe setup.py bdist_wininst
