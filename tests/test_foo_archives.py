@@ -210,7 +210,7 @@ class TestArchives (ArchiveTest):
 
     @needs_program('file')
     @needs_program('7za')
-    def test_p7zip_file (self):
+    def test_p7azip_file (self):
         self.program = '7za'
         self.archive_commands('t.7z.foo', format="7z")
         self.archive_list('t.gz.foo')
