@@ -97,22 +97,22 @@ ArchivePrograms = {
         'list': ('nomarch',),
     },
     'bzip2': {
-        'extract': ('pbzip2', 'bzip2', '7z'),
-        'test': ('pbzip2', 'bzip2', '7z'),
-        'create': ('pbzip2', 'bzip2', '7z'),
-        'list': ('7z', 'echo',),
+        'extract': ('pbzip2', 'bzip2', '7z', '7za'),
+        'test': ('pbzip2', 'bzip2', '7z', '7za'),
+        'create': ('pbzip2', 'bzip2', '7z', '7za'),
+        'list': ('7z', '7za', 'echo',),
     },
     'tar': {
         None: ('tar', 'star',),
     },
     'zip': {
-        'extract': ('unzip', '7z'),
-        'list': ('unzip', '7z'),
-        'test': ('unzip', '7z'),
+        'extract': ('unzip', '7z', '7za'),
+        'list': ('unzip', '7z', '7za'),
+        'test': ('unzip', '7z', '7za'),
         'create': ('zip',),
     },
     'gzip': {
-        None: ('gzip', '7z'),
+        None: ('gzip', '7z', '7za'),
     },
     'lzh': {
         None: ('lha',),
@@ -130,13 +130,13 @@ ArchivePrograms = {
         'create': ('lrzip',),
     },
     'compress': {
-        'extract': ('gzip', '7z', 'uncompress.real'),
-        'list': ('7z', 'echo',),
-        'test': ('gzip', '7z'),
+        'extract': ('gzip', '7z', '7za', 'uncompress.real'),
+        'list': ('7z', '7za', 'echo',),
+        'test': ('gzip', '7z', '7za'),
         'create': ('compress',),
     },
     '7z': {
-        None: ('7z',),
+        None: ('7z', '7za'),
     },
     'rar': {
         None: ('rar',),
@@ -163,7 +163,7 @@ ArchivePrograms = {
     },
     'rpm': {
         'extract': ('rpm2cpio', '7z'),
-        'list': ('rpm', '7z'),
+        'list': ('rpm', '7z', '7za'),
         'test': ('rpm', '7z'),
     },
     'deb': {
@@ -196,9 +196,11 @@ ArchivePrograms = {
     },
 }
 
-# only list those programs that have different python module names
+# List those programs that have different python module names because of
+# Python module naming restrictions.
 ProgramModules = {
     '7z': 'p7zip',
+    '7za': 'p7azip',
     'uncompress.real': 'uncompress',
     'dpkg-deb': 'dpkg',
 }

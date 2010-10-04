@@ -192,6 +192,42 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.rar')
         self.archive_test('t.rar')
 
+    @needs_program('7za')
+    def test_p7azip (self):
+        # unsupported actions of the 7za standalone program are commented out
+        self.program = '7za'
+        self.archive_commands('t .7z')
+        self.archive_list('t.gz')
+        self.archive_list('t .bz2')
+        self.archive_list('t.zip')
+        self.archive_list('t.jar')
+        self.archive_list('t.Z')
+        self.archive_list('t.cab')
+        #self.archive_list('t.arj')
+        #self.archive_list('t.cpio')
+        self.archive_list('t.rpm')
+        #self.archive_list('t.deb')
+        self.archive_extract('t.gz')
+        self.archive_extract('t .bz2')
+        self.archive_extract('t.zip')
+        self.archive_extract('t.jar')
+        self.archive_extract('t.Z')
+        self.archive_extract('t.cab')
+        #self.archive_extract('t.arj')
+        #self.archive_extract('t.cpio')
+        #self.archive_extract('t.rpm')
+        #self.archive_extract('t.deb')
+        self.archive_test('t.gz')
+        self.archive_test('t .bz2')
+        self.archive_test('t.zip')
+        self.archive_test('t.jar')
+        self.archive_test('t.Z')
+        self.archive_test('t.cab')
+        #self.archive_test('t.arj')
+        #self.archive_test('t.cpio')
+        #self.archive_test('t.rpm')
+        #self.archive_test('t.deb')
+
     @needs_program('unrar')
     def test_unrar (self):
         self.program = 'unrar'
