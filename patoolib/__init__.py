@@ -481,7 +481,7 @@ def _diff_archives (archive1, archive2):
     """Show differences between two archives."""
     diff = util.find_program("diff")
     if not diff:
-        raise util.PatoolError("diff(1) is required for showing archive differences, please install it")
+        raise util.PatoolError("The diff(1) program is required for showing archive differences, please install it")
     tmpdir1 = util.tmpdir()
     tmpdir2 = util.tmpdir()
     try:
