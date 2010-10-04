@@ -47,6 +47,10 @@ releasecheck: check test
 	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
 	  echo "Could not release: edit doc/changelog.txt release date"; false; \
 	fi
+	@if [ ! -f ../$(ARCHIVE_WIN32) ]; then \
+	  echo "Missing WIN32 distribution archive at ../$(ARCHIVE_WIN32)"; \
+	  false; \
+	fi
 
 # The check programs used here are mostly local scripts on my private system.
 # So for other developers there is no need to execute this target.
