@@ -1,0 +1,4 @@
+include MANIFEST.in
+include COPYING doc/*.1 doc/*.txt
+include Makefile *.bat *.bash-completion
+recursive-include tests *.py
