@@ -1,3 +1,7 @@
+0.12 "" (released xx.xx.2010)
+
+  *
+
 0.11 "Primer" (released 4.10.2010)
 
   * Added support for the standalone 7za program.
