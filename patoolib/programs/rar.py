@@ -14,14 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rar program."""
+import os
 
 def extract_rar (archive, encoding, cmd, **kwargs):
     """Extract a RAR archive."""
     cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
         cmdlist.append('-c-')
-    cmdlist.extend(['-r', '--', archive, kwargs['outdir']])
-    return cmdlist
+    cmdlist.extend(['-r', '--', os.path.abspath(archive)])
+    return (cmdlist, {'cwd': kwargs['outdir']})
 
 def list_rar (archive, encoding, cmd, **kwargs):
     """List a RAR archive."""
