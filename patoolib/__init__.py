@@ -435,7 +435,7 @@ def _handle_archive (archive, command, *args, **kwargs):
         if command == 'extract':
             if do_cleanup_outdir:
                 target, msg = cleanup_outdir(cmd_kwargs["outdir"])
-                print "%s: extracted to %s" % (archive, msg)
+                util.log_info("%s extracted to %s" % (archive, msg))
             else:
                 target, msg = cmd_kwargs["outdir"], "`%s'" % cmd_kwargs["outdir"]
             return target
