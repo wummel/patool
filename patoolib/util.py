@@ -86,9 +86,16 @@ def backtick (cmd):
     return subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
 
 
+def quote_arg (arg):
+    if " " in arg:
+        return '"%s"' % arg
+    return arg
+
+
 def run (cmd, **kwargs):
     """Run command without error checking.
     @return: command return code"""
+    log_info("running %s" % " ".join(map(quote_arg, cmd)))
     return subprocess.call(cmd, **kwargs)
 
 

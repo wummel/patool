@@ -1,6 +1,6 @@
 0.12 "" (released xx.xx.2010)
 
-  *
+  * Show commands that are run.
 
 0.11 "Primer" (released 4.10.2010)
 
