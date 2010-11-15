@@ -20,65 +20,27 @@ From the man page:
 but does not need any others.
 """
 
-def extract_7z (archive, encoding, cmd, **kwargs):
-    """Extract a 7z archive."""
-    cmdlist = [cmd, 'x']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.extend(['-o%s' % kwargs['outdir'], '--', archive])
-    return cmdlist
-
-extract_bzip2 = \
-  extract_gzip = \
-  extract_zip = \
-  extract_compress = \
-  extract_rar = \
-  extract_cab = \
-  extract_7z
-
-def list_7z (archive, encoding, cmd, **kwargs):
-    """List a 7z archive."""
-    cmdlist = [cmd, 'l']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.append('--')
-    cmdlist.append(archive)
-    return cmdlist
-
-list_bzip2 = \
-  list_gzip = \
-  list_zip = \
-  list_compress = \
-  list_rar = \
-  list_cab = \
-  list_rpm = \
-  list_7z
-
-
-def test_7z (archive, encoding, cmd, **kwargs):
-    """Test a 7z archive."""
-    cmdlist = [cmd, 't']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.append('--')
-    cmdlist.append(archive)
-    return cmdlist
-
-test_bzip2 = \
-  test_gzip = \
-  test_zip = \
-  test_compress = \
-  test_rar = \
-  test_cab = \
-  test_7z
-
-
-def create_7z (archive, encoding, cmd, *args, **kwargs):
-    """Create a 7z archive."""
-    cmdlist = [cmd, 'a']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.append('--')
-    cmdlist.append(archive)
-    cmdlist.extend(args)
-    return cmdlist
+from .p7zip import \
+  extract_bzip2, \
+  extract_gzip, \
+  extract_zip, \
+  extract_compress, \
+  extract_rar, \
+  extract_cab, \
+  extract_7z, \
+  list_bzip2, \
+  list_gzip, \
+  list_zip, \
+  list_compress, \
+  list_rar, \
+  list_cab, \
+  list_rpm, \
+  list_7z, \
+  test_bzip2, \
+  test_gzip, \
+  test_zip, \
+  test_compress, \
+  test_rar, \
+  test_cab, \
+  test_7z, \
+  create_7z

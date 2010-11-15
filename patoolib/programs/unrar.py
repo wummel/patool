@@ -15,29 +15,4 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unrar program."""
 
-def extract_rar (archive, encoding, cmd, **kwargs):
-    """Extract a RAR archive."""
-    cmdlist = [cmd, 'x']
-    if not kwargs['verbose']:
-        cmdlist.append('-c-')
-    cmdlist.extend(['-r', '--', archive, kwargs['outdir']])
-    return cmdlist
-
-def list_rar (archive, encoding, cmd, **kwargs):
-    """List a RAR archive."""
-    cmdlist = [cmd]
-    if kwargs['verbose']:
-        cmdlist.append('v')
-    else:
-        cmdlist.append('l')
-        cmdlist.append('-c-')
-    cmdlist.extend(['--', archive])
-    return cmdlist
-
-def test_rar (archive, encoding, cmd, **kwargs):
-    """Test a RAR archive."""
-    cmdlist = [cmd, 't']
-    if not kwargs['verbose']:
-        cmdlist.append('-c-')
-    cmdlist.extend(['--', archive])
-    return cmdlist
+from .rar import extract_rar, list_rar, test_rar
