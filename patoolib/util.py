@@ -89,9 +89,12 @@ def backtick (cmd):
 def run (cmd, **kwargs):
     """Run command without error checking.
     @return: command return code"""
-    args = (" ".join(map(shell_quote, cmd)),
-          ", ".join("%s=%s" % (k, shell_quote(v)) for k, v in kwargs.items()))
-    log_info("running %s with %s" % args)
+    # Note that shell_quote_nt() result is not suitable for copy-paste
+    # (especially on Unix systems), but it looks nicer than shell_quote().
+    log_info("running %s" % " ".join(map(shell_quote_nt, cmd)))
+    if kwargs:
+        log_info("    with %s" % ", ".join("%s=%s" % (k, shell_quote(str(v)))\
+                                           for k, v in kwargs.items()))
     return subprocess.call(cmd, **kwargs)
 
 
@@ -102,6 +105,7 @@ def run_checked (cmd, **kwargs):
         msg = "Command `%s' returned non-zero exit status %d" % (cmd, retcode)
         raise PatoolError(msg)
     return retcode
+
 
 @memoized
 def guess_mime (filename):
