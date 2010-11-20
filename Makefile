@@ -40,6 +40,7 @@ upload:
 release: clean releasecheck dist upload
 	@echo "Register at Python Package Index..."
 	python setup.py register
+	freshmeat-submit < patool.freshmeat
 
 
 .PHONY: releasecheck
@@ -50,6 +51,9 @@ releasecheck: check test
 	@if [ ! -f ../$(ARCHIVE_WIN32) ]; then \
 	  echo "Missing WIN32 distribution archive at ../$(ARCHIVE_WIN32)"; \
 	  false; \
+	fi
+	@if ! grep "Version: $(VERSION)" patool.freshmeat > /dev/null; then \
+	  echo "Could not release: edit patool.freshmeat version"; false; \
 	fi
 
 # The check programs used here are mostly local scripts on my private system.

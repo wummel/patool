@@ -1,0 +1,12 @@
+Project: patool
+Version: 0.12
+Release-Focus: Minor bugfixes
+Hide: N
+Website-URL: http://patool.sourceforge.net/
+Changelog-URL: http://patool.git.sourceforge.net/git/gitweb.cgi?p=patool/patool;a=blob;f=doc/changelog.txt;hb=HEAD
+Tar/GZ-URL: http://downloads.sourceforge.net/patool/patool-${version}.tar.gz
+GIT-Tree-URL: http://patool.git.sourceforge.net/
+Windows-installer-URL: http://downloads.sourceforge.net/patool/patool-${version}.win32.exe
+
+Archive commands are now printed on the console before running them.
+A RAR extraction bug has been fixed.
