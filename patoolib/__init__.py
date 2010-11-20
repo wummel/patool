@@ -36,6 +36,7 @@ ArchiveMimetypes = {
     'application/x-tar': 'tar',
     'application/x-gzip': 'gzip',
     'application/zip': 'zip',
+    'application/x-zip-compressed': 'zip',
     'application/java-archive': 'zip',
     'application/x-7z-compressed': '7z',
     'application/x-compress': 'compress',
