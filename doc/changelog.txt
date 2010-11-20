@@ -1,4 +1,4 @@
-0.12 "" (released xx.xx.2010)
+0.12 "Galaxy Quest" (released 20.11.2010)
 
   * Show commands that are run.
   * Fix rar extraction unpack directory.
