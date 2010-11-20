@@ -150,7 +150,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.txt.gz", "application/x-gzip", None)
         self.mime_test_mimedb("t .xz", "application/x-xz", None)
         self.mime_test_mimedb("t.Z", "application/x-compress", None)
-        self.mime_test_mimedb("t.zip", "application/zip", None)
+        self.mime_test_mimedb("t.zip", ("application/zip", "application/x-zip-compressed"), None)
         self.mime_test_mimedb("t.ace", "application/x-ace", None)
         self.mime_test_mimedb("t.a", "application/x-archive", None)
         self.mime_test_mimedb("t.lha", "application/x-lha", None)
