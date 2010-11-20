@@ -2,6 +2,7 @@
 
   * Show commands that are run.
   * Fix rar extraction unpack directory.
+  * Fix ZIP mimedb detection on Windows systems.
 
 0.11 "Primer" (released 4.10.2010)
 
