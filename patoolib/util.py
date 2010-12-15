@@ -95,6 +95,9 @@ def run (cmd, **kwargs):
     if kwargs:
         log_info("    with %s" % ", ".join("%s=%s" % (k, shell_quote(str(v)))\
                                            for k, v in kwargs.items()))
+        if kwargs.get("shell"):
+            # for shell calls the command must be a string
+            cmd = " ".join(cmd)
     return subprocess.call(cmd, **kwargs)
 
 

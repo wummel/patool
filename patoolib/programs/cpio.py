@@ -25,7 +25,7 @@ def extract_cpio (archive, encoding, cmd, **kwargs):
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
-    return (" ".join(cmdlist), {'cwd': kwargs['outdir'], 'shell': True})
+    return (cmdlist, {'cwd': kwargs['outdir'], 'shell': True})
 
 
 def list_cpio (archive, encoding, cmd, **kwargs):
@@ -50,4 +50,4 @@ def create_cpio(archive, encoding, cmd, *args, **kwargs):
         cmdlist[0:0] = findcmd
         cmdlist.append('-0')
     cmdlist.extend([">", util.shell_quote(archive)])
-    return (" ".join(cmdlist), {'shell': True})
+    return (cmdlist, {'shell': True})

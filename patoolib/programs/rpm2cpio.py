@@ -30,4 +30,4 @@ def extract_rpm (archive, encoding, cmd, **kwargs):
         r'"*\.\.*"']
     if kwargs['verbose']:
         cmdlist.append('-v')
-    return (" ".join(cmdlist), {'cwd': kwargs['outdir'], 'shell': True})
+    return (cmdlist, {'cwd': kwargs['outdir'], 'shell': True})

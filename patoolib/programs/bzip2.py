@@ -29,5 +29,4 @@ def create_bzip2 (archive, encoding, cmd, *args, **kwargs):
     cmdlist.extend(['-c', '-z', '--'])
     cmdlist.extend([util.shell_quote(x) for x in args])
     cmdlist.extend(['>', util.shell_quote(archive)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
+    return (cmdlist, {'shell': True})

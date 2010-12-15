@@ -23,8 +23,7 @@ def extract_singlefile_standard (archive, encoding, cmd, **kwargs):
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
         util.shell_quote(outfile)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
+    return (cmdlist, {'shell': True})
 
 
 def test_singlefile_standard (archive, encoding, cmd, **kwargs):
@@ -44,5 +43,4 @@ def create_singlefile_standard (archive, encoding, cmd, *args, **kwargs):
     cmdlist.extend(['-c', '--'])
     cmdlist.extend([util.shell_quote(x) for x in args])
     cmdlist.extend(['>', util.shell_quote(archive)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
+    return (cmdlist, {'shell': True})

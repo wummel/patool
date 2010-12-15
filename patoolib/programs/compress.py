@@ -25,5 +25,4 @@ def create_compress (archive, encoding, cmd, *args, **kwargs):
     cmdlist.append('-c')
     cmdlist.extend([util.shell_quote(x) for x in args])
     cmdlist.extend(['>', util.shell_quote(archive)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
+    return (cmdlist, {'shell': True})

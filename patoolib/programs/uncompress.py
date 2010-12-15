@@ -25,5 +25,4 @@ def extract_compress (archive, encoding, cmd, **kwargs):
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend(['-c', util.shell_quote(archive), '>',
                     util.shell_quote(outfile)])
-    # note that for shell calls the command must be a string
-    return (" ".join(cmdlist), {'shell': True})
+    return (cmdlist, {'shell': True})
