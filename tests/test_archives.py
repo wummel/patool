@@ -347,8 +347,7 @@ class TestArchives (ArchiveTest):
         self.program = 'lrzip'
         self.archive_test('t.txt.lrz')
         self.archive_extract('t.txt.lrz')
-        # lrzip is broken for now
-        #self.archive_create('t.txt.lrz', singlefile=True)
+        self.archive_create('t.txt.lrz', singlefile=True)
 
     @needs_program('rzip')
     def test_rzip (self):
@@ -356,8 +355,8 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.txt.rz')
         self.archive_create('t.txt.rz', singlefile=True)
 
-    # XXX test failure
-    #@needs_program('zoo')
-    #def test_zoo (self):
-    #    self.program = 'zoo'
-    #    self.archive_commands('t.zoo', singlefile=True)
+    @needs_program('zoo')
+    def test_zoo (self):
+        self.program = 'zoo'
+        # XXX test failure
+        #self.archive_commands('t.zoo', singlefile=True)
