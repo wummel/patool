@@ -2,7 +2,7 @@
 
   * Fix command argument order when extracting cpio archives.
   * Added correct cpio MIME type on Debian systems.
-  * Added support for the clzip program which is like lzip capable
+  * Added support for the clzip and pdlzip programs who are both capable
     of handling LZIP (.lz) archives.
 
 0.12 "Galaxy Quest" (released 20.11.2010)
