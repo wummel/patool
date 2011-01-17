@@ -212,6 +212,7 @@ FileText2Mime = {
     "ARJ archive data": "application/x-arj",
     "bzip2 compressed data": "application/x-bzip2",
     "cpio archive": "application/x-cpio",
+    "ASCII cpio archive": "application/x-cpio",
     "Debian binary package": "application/x-debian-package",
     "gzip compressed data": "application/x-gzip",
     "lzop compressed data": "application/x-lzop",

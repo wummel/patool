@@ -1,6 +1,7 @@
 0.13 "" (released xx.xx.xxxx)
 
   * Fix command argument order when extracting cpio archives.
+  * Added correct cpio MIME type on Debian systems.
 
 0.12 "Galaxy Quest" (released 20.11.2010)
 
