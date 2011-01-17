@@ -44,9 +44,9 @@ def create_cpio(archive, encoding, cmd, *args, **kwargs):
     if kwargs['verbose']:
         cmdlist.append('-v')
     if len(args) != 0:
-        findcmd = ['find', '-print0']
+        findcmd = ['find']
         findcmd.extend([util.shell_quote(x) for x in args])
-        findcmd.append('|')
+        findcmd.extend(['-print0', '|'])
         cmdlist[0:0] = findcmd
         cmdlist.append('-0')
     cmdlist.extend([">", util.shell_quote(archive)])
