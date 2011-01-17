@@ -23,7 +23,7 @@ class ArchiveRepackTest (unittest.TestCase):
 
     @needs_program('diff')
     @needs_one_program(('tar', 'star', '7z'))
-    @needs_one_program(('unzip', '7z'))
+    @needs_one_program(('zip', '7z'))
     def test_repack (self):
         archive1 = os.path.join(datadir, "t.tar")
         tmpdir = patoolib.util.tmpdir()

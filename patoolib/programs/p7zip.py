@@ -88,3 +88,6 @@ def create_7z (archive, encoding, cmd, *args, **kwargs):
     cmdlist.append(archive)
     cmdlist.extend(args)
     return cmdlist
+
+create_zip = \
+  create_7z

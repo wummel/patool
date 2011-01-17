@@ -43,4 +43,5 @@ from .p7zip import \
   test_rar, \
   test_cab, \
   test_7z, \
-  create_7z
+  create_7z, \
+  create_zip

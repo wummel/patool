@@ -110,7 +110,7 @@ ArchivePrograms = {
         'extract': ('unzip', '7z', '7za'),
         'list': ('unzip', '7z', '7za'),
         'test': ('unzip', '7z', '7za'),
-        'create': ('zip',),
+        'create': ('zip', '7z', '7za'),
     },
     'gzip': {
         None: ('gzip', '7z', '7za'),
