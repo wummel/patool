@@ -4,8 +4,8 @@
   * Added correct cpio MIME type on Debian systems.
   * Added support for the clzip and pdlzip programs who are both capable
     of handling LZIP (.lz) archives.
-  * Support ZIP (.zip) file create with the 7z and 7za programs. Also
-    fixes the test_repack test case when /usr/bin/zip was not installed.
+  * Support ZIP (.zip) file creation with the 7z and 7za programs. Also
+    fixes the test_repack test case when /usr/bin/zip is not installed.
 
 0.12 "Galaxy Quest" (released 20.11.2010)
 
