@@ -180,9 +180,9 @@ class TestArchives (ArchiveTest):
     def test_p7zip_file (self):
         self.program = '7z'
         self.archive_commands('t.7z.foo', format="7z")
+        self.archive_commands('t.zip.foo', format="zip")
         self.archive_list('t.gz.foo')
         self.archive_list('t.bz2.foo')
-        self.archive_list('t.zip.foo')
         self.archive_list('t.jar.foo')
         self.archive_list('t.Z.foo')
         self.archive_list('t.cab.foo')
@@ -192,7 +192,6 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.deb.foo')
         self.archive_extract('t.gz.foo')
         self.archive_extract('t.bz2.foo')
-        self.archive_extract('t.zip.foo')
         self.archive_extract('t.jar.foo')
         self.archive_extract('t.Z.foo')
         self.archive_extract('t.cab.foo')
@@ -202,7 +201,6 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.deb.foo')
         self.archive_test('t.gz.foo')
         self.archive_test('t.bz2.foo')
-        self.archive_test('t.zip.foo')
         self.archive_test('t.jar.foo')
         self.archive_test('t.Z.foo')
         self.archive_test('t.cab.foo')
@@ -216,9 +214,9 @@ class TestArchives (ArchiveTest):
     def test_p7azip_file (self):
         self.program = '7za'
         self.archive_commands('t.7z.foo', format="7z")
+        self.archive_commands('t.zip.foo', format="zip")
         self.archive_list('t.gz.foo')
         self.archive_list('t.bz2.foo')
-        self.archive_list('t.zip.foo')
         self.archive_list('t.jar.foo')
         self.archive_list('t.Z.foo')
         self.archive_list('t.cab.foo')
@@ -228,7 +226,6 @@ class TestArchives (ArchiveTest):
         #self.archive_list('t.deb.foo')
         self.archive_extract('t.gz.foo')
         self.archive_extract('t.bz2.foo')
-        self.archive_extract('t.zip.foo')
         self.archive_extract('t.jar.foo')
         self.archive_extract('t.Z.foo')
         self.archive_extract('t.cab.foo')
@@ -238,7 +235,6 @@ class TestArchives (ArchiveTest):
         #self.archive_extract('t.deb.foo')
         self.archive_test('t.gz.foo')
         self.archive_test('t.bz2.foo')
-        self.archive_test('t.zip.foo')
         self.archive_test('t.jar.foo')
         self.archive_test('t.Z.foo')
         self.archive_test('t.cab.foo')
