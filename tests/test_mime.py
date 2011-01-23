@@ -74,23 +74,17 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.rpm.foo", "application/x-rpm", None)
         self.mime_test_file("t.tar", "application/x-tar", None)
         self.mime_test_file("t.tar.foo", "application/x-tar", None)
+        self.mime_test_file("t.tar.lz", "application/x-tar", "lzip")
         self.mime_test_file("t.tar.bz2", "application/x-tar", "bzip2")
-        self.mime_test_file("t.tar.bz2.foo", "application/x-tar", "bzip2")
+        self.mime_test_file("t.tbz2", "application/x-tar", "bzip2")
         self.mime_test_file("t.tar.gz", "application/x-tar", "gzip")
-        self.mime_test_file("t.tar.gz.foo", "application/x-tar", "gzip")
+        self.mime_test_file("t.taz", "application/x-tar", "gzip")
+        self.mime_test_file("t.tgz", "application/x-tar", "gzip")
+        self.mime_test_file("t.tar.xz", "application/x-tar", "xz")
+        self.mime_test_file("t.tar.Z", "application/x-tar", "compress")
         # file(1) does not recognize .lzma files
         #self.mime_test_file("t.tar.lzma", "application/x-tar", "lzma")
         #self.mime_test_file("t.tar.lzma.foo", "application/x-tar", "lzma")
-        self.mime_test_file("t.tar.xz", "application/x-tar", "xz")
-        self.mime_test_file("t.tar.xz.foo", "application/x-tar", "xz")
-        self.mime_test_file("t.tar.Z", "application/x-tar", "compress")
-        self.mime_test_file("t.tar.Z.foo", "application/x-tar", "compress")
-        self.mime_test_file("t.taz", "application/x-tar", "gzip")
-        self.mime_test_file("t.taz.foo", "application/x-tar", "gzip")
-        self.mime_test_file("t.tbz2", "application/x-tar", "bzip2")
-        self.mime_test_file("t.tbz2.foo", "application/x-tar", "bzip2")
-        self.mime_test_file("t.tgz", "application/x-tar", "gzip")
-        self.mime_test_file("t.tgz.foo", "application/x-tar", "gzip")
         self.mime_test_file("t.txt.gz", "application/x-gzip", None)
         self.mime_test_file("t.txt.gz.foo", "application/x-gzip", None)
         self.mime_test_file("t .xz", "application/x-xz", None)
@@ -124,8 +118,30 @@ class TestMime (unittest.TestCase):
     @needs_program('file')
     @needs_program('lzip')
     def test_mime_file_lzip (self):
-        self.mime_test_file("t.tar.lz", "application/x-tar", "lzip")
         self.mime_test_file("t.tar.lz.foo", "application/x-tar", "lzip")
+
+    @needs_program('file')
+    @needs_program('bzip2')
+    def test_mime_file_bzip (self):
+        self.mime_test_file("t.tar.bz2.foo", "application/x-tar", "bzip2")
+        self.mime_test_file("t.tbz2.foo", "application/x-tar", "bzip2")
+
+    @needs_program('file')
+    @needs_program('gzip')
+    def test_mime_file_gzip (self):
+        self.mime_test_file("t.tar.gz.foo", "application/x-tar", "gzip")
+        self.mime_test_file("t.taz.foo", "application/x-tar", "gzip")
+        self.mime_test_file("t.tgz.foo", "application/x-tar", "gzip")
+
+    @needs_program('file')
+    @needs_program('xz')
+    def test_mime_file_xzip (self):
+        self.mime_test_file("t.tar.xz.foo", "application/x-tar", "xz")
+
+    @needs_program('file')
+    @needs_program('uncompress')
+    def test_mime_file_compress (self):
+        self.mime_test_file("t.tar.Z.foo", "application/x-tar", "compress")
 
     def test_mime_mimedb (self):
         self.mime_test_mimedb("t .7z", "application/x-7z-compressed", None)

@@ -1,11 +1,13 @@
-0.13 "" (released xx.xx.xxxx)
+0.13 "" (released xx.xx.2011)
 
   * Fix command argument order when extracting cpio archives.
   * Added correct cpio MIME type on Debian systems.
   * Added support for the clzip and pdlzip programs who are both capable
     of handling LZIP (.lz) archives.
-  * Support ZIP (.zip) file creation with the 7z and 7za programs. Also
-    fixes the test_repack test case when /usr/bin/zip is not installed.
+  * Support ZIP (.zip) file creation with the 7z and 7za programs.
+  * Improved MIME type detection for compressed TAR archives.
+  * Fix needed archive programs for several test cases, including
+    test_repack and test_mime.
 
 0.12 "Galaxy Quest" (released 20.11.2010)
 

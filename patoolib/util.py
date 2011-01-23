@@ -186,8 +186,15 @@ def guess_mime_file_mime (file_prog, filename):
         except OSError, msg:
             # ignore errors, as file(1) is only a fallback
             return mime, encoding
-        mime2 = outparts[0]
-        if mime2 in ArchiveMimetypes:
+        mime2 = outparts[0].split(" ", 1)[0]
+        if mime2 == 'application/x-empty':
+            # The uncompressor program file(1) uses is not installed.
+            # Try to get mime information from the file extension.
+            mime2, encoding2 = guess_mime_mimedb(filename)
+            if mime2 in ArchiveMimetypes:
+                mime = mime2
+                encoding = encoding2
+        elif mime2 in ArchiveMimetypes:
             mime = mime2
             encoding = get_file_mime_encoding(outparts)
     if mime not in ArchiveMimetypes:
