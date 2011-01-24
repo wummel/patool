@@ -274,7 +274,7 @@ class TestArchives (ArchiveTest):
 
     @needs_program('file')
     @needs_program('orange')
-    def test_cabextract (self):
+    def test_orange (self):
         self.program = 'orange'
         self.archive_extract('t.cab.foo')
 
@@ -365,7 +365,7 @@ class TestArchives (ArchiveTest):
 
     @needs_program('file')
     @needs_program('pdlzip')
-    def test_clzip (self):
+    def test_pdlzip (self):
         self.program = 'pdlzip'
         self.archive_test('t.txt.lz.foo')
         self.archive_extract('t.txt.lz.foo')
@@ -425,3 +425,11 @@ class TestArchives (ArchiveTest):
     #def test_zoo (self):
     #    self.program = 'zoo'
     #    self.archive_commands('t.zoo.foo', format="zoo", singlefile=True)
+
+    # xdms(1) cannot handle files without '.dms' extension
+    #@needs_program('xdms')
+    #def test_xdms (self):
+    #    self.program = 'xdms'
+    #    self.archive_extract('t.dms.foo')
+    #    self.archive_test('t.dms.foo')
+    #    self.archive_list('t.dms.foo')

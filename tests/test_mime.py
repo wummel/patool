@@ -114,6 +114,8 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.txt.rz.foo", "application/x-rzip", None)
         self.mime_test_file("t.zoo", "application/x-zoo", None)
         self.mime_test_file("t.zoo.foo", "application/x-zoo", None)
+        self.mime_test_file("t.dms", "application/x-dms", None)
+        self.mime_test_file("t.dms.foo", "application/x-dms", None)
 
     @needs_program('file')
     @needs_program('lzip')
@@ -180,3 +182,4 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.lrz", "application/x-lrzip", None)
         self.mime_test_mimedb("t.rz", "application/x-rzip", None)
         self.mime_test_mimedb("t.zoo", "application/x-zoo", None)
+        self.mime_test_mimedb("t.dms", "application/x-dms", None)

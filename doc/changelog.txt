@@ -6,6 +6,7 @@
     of handling LZIP (.lz) archives.
   * Added support for the orange program which is capable of extracting
     CAB (.cab) archives.
+  * Added support for DMS (.dms) files with the xdms program.
   * Support ZIP (.zip) file creation with the 7z and 7za programs.
   * Improved MIME type detection for compressed TAR archives.
   * Fix needed archive programs for several test cases, including

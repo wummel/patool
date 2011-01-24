@@ -49,6 +49,7 @@ mimedb.add_type('application/x-lha', '.lha', strict=False)
 mimedb.add_type('application/x-lzh', '.lzh', strict=False)
 mimedb.add_type('application/x-rzip', '.rz', strict=False)
 mimedb.add_type('application/x-zoo', '.zoo', strict=False)
+mimedb.add_type('application/x-dms', '.dms', strict=False)
 
 
 class PatoolError (StandardError):
@@ -236,6 +237,7 @@ FileText2Mime = {
     "LHa ": "application/x-lha",
     "ARC archive data": "application/x-arc",
     "Zoo archive data": "application/x-zoo",
+    "DMS archive data": "application/x-dms",
 }
 
 def guess_mime_file_text (file_prog, filename):

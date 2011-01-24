@@ -245,7 +245,7 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.cab')
 
     @needs_program('orange')
-    def test_cabextract (self):
+    def test_orange (self):
         self.program = 'orange'
         self.archive_extract('t.cab')
 
@@ -323,7 +323,7 @@ class TestArchives (ArchiveTest):
         self.archive_create('t.txt.lz', singlefile=True)
 
     @needs_program('pdlzip')
-    def test_clzip (self):
+    def test_pdlzip (self):
         self.program = 'pdlzip'
         self.archive_test('t.txt.lz')
         self.archive_extract('t.txt.lz')
@@ -378,3 +378,10 @@ class TestArchives (ArchiveTest):
         self.program = 'zoo'
         # XXX test failure
         #self.archive_commands('t.zoo', singlefile=True)
+
+    @needs_program('xdms')
+    def test_xdms (self):
+        self.program = 'xdms'
+        self.archive_test('t.dms')
+        self.archive_extract('t.dms')
+        self.archive_list('t.dms')
