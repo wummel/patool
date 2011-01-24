@@ -146,7 +146,7 @@ ArchivePrograms = {
         'test': ('unrar', '7z'),
     },
     'cab': {
-        'extract': ('cabextract', '7z'),
+        'extract': ('cabextract', '7z', 'orange'),
         'list': ('cabextract', '7z'),
         'test': ('cabextract', '7z'),
     },

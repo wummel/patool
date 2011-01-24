@@ -4,6 +4,8 @@
   * Added correct cpio MIME type on Debian systems.
   * Added support for the clzip and pdlzip programs who are both capable
     of handling LZIP (.lz) archives.
+  * Added support for the orange program which is capable of extracting
+    CAB (.cab) archives.
   * Support ZIP (.zip) file creation with the 7z and 7za programs.
   * Improved MIME type detection for compressed TAR archives.
   * Fix needed archive programs for several test cases, including
