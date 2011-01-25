@@ -1,4 +1,4 @@
-0.13 "" (released xx.xx.2011)
+0.13 "Megamind" (released 25.1.2011)
 
   * Fix command argument order when extracting cpio archives.
   * Added correct cpio MIME type on Debian systems.
