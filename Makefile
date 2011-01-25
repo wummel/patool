@@ -65,7 +65,6 @@ check:
 	check-pofiles -v
 	py-tabdaddy
 	py-unittest2-compat tests/
-	$(MAKE) pyflakes
 
 .PHONY: pyflakes
 pyflakes:
