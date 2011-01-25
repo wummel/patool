@@ -1,5 +1,5 @@
 Project: patool
-Version: 0.12
+Version: 0.13
 Release-Focus: Minor feature enhancements
 Hide: N
 Website-URL: http://patool.sourceforge.net/
@@ -8,5 +8,6 @@ Tar/GZ-URL: http://downloads.sourceforge.net/patool/patool-${version}.tar.gz
 GIT-Tree-URL: http://patool.git.sourceforge.net/
 Windows-installer-URL: http://downloads.sourceforge.net/patool/patool-${version}.win32.exe
 
-Archive commands are now printed on the console before running them.
-A RAR extraction bug has been fixed.
+Support for DMS (.dms) files has been added.
+A bug extracting cpio archives has been fixed.
+MIME type detection has been improved.
