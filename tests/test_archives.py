@@ -45,7 +45,7 @@ class TestArchives (ArchiveTest):
         self.program = 'tar'
         self.archive_commands('t.tar.lzma')
 
-    # XXX even though clzip would support extracting .lz files, the
+    # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for achive detection
     @needs_program('lzip')
     @needs_codec('tar', 'lzip')
@@ -374,7 +374,7 @@ class TestArchives (ArchiveTest):
     @needs_program('zoo')
     def test_zoo (self):
         self.program = 'zoo'
-        # XXX test failure
+        # XXX test failure - zoo cannot read its own files back :-(
         #self.archive_commands('t.zoo', singlefile=True)
 
     @needs_program('xdms')

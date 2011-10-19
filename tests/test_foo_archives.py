@@ -44,14 +44,14 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.bz2.foo', format="tar", encoding="bzip2")
         self.archive_commands('t.tbz2.foo', format="tar", encoding="bzip2")
 
-    # file(1) does not recognize .lzma files
+    # file(1) does not recognize .lzma files (at least not with --uncompress)
     #@needs_program('file')
     #@needs_codec('tar', 'lzma')
     #def test_tar_lzma (self):
     #    self.program = 'tar'
     #    self.archive_commands('t.tar.lzma.foo', format="tar", encoding="lzma")
 
-    # XXX even though clzip would support extracting .lz files, the
+    # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for achive detection
     @needs_program('lzip')
     @needs_program('file')
