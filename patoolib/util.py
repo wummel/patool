@@ -50,6 +50,7 @@ mimedb.add_type('application/x-lzh', '.lzh', strict=False)
 mimedb.add_type('application/x-rzip', '.rz', strict=False)
 mimedb.add_type('application/x-zoo', '.zoo', strict=False)
 mimedb.add_type('application/x-dms', '.dms', strict=False)
+mimedb.add_type('application/x-zip-compressed', '.crx', strict=False)
 
 
 class PatoolError (StandardError):
@@ -153,11 +154,15 @@ def guess_mime_mimedb (filename):
 
 def guess_mime_file (filename):
     """Determine MIME type of filename with file(1):
-     (a) using file(1) --mime
-     (b) using file(1) and look the result string
+     (a) using `file --mime`
+     (b) using `file` and look the result string
     @return: tuple (mime, encoding)
     """
     mime, encoding = None, None
+    base, ext = os.path.splitext(filename)
+    if ext.lower() in ('.lzma', '.alz', '.lrz'):
+        # let mimedb recognize these extensions
+        return mime, encoding
     if os.path.isfile(filename):
         file_prog = find_program("file")
         if file_prog:
@@ -179,7 +184,7 @@ def guess_mime_file_mime (file_prog, filename):
         # ignore errors, as file(1) is only a fallback
         return mime, encoding
     from patoolib import ArchiveMimetypes
-    if mime in Encoding2Mime.values():
+    if mime in Mime2Encoding:
         # try to look inside compressed archives
         cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]
         try:
