@@ -1,3 +1,11 @@
+0.14 "" (released xx.xx.2011)
+
+  * Handle CRX (.crx) files as ZIP archives. They have garbage at
+    the beginning of the file, but some unzip programs can cope with
+    that.
+  * The xz program supports listing of XZ archives. Adjust the
+    configuration accordingly.
+
 0.13 "Megamind" (released 25.1.2011)
 
   * Fix command argument order when extracting cpio archives.

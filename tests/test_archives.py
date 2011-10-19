@@ -339,9 +339,7 @@ class TestArchives (ArchiveTest):
     @needs_program('xz')
     def test_xz (self):
         self.program = 'xz'
-        self.archive_test('t .xz')
-        self.archive_extract('t .xz')
-        self.archive_create('t .xz', singlefile=True)
+        self.archive_commands('t .xz', singlefile=True)
 
     @needs_program('lha')
     def test_lha (self):

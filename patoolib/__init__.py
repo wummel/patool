@@ -188,10 +188,7 @@ ArchivePrograms = {
         'create': ('rzip',),
     },
     'xz': {
-        'extract': ('xz',),
-        'list': ('echo',),
-        'test': ('xz',),
-        'create': ('xz',),
+        None: ('xz',),
     },
     'zoo': {
         None: ('zoo',),
@@ -415,12 +412,7 @@ def _handle_archive (archive, command, *args, **kwargs):
     if command == 'create' and os.path.exists(archive):
         raise util.PatoolError("archive `%s' already exists" % archive)
     program = config['program']
-    # get python module for given archive program
-    key = util.stripext(os.path.basename(program).lower())
-    module = ProgramModules.get(key, key)
-    # import archive handler (eg. patoolib.programs.star.extract_tar())
-    exec "from patoolib.programs.%s import %s_%s as func" % (module, command, format)
-    get_archive_cmdlist = locals()['func']
+    get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
     # prepare keyword arguments for command list
     cmd_kwargs = dict(verbose=config['verbose'])
     origarchive = None
@@ -454,6 +446,20 @@ def _handle_archive (archive, command, *args, **kwargs):
                 os.rmdir(cmd_kwargs["outdir"])
             except OSError:
                 pass
+
+
+def get_archive_cmdlist_func (program, command, format):
+    # get python module for given archive program
+    key = util.stripext(os.path.basename(program).lower())
+    module = ProgramModules.get(key, key)
+    # import archive handler function (eg. patoolib.programs.star.extract_tar)
+    args = (module, command, format)
+    import_cmd = "from patoolib.programs.%s import %s_%s as func" % args
+    try:
+        exec import_cmd
+    except ImportError:
+        raise util.PatoolError('ImportError executing %r' % import_cmd)
+    return locals()['func']
 
 
 def handle_archive (archive, command, *args, **kwargs):
