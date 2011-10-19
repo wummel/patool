@@ -21,3 +21,12 @@ from patoolib.programs import extract_singlefile_standard, \
 extract_xz = extract_singlefile_standard
 test_xz = test_singlefile_standard
 create_xz = create_singlefile_standard
+
+def list_xz (archive, encoding, cmd, **kwargs):
+    """List a XZ archive."""
+    cmdlist = [cmd]
+    cmdlist.append('-l')
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    cmdlist.append(archive)
+    return cmdlist
