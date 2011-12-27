@@ -1,25 +1,31 @@
 # This Makefile is only used by developers.
-VERSION:=$(shell python setup.py --version)
+PYVER:=2.7
+PYTHON:=python$(PYVER)
+VERSION:=$(shell $(PYTHON) setup.py --version)
 ARCHIVE:=patool-$(VERSION).tar.gz
 ARCHIVE_WIN32:=patool-$(VERSION).win32.exe
 PY_FILES_DIRS := patool setup.py patoolib tests
-NUMCPUS := $(shell grep -c '^process' /proc/cpuinfo)
+PY2APPOPTS ?=
+ifeq ($(shell uname),Darwin)
+  NOSETESTS:=/usr/local/share/python/nosetests
+  NUMPROCESSORS:=$(shell sysctl -a | grep machdep.cpu.core_count | cut -d " " -f 2)
+  CHMODMINUSMINUS:=
+else
+  NOSETESTS:=$(shell which nosetests)
+  NUMPROCESSORS:=$(shell grep -c processor /proc/cpuinfo)
+  CHMODMINUSMINUS:=--
+endif
 # which test modules to run
 TESTS ?= tests/
 # set test options, eg. to "--nologcapture"
 TESTOPTS=
-# test for nose achievements plugin and use it if available
-NOSE_ACHIEVEMENTS:=$(shell nosetests --plugins | grep achievements)
-ifeq ($(strip $(NOSE_ACHIEVEMENTS)),Plugin achievements)
-TESTOPTS += --with-achievements
-endif
 
 all:
 
 
 .PHONY: chmod
 chmod:
-	-chmod -R a+rX,u+w,go-w -- *
+	-chmod -R a+rX,u+w,go-w $(CHMODMINUSMINUS) *
 	find . -type d -exec chmod 755 {} \;
 
 .PHONY: dist
@@ -39,8 +45,8 @@ upload:
 .PHONY: release
 release: clean releasecheck dist upload
 	@echo "Register at Python Package Index..."
-	python setup.py register
-	freshmeat-submit < patool.freshmeat
+	$(PYTHON) setup.py register
+	freecode-submit < patool.freecode
 
 
 .PHONY: releasecheck
@@ -55,6 +61,11 @@ releasecheck: check test
 	@if ! grep "Version: $(VERSION)" patool.freshmeat > /dev/null; then \
 	  echo "Could not release: edit patool.freshmeat version"; false; \
 	fi
+
+# Build OSX installer
+.PHONY: app
+app: clean chmod
+	$(PYTHON) setup.py py2app $(PY2APPOPTS)
 
 # The check programs used here are mostly local scripts on my private system.
 # So for other developers there is no need to execute this target.
@@ -82,7 +93,7 @@ clean:
 
 .PHONY: test
 test:
-	nosetests -v --processes=$(NUMCPUS) -m "^test_.*" $(TESTOPTS) $(TESTS)
+	$(PYTHON) $(NOSETESTS) -v --processes=$(NUMPROCESSORS) -m "^test_.*" $(TESTOPTS) $(TESTS)
 
 doc/patool.txt: doc/patool.1
 	cols=`stty size | cut -d" " -f2`; stty cols 72; man -l doc/patool.1 | perl -pe 's/.\cH//g' > doc/patool.txt; stty cols $$cols
@@ -90,3 +101,6 @@ doc/patool.txt: doc/patool.1
 .PHONY: deb
 deb:
 	git-buildpackage --git-export-dir=../build-area/ --git-upstream-branch=master --git-debian-branch=debian  --git-ignore-new
+
+update-copyright:
+	update-copyright --holder="Bastian Kleineidam"
