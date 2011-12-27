@@ -21,7 +21,7 @@ def extract_rar (archive, encoding, cmd, **kwargs):
     cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
         cmdlist.append('-c-')
-    cmdlist.extend(['-r', '--', os.path.abspath(archive)])
+    cmdlist.extend(['--', os.path.abspath(archive)])
     return (cmdlist, {'cwd': kwargs['outdir']})
 
 def list_rar (archive, encoding, cmd, **kwargs):
