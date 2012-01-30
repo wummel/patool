@@ -44,6 +44,7 @@ upload:
 
 .PHONY: release
 release: clean releasecheck dist upload
+	git tag v$(VERSION)
 	@echo "Register at Python Package Index..."
 	$(PYTHON) setup.py register
 	freecode-submit < patool.freecode
