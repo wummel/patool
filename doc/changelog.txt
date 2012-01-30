@@ -1,4 +1,4 @@
-0.14 "" (released xx.xx.2011)
+0.14 "Book of Dragons" (released 30.1.2012)
 
   * Handle CRX (.crx) files as ZIP archives. They have garbage at
     the beginning of the file, but some unzip programs can cope with
