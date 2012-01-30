@@ -58,8 +58,8 @@ releasecheck: check test
 	  echo "Missing WIN32 distribution archive at ../$(ARCHIVE_WIN32)"; \
 	  false; \
 	fi
-	@if ! grep "Version: $(VERSION)" patool.freshmeat > /dev/null; then \
-	  echo "Could not release: edit patool.freshmeat version"; false; \
+	@if ! grep "Version: $(VERSION)" patool.freecode > /dev/null; then \
+	  echo "Could not release: edit patool.freecode version"; false; \
 	fi
 
 # Build OSX installer
