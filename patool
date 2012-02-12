@@ -89,4 +89,5 @@ try:
     sys.exit(baker.run())
 except baker.CommandError, msg:
     print >>sys.stderr, "patool error:", msg
+    baker.help(sys.argv[0])
     sys.exit(1)
