@@ -1,3 +1,7 @@
+0.15 "" (released xx.xx.2012)
+
+  * Print help when unknown options are given.
+
 0.14 "Book of Dragons" (released 30.1.2012)
 
   * Handle CRX (.crx) files as ZIP archives. They have garbage at
