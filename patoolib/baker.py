@@ -208,7 +208,8 @@ class Baker(object):
         self.commands[cmd.name] = cmd
 
         # If default is True, set this as the default command
-        if default: self.defaultcommand = cmd
+        if default:
+            self.defaultcommand = cmd
 
         return fn
 
@@ -514,7 +515,7 @@ class Baker(object):
         if len(args) > len(posargs) and not cmd.has_varargs:
             raise CommandError("Too many arguments to %s: %s" % (cmd.name, " ".join(args)))
 
-        if not cmd.has_kwargs:
+        if cmd.keywords:
             for k in sorted(kwargs.keys()):
                 if k not in cmd.keywords:
                     raise CommandError("Unknown option --%s" % k)
@@ -570,3 +571,4 @@ _baker = Baker()
 command = _baker.command
 run = _baker.run
 test = _baker.test
+help = _baker.print_top_help
