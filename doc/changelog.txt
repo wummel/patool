@@ -2,6 +2,7 @@
 
   * Print help when unknown options are given.
   * Print error when archive files do not exist.
+  * Added installation instructions in doc/install.txt
 
 0.14 "Book of Dragons" (released 30.1.2012)
 
