@@ -44,7 +44,10 @@ class ArchiveTest (unittest.TestCase):
         archive = os.path.join(datadir, filename)
         # create a temporary directory for extraction
         tmpdir = patoolib.util.tmpdir(dir=basedir)
-        olddir = os.getcwd()
+        try:
+            olddir = os.getcwd()
+        except OSError:
+            olddir = None
         os.chdir(tmpdir)
         # archive name relative to tmpdir
         relarchive = os.path.join("..", archive[len(basedir)+1:])
@@ -52,7 +55,8 @@ class ArchiveTest (unittest.TestCase):
             patoolib._handle_archive(archive, 'extract', program=self.program)
             patoolib._handle_archive(relarchive, 'extract', program=self.program, verbose=True)
         finally:
-            os.chdir(olddir)
+            if olddir:
+                os.chdir(olddir)
             shutil.rmtree(tmpdir)
 
     def archive_list (self, filename):
