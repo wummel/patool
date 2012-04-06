@@ -142,6 +142,12 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.txt.gz', singlefile=True)
         self.archive_extract('t.Z')
 
+    @needs_program('pigz')
+    def test_pigz (self):
+        self.program = 'pigz'
+        self.archive_commands('t.gz', singlefile=True)
+        self.archive_commands('t.txt.gz', singlefile=True)
+
     @needs_program('uncompress.real')
     def test_uncompress (self):
         self.program = 'uncompress.real'

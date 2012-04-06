@@ -68,7 +68,7 @@ ArchiveMimetypes = {
 # List of programs supporting the given encoding
 
 EncodingPrograms = {
-    'gzip': ('gzip',),
+    'gzip': ('pigz', 'gzip'),
     'bzip2': ('pbzip2', 'bzip2'),
     'compress': ('compress',),
     'lzma': ('lzma',),
@@ -114,7 +114,7 @@ ArchivePrograms = {
         'create': ('zip', '7z', '7za'),
     },
     'gzip': {
-        None: ('gzip', '7z', '7za'),
+        None: ('pigz', 'gzip', '7z', '7za'),
     },
     'lzh': {
         None: ('lha',),
