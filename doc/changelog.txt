@@ -1,4 +1,4 @@
-0.15 "" (released xx.xx.2012)
+0.15 "Contraband" (released 8.4.2012)
 
   * Print help when unknown options are given.
   * Print error when archive files do not exist.

@@ -1,5 +1,5 @@
 Project: patool
-Version: 0.14
+Version: 0.15
 Release-Focus: Minor feature enhancements
 Hide: N
 Website-URL: http://patool.sourceforge.net/
@@ -8,4 +8,6 @@ Tar/GZ-URL: http://downloads.sourceforge.net/patool/patool-${version}.tar.gz
 GIT-Tree-URL: http://patool.git.sourceforge.net/
 Windows-installer-URL: http://downloads.sourceforge.net/patool/patool-${version}.win32.exe
 
-Support for CRX (.crx) files has been added.
+Support for the pigz program handling GZIP archives has been added.
+Error messages for unknown options or missing archive files are
+now printed.
