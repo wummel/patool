@@ -462,28 +462,6 @@ def get_archive_cmdlist_func (program, command, format):
     return locals()['func']
 
 
-def handle_archive (archive, command, *args, **kwargs):
-    """Handle archive file command; with nice error reporting."""
-    try:
-        if command == "diff":
-            res = _diff_archives(archive, args[0])
-        elif command == "repack":
-            res = _repack_archive(archive, args[0])
-        else:
-            _handle_archive(archive, command, *args, **kwargs)
-            res = 0
-    except KeyboardInterrupt, msg:
-        util.log_info("aborted")
-        res = 1
-    except util.PatoolError, msg:
-        util.log_error(msg)
-        res = 1
-    except StandardError, msg:
-        util.log_internal_error()
-        res = 1
-    return res
-
-
 def rmtree_log_error (func, path, exc):
     """Error function for shutil.rmtree(). Raises a PatoolError."""
     msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
@@ -518,3 +496,57 @@ def _repack_archive (archive1, archive2):
         return 0
     finally:
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
+
+
+def handle_archive (archive, command, *args, **kwargs):
+    """Handle archive file command; with nice error reporting."""
+    try:
+        if command == "diff":
+            res = _diff_archives(archive, args[0])
+        elif command == "repack":
+            res = _repack_archive(archive, args[0])
+        else:
+            _handle_archive(archive, command, *args, **kwargs)
+            res = 0
+    except KeyboardInterrupt, msg:
+        util.log_info("aborted")
+        res = 1
+    except util.PatoolError, msg:
+        util.log_error(msg)
+        res = 1
+    except StandardError, msg:
+        util.log_internal_error()
+        res = 1
+    return res
+
+
+# convenience functions
+
+def extract (archive, verbose=False, outdir=None):
+    """Extract given archive."""
+    return handle_archive(archive, 'extract', verbose=verbose, outdir=outdir)
+
+
+def list (archive, verbose=False):
+    """List given archive."""
+    return handle_archive(archive, 'list', verbose=verbose)
+
+
+def test (archive, verbose=False):
+    """Test given archive."""
+    return handle_archive(archive, 'test', verbose=verbose)
+
+
+def create (archive, *files, verbose=False):
+    """Create given archive with given files."""
+    return handle_archive(archive, 'create', *files, verbose=verbose)
+
+
+def diff (archive1, archive2, verbose=False):
+    """Print differences between two archives."""
+    return handle_archive(archive1, 'diff', archive2, verbose=verbose)
+
+
+def repack (archive1, archive2, verbose=False):
+    """Repacke archive to different file and/or format."""
+    return handle_archive(archive1, 'repack', archive2, verbose=verbose)

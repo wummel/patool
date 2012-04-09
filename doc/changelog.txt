@@ -1,7 +1,9 @@
 0.16 "" (released xx.xx.2012)
 
   * Document the --outdir option for the extract command.
-    Closes: SF Bug #3363964
+    Closes: SF bug #3363964
+  * Added convenience library function to handle archives.
+    Closes: SF bug #3351936
 
 0.15 "Contraband" (released 8.4.2012)
 
