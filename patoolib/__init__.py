@@ -537,9 +537,9 @@ def test (archive, verbose=False):
     return handle_archive(archive, 'test', verbose=verbose)
 
 
-def create (archive, *files, verbose=False):
+def create (archive, *files, **kwargs):
     """Create given archive with given files."""
-    return handle_archive(archive, 'create', *files, verbose=verbose)
+    return handle_archive(archive, 'create', *files, **kwargs)
 
 
 def diff (archive1, archive2, verbose=False):
