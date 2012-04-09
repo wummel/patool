@@ -1,5 +1,5 @@
 .\"                                      -*- nroff -*-
-.\" Copyright (C) 2010-2011 Bastian Kleineidam
+.\" Copyright (C) 2010-2012 Bastian Kleineidam
 .\"
 .\" This program is free software: you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -15,8 +15,9 @@
 .SH NAME
 patool - portable command line archive file manager
 .SH SYNOPSIS
- \fBpatool\fP (\fBextract\fP|\fBlist\fP|\fBtest\fP) [\fI\-\-verbose\fP] <\fIarchive-file\fP>...
- \fBpatool\fP \fBcreate\fP [\fI\-\-verbose\fP] <\fIarchive-file\fP> [\fIfiles\fP...]
+ \fBpatool\fP (\fBlist\fP|\fBtest\fP) [\fB\-\-verbose\fP] <\fIarchive-file\fP>...
+ \fBpatool\fP \fBextract\fP [\fB\-\-verbose\fP] [\fB\-\-outdir=\fP\fIDIRNAME\fP] <\fIarchive-file\fP>...
+ \fBpatool\fP \fBcreate\fP [\fB\-\-verbose\fP] <\fIarchive-file\fP> [\fIfiles\fP...]
  \fBpatool\fP \fBdiff\fP <\fIarchive1\fP> <\fIarchive2\fP>
  \fBpatool\fP \fBrepack\fP <\fIarchive1\fP> <\fIarchive2\fP>
  \fBpatool\fP \fBformats\fP
@@ -102,4 +103,4 @@ For example:
 .SH AUTHOR
 Bastian Kleineidam <calvin@users.sourceforge.net>
 .SH COPYRIGHT
-Copyright \(co 2010-2011 Bastian Kleineidam
+Copyright \(co 2010-2012 Bastian Kleineidam

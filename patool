@@ -46,7 +46,11 @@ def handle_multi_archive(archives, cmd, **kwargs):
     return res
 
 
-@baker.command(default=True, shortopts=shortopts, params=params)
+extract_params = {
+  "outdir": "Extract to given directory.",
+}
+extract_params.update(params)
+@baker.command(default=True, shortopts=shortopts, params=extract_params)
 def extract (archive, *archives, **kwargs):
     """Extract files from archive(s)."""
     return handle_multi_archive((archive,)+archives, 'extract', **kwargs)
