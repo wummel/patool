@@ -1,113 +1,128 @@
 0.16 "" (released xx.xx.2012)
 
-  * Document the --outdir option for the extract command.
-    Closes: SF bug #3363964
-  * Added convenience library function to handle archives.
-    Closes: SF bug #3351936
+* Document the --outdir option for the extract command.
+  Closes: SF bug #3363964
+* Added convenience library function to handle archives.
+  Closes: SF bug #3351936
+
 
 0.15 "Contraband" (released 8.4.2012)
 
-  * Print help when unknown options are given.
-  * Print error when archive files do not exist.
-  * Added installation instructions in doc/install.txt
-  * Added support for the pigz program handling GZIP archives.
+* Print help when unknown options are given.
+* Print error when archive files do not exist.
+* Added installation instructions in doc/install.txt
+* Added support for the pigz program handling GZIP archives.
+
 
 0.14 "Book of Dragons" (released 30.1.2012)
 
-  * Handle CRX (.crx) files as ZIP archives. They have garbage at
-    the beginning of the file, but some unzip programs can cope with
-    that.
-  * The xz program supports listing of XZ archives. Adjust the
-    configuration accordingly.
+* Handle CRX (.crx) files as ZIP archives. They have garbage at
+  the beginning of the file, but some unzip programs can cope with
+  that.
+* The xz program supports listing of XZ archives. Adjust the
+  configuration accordingly.
+
 
 0.13 "Megamind" (released 25.1.2011)
 
-  * Fix command argument order when extracting cpio archives.
-  * Added correct cpio MIME type on Debian systems.
-  * Added support for the clzip and pdlzip programs who are both capable
-    of handling LZIP (.lz) archives.
-  * Added support for the orange program which is capable of extracting
-    CAB (.cab) archives.
-  * Added support for DMS (.dms) files with the xdms program.
-  * Support ZIP (.zip) file creation with the 7z and 7za programs.
-  * Improved MIME type detection for compressed TAR archives.
-  * Fix needed archive programs for several test cases, including
-    test_repack and test_mime.
+* Fix command argument order when extracting cpio archives.
+* Added correct cpio MIME type on Debian systems.
+* Added support for the clzip and pdlzip programs who are both capable
+  of handling LZIP (.lz) archives.
+* Added support for the orange program which is capable of extracting
+  CAB (.cab) archives.
+* Added support for DMS (.dms) files with the xdms program.
+* Support ZIP (.zip) file creation with the 7z and 7za programs.
+* Improved MIME type detection for compressed TAR archives.
+* Fix needed archive programs for several test cases, including
+  test_repack and test_mime.
+
 
 0.12 "Galaxy Quest" (released 20.11.2010)
 
-  * Show commands that are run.
-  * Fix rar extraction unpack directory.
-  * Fix ZIP mimedb detection on Windows systems.
+* Show commands that are run.
+* Fix rar extraction unpack directory.
+* Fix ZIP mimedb detection on Windows systems.
+
 
 0.11 "Primer" (released 4.10.2010)
 
-  * Added support for the standalone 7za program.
+* Added support for the standalone 7za program.
+
 
 0.10 "Matchpoint" (released 10.4.2010)
 
-  * Correct shell quoting of commandline arguments. Now files with
-    spaces or other special characters are handled correctly.
-  * Use correct error routine on rmtree() errors. The previous
-    one did not have the correct number of arguments.
+* Correct shell quoting of commandline arguments. Now files with
+  spaces or other special characters are handled correctly.
+* Use correct error routine on rmtree() errors. The previous
+  one did not have the correct number of arguments.
+
 
 0.9 "Cargo" (released 26.3.2010)
 
-  * Do not use the diff -B option when comparing archives.
-  * Improved documentation: explain commands in more detail.
-  * Added support for RZIP (.rz) archives.
-  * Added support for ZOO (.zoo) archives.
+* Do not use the diff -B option when comparing archives.
+* Improved documentation: explain commands in more detail.
+* Added support for RZIP (.rz) archives.
+* Added support for ZOO (.zoo) archives.
+
 
 0.8 "Storage" (released 11.3.2010)
 
-  * Fix path error by using absolute pathname for archive when changing
-    the current working directory to the unpack directory.
-  * Fix parsing of the "-v" short option.
-  * Added new command "patool diff" to show differences between two
-    archives.
-  * Added new command "patool repack" to repackage archives in another
-    format.
+* Fix path error by using absolute pathname for archive when changing
+  the current working directory to the unpack directory.
+* Fix parsing of the "-v" short option.
+* Added new command "patool diff" to show differences between two
+  archives.
+* Added new command "patool repack" to repackage archives in another
+  format.
+
 
 0.7 "3000 Miles to Graceland" (released 8.3.2010)
 
-  * Added support for ALZIP (.alz) archives.
-  * Added support for LRZIP (.lrz) archives.
-  * Added support for ARC (.arc) archives.
+* Added support for ALZIP (.alz) archives.
+* Added support for LRZIP (.lrz) archives.
+* Added support for ARC (.arc) archives.
+
 
 0.6 "Waking Ned" (released 6.3.2010)
 
-  * Remove the --force option. Local files are now never overwritten.
-  * Added option alias -v for --verbose.
-  * Added --verbose option to create command.
-  * Added support for extracting, listing and testing multiple archives.
-  * Fix permissions of extracted files: make them readable by the
-    current user.
-  * Added support for ACE (.ace) archives.
-  * Added support for AR (.a) archives.
-  * Added support for LZH (.lha, .lzh) archives.
+* Remove the --force option. Local files are now never overwritten.
+* Added option alias -v for --verbose.
+* Added --verbose option to create command.
+* Added support for extracting, listing and testing multiple archives.
+* Fix permissions of extracted files: make them readable by the
+  current user.
+* Added support for ACE (.ace) archives.
+* Added support for AR (.a) archives.
+* Added support for LZH (.lha, .lzh) archives.
+
 
 0.5 "Vanishing Point" (released 4.3.2010)
 
-  * Ported to Python 2.4.
-  * Added support for LZIP (.lz) archives.
-  * Removed support for setting options via config file.
+* Ported to Python 2.4.
+* Added support for LZIP (.lz) archives.
+* Removed support for setting options via config file.
+
 
 0.4 "Nikita" (released 3.3.2010)
 
-  * Added support for Windows systems.
-  * Added support for creating ZIP files.
-  * Improved listing of available archive formats.
-  * Improved recognition of MIME types.
+* Added support for Windows systems.
+* Added support for creating ZIP files.
+* Improved listing of available archive formats.
+* Improved recognition of MIME types.
+
 
 0.3 "Management" (released 23.2.2010)
 
-  * Better test if encodings of archive commands are supported
-    (for example .tar.Z needs a decompress program).
+* Better test if encodings of archive commands are supported
+  (for example .tar.Z needs a decompress program).
+
 
 0.2 "Birdy" (released 22.2.2010)
 
-  * Add support for LZMA and XZ archives.
+* Add support for LZMA and XZ archives.
+
 
 0.1 "Hard Boiled" (released 21.2.2010)
 
-  * Initial release.
+* Initial release.
