@@ -105,3 +105,7 @@ deb:
 
 update-copyright:
 	update-copyright --holder="Bastian Kleineidam"
+
+.PHONY: changelog
+changelog:
+	sftrack_changelog patool calvin@users.sourceforge.net doc/changelog.txt $(DRYRUN)
