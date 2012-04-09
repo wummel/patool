@@ -75,16 +75,18 @@ def create (archive, file1, *files, **kwargs):
     return handle_archive(archive, 'create', *allfiles, **kwargs)
 
 
-@baker.command
-def diff (archive1, archive2):
+@baker.command(shortopts=shortopts, params=params)
+def diff (archive1, archive2, **kwargs):
     """Show differences between two archives."""
-    return handle_archive(archive1, "diff", archive2)
+    from patoolib import diff
+    return diff(archive1, archive2, **kwargs)
 
 
-@baker.command
-def repack (archive1, archive2):
+@baker.command(shortopts=shortopts, params=params)
+def repack (archive1, archive2, **kwargs):
     """Repackage one archive in another format."""
-    return handle_archive(archive1, "repack", archive2)
+    from patoolib import repack
+    return repack(archive1, archive2, **kwargs)
 
 
 @baker.command
