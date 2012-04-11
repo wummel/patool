@@ -4,6 +4,8 @@
   Closes: SF bug #3363964
 * Added convenience library function to handle archives.
   Closes: SF bug #3351936
+* Fix generating an RPM installer.
+  Closes: SF bug #2977749
 
 
 0.15 "Contraband" (released 8.4.2012)
