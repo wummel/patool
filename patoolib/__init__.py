@@ -508,8 +508,8 @@ def handle_archive (archive, command, *args, **kwargs):
         else:
             _handle_archive(archive, command, *args, **kwargs)
             res = 0
-    except KeyboardInterrupt, msg:
-        util.log_info("aborted")
+    except KeyboardInterrupt:
+        util.log_error("aborted")
         res = 1
     except util.PatoolError, msg:
         util.log_error(msg)
