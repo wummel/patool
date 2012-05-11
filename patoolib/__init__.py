@@ -539,6 +539,7 @@ def test (archive, verbose=False):
 
 def create (archive, *files, **kwargs):
     """Create given archive with given files."""
+    assert len(files) > 0
     return handle_archive(archive, 'create', *files, **kwargs)
 
 
