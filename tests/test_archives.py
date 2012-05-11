@@ -103,6 +103,10 @@ class TestArchives (ArchiveTest):
         self.archive_test('t .bz2')
         self.archive_create('t .bz2', singlefile=True)
 
+    def test_pybz2 (self):
+        self.program = 'pybz2'
+        self.archive_extract('t .bz2')
+
     @needs_program('pbzip2')
     def test_pbzip2 (self):
         self.program = 'pbzip2'

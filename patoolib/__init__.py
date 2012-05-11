@@ -100,7 +100,7 @@ ArchivePrograms = {
     },
     'bzip2': {
         None: ('7z', '7za'),
-        'extract': ('pbzip2', 'lbzip2', 'bzip2'),
+        'extract': ('pbzip2', 'lbzip2', 'bzip2', 'pybz2'),
         'test': ('pbzip2', 'lbzip2', 'bzip2'),
         'create': ('pbzip2', 'lbzip2', 'bzip2'),
         'list': ('echo',),
@@ -452,7 +452,11 @@ def _handle_archive (archive, command, *args, **kwargs):
         archive = util.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
     try:
         cmdlist = get_archive_cmdlist(archive, encoding, program, *args, **cmd_kwargs)
-        run_archive_cmdlist(cmdlist)
+        if cmdlist:
+            # an empty command list means the get_archive_cmdlist() function
+            # already handled the command (eg. when it's a builting Python
+            # function)
+            run_archive_cmdlist(cmdlist)
         if command == 'extract':
             if do_cleanup_outdir:
                 target, msg = cleanup_outdir(cmd_kwargs["outdir"])

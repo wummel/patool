@@ -332,9 +332,17 @@ def stripext (filename):
 def get_single_outfile (directory, archive):
     """Get output filename if archive is in a single file format like gzip."""
     outfile = os.path.join(directory, stripext(archive))
-    if archive == outfile:
+    if is_same_filename(archive, outfile):
         # prevent overwriting the archive itself
         outfile += ".raw"
+    if os.path.exists(outfile):
+        # prevent overwriting existing files
+        i = 1
+        newfile = "%s%d" % (outfile, i)
+        while os.path.exists(newfile):
+            newfile = "%s%d" % (outfile, i)
+            i += 1
+        outfile = newfile
     return outfile
 
 
