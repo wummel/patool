@@ -537,10 +537,10 @@ def test (archive, verbose=False):
     return handle_archive(archive, 'test', verbose=verbose)
 
 
-def create (archive, *files, **kwargs):
+def create (archive, *filenames, **kwargs):
     """Create given archive with given files."""
-    assert len(files) > 0
-    return handle_archive(archive, 'create', *files, **kwargs)
+    assert len(filenames) > 0
+    return handle_archive(archive, 'create', *filenames, **kwargs)
 
 
 def diff (archive1, archive2, verbose=False):
