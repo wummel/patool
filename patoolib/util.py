@@ -404,9 +404,18 @@ def strlist_with_or (alist):
 
 
 def is_same_file (filename1, filename2):
-    """Check if filename1 and filename2 point to the same file object."""
+    """Check if filename1 and filename2 point to the same file object.
+    There can be false negatives, ie. the result is False, but it is
+    the same file anyway. Reason is that network filesystems can create
+    different paths to the same physical file.
+    """
     if filename1 == filename2:
         return True
     if os.name == 'posix':
         return os.path.samefile(filename1, filename2)
+    return is_same_filename(filename1, filename2)
+
+
+def is_same_filename (filename1, filename2):
+    """Check if filename1 and filename2 are the same filename."""
     return os.path.realpath(filename1) == os.path.realpath(filename2)
