@@ -99,19 +99,21 @@ ArchivePrograms = {
         'list': ('nomarch',),
     },
     'bzip2': {
-        'extract': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
-        'test': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
-        'create': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
-        'list': ('7z', '7za', 'echo',),
+        None: ('7z', '7za'),
+        'extract': ('pbzip2', 'lbzip2', 'bzip2'),
+        'test': ('pbzip2', 'lbzip2', 'bzip2'),
+        'create': ('pbzip2', 'lbzip2', 'bzip2'),
+        'list': ('echo',),
     },
     'tar': {
         None: ('tar', 'star',),
     },
     'zip': {
-        'extract': ('unzip', '7z', '7za'),
-        'list': ('unzip', '7z', '7za'),
-        'test': ('unzip', '7z', '7za'),
-        'create': ('zip', '7z', '7za'),
+        None: ('7z', '7za'),
+        'extract': ('unzip',),
+        'list': ('unzip',),
+        'test': ('unzip',),
+        'create': ('zip',),
     },
     'gzip': {
         None: ('pigz', 'gzip', '7z', '7za'),
@@ -404,11 +406,16 @@ def check_archive_arguments (archive, command, *args):
     elif command == 'repack':
         util.check_existing_filename(archive)
         if not args:
-            raise PatoolError("missing target archive filename for repack")
+            raise util.PatoolError("missing target archive filename for repack")
         util.check_new_filename(args[0])
         if util.is_same_filename(archive, args[0]):
             msg = "cannot repack identical archives `%s' and `%s'"
-            raise util.PatoolError(msg % (archive1, archive2))
+            raise util.PatoolError(msg % (archive, args[0]))
+    elif command == 'diff':
+        util.check_existing_filename(archive)
+        if not args:
+            raise util.PatoolError("missing second archive filename for diff")
+        util.check_existing_filename(args[0])
     else:
         util.check_existing_filename(archive)
 
