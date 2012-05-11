@@ -145,6 +145,12 @@ class TestArchives (ArchiveTest):
         self.program = 'zip'
         self.archive_create('t.zip')
 
+    def test_pyzipfile (self):
+        self.program = 'pyzipfile'
+        self.archive_create('t.zip')
+        self.archive_extract('t.zip')
+        self.archive_list('t.zip')
+
     @needs_program('gzip')
     def test_gzip (self):
         self.program = 'gzip'

@@ -13,6 +13,7 @@
 * Prevent overwriting the same file with repack.
 * Support extraction of BZIP2 (.bz2) files with the Python bz2 module.
 * Support extraction of GZIP (.gz) files with the Python gzip module.
+* Support extraction of ZIP (.zip) files with the Python zipfile module.
 
 
 0.15 "Contraband" (released 8.4.2012)

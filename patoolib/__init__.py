@@ -109,7 +109,7 @@ ArchivePrograms = {
         None: ('tar', 'star',),
     },
     'zip': {
-        None: ('7z', '7za'),
+        None: ('7z', '7za', 'pyzipfile'),
         'extract': ('unzip',),
         'list': ('unzip',),
         'test': ('unzip',),
