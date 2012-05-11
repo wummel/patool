@@ -13,7 +13,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the echo program."""
+"""Archive commands for the echo program, simulated by the Python print
+statement."""
 from patoolib import util
 
 
@@ -46,5 +47,6 @@ def list_rzip (archive, encoding, cmd, **kwargs):
     return stripext(cmd, archive)
 
 def stripext (cmd, archive):
-    """Echo the name without suffix."""
-    return [cmd, util.stripext(archive)]
+    """Print the name without suffix."""
+    print util.stripext(archive)
+    return None

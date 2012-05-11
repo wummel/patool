@@ -121,7 +121,6 @@ class TestArchives (ArchiveTest):
         self.archive_test('t .bz2')
         self.archive_create('t .bz2', singlefile=True)
 
-    @needs_program('echo')
     def test_echo (self):
         self.program = 'echo'
         self.archive_list('t .bz2')
