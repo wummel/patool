@@ -396,14 +396,26 @@ def cleanup_outdir (outdir):
     return outdir, "`%s' (%s)" % (outdir, msg)
 
 
-def _handle_archive (archive, command, *args, **kwargs):
-    """Handle archive command; raising PatoolError on errors."""
-    # check arguments
+def check_archive_arguments (archive, command, *args):
+    """Check for invalid archive command arguments."""
     if command == 'create':
         util.check_archive_filelist(args)
         util.check_new_filename(archive)
+    elif command == 'repack':
+        util.check_existing_filename(archive)
+        if not args:
+            raise PatoolError("missing target archive filename for repack")
+        util.check_new_filename(args[0])
+        if util.is_same_filename(archive, args[0]):
+            msg = "cannot repack identical archives `%s' and `%s'"
+            raise util.PatoolError(msg % (archive1, archive2))
     else:
         util.check_existing_filename(archive)
+
+
+def _handle_archive (archive, command, *args, **kwargs):
+    """Handle archive command; raising PatoolError on errors."""
+    check_archive_arguments(archive, command, *args)
     format, encoding = kwargs.get("format"), kwargs.get("encoding")
     if format is None:
         format, encoding = get_archive_format(archive)
@@ -496,9 +508,6 @@ def _diff_archives (archive1, archive2, **kwargs):
 
 def _repack_archive (archive1, archive2, **kwargs):
     """Repackage an archive to a different format."""
-    if util.is_same_file(archive1, archive2):
-        msg = "cannot repack identical archives `%s' and `%s'"
-        raise util.PatoolError(msg % (archive1, archive2))
     tmpdir = util.tmpdir()
     try:
         _handle_archive(archive1, 'extract', outdir=tmpdir, **kwargs)
