@@ -189,7 +189,7 @@ def guess_mime_file_mime (file_prog, filename):
         cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]
         try:
             outparts = backtick(cmd).strip().split(";")
-        except OSError, msg:
+        except OSError:
             # ignore errors, as file(1) is only a fallback
             return mime, encoding
         mime2 = outparts[0].split(" ", 1)[0]
@@ -250,7 +250,7 @@ def guess_mime_file_text (file_prog, filename):
     cmd = [file_prog, "--brief", filename]
     try:
         output = backtick(cmd).strip()
-    except OSError, msg:
+    except OSError:
         # ignore errors, as file(1) is only a fallback
         return None
     # match output against known strings
@@ -260,14 +260,28 @@ def guess_mime_file_text (file_prog, filename):
     return None
 
 
-def check_filename (filename):
+def check_existing_filename (filename):
     """Ensure that given filename is a valid, existing file."""
     if not os.path.isfile(filename):
-        raise PatoolError("`%s' is not a file." % filename)
+        raise PatoolError("`%s' is not a file" % filename)
     if not os.path.exists(filename):
-        raise PatoolError("File `%s' not found." % filename)
+        raise PatoolError("file `%s' was not found" % filename)
     if not os.access(filename, os.R_OK):
-        raise PatoolError("File `%s' not readable." % filename)
+        raise PatoolError("file `%s' is not readable" % filename)
+
+
+def check_new_filename (filename):
+    """Check that filename does not already exist."""
+    if os.path.exists(filename):
+        raise PatoolError("cannot overwrite existing file `%s'" % filename)
+
+
+def check_archive_filelist (filenames):
+    """Check that file list is not empty and contains only existing files."""
+    if not filenames:
+        raise PatoolError("cannot create archive with empty filelist")
+    for filename in filenames:
+        check_existing_filename(filename)
 
 
 def set_mode (filename, flags):
@@ -387,3 +401,10 @@ def strlist_with_or (alist):
     if len(alist) > 1:
         return "%s or %s" % (", ".join(alist[:-1]), alist[-1])
     return ", ".join(alist)
+
+
+def is_same_file (filename1, filename2):
+    """Check if filename1 and filename2 point to the same file object."""
+    if os.name == 'posix':
+        return os.path.samefile(filename1, filename2)
+    return os.path.realpath(filename1) == os.path.realpath(filename2)

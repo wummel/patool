@@ -398,9 +398,12 @@ def cleanup_outdir (outdir):
 
 def _handle_archive (archive, command, *args, **kwargs):
     """Handle archive command; raising PatoolError on errors."""
-    if command != 'create':
-        # check that archive is a regular file
-        util.check_filename(archive)
+    # check arguments
+    if command == 'create':
+        util.check_archive_filelist(args)
+        util.check_new_filename(archive)
+    else:
+        util.check_existing_filename(archive)
     format, encoding = kwargs.get("format"), kwargs.get("encoding")
     if format is None:
         format, encoding = get_archive_format(archive)
@@ -470,9 +473,14 @@ def rmtree_log_error (func, path, exc):
 
 def _diff_archives (archive1, archive2, **kwargs):
     """Show differences between two archives."""
+    if util.is_same_file(archive1, archive2):
+        msg = "no differences found: archive `%s' and `%s' are the same files"
+        print msg % (archive1, archive2)
+        return 0
     diff = util.find_program("diff")
     if not diff:
-        raise util.PatoolError("The diff(1) program is required for showing archive differences, please install it")
+        msg = "The diff(1) program is required for showing archive differences, please install it."
+        raise util.PatoolError(msg)
     tmpdir1 = util.tmpdir()
     tmpdir2 = util.tmpdir()
     try:
@@ -486,6 +494,9 @@ def _diff_archives (archive1, archive2, **kwargs):
 
 def _repack_archive (archive1, archive2, **kwargs):
     """Repackage an archive to a different format."""
+    if util.is_same_file(archive1, archive2):
+        msg = "cannot repack identical archives `%s' and `%s'"
+        raise util.PatoolError(msg % (archive1, archive2))
     tmpdir = util.tmpdir()
     try:
         _handle_archive(archive1, 'extract', outdir=tmpdir, **kwargs)
@@ -539,7 +550,6 @@ def test (archive, verbose=False):
 
 def create (archive, *filenames, **kwargs):
     """Create given archive with given files."""
-    assert len(filenames) > 0
     return handle_archive(archive, 'create', *filenames, **kwargs)
 
 

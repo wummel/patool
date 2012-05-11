@@ -1,0 +1,65 @@
+Development with the patoolib library
+======================================
+
+The patool funtionality can also be used in other Python programs.
+To do this, install the patool program, import the library and
+use one or more of the convenience functions.
+
+import patoolib
+if patoolib.extract("myarchive.zip", verbose=True) == 0:
+    print "Success."
+else:
+    print "Error."
+
+General rules for all convenience functions:
+
+* All convenience function return zero when no error occurred, else
+  an integer unequal zero.
+
+* Error messages are printed on stderr, informative messages
+  are printed on stdout.
+
+* All file arguments are filenames. File objects are not accepted
+  as input.
+
+* Filenames can be relative or absolute.
+
+The convenience functions are:
+
+* ``def extract(archive, verbose=False, outdir=None)``
+  
+  This function extracts the given archive filename to the current
+  working directory or if specified to the given directory name in outdir.
+  If verbose operation is set to True, additional output of the archive
+  program is shown.
+
+* ``def list(archive, verbose=False)``
+  
+  This function lists the contents of the given archive filename
+  on stdout.
+  If verbose operation is set to True, additional output of the archive
+  program is shown.
+
+* ``def test(archive, verbose=False)``
+  
+  This function tests the given archive filename.
+  If verbose operation is set to True, additional output of the archive
+  program is shown.
+
+* ``def create(archive, *filenames, **kwargs)``
+  
+  This function create a new archive. The type of archive is determined
+  by the archive filename extension. The archive must not already
+  exist.
+  The list of filenames to add to the archive must not be empty.
+  If verbose operation is set to True, additional output of the archive
+  program is shown.
+
+* ``def diff(archive1, archive2, verbose=False)``
+  
+  This function 
+
+* ``def repack(archive1, archive2, verbose=False)``
+  
+  This function 
+
