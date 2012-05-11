@@ -335,6 +335,13 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.txt.lz')
         self.archive_create('t.txt.lz', singlefile=True)
 
+    @needs_program('plzip')
+    def test_plzip (self):
+        self.program = 'plzip'
+        self.archive_test('t.txt.lz')
+        self.archive_extract('t.txt.lz')
+        self.archive_create('t.txt.lz', singlefile=True)
+
     @needs_program('pdlzip')
     def test_pdlzip (self):
         self.program = 'pdlzip'

@@ -7,6 +7,7 @@
 * Fix generating an RPM installer.
   Closes: SF bug #2977749
 * Added support for the lbzip2 program handling BZIP2 archives.
+* Added support for the plzip program handling LZIP archives.
 
 
 0.15 "Contraband" (released 8.4.2012)

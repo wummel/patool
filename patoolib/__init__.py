@@ -73,7 +73,7 @@ EncodingPrograms = {
     'compress': ('compress',),
     'lzma': ('lzma',),
     'xz': ('xz',),
-    'lzip': ('lzip', 'clzip', 'pdlzip'),
+    'lzip': ('lzip', 'clzip', 'plzip', 'pdlzip'),
 }
 
 # List of programs supporting the given archive format and command.
@@ -120,10 +120,10 @@ ArchivePrograms = {
         None: ('lha',),
     },
     'lzip': {
-        'extract': ('lzip', 'clzip', 'pdlzip'),
+        'extract': ('plzip', 'lzip', 'clzip', 'pdlzip'),
         'list': ('echo',),
-        'test': ('lzip', 'clzip', 'pdlzip'),
-        'create': ('lzip', 'clzip', 'pdlzip'),
+        'test': ('plzip', 'lzip', 'clzip', 'pdlzip'),
+        'create': ('plzip', 'lzip', 'clzip', 'pdlzip'),
     },
     'lrzip': {
         'extract': ('lrzip',),
