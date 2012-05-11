@@ -102,7 +102,7 @@ ArchivePrograms = {
         None: ('7z', '7za'),
         'extract': ('pbzip2', 'lbzip2', 'bzip2', 'pybz2'),
         'test': ('pbzip2', 'lbzip2', 'bzip2'),
-        'create': ('pbzip2', 'lbzip2', 'bzip2'),
+        'create': ('pbzip2', 'lbzip2', 'bzip2', 'pybz2'),
         'list': ('echo',),
     },
     'tar': {
@@ -118,6 +118,7 @@ ArchivePrograms = {
     'gzip': {
         None: ('pigz', 'gzip', '7z', '7za'),
         'extract': ('pygzip',),
+        'create': ('pygzip',),
     },
     'lzh': {
         None: ('lha',),

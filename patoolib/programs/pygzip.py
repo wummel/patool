@@ -22,7 +22,7 @@ from patoolib import util
 READ_SIZE_BYTES = 1024*1024
 
 def extract_gzip (archive, encoding, cmd, **kwargs):
-    """Extract a GZIP archive with the gzip Python module functionality."""
+    """Extract a GZIP archive with the gzip Python module."""
     verbose = kwargs['verbose']
     if verbose:
         util.log_info('extracting %s...' % archive)
@@ -41,4 +41,29 @@ def extract_gzip (archive, encoding, cmd, **kwargs):
         gzipfile.close()
     if verbose:
         util.log_info('... extracted to %s' % targetname)
+    return None
+
+
+def create_gzip (archive, encoding, cmd, *args, **kwargs):
+    """Create a GZIP archive with the gzip Python module."""
+    verbose = kwargs['verbose']
+    if verbose:
+        util.log_info('creating %s...' % archive)
+    if len(args) > 1:
+        util.log_error('multi-file compression not supported in Python gzip')
+    gzipfile = gzip.GzipFile(archive, 'wb')
+    try:
+        filename = args[0]
+        srcfile = open(filename)
+        try:
+            data = srcfile.read(READ_SIZE_BYTES)
+            while data:
+                gzipfile.write(data)
+                data = srcfile.read(READ_SIZE_BYTES)
+            if verbose:
+                util.log_info('... added %s' % filename)
+        finally:
+            srcfile.close()
+    finally:
+        gzipfile.close()
     return None
