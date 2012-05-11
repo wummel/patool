@@ -260,14 +260,14 @@ def guess_mime_file_text (file_prog, filename):
     return None
 
 
-def check_existing_filename (filename):
+def check_existing_filename (filename, onlyfiles=True):
     """Ensure that given filename is a valid, existing file."""
-    if not os.path.isfile(filename):
-        raise PatoolError("`%s' is not a file" % filename)
     if not os.path.exists(filename):
         raise PatoolError("file `%s' was not found" % filename)
     if not os.access(filename, os.R_OK):
         raise PatoolError("file `%s' is not readable" % filename)
+    if onlyfiles and not os.path.isfile(filename):
+        raise PatoolError("`%s' is not a file" % filename)
 
 
 def check_new_filename (filename):
@@ -281,7 +281,7 @@ def check_archive_filelist (filenames):
     if not filenames:
         raise PatoolError("cannot create archive with empty filelist")
     for filename in filenames:
-        check_existing_filename(filename)
+        check_existing_filename(filename, onlyfiles=False)
 
 
 def set_mode (filename, flags):
@@ -405,6 +405,8 @@ def strlist_with_or (alist):
 
 def is_same_file (filename1, filename2):
     """Check if filename1 and filename2 point to the same file object."""
+    if filename1 == filename2:
+        return True
     if os.name == 'posix':
         return os.path.samefile(filename1, filename2)
     return os.path.realpath(filename1) == os.path.realpath(filename2)
