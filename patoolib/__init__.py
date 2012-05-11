@@ -482,14 +482,16 @@ def _diff_archives (archive1, archive2, **kwargs):
         msg = "The diff(1) program is required for showing archive differences, please install it."
         raise util.PatoolError(msg)
     tmpdir1 = util.tmpdir()
-    tmpdir2 = util.tmpdir()
     try:
         path1 = _handle_archive(archive1, 'extract', outdir=tmpdir1, **kwargs)
-        path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2, **kwargs)
-        return util.run([diff, "-urN", path1, path2])
+        tmpdir2 = util.tmpdir()
+        try:
+            path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2, **kwargs)
+            return util.run([diff, "-urN", path1, path2])
+        finally:
+            shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
     finally:
         shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
-        shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
 
 
 def _repack_archive (archive1, archive2, **kwargs):
