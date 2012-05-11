@@ -69,7 +69,7 @@ ArchiveMimetypes = {
 
 EncodingPrograms = {
     'gzip': ('pigz', 'gzip'),
-    'bzip2': ('pbzip2', 'bzip2'),
+    'bzip2': ('pbzip2', 'lbzip2', 'bzip2'),
     'compress': ('compress',),
     'lzma': ('lzma',),
     'xz': ('xz',),
@@ -99,9 +99,9 @@ ArchivePrograms = {
         'list': ('nomarch',),
     },
     'bzip2': {
-        'extract': ('pbzip2', 'bzip2', '7z', '7za'),
-        'test': ('pbzip2', 'bzip2', '7z', '7za'),
-        'create': ('pbzip2', 'bzip2', '7z', '7za'),
+        'extract': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
+        'test': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
+        'create': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
         'list': ('7z', '7za', 'echo',),
     },
     'tar': {
