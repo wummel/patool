@@ -329,8 +329,8 @@ def log_error (msg, out=sys.stderr):
     print >> out, "patool error:", msg
 
 
-def log_info (msg, out=sys.stderr):
-    """Print info message to stderr (or any other given output)."""
+def log_info (msg, out=sys.stdout):
+    """Print info message to stdout (or any other given output)."""
     print >> out, "patool:", msg
 
 
