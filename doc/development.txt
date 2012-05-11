@@ -48,18 +48,27 @@ The convenience functions are:
 
 * ``def create(archive, *filenames, **kwargs)``
   
-  This function create a new archive. The type of archive is determined
+  This function creates a new archive. The type of archive is determined
   by the archive filename extension. The archive must not already
   exist.
-  The list of filenames to add to the archive must not be empty.
+  The list of filenames to add to the archive must not be empty and the
+  files must exist and be readable.
   If verbose operation is set to True, additional output of the archive
   program is shown.
 
 * ``def diff(archive1, archive2, verbose=False)``
   
-  This function 
+  This function lists differences in the content of the two archives.
+  Both archives are extracted and the contents are compared
+  recursively with the diff(1) program.
+  If verbose operation is set to True, additional output of the archive
+  program is shown.
 
 * ``def repack(archive1, archive2, verbose=False)``
   
-  This function 
+  This function extracts the contents of archive1 and packs them
+  into archive2.
+  Archive1 and archive2 must be different files.
+  If verbose operation is set to True, additional output of the archive
+  program is shown.
 

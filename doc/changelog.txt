@@ -3,13 +3,14 @@
 * Document the --outdir option for the extract command.
   Closes: SF bug #3363964
 * Added convenience library function to handle archives.
+  Documentation for those functions can be found in
+  doc/development.txt.
   Closes: SF bug #3351936
 * Fix generating an RPM installer.
   Closes: SF bug #2977749
 * Added support for the lbzip2 program handling BZIP2 archives.
 * Added support for the plzip program handling LZIP archives.
 * Prevent overwriting the same file with repack.
-
 
 0.15 "Contraband" (released 8.4.2012)
 
