@@ -153,6 +153,11 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.txt.gz', singlefile=True)
         self.archive_extract('t.Z')
 
+    def test_pygzip (self):
+        self.program = 'pygzip'
+        self.archive_extract('t.gz')
+        self.archive_extract('t.txt.gz')
+
     @needs_program('pigz')
     def test_pigz (self):
         self.program = 'pigz'

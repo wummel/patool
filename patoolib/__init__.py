@@ -117,6 +117,7 @@ ArchivePrograms = {
     },
     'gzip': {
         None: ('pigz', 'gzip', '7z', '7za'),
+        'extract': ('pygzip',),
     },
     'lzh': {
         None: ('lha',),

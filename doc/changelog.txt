@@ -11,7 +11,8 @@
 * Added support for the lbzip2 program handling BZIP2 archives.
 * Added support for the plzip program handling LZIP archives.
 * Prevent overwriting the same file with repack.
-* Support extraction of BZIP2 files with the Python bz2 module.
+* Support extraction of BZIP2 (.bz2) files with the Python bz2 module.
+* Support extraction of GZIP (.gz) files with the Python gzip module.
 
 
 0.15 "Contraband" (released 8.4.2012)
