@@ -1,4 +1,4 @@
-0.16 "" (released xx.xx.2012)
+0.16 "Game of thrones" (released 12.5.2012)
 
 * Document the --outdir option for the extract command.
   Closes: SF bug #3363964
