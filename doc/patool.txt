@@ -32,6 +32,10 @@ DESCRIPTION
        helper applications to handle those archive formats (for  exam‐
        ple bzip2 for BZIP2 archives).
 
+       The  archive  formats  TAR (.tar), ZIP (.zip), BZIP2 (.bz2) and
+       GZIP (.gz) are supported natively and  do  not  require  helper
+       applications to be installed.
+
 EXAMPLES
          patool extract archive.zip otherarchive.rar
          patool test --verbose dist.tar.gz

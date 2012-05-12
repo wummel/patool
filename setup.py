@@ -52,7 +52,12 @@ DEB (.deb), DMS (.dms), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh), LZIP (.lz),
 LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar), RZIP (.rz), TAR (.tar),
 XZ (.xz), ZIP (.zip, .jar) and ZOO (.zoo) formats. It relies on helper
 applications to handle those archive formats (for example bzip2 for
-BZIP2 archives).""",
+BZIP2 archives).
+
+The archive formats TAR (.tar), ZIP (.zip), BZIP2 (.bz2) and GZIP (.gz)
+are supported natively and do not require helper applications to be
+installed.
+""",
     author = MyName,
     author_email = MyEmail,
     maintainer = MyName,
