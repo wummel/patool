@@ -412,9 +412,6 @@ def check_archive_arguments (archive, command, *args):
         if not args:
             raise util.PatoolError("missing target archive filename for repack")
         util.check_new_filename(args[0])
-        if util.is_same_filename(archive, args[0]):
-            msg = "cannot repack identical archives `%s' and `%s'"
-            raise util.PatoolError(msg % (archive, args[0]))
     elif command == 'diff':
         util.check_existing_filename(archive)
         if not args:
