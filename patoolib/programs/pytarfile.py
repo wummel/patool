@@ -13,54 +13,67 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the zipfile Python module."""
+"""Archive commands for the tarfile Python module."""
 from patoolib import util
-import zipfile
+import tarfile
 
 READ_SIZE_BYTES = 1024*1024
 
 
-def list_zip (archive, encoding, cmd, **kwargs):
-    """List member of a ZIP archive with the zipfile Python module."""
+def list_tar (archive, encoding, cmd, **kwargs):
+    """List a TAR archive with the tarfile Python module."""
     verbose = kwargs['verbose']
     if verbose:
         util.log_info('listing %s...' % archive)
-    zfile = zipfile.ZipFile(archive, "r")
+    tfile = tarfile.open(archive)
     try:
-        for name in zfile.namelist():
-            util.log_info('member %s' % name)
+        tfile.list(verbose=verbose)
     finally:
-        zfile.close()
+        tfile.close()
     return None
 
-test_zip = list_zip
+test_tar = list_tar
 
-def extract_zip (archive, encoding, cmd, **kwargs):
-    """Extract a ZIP archive with the zipfile Python module."""
+def extract_tar (archive, encoding, cmd, **kwargs):
+    """Extract a TAR archive with the tarfile Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
     # XXX honor outdir
     if verbose:
         util.log_info('extracting %s...' % archive)
-    zfile = zipfile.ZipFile(archive)
+    tfile = tarfile.open(archive)
     try:
-        zfile.extractall()
+        tfile.extractall()
     finally:
-        zfile.close()
+        tfile.close()
     if verbose:
         util.log_info('... extracted to %s' % outdir)
     return None
 
 
-def create_zip (archive, encoding, cmd, *args, **kwargs):
-    """Create a ZIP archive with the zipfile Python module."""
+def create_tar (archive, encoding, cmd, *args, **kwargs):
+    """Create a TAR archive with the tarfile Python module."""
     verbose = kwargs['verbose']
     if verbose:
         util.log_info('creating %s...' % archive)
-    zfile = zipfile.ZipFile(archive, 'w')
+    mode = get_tar_mode(encoding)
+    tfile = tarfile.open(archive, mode)
     try:
         for filename in args:
-            zfile.write(filename)
+            tfile.add(filename)
     finally:
-        zfile.close()
+        tfile.close()
     return None
+
+
+def get_tar_mode (compression):
+    """Determine tarfile open mode according to the given compression."""
+    if compression == 'gzip':
+        return 'w:gz'
+    if compression == 'bzip2':
+        return 'w:bz2'
+    if compression:
+        msg = 'pytarfile does not support %s for tar compression'
+        util.log_error(msg % compression)
+    # no compression
+    return 'w'

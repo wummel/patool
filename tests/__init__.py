@@ -102,8 +102,10 @@ class ArchiveTest (unittest.TestCase):
             command = 'test'
             program = self.program
             # special case for programs that cannot test what they create
-            if self.program == 'compress':
+            if self.program in ('compress', 'pygzip'):
                 program = 'gzip'
+            elif self.program == 'pybz2':
+                program = 'bzip2'
             elif self.program == 'zip':
                 program = 'unzip'
             elif self.program == 'rzip':

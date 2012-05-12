@@ -96,6 +96,20 @@ class TestArchives (ArchiveTest):
         self.program = 'star'
         self.archive_commands('t.tar.xz')
 
+    def test_pytarfile (self):
+        self.program = 'pytarfile'
+        self.archive_commands('t.tar')
+
+    def test_pytarfile_gz (self):
+        self.program = 'pytarfile'
+        self.archive_commands('t.tar.gz')
+        self.archive_commands('t.tgz')
+
+    def test_pytarfile_bz2 (self):
+        self.program = 'pytarfile'
+        self.archive_commands('t.tar.bz2')
+        self.archive_commands('t.tbz2')
+
     @needs_program('bzip2')
     def test_bzip2 (self):
         self.program = 'bzip2'
@@ -103,9 +117,12 @@ class TestArchives (ArchiveTest):
         self.archive_test('t .bz2')
         self.archive_create('t .bz2', singlefile=True)
 
+    @needs_program('bzip2')
     def test_pybz2 (self):
         self.program = 'pybz2'
         self.archive_extract('t .bz2')
+        # bzip2 is used to test the created archive
+        self.archive_create('t .bz2', singlefile=True)
 
     @needs_program('pbzip2')
     def test_pbzip2 (self):
@@ -147,9 +164,7 @@ class TestArchives (ArchiveTest):
 
     def test_pyzipfile (self):
         self.program = 'pyzipfile'
-        self.archive_create('t.zip')
-        self.archive_extract('t.zip')
-        self.archive_list('t.zip')
+        self.archive_commands('t.zip')
 
     @needs_program('gzip')
     def test_gzip (self):
@@ -158,10 +173,13 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.txt.gz', singlefile=True)
         self.archive_extract('t.Z')
 
+    @needs_program('gzip')
     def test_pygzip (self):
         self.program = 'pygzip'
         self.archive_extract('t.gz')
         self.archive_extract('t.txt.gz')
+        # gzip is used to test the created archive
+        self.archive_create('t.gz', singlefile=True)
 
     @needs_program('pigz')
     def test_pigz (self):

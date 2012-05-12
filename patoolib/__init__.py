@@ -106,7 +106,7 @@ ArchivePrograms = {
         'list': ('echo',),
     },
     'tar': {
-        None: ('tar', 'star',),
+        None: ('tar', 'star', 'pytarfile'),
     },
     'zip': {
         None: ('7z', '7za', 'pyzipfile'),
@@ -272,6 +272,8 @@ def find_encoding_program (program, encoding):
             found = util.find_program(enc_program)
             if found:
                 return found
+    elif program == 'pytarfile':
+        return encoding in ('gzip', 'bzip2')
     return None
 
 
