@@ -113,11 +113,34 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.xz.foo', format="tar", encoding="xz")
 
     @needs_program('file')
+    def test_pytarfile_file (self):
+        self.program = 'pytarfile'
+        self.archive_commands('t.tar.foo', format="tar")
+
+    @needs_program('file')
+    def test_pytarfile_gz_file (self):
+        self.program = 'pytarfile'
+        self.archive_commands('t.tar.gz.foo', format="tar", encoding="gzip")
+        self.archive_commands('t.tgz.foo', format="tar", encoding="gzip")
+
+    @needs_program('file')
+    def test_pytarfile_bz2 (self):
+        self.program = 'pytarfile'
+        self.archive_commands('t.tar.bz2.foo', format="tar", encoding="bzip2")
+        self.archive_commands('t.tbz2.foo', format="tar", encoding="bzip2")
+
+    @needs_program('file')
     @needs_program('bzip2')
     def test_bzip2 (self):
         self.program = 'bzip2'
         self.archive_extract('t.bz2.foo')
         self.archive_test('t.bz2.foo')
+        self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
+
+    @needs_program('file')
+    def test_pybz2 (self):
+        self.program = 'pybz2'
+        self.archive_extract('t.bz2.foo')
         self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
@@ -163,12 +186,25 @@ class TestArchives (ArchiveTest):
         self.archive_create('t.zip.foo', format="zip")
 
     @needs_program('file')
+    def test_pyzipfile (self):
+        self.program = 'pyzipfile'
+        self.archive_commands('t.zip.foo', format="zip")
+
+    @needs_program('file')
     @needs_program('gzip')
     def test_gzip (self):
         self.program = 'gzip'
         self.archive_commands('t.gz.foo', format="gzip", singlefile=True)
         self.archive_commands('t.txt.gz.foo', format="gzip", singlefile=True)
         self.archive_extract('t.Z.foo')
+
+    @needs_program('file')
+    def test_pygzip (self):
+        self.program = 'pygzip'
+        self.archive_extract('t.gz.foo')
+        self.archive_extract('t.txt.gz.foo')
+        self.archive_create('t.gz.foo', format="gzip", singlefile=True)
+        self.archive_create('t.txt.gz.foo', format="gzip", singlefile=True)
 
     @needs_program('file')
     @needs_program('uncompress.real')
