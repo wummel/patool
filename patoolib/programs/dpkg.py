@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the dpkg-deb program."""
 
-def extract_deb (archive, encoding, cmd, **kwargs):
+def extract_deb (archive, compression, cmd, **kwargs):
     """Extract a DEB archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -25,7 +25,7 @@ def extract_deb (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', archive, kwargs['outdir']])
     return cmdlist
 
-def list_deb (archive, encoding, cmd, **kwargs):
+def list_deb (archive, compression, cmd, **kwargs):
     """List a DEB archive."""
     return [cmd, '--contents', '--', archive]
 

@@ -174,4 +174,4 @@ def has_codec (program, codec):
     """Test if program supports given codec."""
     if program == '7z' and codec == 'rar':
         return patoolib.util.p7zip_supports_rar()
-    return patoolib.find_encoding_program(program, codec)
+    return patoolib.find_compression_program(program, codec)

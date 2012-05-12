@@ -17,7 +17,7 @@
 from patoolib import util
 
 
-def extract_dms (archive, encoding, cmd, **kwargs):
+def extract_dms (archive, compression, cmd, **kwargs):
     """Extract a DMS archive."""
     check_archive_ext(archive)
     cmdlist = [cmd, '-d', kwargs['outdir']]
@@ -27,13 +27,13 @@ def extract_dms (archive, encoding, cmd, **kwargs):
     return cmdlist
 
 
-def list_dms (archive, encoding, cmd, **kwargs):
+def list_dms (archive, compression, cmd, **kwargs):
     """List a DMS archive."""
     check_archive_ext(archive)
     return [cmd, 'v', archive]
 
 
-def test_dms (archive, encoding, cmd, **kwargs):
+def test_dms (archive, compression, cmd, **kwargs):
     """Test a DMS archive."""
     check_archive_ext(archive)
     return [cmd, 't', archive]

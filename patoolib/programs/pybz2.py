@@ -23,7 +23,7 @@ except ImportError:
 
 READ_SIZE_BYTES = 1024*1024
 
-def extract_bzip2 (archive, encoding, cmd, **kwargs):
+def extract_bzip2 (archive, compression, cmd, **kwargs):
     """Extract a BZIP2 archive with the bz2 Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
@@ -48,7 +48,7 @@ def extract_bzip2 (archive, encoding, cmd, **kwargs):
     return None
 
 
-def create_bzip2 (archive, encoding, cmd, *args, **kwargs):
+def create_bzip2 (archive, compression, cmd, *args, **kwargs):
     """Create a BZIP2 archive with the bz2 Python module."""
     verbose = kwargs['verbose']
     if verbose:

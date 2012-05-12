@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from patoolib import util
 
-def extract_singlefile_standard (archive, encoding, cmd, **kwargs):
+def extract_singlefile_standard (archive, compression, cmd, **kwargs):
     """Standard routine to extract a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:
@@ -26,7 +26,7 @@ def extract_singlefile_standard (archive, encoding, cmd, **kwargs):
     return (cmdlist, {'shell': True})
 
 
-def test_singlefile_standard (archive, encoding, cmd, **kwargs):
+def test_singlefile_standard (archive, compression, cmd, **kwargs):
     """Standard routine to test a singlefile archive (like gzip)."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -35,7 +35,7 @@ def test_singlefile_standard (archive, encoding, cmd, **kwargs):
     return cmdlist
 
 
-def create_singlefile_standard (archive, encoding, cmd, *args, **kwargs):
+def create_singlefile_standard (archive, compression, cmd, *args, **kwargs):
     """Standard routine to create a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:

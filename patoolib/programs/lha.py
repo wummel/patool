@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lha program."""
 
-def extract_lzh (archive, encoding, cmd, **kwargs):
+def extract_lzh (archive, compression, cmd, **kwargs):
     """Extract a LZH archive."""
     opts = 'x'
     if kwargs['verbose']:
@@ -23,7 +23,7 @@ def extract_lzh (archive, encoding, cmd, **kwargs):
     opts += "w=%s" % kwargs['outdir']
     return [cmd, opts, archive]
 
-def list_lzh (archive, encoding, cmd, **kwargs):
+def list_lzh (archive, compression, cmd, **kwargs):
     """List a LZH archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -33,14 +33,14 @@ def list_lzh (archive, encoding, cmd, **kwargs):
     cmdlist.append(archive)
     return cmdlist
 
-def test_lzh (archive, encoding, cmd, **kwargs):
+def test_lzh (archive, compression, cmd, **kwargs):
     """Test a LZH archive."""
     opts = 't'
     if kwargs['verbose']:
         opts += 'v'
     return [cmd, opts, archive]
 
-def create_lzh (archive, encoding, cmd, *args, **kwargs):
+def create_lzh (archive, compression, cmd, *args, **kwargs):
     """Create a LZH archive."""
     opts = 'a'
     if kwargs['verbose']:

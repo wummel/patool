@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the cabextract program."""
 
-def extract_cab (archive, encoding, cmd, **kwargs):
+def extract_cab (archive, compression, cmd, **kwargs):
     """Extract a CAB archive."""
     cmdlist = [cmd, '-d', kwargs['outdir']]
     if kwargs['verbose']:
@@ -23,7 +23,7 @@ def extract_cab (archive, encoding, cmd, **kwargs):
     cmdlist.append(archive)
     return cmdlist
 
-def list_cab (archive, encoding, cmd, **kwargs):
+def list_cab (archive, compression, cmd, **kwargs):
     """List a CAB archive."""
     cmdlist = [cmd, '-l']
     if kwargs['verbose']:
@@ -31,6 +31,6 @@ def list_cab (archive, encoding, cmd, **kwargs):
     cmdlist.append(archive)
     return cmdlist
 
-def test_cab (archive, encoding, cmd, **kwargs):
+def test_cab (archive, compression, cmd, **kwargs):
     """Test a CAB archive."""
     return [cmd, '-t', archive]

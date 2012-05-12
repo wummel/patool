@@ -21,7 +21,7 @@ from patoolib import util
 
 READ_SIZE_BYTES = 1024*1024
 
-def extract_gzip (archive, encoding, cmd, **kwargs):
+def extract_gzip (archive, compression, cmd, **kwargs):
     """Extract a GZIP archive with the gzip Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
@@ -46,7 +46,7 @@ def extract_gzip (archive, encoding, cmd, **kwargs):
     return None
 
 
-def create_gzip (archive, encoding, cmd, *args, **kwargs):
+def create_gzip (archive, compression, cmd, *args, **kwargs):
     """Create a GZIP archive with the gzip Python module."""
     verbose = kwargs['verbose']
     if verbose:

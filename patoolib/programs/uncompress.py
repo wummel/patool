@@ -17,7 +17,7 @@
 from patoolib import util
 
 
-def extract_compress (archive, encoding, cmd, **kwargs):
+def extract_compress (archive, compression, cmd, **kwargs):
     """Extract a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unace program."""
 
-def extract_ace (archive, encoding, cmd, **kwargs):
+def extract_ace (archive, compression, cmd, **kwargs):
     """Extract a ACE archive."""
     cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
@@ -23,7 +23,7 @@ def extract_ace (archive, encoding, cmd, **kwargs):
     cmdlist.extend([archive, kwargs['outdir']])
     return cmdlist
 
-def list_ace (archive, encoding, cmd, **kwargs):
+def list_ace (archive, compression, cmd, **kwargs):
     """List a ACE archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -34,7 +34,7 @@ def list_ace (archive, encoding, cmd, **kwargs):
     cmdlist.append(archive)
     return cmdlist
 
-def test_ace (archive, encoding, cmd, **kwargs):
+def test_ace (archive, compression, cmd, **kwargs):
     """Test a ACE archive."""
     cmdlist = [cmd, 't']
     if not kwargs['verbose']:

@@ -17,7 +17,7 @@
 import os
 from patoolib import util
 
-def extract_rzip (archive, encoding, cmd, **kwargs):
+def extract_rzip (archive, compression, cmd, **kwargs):
     """Extract a RZIP archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
@@ -28,7 +28,7 @@ def extract_rzip (archive, encoding, cmd, **kwargs):
     cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
     return (cmdlist, {'cwd': kwargs['outdir']})
 
-def create_rzip (archive, encoding, cmd, *args, **kwargs):
+def create_rzip (archive, compression, cmd, *args, **kwargs):
     """Create a RZIP archive."""
     cmdlist = [cmd, '-k', '-o', archive]
     if kwargs['verbose']:

@@ -15,14 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the ar program."""
 
-def extract_ar (archive, encoding, cmd, **kwargs):
+def extract_ar (archive, compression, cmd, **kwargs):
     """Extract a AR archive."""
     opts = 'x'
     if kwargs['verbose']:
         opts += 'v'
     return [cmd, opts, archive, kwargs['outdir']]
 
-def list_ar (archive, encoding, cmd, **kwargs):
+def list_ar (archive, compression, cmd, **kwargs):
     """List a AR archive."""
     opts = 't'
     if kwargs['verbose']:
@@ -31,7 +31,7 @@ def list_ar (archive, encoding, cmd, **kwargs):
 
 test_ar = list_ar
 
-def create_ar (archive, encoding, cmd, *args, **kwargs):
+def create_ar (archive, compression, cmd, *args, **kwargs):
     """Create a AR archive."""
     opts = 'rc'
     if kwargs['verbose']:

@@ -17,7 +17,7 @@
 import os
 from patoolib import util
 
-def extract_cpio (archive, encoding, cmd, **kwargs):
+def extract_cpio (archive, compression, cmd, **kwargs):
     """Extract a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
         '--preserve-modification-time', '--no-absolute-filenames',
@@ -28,7 +28,7 @@ def extract_cpio (archive, encoding, cmd, **kwargs):
     return (cmdlist, {'cwd': kwargs['outdir'], 'shell': True})
 
 
-def list_cpio (archive, encoding, cmd, **kwargs):
+def list_cpio (archive, compression, cmd, **kwargs):
     """List a CPIO archive."""
     cmdlist = [cmd, '-t']
     if kwargs['verbose']:
@@ -38,7 +38,7 @@ def list_cpio (archive, encoding, cmd, **kwargs):
 
 test_cpio = list_cpio
 
-def create_cpio(archive, encoding, cmd, *args, **kwargs):
+def create_cpio(archive, compression, cmd, *args, **kwargs):
     """Create a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--create']
     if kwargs['verbose']:

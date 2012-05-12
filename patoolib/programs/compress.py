@@ -17,7 +17,7 @@
 from patoolib import util
 
 
-def create_compress (archive, encoding, cmd, *args, **kwargs):
+def create_compress (archive, compression, cmd, *args, **kwargs):
     """Create a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:

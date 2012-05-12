@@ -143,8 +143,8 @@ def guess_mime_mimedb (filename):
     @return: tuple (mime, encoding)
     """
     mime, encoding = mimedb.guess_type(filename, strict=False)
-    from patoolib import ArchiveMimetypes, ArchiveEncodings
-    if mime not in ArchiveMimetypes and encoding in ArchiveEncodings:
+    from patoolib import ArchiveMimetypes, ArchiveCompressions
+    if mime not in ArchiveMimetypes and encoding in ArchiveCompressions:
         # Files like 't.txt.gz' are recognized with encoding as format, and
         # an unsupported mime-type like 'text/plain'. Fix this.
         mime = Encoding2Mime[encoding]

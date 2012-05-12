@@ -16,14 +16,14 @@
 """Archive commands for the arc program."""
 import os
 
-def extract_arc (archive, encoding, cmd, **kwargs):
+def extract_arc (archive, compression, cmd, **kwargs):
     """Extract a ARC archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
     cmdlist = [cmd, 'x', os.path.abspath(archive)]
     return (cmdlist, {'cwd': kwargs['outdir']})
 
-def list_arc (archive, encoding, cmd, **kwargs):
+def list_arc (archive, compression, cmd, **kwargs):
     """List a ARC archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -33,11 +33,11 @@ def list_arc (archive, encoding, cmd, **kwargs):
     cmdlist.append(archive)
     return cmdlist
 
-def test_arc (archive, encoding, cmd, **kwargs):
+def test_arc (archive, compression, cmd, **kwargs):
     """Test a ARC archive."""
     return [cmd, 't', archive]
 
-def create_arc (archive, encoding, cmd, *args, **kwargs):
+def create_arc (archive, compression, cmd, *args, **kwargs):
     """Create a ARC archive."""
     cmdlist = [cmd, 'a', archive]
     cmdlist.extend(args)

@@ -21,7 +21,7 @@ extract_gzip = extract_compress = extract_singlefile_standard
 test_gzip = test_compress = test_singlefile_standard
 create_gzip = create_singlefile_standard
 
-def list_gzip (archive, encoding, cmd, **kwargs):
+def list_gzip (archive, compression, cmd, **kwargs):
     """List a GZIP archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:

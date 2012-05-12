@@ -21,7 +21,7 @@ from patoolib.programs import extract_singlefile_standard, \
 extract_bzip2 = extract_singlefile_standard
 test_bzip2 = test_singlefile_standard
 
-def create_bzip2 (archive, encoding, cmd, *args, **kwargs):
+def create_bzip2 (archive, compression, cmd, *args, **kwargs):
     """Create a BZIP2 archive."""
     cmdlist = [util.shell_quote(cmd)]
     if kwargs['verbose']:

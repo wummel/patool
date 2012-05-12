@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the zip program."""
 
-def create_zip (archive, encoding, cmd, *args, **kwargs):
+def create_zip (archive, compression, cmd, *args, **kwargs):
     """Create a ZIP archive."""
     cmdlist = [cmd, '-r']
     if kwargs['verbose']:

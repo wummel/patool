@@ -17,7 +17,7 @@
 import os
 from patoolib import util
 
-def extract_rpm (archive, encoding, cmd, **kwargs):
+def extract_rpm (archive, compression, cmd, **kwargs):
     """Extract a RPM archive."""
     # also check cpio
     cpio = util.find_program("cpio")

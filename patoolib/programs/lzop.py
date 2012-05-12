@@ -20,7 +20,7 @@ from patoolib.programs import extract_singlefile_standard
 extract_lzop = extract_singlefile_standard
 
 
-def list_lzop (archive, encoding, cmd, **kwargs):
+def list_lzop (archive, compression, cmd, **kwargs):
     """List a LZOP archive."""
     cmdlist = [cmd, '--list']
     if kwargs['verbose']:
@@ -28,7 +28,7 @@ def list_lzop (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_lzop (archive, encoding, cmd, **kwargs):
+def test_lzop (archive, compression, cmd, **kwargs):
     """Test a LZOP archive."""
     cmdlist = [cmd, '--test']
     if kwargs['verbose']:
@@ -36,7 +36,7 @@ def test_lzop (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def create_lzop (archive, encoding, cmd, *args, **kwargs):
+def create_lzop (archive, compression, cmd, *args, **kwargs):
     """Create a LZOP archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:

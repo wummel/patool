@@ -16,7 +16,7 @@
 """Archive commands for the zoo program."""
 import os
 
-def extract_zoo (archive, encoding, cmd, **kwargs):
+def extract_zoo (archive, compression, cmd, **kwargs):
     """Extract a ZOO archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
@@ -24,17 +24,17 @@ def extract_zoo (archive, encoding, cmd, **kwargs):
     return (cmdlist, {'cwd': kwargs['outdir']})
 
 
-def list_zoo (archive, encoding, cmd, **kwargs):
+def list_zoo (archive, compression, cmd, **kwargs):
     """List a ZOO archive."""
     return [cmd, '-list', archive]
 
 
-def test_zoo (archive, encoding, cmd, **kwargs):
+def test_zoo (archive, compression, cmd, **kwargs):
     """Test a ZOO archive."""
     return [cmd, '-test', archive]
 
 
-def create_zoo (archive, encoding, cmd, *args, **kwargs):
+def create_zoo (archive, compression, cmd, *args, **kwargs):
     """Create a ZOO archive."""
     cmdlist = [cmd, '-add', archive]
     cmdlist.extend(args)

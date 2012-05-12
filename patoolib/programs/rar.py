@@ -16,7 +16,7 @@
 """Archive commands for the rar program."""
 import os
 
-def extract_rar (archive, encoding, cmd, **kwargs):
+def extract_rar (archive, compression, cmd, **kwargs):
     """Extract a RAR archive."""
     cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
@@ -24,7 +24,7 @@ def extract_rar (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', os.path.abspath(archive)])
     return (cmdlist, {'cwd': kwargs['outdir']})
 
-def list_rar (archive, encoding, cmd, **kwargs):
+def list_rar (archive, compression, cmd, **kwargs):
     """List a RAR archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -35,7 +35,7 @@ def list_rar (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_rar (archive, encoding, cmd, **kwargs):
+def test_rar (archive, compression, cmd, **kwargs):
     """Test a RAR archive."""
     cmdlist = [cmd, 't']
     if not kwargs['verbose']:
@@ -43,7 +43,7 @@ def test_rar (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def create_rar (archive, encoding, cmd, *args, **kwargs):
+def create_rar (archive, compression, cmd, *args, **kwargs):
     """Create a RAR archive."""
     cmdlist = [cmd, 'a']
     if not kwargs['verbose']:

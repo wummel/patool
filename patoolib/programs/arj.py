@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the arj program."""
 
-def extract_arj (archive, encoding, cmd, **kwargs):
+def extract_arj (archive, compression, cmd, **kwargs):
     """Extract a ARJ archive."""
     cmdlist = [cmd, 'x', '-r', '-y']
     if not kwargs['verbose']:
@@ -24,7 +24,7 @@ def extract_arj (archive, encoding, cmd, **kwargs):
     return cmdlist
 
 
-def list_arj (archive, encoding, cmd, **kwargs):
+def list_arj (archive, compression, cmd, **kwargs):
     """List a ARJ archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -36,7 +36,7 @@ def list_arj (archive, encoding, cmd, **kwargs):
     return cmdlist
 
 
-def test_arj (archive, encoding, cmd, **kwargs):
+def test_arj (archive, compression, cmd, **kwargs):
     """Test a ARJ archive."""
     cmdlist = [cmd, 't']
     if not kwargs['verbose']:
@@ -45,7 +45,7 @@ def test_arj (archive, encoding, cmd, **kwargs):
     return cmdlist
 
 
-def create_arj (archive, encoding, cmd, *args, **kwargs):
+def create_arj (archive, compression, cmd, *args, **kwargs):
     """Create a ARJ archive."""
     cmdlist = [cmd, 'a', '-r', '-y']
     if not kwargs['verbose']:

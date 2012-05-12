@@ -26,9 +26,9 @@ ArchiveFormats = ('7z', 'ace', 'alzip', 'ar', 'arc', 'arj', 'bzip2',
     'cab', 'compress', 'cpio', 'deb', 'dms', 'gzip', 'lrzip', 'lzh', 'lzip', 'lzma',
     'lzop', 'rar', 'rpm', 'rzip', 'tar', 'xz', 'zip', 'zoo')
 
-# Supported encodings (used with tar for example)
-# Note that all encodings must also be archive formats
-ArchiveEncodings = ('bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz')
+# Supported compressions (used with tar for example)
+# Note that all compressions must also be archive formats
+ArchiveCompressions = ('bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz')
 
 # Map MIME types to archive format
 ArchiveMimetypes = {
@@ -65,9 +65,9 @@ ArchiveMimetypes = {
     'application/x-dms': 'dms',
 }
 
-# List of programs supporting the given encoding
+# List of programs supporting the given compression
 
-EncodingPrograms = {
+CompressionPrograms = {
     'gzip': ('pigz', 'gzip'),
     'bzip2': ('pbzip2', 'lbzip2', 'bzip2'),
     'compress': ('compress',),
@@ -215,26 +215,26 @@ ProgramModules = {
 
 
 def get_archive_format (filename):
-    """Detect filename archive format and optional encoding."""
-    mime, encoding = util.guess_mime(filename)
-    if not (mime or encoding):
+    """Detect filename archive format and optional compression."""
+    mime, compression = util.guess_mime(filename)
+    if not (mime or compression):
         raise util.PatoolError("unknown archive format for file `%s'" % filename)
     if mime in ArchiveMimetypes:
         format = ArchiveMimetypes[mime]
     else:
         raise util.PatoolError("unknown archive format for file `%s' (mime-type is `%s')" % (filename, mime))
-    if format == encoding:
-        # file cannot be in same format encoded
-        encoding = None
-    return format, encoding
+    if format == compression:
+        # file cannot be in same format compressed
+        compression = None
+    return format, compression
 
 
-def check_archive_format (format, encoding):
-    """Make sure format and encoding is known."""
+def check_archive_format (format, compression):
+    """Make sure format and compression is known."""
     if format not in ArchiveFormats:
         raise util.PatoolError("unknown archive format `%s'" % format)
-    if encoding is not None and encoding not in ArchiveEncodings:
-        raise util.PatoolError("unkonwn archive encoding `%s'" % encoding)
+    if compression is not None and compression not in ArchiveCompressions:
+        raise util.PatoolError("unkonwn archive compression `%s'" % compression)
 
 
 def check_archive_command (command):
@@ -264,16 +264,16 @@ def find_archive_program (format, command):
     raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (command, format, ",".join(programs)))
 
 
-def find_encoding_program (program, encoding):
-    """Find suitable encoding program and return it. Returns None if
-    no encoding program could be found"""
+def find_compression_program (program, compression):
+    """Find suitable compression program and return it. Returns None if
+    no compression program could be found"""
     if program in ('tar', 'star'):
-        for enc_program in EncodingPrograms[encoding]:
+        for enc_program in CompressionPrograms[compression]:
             found = util.find_program(enc_program)
             if found:
                 return found
     elif program == 'pytarfile':
-        return encoding in ('gzip', 'bzip2')
+        return compression in ('gzip', 'bzip2')
     return None
 
 
@@ -290,9 +290,9 @@ def list_formats ():
                 program = find_archive_program(format, command)
                 print "   %8s: %s" % (command, program),
                 if format == 'tar':
-                    encs = [x for x in ArchiveEncodings if util.find_program(x)]
+                    encs = [x for x in ArchiveCompressions if util.find_program(x)]
                     if encs:
-                        print "(supported encodings: %s)" % ", ".join(encs),
+                        print "(supported compressions: %s)" % ", ".join(encs),
                 elif format == '7z':
                     if util.p7zip_supports_rar():
                         print "(rar archives supported)",
@@ -317,10 +317,10 @@ def clean_config_keys (kwargs):
     return config_kwargs
 
 
-def parse_config (archive, format, encoding, command, **kwargs):
+def parse_config (archive, format, compression, command, **kwargs):
     """The configuration determines which program to use for which
     archive format for the given command.
-    @raises: PatoolError if command for given format and encoding
+    @raises: PatoolError if command for given format and compression
        is not supported.
     """
     config = {
@@ -335,9 +335,9 @@ def parse_config (archive, format, encoding, command, **kwargs):
                     value = program
             config[key] = value
     program = os.path.basename(config['program'])
-    if encoding and not find_encoding_program(program, encoding):
-        msg = "cannot %s archive `%s': encoding `%s' not supported by %s" % \
-              (command, archive, encoding, program)
+    if compression and not find_compression_program(program, compression):
+        msg = "cannot %s archive `%s': compression `%s' not supported by %s" % \
+              (command, archive, compression, program)
         raise util.PatoolError(msg)
     return config
 
@@ -427,13 +427,13 @@ def check_archive_arguments (archive, command, *args):
 def _handle_archive (archive, command, *args, **kwargs):
     """Handle archive command; raising PatoolError on errors."""
     check_archive_arguments(archive, command, *args)
-    format, encoding = kwargs.get("format"), kwargs.get("encoding")
+    format, compression = kwargs.get("format"), kwargs.get("compression")
     if format is None:
-        format, encoding = get_archive_format(archive)
-    check_archive_format(format, encoding)
+        format, compression = get_archive_format(archive)
+    check_archive_format(format, compression)
     check_archive_command(command)
     config_kwargs = clean_config_keys(kwargs)
-    config = parse_config(archive, format, encoding, command, **config_kwargs)
+    config = parse_config(archive, format, compression, command, **config_kwargs)
     # check if archive already exists
     if command == 'create' and os.path.exists(archive):
         raise util.PatoolError("archive `%s' already exists" % archive)
@@ -455,7 +455,7 @@ def _handle_archive (archive, command, *args, **kwargs):
         origarchive = archive
         archive = util.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
     try:
-        cmdlist = get_archive_cmdlist(archive, encoding, program, *args, **cmd_kwargs)
+        cmdlist = get_archive_cmdlist(archive, compression, program, *args, **cmd_kwargs)
         if cmdlist:
             # an empty command list means the get_archive_cmdlist() function
             # already handled the command (eg. when it's a builting Python

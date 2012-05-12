@@ -32,12 +32,12 @@ class TestConfiguration (unittest.TestCase):
                 if command is not None:
                     self.assertTrue(command in patoolib.ArchiveCommands)
 
-    def test_encoding_programs (self):
-        self.assertEqual(set(patoolib.ArchiveEncodings),
-                         set(patoolib.EncodingPrograms.keys()))
+    def test_compression_programs (self):
+        self.assertEqual(set(patoolib.ArchiveCompressions),
+                         set(patoolib.CompressionPrograms.keys()))
 
     def test_encoding_mimes (self):
-        self.assertEqual(set(patoolib.ArchiveEncodings),
+        self.assertEqual(set(patoolib.ArchiveCompressions),
                          set(patoolib.util.Encoding2Mime.keys()))
         for mime in patoolib.util.Encoding2Mime.values():
             self.assertTrue(mime in patoolib.ArchiveMimetypes)

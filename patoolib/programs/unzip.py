@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unzip program."""
 
-def extract_zip (archive, encoding, cmd, **kwargs):
+def extract_zip (archive, compression, cmd, **kwargs):
     """Extract a ZIP archive."""
     cmdlist = [cmd]
     if kwargs['verbose']:
@@ -23,7 +23,7 @@ def extract_zip (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', archive, '-d', kwargs['outdir']])
     return cmdlist
 
-def list_zip (archive, encoding, cmd, **kwargs):
+def list_zip (archive, compression, cmd, **kwargs):
     """List a ZIP archive."""
     cmdlist = [cmd, '-l']
     if kwargs['verbose']:
@@ -31,7 +31,7 @@ def list_zip (archive, encoding, cmd, **kwargs):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_zip (archive, encoding, cmd, **kwargs):
+def test_zip (archive, compression, cmd, **kwargs):
     """Test a ZIP archive."""
     cmdlist = [cmd, '-t']
     if kwargs['verbose']:

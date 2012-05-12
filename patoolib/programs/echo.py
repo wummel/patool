@@ -18,31 +18,31 @@ statement."""
 from patoolib import util
 
 
-def list_bzip2 (archive, encoding, cmd, **kwargs):
+def list_bzip2 (archive, compression, cmd, **kwargs):
     """List a BZIP2 archive."""
     return stripext(cmd, archive)
 
-def list_compress (archive, encoding, cmd, **kwargs):
+def list_compress (archive, compression, cmd, **kwargs):
     """List a compress archive."""
     return stripext(cmd, archive)
 
-def list_lzma (archive, encoding, cmd, **kwargs):
+def list_lzma (archive, compression, cmd, **kwargs):
     """List a LZMA archive."""
     return stripext(cmd, archive)
 
-def list_xz (archive, encoding, cmd, **kwargs):
+def list_xz (archive, compression, cmd, **kwargs):
     """List a XZ archive."""
     return stripext(cmd, archive)
 
-def list_lzip (archive, encoding, cmd, **kwargs):
+def list_lzip (archive, compression, cmd, **kwargs):
     """List a LZIP archive."""
     return stripext(cmd, archive)
 
-def list_lrzip (archive, encoding, cmd, **kwargs):
+def list_lrzip (archive, compression, cmd, **kwargs):
     """List a LRZIP archive."""
     return stripext(cmd, archive)
 
-def list_rzip (archive, encoding, cmd, **kwargs):
+def list_rzip (archive, compression, cmd, **kwargs):
     """List a RZIP archive."""
     return stripext(cmd, archive)
 

@@ -15,35 +15,35 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the GNU tar program."""
 
-def extract_tar (archive, encoding, cmd, **kwargs):
+def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive."""
     cmdlist = [cmd, '--extract']
-    add_tar_opts(cmdlist, encoding, kwargs['verbose'])
+    add_tar_opts(cmdlist, compression, kwargs['verbose'])
     cmdlist.extend(["--file", archive, '--directory', kwargs['outdir']])
     return cmdlist
 
-def list_tar (archive, encoding, cmd, **kwargs):
+def list_tar (archive, compression, cmd, **kwargs):
     """List a TAR archive."""
     cmdlist = [cmd, '--list']
-    add_tar_opts(cmdlist, encoding, kwargs['verbose'])
+    add_tar_opts(cmdlist, compression, kwargs['verbose'])
     cmdlist.extend(["--file", archive])
     return cmdlist
 
 test_tar = list_tar
 
-def create_tar (archive, encoding, cmd, *args, **kwargs):
+def create_tar (archive, compression, cmd, *args, **kwargs):
     """Create a TAR archive."""
     cmdlist = [cmd, '--create']
-    add_tar_opts(cmdlist, encoding, kwargs['verbose'])
+    add_tar_opts(cmdlist, compression, kwargs['verbose'])
     cmdlist.extend(["--file", archive, '--'])
     cmdlist.extend(args)
     return cmdlist
 
-def add_tar_opts (cmdlist, encoding, verbose):
-    if encoding == 'lzip':
+def add_tar_opts (cmdlist, compression, verbose):
+    if compression == 'lzip':
         # use compress-program option
-        cmdlist.extend(['--use-compress-program', encoding])
-    elif encoding:
-        cmdlist.append('--%s' % encoding)
+        cmdlist.extend(['--use-compress-program', compression])
+    elif compression:
+        cmdlist.append('--%s' % compression)
     if verbose:
         cmdlist.append('--verbose')

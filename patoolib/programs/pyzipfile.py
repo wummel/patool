@@ -20,7 +20,7 @@ import zipfile
 READ_SIZE_BYTES = 1024*1024
 
 
-def list_zip (archive, encoding, cmd, **kwargs):
+def list_zip (archive, compression, cmd, **kwargs):
     """List member of a ZIP archive with the zipfile Python module."""
     verbose = kwargs['verbose']
     if verbose:
@@ -35,7 +35,7 @@ def list_zip (archive, encoding, cmd, **kwargs):
 
 test_zip = list_zip
 
-def extract_zip (archive, encoding, cmd, **kwargs):
+def extract_zip (archive, compression, cmd, **kwargs):
     """Extract a ZIP archive with the zipfile Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
@@ -52,7 +52,7 @@ def extract_zip (archive, encoding, cmd, **kwargs):
     return None
 
 
-def create_zip (archive, encoding, cmd, *args, **kwargs):
+def create_zip (archive, compression, cmd, *args, **kwargs):
     """Create a ZIP archive with the zipfile Python module."""
     verbose = kwargs['verbose']
     if verbose:

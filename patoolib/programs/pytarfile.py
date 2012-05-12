@@ -20,7 +20,7 @@ import tarfile
 READ_SIZE_BYTES = 1024*1024
 
 
-def list_tar (archive, encoding, cmd, **kwargs):
+def list_tar (archive, compression, cmd, **kwargs):
     """List a TAR archive with the tarfile Python module."""
     verbose = kwargs['verbose']
     if verbose:
@@ -34,7 +34,7 @@ def list_tar (archive, encoding, cmd, **kwargs):
 
 test_tar = list_tar
 
-def extract_tar (archive, encoding, cmd, **kwargs):
+def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive with the tarfile Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
@@ -51,12 +51,12 @@ def extract_tar (archive, encoding, cmd, **kwargs):
     return None
 
 
-def create_tar (archive, encoding, cmd, *args, **kwargs):
+def create_tar (archive, compression, cmd, *args, **kwargs):
     """Create a TAR archive with the tarfile Python module."""
     verbose = kwargs['verbose']
     if verbose:
         util.log_info('creating %s...' % archive)
-    mode = get_tar_mode(encoding)
+    mode = get_tar_mode(compression)
     tfile = tarfile.open(archive, mode)
     try:
         for filename in args:

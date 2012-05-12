@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the orange program."""
 
-def extract_cab (archive, encoding, cmd, **kwargs):
+def extract_cab (archive, compression, cmd, **kwargs):
     """Extract a CAB archive."""
     cmdlist = [cmd, '-d', kwargs['outdir']]
     if kwargs['verbose']:

@@ -15,42 +15,42 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the star program."""
 
-def extract_tar (archive, encoding, cmd, **kwargs):
+def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive."""
     cmdlist = [cmd, '-x']
-    add_star_opts(cmdlist, encoding, kwargs['verbose'])
+    add_star_opts(cmdlist, compression, kwargs['verbose'])
     cmdlist.extend(['-C', kwargs['outdir'], 'file=%s' % archive])
     return cmdlist
 
-def list_tar (archive, encoding, cmd, **kwargs):
+def list_tar (archive, compression, cmd, **kwargs):
     """List a TAR archive."""
     cmdlist = [cmd, '-n']
-    add_star_opts(cmdlist, encoding, kwargs['verbose'])
+    add_star_opts(cmdlist, compression, kwargs['verbose'])
     cmdlist.append("file=%s" % archive)
     return cmdlist
 
 test_tar = list_tar
 
-def create_tar (archive, encoding, cmd, *args, **kwargs):
+def create_tar (archive, compression, cmd, *args, **kwargs):
     """Create a TAR archive."""
     cmdlist = [cmd, '-c']
-    add_star_opts(cmdlist, encoding, kwargs['verbose'])
+    add_star_opts(cmdlist, compression, kwargs['verbose'])
     cmdlist.append("file=%s" % archive)
     cmdlist.extend(args)
     return cmdlist
 
-def add_star_opts (cmdlist, encoding, verbose):
+def add_star_opts (cmdlist, compression, verbose):
     """Add default options for the star program."""
-    # Note that star autodetects encoding compression, but displays a warning
+    # Note that star autodetects compression compression, but displays a warning
     # which we want to avoid.
-    if encoding == 'gzip':
+    if compression == 'gzip':
         cmdlist.append('-z')
-    elif encoding == 'compress':
+    elif compression == 'compress':
         cmdlist.append('-Z')
-    elif encoding == 'bzip2':
+    elif compression == 'bzip2':
         cmdlist.append('-bz')
-    elif encoding in ('lzma', 'xz', 'lzip'):
+    elif compression in ('lzma', 'xz', 'lzip'):
         # use compress-program option
-        cmdlist.append('compress-program=%s' % encoding)
+        cmdlist.append('compress-program=%s' % compression)
     if verbose:
         cmdlist.append('-v')

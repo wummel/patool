@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the 7z program."""
 
-def extract_7z (archive, encoding, cmd, **kwargs):
+def extract_7z (archive, compression, cmd, **kwargs):
     """Extract a 7z archive."""
     cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
@@ -35,7 +35,7 @@ extract_bzip2 = \
   extract_deb = \
   extract_7z
 
-def list_7z (archive, encoding, cmd, **kwargs):
+def list_7z (archive, compression, cmd, **kwargs):
     """List a 7z archive."""
     cmdlist = [cmd, 'l']
     if not kwargs['verbose']:
@@ -57,7 +57,7 @@ list_bzip2 = \
   list_7z
 
 
-def test_7z (archive, encoding, cmd, **kwargs):
+def test_7z (archive, compression, cmd, **kwargs):
     """Test a 7z archive."""
     cmdlist = [cmd, 't']
     if not kwargs['verbose']:
@@ -79,7 +79,7 @@ test_bzip2 = \
   test_7z
 
 
-def create_7z (archive, encoding, cmd, *args, **kwargs):
+def create_7z (archive, compression, cmd, *args, **kwargs):
     """Create a 7z archive."""
     cmdlist = [cmd, 'a']
     if not kwargs['verbose']:
