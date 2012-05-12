@@ -28,33 +28,35 @@ The convenience functions are:
 
 * ``def extract(archive, verbose=False, outdir=None)``
   
-  This function extracts the given archive filename to the current
-  working directory or if specified to the given directory name in outdir.
+  Extracts the given archive filename to the current working directory
+  or if specified to the given directory name in outdir.
   If verbose operation is set to True, additional output of the archive
   program is shown.
+  Checks that the archive exists and is readable before extracting it.
 
 * ``def list(archive, verbose=False)``
   
-  This function lists the contents of the given archive filename
-  on stdout.
+  Lists the contents of the given archive filename on stdout.
   If verbose operation is set to True, additional output of the archive
   program is shown.
+  Checks that the archive exists and is readable before listing it.
 
 * ``def test(archive, verbose=False)``
   
-  This function tests the given archive filename.
+  Tests the given archive filename.
   If verbose operation is set to True, additional output of the archive
   program is shown.
+  Checks that the archive exists and is readable before testing it.
 
 * ``def create(archive, *filenames, **kwargs)``
   
-  This function creates a new archive. The type of archive is determined
-  by the archive filename extension. The archive must not already
-  exist.
-  The list of filenames to add to the archive must not be empty and the
-  files must exist and be readable.
+  Creates a new archive. The type of archive is determined
+  by the archive filename extension.
   If verbose operation is set to True, additional output of the archive
   program is shown.
+  Checks that the archive is not already existing to avoid overwriting it.
+  Also checks that the filename list is not empty and that all files exist
+  and are readable.
 
 * ``def diff(archive1, archive2, verbose=False)``
   
@@ -63,12 +65,14 @@ The convenience functions are:
   recursively with the diff(1) program.
   If verbose operation is set to True, additional output of the archive
   program is shown.
+  Checks that both archives exist and are readable.
 
 * ``def repack(archive1, archive2, verbose=False)``
   
   This function extracts the contents of archive1 and packs them
   into archive2.
-  Archive1 and archive2 must be different files.
   If verbose operation is set to True, additional output of the archive
   program is shown.
+  Checks that archive1 exists and is readable. Also checks that
+  archive2 does not exist to avoid overwriting it.
 
