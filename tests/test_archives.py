@@ -96,17 +96,17 @@ class TestArchives (ArchiveTest):
         self.program = 'star'
         self.archive_commands('t.tar.xz')
 
-    def test_pytarfile (self):
-        self.program = 'pytarfile'
+    def test_py_tarfile (self):
+        self.program = 'py_tarfile'
         self.archive_commands('t.tar')
 
-    def test_pytarfile_gz (self):
-        self.program = 'pytarfile'
+    def test_py_tarfile_gz (self):
+        self.program = 'py_tarfile'
         self.archive_commands('t.tar.gz')
         self.archive_commands('t.tgz')
 
-    def test_pytarfile_bz2 (self):
-        self.program = 'pytarfile'
+    def test_py_tarfile_bz2 (self):
+        self.program = 'py_tarfile'
         self.archive_commands('t.tar.bz2')
         self.archive_commands('t.tbz2')
 
@@ -118,8 +118,8 @@ class TestArchives (ArchiveTest):
         self.archive_create('t .bz2', singlefile=True)
 
     @needs_program('bzip2')
-    def test_pybz2 (self):
-        self.program = 'pybz2'
+    def test_py_bz2 (self):
+        self.program = 'py_bz2'
         self.archive_extract('t .bz2')
         # bzip2 is used to test the created archive
         self.archive_create('t .bz2', singlefile=True)
@@ -138,8 +138,8 @@ class TestArchives (ArchiveTest):
         self.archive_test('t .bz2')
         self.archive_create('t .bz2', singlefile=True)
 
-    def test_echo (self):
-        self.program = 'echo'
+    def test_py_echo (self):
+        self.program = 'py_echo'
         self.archive_list('t .bz2')
         self.archive_list('t.Z')
         self.archive_list('t.lzma')
@@ -162,8 +162,8 @@ class TestArchives (ArchiveTest):
         self.program = 'zip'
         self.archive_create('t.zip')
 
-    def test_pyzipfile (self):
-        self.program = 'pyzipfile'
+    def test_py_zipfile (self):
+        self.program = 'py_zipfile'
         self.archive_commands('t.zip')
 
     @needs_program('gzip')
@@ -174,8 +174,8 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.Z')
 
     @needs_program('gzip')
-    def test_pygzip (self):
-        self.program = 'pygzip'
+    def test_py_gzip (self):
+        self.program = 'py_gzip'
         self.archive_extract('t.gz')
         self.archive_extract('t.txt.gz')
         # gzip is used to test the created archive

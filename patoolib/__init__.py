@@ -78,6 +78,7 @@ CompressionPrograms = {
 
 # List of programs supporting the given archive format and command.
 # If command is None, the program supports all commands (list, extract, ...)
+# Programs starting with "py_" are Python modules.
 ArchivePrograms = {
     'ace': {
         'extract': ('unace',),
@@ -100,16 +101,16 @@ ArchivePrograms = {
     },
     'bzip2': {
         None: ('7z', '7za'),
-        'extract': ('pbzip2', 'lbzip2', 'bzip2', 'pybz2'),
+        'extract': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
         'test': ('pbzip2', 'lbzip2', 'bzip2'),
-        'create': ('pbzip2', 'lbzip2', 'bzip2', 'pybz2'),
-        'list': ('echo',),
+        'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
+        'list': ('py_echo',),
     },
     'tar': {
-        None: ('tar', 'star', 'pytarfile'),
+        None: ('tar', 'star', 'py_tarfile'),
     },
     'zip': {
-        None: ('7z', '7za', 'pyzipfile'),
+        None: ('7z', '7za', 'py_zipfile'),
         'extract': ('unzip',),
         'list': ('unzip',),
         'test': ('unzip',),
@@ -117,27 +118,27 @@ ArchivePrograms = {
     },
     'gzip': {
         None: ('pigz', 'gzip', '7z', '7za'),
-        'extract': ('pygzip',),
-        'create': ('pygzip',),
+        'extract': ('py_gzip',),
+        'create': ('py_gzip',),
     },
     'lzh': {
         None: ('lha',),
     },
     'lzip': {
         'extract': ('plzip', 'lzip', 'clzip', 'pdlzip'),
-        'list': ('echo',),
+        'list': ('py_echo',),
         'test': ('plzip', 'lzip', 'clzip', 'pdlzip'),
         'create': ('plzip', 'lzip', 'clzip', 'pdlzip'),
     },
     'lrzip': {
         'extract': ('lrzip',),
-        'list': ('echo',),
+        'list': ('py_echo',),
         'test': ('lrzip',),
         'create': ('lrzip',),
     },
     'compress': {
         'extract': ('gzip', '7z', '7za', 'uncompress.real'),
-        'list': ('7z', '7za', 'echo',),
+        'list': ('7z', '7za', 'py_echo',),
         'test': ('gzip', '7z', '7za'),
         'create': ('compress',),
     },
@@ -182,13 +183,13 @@ ArchivePrograms = {
     },
     'lzma': {
         'extract': ('lzma',),
-        'list': ('echo',),
+        'list': ('py_echo',),
         'test': ('lzma',),
         'create': ('lzma',),
     },
     'rzip': {
         'extract': ('rzip',),
-        'list': ('echo',),
+        'list': ('py_echo',),
         'create': ('rzip',),
     },
     'xz': {
@@ -255,6 +256,9 @@ def find_archive_program (format, command):
         raise util.PatoolError("%s archive format `%s' is not supported" % (command, format))
     # return the first existing program
     for program in programs:
+        if program.startswith('py_'):
+            # it's a Python module and therefore always supported
+            return program
         exe = util.find_program(program)
         if exe:
             if program == '7z' and format == 'rar' and not util.p7zip_supports_rar():
@@ -272,7 +276,7 @@ def find_compression_program (program, compression):
             found = util.find_program(enc_program)
             if found:
                 return found
-    elif program == 'pytarfile':
+    elif program == 'py_tarfile':
         return compression in ('gzip', 'bzip2')
     return None
 

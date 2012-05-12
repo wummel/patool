@@ -102,14 +102,14 @@ class ArchiveTest (unittest.TestCase):
             command = 'test'
             program = self.program
             # special case for programs that cannot test what they create
-            if self.program in ('compress', 'pygzip'):
+            if self.program in ('compress', 'py_gzip'):
                 program = 'gzip'
-            elif self.program == 'pybz2':
+            elif self.program == 'py_bz2':
                 program = 'bzip2'
             elif self.program == 'zip':
                 program = 'unzip'
             elif self.program == 'rzip':
-                program = 'echo'
+                program = 'py_echo'
                 command = 'list'
             patoolib._handle_archive(archive, command, program=program)
         finally:

@@ -113,19 +113,19 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.xz.foo', format="tar", encoding="xz")
 
     @needs_program('file')
-    def test_pytarfile_file (self):
-        self.program = 'pytarfile'
+    def test_py_tarfile_file (self):
+        self.program = 'py_tarfile'
         self.archive_commands('t.tar.foo', format="tar")
 
     @needs_program('file')
-    def test_pytarfile_gz_file (self):
-        self.program = 'pytarfile'
+    def test_py_tarfile_gz_file (self):
+        self.program = 'py_tarfile'
         self.archive_commands('t.tar.gz.foo', format="tar", encoding="gzip")
         self.archive_commands('t.tgz.foo', format="tar", encoding="gzip")
 
     @needs_program('file')
-    def test_pytarfile_bz2 (self):
-        self.program = 'pytarfile'
+    def test_py_tarfile_bz2 (self):
+        self.program = 'py_tarfile'
         self.archive_commands('t.tar.bz2.foo', format="tar", encoding="bzip2")
         self.archive_commands('t.tbz2.foo', format="tar", encoding="bzip2")
 
@@ -138,8 +138,8 @@ class TestArchives (ArchiveTest):
         self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
-    def test_pybz2 (self):
-        self.program = 'pybz2'
+    def test_py_bz2 (self):
+        self.program = 'py_bz2'
         self.archive_extract('t.bz2.foo')
         self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
 
@@ -160,8 +160,8 @@ class TestArchives (ArchiveTest):
         self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
-    def test_echo (self):
-        self.program = 'echo'
+    def test_py_echo (self):
+        self.program = 'py_echo'
         self.archive_list('t.bz2.foo')
         self.archive_list('t.Z.foo')
         # file(1) does not recognize .lzma files
@@ -186,8 +186,8 @@ class TestArchives (ArchiveTest):
         self.archive_create('t.zip.foo', format="zip")
 
     @needs_program('file')
-    def test_pyzipfile (self):
-        self.program = 'pyzipfile'
+    def test_py_zipfile (self):
+        self.program = 'py_zipfile'
         self.archive_commands('t.zip.foo', format="zip")
 
     @needs_program('file')
@@ -199,10 +199,12 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.Z.foo')
 
     @needs_program('file')
-    def test_pygzip (self):
-        self.program = 'pygzip'
+    @needs_program('gzip')
+    def test_py_gzip (self):
+        self.program = 'py_gzip'
         self.archive_extract('t.gz.foo')
         self.archive_extract('t.txt.gz.foo')
+        # gzip is used to test the created archive
         self.archive_create('t.gz.foo', format="gzip", singlefile=True)
         self.archive_create('t.txt.gz.foo', format="gzip", singlefile=True)
 
