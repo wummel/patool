@@ -1,6 +1,6 @@
 Project: patool
-Version: 0.15
-Release-Focus: Minor feature enhancements
+Version: 0.16
+Release-Focus: Major feature enhancements
 Hide: N
 Website-URL: http://patool.sourceforge.net/
 Changelog-URL: http://patool.git.sourceforge.net/git/gitweb.cgi?p=patool/patool;a=blob;f=doc/changelog.txt;hb=HEAD
@@ -8,6 +8,8 @@ Tar/GZ-URL: http://downloads.sourceforge.net/patool/patool-${version}.tar.gz
 GIT-Tree-URL: http://patool.git.sourceforge.net/
 Windows-installer-URL: http://downloads.sourceforge.net/patool/patool-${version}.win32.exe
 
-Support for the pigz program handling GZIP archives has been added.
-Error messages for unknown options or missing archive files are
-now printed.
+Support for the lbzip2 and plzip archive programs has been added.
+Native support for handling BZIP2 (.bz2), GZIP (.gz), ZIP (.zip) and
+TAR (.tar) archives has been added.
+Convenience library functions have been added for people who want to use
+the patool functionality in other Python programs.

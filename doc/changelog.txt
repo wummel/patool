@@ -10,7 +10,7 @@
   Closes: SF bug #2977749
 * Added support for the lbzip2 program handling BZIP2 archives.
 * Added support for the plzip program handling LZIP archives.
-* Prevent overwriting the same file with repack.
+* Prevent overwriting files with repack.
 * Support extraction of BZIP2 (.bz2) files with the Python bz2 module.
 * Support extraction of GZIP (.gz) files with the Python gzip module.
 * Support extraction of ZIP (.zip) files with the Python zipfile module.
