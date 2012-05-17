@@ -24,7 +24,8 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 # Supported archive formats
 ArchiveFormats = ('7z', 'ace', 'alzip', 'ape', 'ar', 'arc', 'arj', 'bzip2',
     'cab', 'compress', 'cpio', 'deb', 'dms', 'gzip', 'lrzip', 'lzh',
-    'lzip', 'lzma', 'lzop', 'rar', 'rpm', 'rzip', 'tar', 'xz', 'zip', 'zoo')
+    'lzip', 'lzma', 'lzop', 'rar', 'rpm', 'rzip', 'shn', 'tar', 'xz',
+    'zip', 'zoo')
 
 # Supported compressions (used with tar for example)
 # Note that all compressions must also be archive formats
@@ -64,6 +65,7 @@ ArchiveMimetypes = {
     'application/x-zoo': 'zoo',
     'application/x-dms': 'dms',
     'audio/x-ape': 'ape',
+    'audio/x-shn': 'shn',
 }
 
 # List of programs supporting the given archive format and command.
@@ -187,6 +189,11 @@ ArchivePrograms = {
         'extract': ('rzip',),
         'list': ('py_echo',),
         'create': ('rzip',),
+    },
+    'shn': {
+        'extract': ('shorten',),
+        'list': ('py_echo',),
+        'create': ('shorten',),
     },
     'xz': {
         None: ('xz',),

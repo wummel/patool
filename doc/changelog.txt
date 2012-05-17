@@ -1,6 +1,7 @@
 0.17 "" (released xx.xx.2012)
 
 * Added support for Monkey's Audio Compressor handling APE (.ape) files.
+* Added support for shorten handling SHN (.shn) files.
 
 
 0.16 "Game of thrones" (released 12.5.2012)

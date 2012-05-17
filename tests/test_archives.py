@@ -150,6 +150,7 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.txt.lrz')
         self.archive_list('t.txt.rz')
         self.archive_list('t.ape')
+        self.archive_list('t.shn')
 
     @needs_program('unzip')
     def test_unzip (self):
@@ -446,3 +447,9 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.ape')
         self.archive_test('t.ape')
         self.archive_create('t.ape', srcfile="t.wav")
+
+    @needs_program('shorten')
+    def test_shorten (self):
+        self.program = 'shorten'
+        self.archive_extract('t.shn')
+        self.archive_create('t.shn', srcfile="t.wav")

@@ -460,6 +460,7 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.arc.foo')
 
     # file(1) does not recognize .lrz files
+    #@needs_program('file')
     #@needs_program('lrzip')
     #def test_lrzip (self):
     #    self.program = 'lrzip'
@@ -492,3 +493,12 @@ class TestArchives (ArchiveTest):
     def test_mac (self):
         self.program = 'mac'
         self.archive_extract('t.ape.foo')
+        self.archive_create('t.ape.foo', srcfile='t.wav')
+
+    # file(1) does not recognize .shn files
+    #@needs_program('file')
+    #@needs_program('shorten')
+    #def test_shorten (self):
+    #    self.program = 'shorten'
+    #    self.archive_extract('t.shn.foo')
+    #    self.archive_create('t.shn.foo', srcfile='t.wav')

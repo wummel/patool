@@ -112,7 +112,7 @@ class ArchiveTest (unittest.TestCase):
                 program = 'bzip2'
             elif self.program == 'zip':
                 program = 'unzip'
-            elif self.program == 'rzip':
+            elif self.program in ('rzip', 'shorten'):
                 program = 'py_echo'
                 command = 'list'
             patoolib._handle_archive(archive, command, program=program)

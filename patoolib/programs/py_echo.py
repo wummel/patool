@@ -50,6 +50,10 @@ def list_ape (archive, compression, cmd, **kwargs):
     """List an APE archive."""
     return stripext(cmd, archive, extension=".wav")
 
+def list_shn (archive, compression, cmd, **kwargs):
+    """List a SHN archive."""
+    return stripext(cmd, archive, extension=".wav")
+
 def stripext (cmd, archive, extension=""):
     """Print the name without suffix."""
     print util.stripext(archive)+extension
