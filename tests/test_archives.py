@@ -438,3 +438,8 @@ class TestArchives (ArchiveTest):
         self.archive_test('t.dms')
         self.archive_extract('t.dms')
         self.archive_list('t.dms')
+
+    @needs_program('mac')
+    def test_mac (self):
+        self.program = 'mac'
+        self.archive_extract('t.ape', singlefile=True)

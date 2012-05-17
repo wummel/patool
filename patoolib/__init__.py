@@ -22,7 +22,7 @@ from patoolib import util
 ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
-ArchiveFormats = ('7z', 'ace', 'alzip', 'ar', 'arc', 'arj', 'bzip2',
+ArchiveFormats = ('7z', 'ace', 'alzip', 'ape', 'ar', 'arc', 'arj', 'bzip2',
     'cab', 'compress', 'cpio', 'deb', 'dms', 'gzip', 'lrzip', 'lzh',
     'lzip', 'lzma', 'lzop', 'rar', 'rpm', 'rzip', 'tar', 'xz', 'zip', 'zoo')
 
@@ -63,6 +63,7 @@ ArchiveMimetypes = {
     'application/x-rzip': 'rzip',
     'application/x-zoo': 'zoo',
     'application/x-dms': 'dms',
+    'audio/x-ape': 'ape',
 }
 
 # List of programs supporting the given archive format and command.
@@ -78,6 +79,9 @@ ArchivePrograms = {
         'extract': ('unalz',),
         'test': ('unalz',),
         'list': ('unalz',),
+    },
+    'ape': {
+        None: ('mac',),
     },
     'ar': {
         None: ('ar',),

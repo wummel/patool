@@ -51,6 +51,7 @@ mimedb.add_type('application/x-rzip', '.rz', strict=False)
 mimedb.add_type('application/x-zoo', '.zoo', strict=False)
 mimedb.add_type('application/x-dms', '.dms', strict=False)
 mimedb.add_type('application/x-zip-compressed', '.crx', strict=False)
+mimedb.add_type('audio/x-ape', '.ape', strict=False)
 
 
 class PatoolError (StandardError):
@@ -243,6 +244,7 @@ FileText2Mime = {
     "ARC archive data": "application/x-arc",
     "Zoo archive data": "application/x-zoo",
     "DMS archive data": "application/x-dms",
+    "Monkey's Audio": "audio/x-ape",
 }
 
 def guess_mime_file_text (file_prog, filename):
@@ -378,6 +380,7 @@ def find_program (program):
     path = os.environ['PATH']
     if os.name == 'nt':
         path = append_to_path(path, get_nt_7z_dir())
+        path = append_to_path(path, get_nt_mac_dir())
     return find_executable(program, path=path)
 
 
@@ -402,6 +405,17 @@ def get_nt_7z_dir ():
             _winreg.CloseKey(key)
     except WindowsError:
         return ""
+
+
+def get_nt_program_dir ():
+    """Return the Windows program files directory."""
+    progvar = "%ProgramFiles%"
+    return os.path.expandvars(progvar)
+
+
+def get_nt_mac_dir ():
+    """Return Monkey Audio Compressor (MAC) directory, or an empty string."""
+    return os.path.join(get_nt_program_dir(), "Monkey's Audio")
 
 
 def strlist_with_or (alist):
