@@ -81,7 +81,10 @@ ArchivePrograms = {
         'list': ('unalz',),
     },
     'ape': {
-        None: ('mac',),
+        'create': ('mac',),
+        'extract': ('mac',),
+        'list': ('py_echo',),
+        'test': ('mac',),
     },
     'ar': {
         None: ('ar',),

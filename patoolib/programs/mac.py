@@ -14,10 +14,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the MAC.exe program."""
+from patoolib import util
 
 def extract_ape (archive, compression, cmd, **kwargs):
-    """Extract an APE archive."""
-    cmdlist = [cmd]
-    # XXX todo
+    """Decompress an APE archive to a WAV file."""
+    outfile = util.get_single_outfile(kwargs['outdir'], archive,
+      extension=".wav")
+    cmdlist = [cmd, archive, outfile, '-d']
     return cmdlist
 
+
+def create_ape (archive, compression, cmd, *args, **kwargs):
+    """Compress a WAV file to an APE archive."""
+    cmdlist = [cmd]
+    cmdlist.extend(args)
+    cmdlist.append(archive)
+    cmdlist.append('-c2000')
+    return cmdlist
+
+
+def test_ape (archive, compression, cmd, **kwargs):
+    cmdlist = [cmd, archive, '-v']
+    return cmdlist

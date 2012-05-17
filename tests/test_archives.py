@@ -149,6 +149,7 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.txt.lz')
         self.archive_list('t.txt.lrz')
         self.archive_list('t.txt.rz')
+        self.archive_list('t.ape')
 
     @needs_program('unzip')
     def test_unzip (self):
@@ -442,4 +443,6 @@ class TestArchives (ArchiveTest):
     @needs_program('mac')
     def test_mac (self):
         self.program = 'mac'
-        self.archive_extract('t.ape', singlefile=True)
+        self.archive_extract('t.ape')
+        self.archive_test('t.ape')
+        self.archive_create('t.ape', singlefile=True)
