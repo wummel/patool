@@ -71,13 +71,14 @@ class ArchiveTest (unittest.TestCase):
         patoolib._handle_archive(archive, 'test', program=self.program)
         patoolib._handle_archive(archive, 'test', program=self.program, verbose=True)
 
-    def archive_create (self, filename, singlefile=False, format=None, encoding=None):
+    def archive_create (self, archive, srcfile=None, singlefile=False,
+            format=None, encoding=None):
         """Test archive creation."""
-        # the file or directory to pack (note that they have spaces)
-        if singlefile:
-            topack = os.path.join(datadir, 'foo .txt')
-        else:
-            topack = os.path.join(datadir, 'foo dir')
+        if not srcfile:
+            if singlefile:
+                srcfile = os.path.join(datadir, 'foo .txt')
+            else:
+                srcfile = os.path.join(datadir, 'foo dir')
         # The format and encoding arguments are needed for creating
         # archives with unusual file extensions.
         kwargs = dict(
@@ -85,9 +86,10 @@ class ArchiveTest (unittest.TestCase):
             format=format,
             encoding=encoding,
         )
-        self._archive_create(filename, topack, kwargs)
+        self._archive_create(archive, srcfile, kwargs)
+        # create again in verbose mode
         kwargs['verbose'] = True
-        self._archive_create(filename, topack, kwargs)
+        self._archive_create(archive, srcfile, kwargs)
 
     def _archive_create (self, filename, topack, kwargs):
         """Create archive from filename."""
