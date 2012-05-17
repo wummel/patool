@@ -52,6 +52,7 @@ mimedb.add_type('application/x-zoo', '.zoo', strict=False)
 mimedb.add_type('application/x-dms', '.dms', strict=False)
 mimedb.add_type('application/x-zip-compressed', '.crx', strict=False)
 mimedb.add_type('audio/x-ape', '.ape', strict=False)
+mimedb.add_type('audio/x-shn', '.shn', strict=False)
 
 
 class PatoolError (StandardError):
