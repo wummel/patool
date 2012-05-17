@@ -106,6 +106,10 @@ ArchivePrograms = {
         'list': ('py_echo',),
     },
     'flac': {
+        'extract': ('flac',),
+        'test': ('flac',),
+        'create': ('flac',),
+        'list': ('py_echo',),
     },
     'tar': {
         None: ('tar', 'star', 'py_tarfile'),

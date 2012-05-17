@@ -167,6 +167,12 @@ class TestArchives (ArchiveTest):
         # file(1) does not recognize .lzma files
         #self.archive_list('t.lzma.foo')
         self.archive_list('t.txt.lz.foo')
+        self.archive_list('t.txt.lrz')
+        self.archive_list('t.txt.rz.foo')
+        self.archive_list('t.ape.foo')
+        # file(1) does not recognize .shn files
+        #self.archive_list('t.shn.foo')
+        self.archive_list('t.flac.foo')
 
     @needs_program('file')
     @needs_program('unzip')
@@ -502,3 +508,11 @@ class TestArchives (ArchiveTest):
     #    self.program = 'shorten'
     #    self.archive_extract('t.shn.foo')
     #    self.archive_create('t.shn.foo', srcfile='t.wav')
+
+    @needs_program('file')
+    @needs_program('flac')
+    def test_flac (self):
+        self.program = 'flac'
+        self.archive_extract('t.flac.foo')
+        self.archive_test('t.flac.foo')
+        self.archive_create('t.flac.foo', srcfile='t.wav', format='flac')
