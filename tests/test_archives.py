@@ -445,4 +445,4 @@ class TestArchives (ArchiveTest):
         self.program = 'mac'
         self.archive_extract('t.ape')
         self.archive_test('t.ape')
-        self.archive_create('t.ape', singlefile=True)
+        self.archive_create('t.ape', srcfile="t.wav")

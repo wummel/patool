@@ -74,11 +74,13 @@ class ArchiveTest (unittest.TestCase):
     def archive_create (self, archive, srcfile=None, singlefile=False,
             format=None, compression=None):
         """Test archive creation."""
-        if not srcfile:
+        # determine filename which is added to the archive
+        if srcfile is None:
             if singlefile:
-                srcfile = os.path.join(datadir, 'foo .txt')
+                srcfile = 'foo .txt'
             else:
-                srcfile = os.path.join(datadir, 'foo dir')
+                srcfile = 'foo dir'
+        srcfile = os.path.join(datadir, srcfile)
         # The format and compression arguments are needed for creating
         # archives with unusual file extensions.
         kwargs = dict(
