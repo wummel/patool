@@ -246,6 +246,7 @@ FileText2Mime = {
     "Zoo archive data": "application/x-zoo",
     "DMS archive data": "application/x-dms",
     "Monkey's Audio": "audio/x-ape",
+    "FLAC audio bitstream data": "audio/flac",
 }
 
 def guess_mime_file_text (file_prog, filename):

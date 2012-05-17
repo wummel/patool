@@ -121,6 +121,8 @@ class TestMime (unittest.TestCase):
         # file(1) does not recognize .shn files
         #self.mime_test_file("t.shn", "audio/x-shn", None)
         #self.mime_test_file("t.shn.foo", "audio/x-shn", None)
+        self.mime_test_file("t.flac", "audio/flac", None)
+        self.mime_test_file("t.flac.foo", "audio/flac", None)
 
     @needs_program('file')
     @needs_program('lzip')
@@ -190,3 +192,4 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.dms", "application/x-dms", None)
         self.mime_test_mimedb("t.ape", "audio/x-ape", None)
         self.mime_test_mimedb("t.shn", "audio/x-shn", None)
+        self.mime_test_mimedb("t.flac", "audio/flac", None)
