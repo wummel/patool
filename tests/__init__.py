@@ -72,19 +72,19 @@ class ArchiveTest (unittest.TestCase):
         patoolib._handle_archive(archive, 'test', program=self.program, verbose=True)
 
     def archive_create (self, archive, srcfile=None, singlefile=False,
-            format=None, encoding=None):
+            format=None, compression=None):
         """Test archive creation."""
         if not srcfile:
             if singlefile:
                 srcfile = os.path.join(datadir, 'foo .txt')
             else:
                 srcfile = os.path.join(datadir, 'foo dir')
-        # The format and encoding arguments are needed for creating
+        # The format and compression arguments are needed for creating
         # archives with unusual file extensions.
         kwargs = dict(
             program=self.program,
             format=format,
-            encoding=encoding,
+            compression=compression,
         )
         self._archive_create(archive, srcfile, kwargs)
         # create again in verbose mode

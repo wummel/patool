@@ -27,29 +27,29 @@ class TestArchives (ArchiveTest):
     @needs_codec('tar', 'gzip')
     def test_tar_gz_file (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.gz.foo', format="tar", encoding="gzip")
-        self.archive_commands('t.tgz.foo', format="tar", encoding="gzip")
+        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
 
     @needs_program('file')
     @needs_codec('tar', 'compress')
     def test_tar_z (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.Z.foo', format="tar", encoding="compress")
-        self.archive_commands('t.taz.foo', format="tar", encoding="compress")
+        self.archive_commands('t.tar.Z.foo', format="tar", compression="compress")
+        self.archive_commands('t.taz.foo', format="tar", compression="compress")
 
     @needs_program('file')
     @needs_codec('tar', 'bzip2')
     def test_tar_bz2 (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.bz2.foo', format="tar", encoding="bzip2")
-        self.archive_commands('t.tbz2.foo', format="tar", encoding="bzip2")
+        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
 
     # file(1) does not recognize .lzma files (at least not with --uncompress)
     #@needs_program('file')
     #@needs_codec('tar', 'lzma')
     #def test_tar_lzma (self):
     #    self.program = 'tar'
-    #    self.archive_commands('t.tar.lzma.foo', format="tar", encoding="lzma")
+    #    self.archive_commands('t.tar.lzma.foo', format="tar", compression="lzma")
 
     # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for achive detection
@@ -58,13 +58,13 @@ class TestArchives (ArchiveTest):
     @needs_codec('tar', 'lzip')
     def test_tar_lzip (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.lz.foo', format="tar", encoding="lzip")
+        self.archive_commands('t.tar.lz.foo', format="tar", compression="lzip")
 
     @needs_program('file')
     @needs_codec('tar', 'xz')
     def test_tar_xz (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.xz.foo', format="tar", encoding="xz")
+        self.archive_commands('t.tar.xz.foo', format="tar", compression="xz")
 
     @needs_program('file')
     @needs_program('star')
@@ -76,41 +76,41 @@ class TestArchives (ArchiveTest):
     @needs_codec('star', 'gzip')
     def test_star_gz (self):
         self.program = 'star'
-        self.archive_commands('t.tar.gz.foo', format="tar", encoding="gzip")
-        self.archive_commands('t.tgz.foo', format="tar", encoding="gzip")
+        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
 
     @needs_program('file')
     @needs_codec('star', 'compress')
     def test_star_z (self):
         self.program = 'star'
-        self.archive_commands('t.tar.Z.foo', format="tar", encoding="compress")
-        self.archive_commands('t.taz.foo', format="tar", encoding="compress")
+        self.archive_commands('t.tar.Z.foo', format="tar", compression="compress")
+        self.archive_commands('t.taz.foo', format="tar", compression="compress")
 
     @needs_program('file')
     @needs_codec('star', 'bzip2')
     def test_star_bz2 (self):
         self.program = 'star'
-        self.archive_commands('t.tar.bz2.foo', format="tar", encoding="bzip2")
-        self.archive_commands('t.tbz2.foo', format="tar", encoding="bzip2")
+        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
 
     # file(1) does not recognize .lzma files
     #@needs_program('file')
     #@needs_codec('star', 'lzma')
     #def test_star_lzma (self):
     #    self.program = 'star'
-    #    self.archive_commands('t.tar.lzma.foo', format="tar", encoding="lzma")
+    #    self.archive_commands('t.tar.lzma.foo', format="tar", compression="lzma")
 
     @needs_program('file')
     @needs_codec('star', 'lzip')
     def test_star_lzip (self):
         self.program = 'star'
-        self.archive_commands('t.tar.lz.foo', format="tar", encoding="lzip")
+        self.archive_commands('t.tar.lz.foo', format="tar", compression="lzip")
 
     @needs_program('file')
     @needs_codec('star', 'xz')
     def test_star_xz (self):
         self.program = 'star'
-        self.archive_commands('t.tar.xz.foo', format="tar", encoding="xz")
+        self.archive_commands('t.tar.xz.foo', format="tar", compression="xz")
 
     @needs_program('file')
     def test_py_tarfile_file (self):
@@ -120,14 +120,14 @@ class TestArchives (ArchiveTest):
     @needs_program('file')
     def test_py_tarfile_gz_file (self):
         self.program = 'py_tarfile'
-        self.archive_commands('t.tar.gz.foo', format="tar", encoding="gzip")
-        self.archive_commands('t.tgz.foo', format="tar", encoding="gzip")
+        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
 
     @needs_program('file')
     def test_py_tarfile_bz2 (self):
         self.program = 'py_tarfile'
-        self.archive_commands('t.tar.bz2.foo', format="tar", encoding="bzip2")
-        self.archive_commands('t.tbz2.foo', format="tar", encoding="bzip2")
+        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
 
     @needs_program('file')
     @needs_program('bzip2')
