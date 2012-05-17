@@ -28,7 +28,8 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.gz')
         self.archive_commands('t.tgz')
 
-    @needs_codec('tar', 'compress')
+    @needs_program('tar')
+    @needs_program('compress')
     def test_tar_z (self):
         self.program = 'tar'
         self.archive_commands('t.tar.Z')
@@ -47,8 +48,8 @@ class TestArchives (ArchiveTest):
 
     # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for achive detection
+    @needs_program('tar')
     @needs_program('lzip')
-    @needs_codec('tar', 'lzip')
     def test_tar_lzip (self):
         self.program = 'tar'
         self.archive_commands('t.tar.lz')
@@ -69,7 +70,8 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.gz')
         self.archive_commands('t.tgz')
 
-    @needs_codec('star', 'compress')
+    @needs_program('star')
+    @needs_program('compress')
     def test_star_z (self):
         self.program = 'star'
         self.archive_commands('t.tar.Z')
@@ -86,7 +88,8 @@ class TestArchives (ArchiveTest):
         self.program = 'star'
         self.archive_commands('t.tar.lzma')
 
-    @needs_codec('star', 'lzip')
+    @needs_program('star')
+    @needs_program('lzip')
     def test_star_lzip (self):
         self.program = 'star'
         self.archive_commands('t.tar.lz')

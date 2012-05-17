@@ -33,8 +33,8 @@ class TestConfiguration (unittest.TestCase):
                     self.assertTrue(command in patoolib.ArchiveCommands)
 
     def test_compression_programs (self):
-        self.assertEqual(set(patoolib.ArchiveCompressions),
-                         set(patoolib.CompressionPrograms.keys()))
+        self.assertTrue(set(patoolib.ArchiveCompressions).issubset(
+                         set(patoolib.ArchiveFormats)))
 
     def test_encoding_mimes (self):
         self.assertEqual(set(patoolib.ArchiveCompressions),

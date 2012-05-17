@@ -23,8 +23,8 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
 ArchiveFormats = ('7z', 'ace', 'alzip', 'ar', 'arc', 'arj', 'bzip2',
-    'cab', 'compress', 'cpio', 'deb', 'dms', 'gzip', 'lrzip', 'lzh', 'lzip', 'lzma',
-    'lzop', 'rar', 'rpm', 'rzip', 'tar', 'xz', 'zip', 'zoo')
+    'cab', 'compress', 'cpio', 'deb', 'dms', 'gzip', 'lrzip', 'lzh',
+    'lzip', 'lzma', 'lzop', 'rar', 'rpm', 'rzip', 'tar', 'xz', 'zip', 'zoo')
 
 # Supported compressions (used with tar for example)
 # Note that all compressions must also be archive formats
@@ -63,17 +63,6 @@ ArchiveMimetypes = {
     'application/x-rzip': 'rzip',
     'application/x-zoo': 'zoo',
     'application/x-dms': 'dms',
-}
-
-# List of programs supporting the given compression
-
-CompressionPrograms = {
-    'gzip': ('pigz', 'gzip'),
-    'bzip2': ('pbzip2', 'lbzip2', 'bzip2'),
-    'compress': ('compress',),
-    'lzma': ('lzma',),
-    'xz': ('xz',),
-    'lzip': ('lzip', 'clzip', 'plzip', 'pdlzip'),
 }
 
 # List of programs supporting the given archive format and command.
@@ -268,17 +257,16 @@ def find_archive_program (format, command):
     raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (command, format, ",".join(programs)))
 
 
-def find_compression_program (program, compression):
-    """Find suitable compression program and return it. Returns None if
-    no compression program could be found"""
-    if program in ('tar', 'star'):
-        for enc_program in CompressionPrograms[compression]:
-            found = util.find_program(enc_program)
-            if found:
-                return found
-    elif program == 'py_tarfile':
+def program_supports_compression (program, compression):
+    """Decide if the given program supports the compression natively.
+    @return: True iff the program supports the given compression format
+      natively, else False.
+    """
+    if program == 'py_tarfile':
         return compression in ('gzip', 'bzip2')
-    return None
+    if program in ('tar', 'star'):
+        return compression in ('gzip', 'bzip2', 'xz', 'lzma')
+    return False
 
 
 def list_formats ():
@@ -339,10 +327,17 @@ def parse_config (archive, format, compression, command, **kwargs):
                     value = program
             config[key] = value
     program = os.path.basename(config['program'])
-    if compression and not find_compression_program(program, compression):
-        msg = "cannot %s archive `%s': compression `%s' not supported by %s" % \
-              (command, archive, compression, program)
-        raise util.PatoolError(msg)
+    if compression:
+        # check if compression is supported
+        if not program_supports_compression(program, compression):
+            if command == 'create':
+                comp_command = command
+            else:
+                comp_command = 'extract'
+            comp_prog = find_archive_program(compression, comp_command)
+            if not comp_prog:
+                msg = "cannot %s archive `%s': compression `%s' not supported"
+                raise util.PatoolError(msg % (command, archive, compression))
     return config
 
 
