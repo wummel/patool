@@ -1,5 +1,5 @@
 :: Create patool Windows distribution file
-:: Copyright (C) 2010 Bastian Kleineidam
+:: Copyright (C) 2010-2012 Bastian Kleineidam
 :: This program is free software: you can redistribute it and/or modify
 :: it under the terms of the GNU General Public License as published by
 :: the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +14,8 @@
 :: along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @echo off
 set PYDIR=c:\python27
-rd build /s /q
-rd dist /s /q
-%PYDIR%\python.exe setup.py bdist_wininst
+rd /s /q build > nul
+call %~dp0\build.bat
+rd /s /q dist > nul
+%PYDIR%\python.exe setup.py py2exe
 pause
