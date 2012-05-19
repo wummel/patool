@@ -45,7 +45,9 @@ MyEmail = "calvin@users.sourceforge.net"
 # py2exe options for windows .exe packaging
 py2exe_options = dict(
     packages=["encodings"],
-    excludes=['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb', 'inspect'],
+    excludes=['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb',
+    'email', 'calendar', 'ftplib', 'httplib', 'pickle', 'optparse',
+    'rfc822'],
     # silence py2exe error about not finding msvcp90.dll
     dll_excludes=['MSVCP90.dll'],
     compressed=1,
