@@ -42,11 +42,10 @@ AppVersion = "0.17"
 MyName = "Bastian Kleineidam"
 MyEmail = "calvin@users.sourceforge.net"
 
-# basic excludes for py2exe and py2app
 # py2exe options for windows .exe packaging
 py2exe_options = dict(
     packages=["encodings"],
-    excludes=['doctest', 'unittest', 'optcomplete', 'Tkinter'],
+    excludes=['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb', 'inspect'],
     # silence py2exe error about not finding msvcp90.dll
     dll_excludes=['MSVCP90.dll'],
     compressed=1,
