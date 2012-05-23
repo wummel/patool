@@ -16,6 +16,7 @@
 """Archive commands for the zipfile Python module."""
 from patoolib import util
 import zipfile
+import os
 
 READ_SIZE_BYTES = 1024*1024
 
@@ -59,7 +60,18 @@ def create_zip (archive, compression, cmd, *args, **kwargs):
     zfile = zipfile.ZipFile(archive, 'w')
     try:
         for filename in args:
-            zfile.write(filename)
+            if os.path.isdir(filename):
+                write_directory(zfile, filename)
+            else:
+                zfile.write(filename)
     finally:
         zfile.close()
     return None
+
+
+def write_directory (zfile, directory):
+    """Write recursively all directories and filenames to zipfile instance."""
+    for dirpath, dirnames, filenames in os.walk(directory):
+        zfile.write(dirpath)
+        for filename in filenames:
+            zfile.write(os.path.join(dirpath, filename))
