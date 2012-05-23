@@ -283,10 +283,8 @@ def program_supports_compression (program, compression):
     @return: True iff the program supports the given compression format
       natively, else False.
     """
-    if program == 'py_tarfile':
+    if program in ('tar', 'star', 'py_tarfile'):
         return compression in ('gzip', 'bzip2')
-    if program in ('tar', 'star'):
-        return compression in ('gzip', 'bzip2', 'xz', 'lzma')
     return False
 
 
