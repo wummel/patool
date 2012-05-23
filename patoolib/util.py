@@ -22,38 +22,58 @@ import tempfile
 import traceback
 from distutils.spawn import find_executable
 
-mimedb = mimetypes.MimeTypes(strict=False)
-# add missing encodings and mimetypes
-mimedb.encodings_map['.bz2'] = 'bzip2'
-mimedb.encodings_map['.lzma'] = 'lzma'
-mimedb.encodings_map['.xz'] = 'xz'
-mimedb.encodings_map['.lz'] = 'lzip'
-mimedb.suffix_map['.tbz2'] = '.tar.bz2'
-mimedb.add_type('application/x-lzop', '.lzo', strict=False)
-mimedb.add_type('application/x-arj', '.arj', strict=False)
-mimedb.add_type('application/x-lzma', '.lzma', strict=False)
-mimedb.add_type('application/x-xz', '.xz', strict=False)
-mimedb.add_type('application/java-archive', '.jar', strict=False)
-mimedb.add_type('application/x-rar', '.rar', strict=False)
-mimedb.add_type('application/x-7z-compressed', '.7z', strict=False)
-mimedb.add_type('application/x-cab', '.cab', strict=False)
-mimedb.add_type('application/x-rpm', '.rpm', strict=False)
-mimedb.add_type('application/x-debian-package', '.deb', strict=False)
-mimedb.add_type('application/x-ace', '.ace', strict=False)
-# Since .a is already a common type, strict=True must be used.
-mimedb.add_type('application/x-archive', '.a', strict=True)
-mimedb.add_type('application/x-alzip', '.alz', strict=False)
-mimedb.add_type('application/x-arc', '.arc', strict=False)
-mimedb.add_type('application/x-lrzip', '.lrz', strict=False)
-mimedb.add_type('application/x-lha', '.lha', strict=False)
-mimedb.add_type('application/x-lzh', '.lzh', strict=False)
-mimedb.add_type('application/x-rzip', '.rz', strict=False)
-mimedb.add_type('application/x-zoo', '.zoo', strict=False)
-mimedb.add_type('application/x-dms', '.dms', strict=False)
-mimedb.add_type('application/x-zip-compressed', '.crx', strict=False)
-mimedb.add_type('audio/x-ape', '.ape', strict=False)
-mimedb.add_type('audio/x-shn', '.shn', strict=False)
-mimedb.add_type('audio/flac', '.flac', strict=False)
+# internal MIME database
+mimedb = None
+
+def init_mimedb():
+    """Initialize the internal MIME database."""
+    global mimedb
+    try:
+        mimedb = mimetypes.MimeTypes(strict=False)
+    except StandardError, msg:
+        log_error("could not initialize MIME database: %s" % msg)
+        return
+    add_mimedb_data(mimedb)
+
+
+def add_mimedb_data(mimedb):
+    """Add missing encodings and mimetypes to MIME database."""
+    mimedb.encodings_map['.bz2'] = 'bzip2'
+    mimedb.encodings_map['.lzma'] = 'lzma'
+    mimedb.encodings_map['.xz'] = 'xz'
+    mimedb.encodings_map['.lz'] = 'lzip'
+    mimedb.suffix_map['.tbz2'] = '.tar.bz2'
+    add_mimetype(mimedb, 'application/x-lzop', '.lzo')
+    add_mimetype(mimedb, 'application/x-arj', '.arj')
+    add_mimetype(mimedb, 'application/x-lzma', '.lzma')
+    add_mimetype(mimedb, 'application/x-xz', '.xz')
+    add_mimetype(mimedb, 'application/java-archive', '.jar')
+    add_mimetype(mimedb, 'application/x-rar', '.rar')
+    add_mimetype(mimedb, 'application/x-7z-compressed', '.7z')
+    add_mimetype(mimedb, 'application/x-cab', '.cab')
+    add_mimetype(mimedb, 'application/x-rpm', '.rpm')
+    add_mimetype(mimedb, 'application/x-debian-package', '.deb')
+    add_mimetype(mimedb, 'application/x-ace', '.ace')
+    add_mimetype(mimedb, 'application/x-archive', '.a')
+    add_mimetype(mimedb, 'application/x-alzip', '.alz')
+    add_mimetype(mimedb, 'application/x-arc', '.arc')
+    add_mimetype(mimedb, 'application/x-lrzip', '.lrz')
+    add_mimetype(mimedb, 'application/x-lha', '.lha')
+    add_mimetype(mimedb, 'application/x-lzh', '.lzh')
+    add_mimetype(mimedb, 'application/x-rzip', '.rz')
+    add_mimetype(mimedb, 'application/x-zoo', '.zoo')
+    add_mimetype(mimedb, 'application/x-dms', '.dms')
+    add_mimetype(mimedb, 'application/x-zip-compressed', '.crx')
+    add_mimetype(mimedb, 'audio/x-ape', '.ape')
+    add_mimetype(mimedb, 'audio/x-shn', '.shn')
+    add_mimetype(mimedb, 'audio/flac', '.flac')
+
+
+def add_mimetype(mimedb, mimetype, extension):
+    """Add or replace a mimetype to be used with the given extension."""
+    # If extension is already a common type, strict=True must be used.
+    strict = extension in mimedb.types_map[True]
+    mimedb.add_type(mimetype, extension, strict=strict)
 
 
 class PatoolError (StandardError):
@@ -145,7 +165,9 @@ def guess_mime_mimedb (filename):
     """Guess MIME type from given filename.
     @return: tuple (mime, encoding)
     """
-    mime, encoding = mimedb.guess_type(filename, strict=False)
+    mime, encoding = None, None
+    if mimedb is not None:
+        mime, encoding = mimedb.guess_type(filename, strict=False)
     from patoolib import ArchiveMimetypes, ArchiveCompressions
     if mime not in ArchiveMimetypes and encoding in ArchiveCompressions:
         # Files like 't.txt.gz' are recognized with encoding as format, and
@@ -444,3 +466,5 @@ def is_same_file (filename1, filename2):
 def is_same_filename (filename1, filename2):
     """Check if filename1 and filename2 are the same filename."""
     return os.path.realpath(filename1) == os.path.realpath(filename2)
+
+init_mimedb()
