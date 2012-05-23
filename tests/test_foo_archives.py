@@ -348,6 +348,11 @@ class TestArchives (ArchiveTest):
         self.program = 'cpio'
         self.archive_list('t.cpio.foo')
         self.archive_extract('t.cpio.foo')
+
+    @needs_program('file')
+    @needs_program('cpio')
+    @needs_program('7z')
+    def test_cpio (self):
         self.archive_create('t.cpio.foo', format="cpio")
 
     @needs_program('file')
