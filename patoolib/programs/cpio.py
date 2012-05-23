@@ -30,7 +30,7 @@ def extract_cpio (archive, compression, cmd, **kwargs):
 
 def list_cpio (archive, compression, cmd, **kwargs):
     """List a CPIO archive."""
-    cmdlist = [cmd, '-t']
+    cmdlist = [cmd, '-i', '-t']
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['-F', archive])
