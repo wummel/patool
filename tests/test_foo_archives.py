@@ -346,14 +346,13 @@ class TestArchives (ArchiveTest):
     @needs_program('cpio')
     def test_cpio (self):
         self.program = 'cpio'
-        self.archive_list('t.cpio.foo')
-        self.archive_extract('t.cpio.foo')
+        self.archive_commands('t.cpio.foo', format="cpio")
 
     @needs_program('file')
-    @needs_program('cpio')
-    @needs_program('7z')
-    def test_cpio (self):
-        self.archive_create('t.cpio.foo', format="cpio")
+    @needs_program('bsdcpio')
+    def test_bsdcpio (self):
+        self.program = 'bsdcpio'
+        self.archive_commands('t.cpio.foo', format="cpio")
 
     @needs_program('file')
     @needs_program('unace')

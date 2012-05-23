@@ -168,10 +168,10 @@ ArchivePrograms = {
         'test': ('7z',),
     },
     'cpio': {
-        'extract': ('cpio', '7z'),
-        'list': ('cpio', '7z'),
-        'test': ('7z',),
-        'create': ('cpio',),
+        'extract': ('cpio', 'bsdcpio', '7z'),
+        'list': ('cpio', 'bsdcpio', '7z'),
+        'test': ('cpio', 'bsdcpio', '7z',),
+        'create': ('cpio', 'bsdcpio'),
     },
     'rpm': {
         'extract': ('rpm2cpio', '7z'),

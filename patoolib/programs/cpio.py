@@ -22,7 +22,7 @@ def extract_cpio (archive, compression, cmd, **kwargs):
     """Extract a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
         '--preserve-modification-time']
-    if sys.platform != 'darwin':
+    if sys.platform.startswith('linux') and not cmd.endswith('bsdcpio'):
         cmdlist.extend(['--no-absolute-filenames',
         '--force-local', '--nonmatching', r'"*\.\.*"'])
     if kwargs['verbose']:
