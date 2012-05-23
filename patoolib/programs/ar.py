@@ -14,13 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the ar program."""
+import os
 
 def extract_ar (archive, compression, cmd, **kwargs):
     """Extract a AR archive."""
     opts = 'x'
     if kwargs['verbose']:
         opts += 'v'
-    return [cmd, opts, archive, kwargs['outdir']]
+    cmdlist = [cmd, opts, os.path.abspath(archive)]
+    return (cmdlist, {'cwd': kwargs['outdir']})
 
 def list_ar (archive, compression, cmd, **kwargs):
     """List a AR archive."""
