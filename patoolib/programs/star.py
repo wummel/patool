@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the star program."""
+from .tar import add_tar_opts as add_star_opts
 
 def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive."""
@@ -38,19 +39,3 @@ def create_tar (archive, compression, cmd, *args, **kwargs):
     cmdlist.append("file=%s" % archive)
     cmdlist.extend(args)
     return cmdlist
-
-def add_star_opts (cmdlist, compression, verbose):
-    """Add default options for the star program."""
-    # Note that star autodetects compression compression, but displays a warning
-    # which we want to avoid.
-    if compression == 'gzip':
-        cmdlist.append('-z')
-    elif compression == 'compress':
-        cmdlist.append('-Z')
-    elif compression == 'bzip2':
-        cmdlist.append('-bz')
-    elif compression in ('lzma', 'xz', 'lzip'):
-        # use compress-program option
-        cmdlist.append('compress-program=%s' % compression)
-    if verbose:
-        cmdlist.append('-v')
