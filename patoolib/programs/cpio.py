@@ -15,13 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the cpio program."""
 import os
+import sys
 from patoolib import util
 
 def extract_cpio (archive, compression, cmd, **kwargs):
     """Extract a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
-        '--preserve-modification-time', '--no-absolute-filenames',
-        '--force-local', '--nonmatching', r'"*\.\.*"']
+        '--preserve-modification-time']
+    if sys.platform != 'darwin':
+        cmdlist.extend(['--no-absolute-filenames',
+        '--force-local', '--nonmatching', r'"*\.\.*"'])
     if kwargs['verbose']:
         cmdlist.append('-v')
     cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
