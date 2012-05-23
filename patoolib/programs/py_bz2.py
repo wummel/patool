@@ -27,10 +27,9 @@ def extract_bzip2 (archive, compression, cmd, **kwargs):
     """Extract a BZIP2 archive with the bz2 Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    # XXX honor outdir
     if verbose:
         util.log_info('extracting %s...' % archive)
-    targetname = util.get_single_outfile(kwargs['outdir'], archive)
+    targetname = util.get_single_outfile(outdir, archive)
     bz2file = bz2.BZ2File(archive)
     try:
         targetfile = open(targetname, 'wb')

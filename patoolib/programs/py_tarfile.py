@@ -38,12 +38,11 @@ def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive with the tarfile Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    # XXX honor outdir
     if verbose:
         util.log_info('extracting %s...' % archive)
     tfile = tarfile.open(archive)
     try:
-        tfile.extractall()
+        tfile.extractall(path=outdir)
     finally:
         tfile.close()
     if verbose:

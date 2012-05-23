@@ -25,10 +25,9 @@ def extract_gzip (archive, compression, cmd, **kwargs):
     """Extract a GZIP archive with the gzip Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    # XXX honor outdir
     if verbose:
         util.log_info('extracting %s...' % archive)
-    targetname = util.get_single_outfile(kwargs['outdir'], archive)
+    targetname = util.get_single_outfile(outdir, archive)
     gzipfile = gzip.GzipFile(archive)
     try:
         targetfile = open(targetname, 'wb')

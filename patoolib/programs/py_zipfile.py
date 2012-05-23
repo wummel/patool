@@ -39,12 +39,11 @@ def extract_zip (archive, compression, cmd, **kwargs):
     """Extract a ZIP archive with the zipfile Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    # XXX honor outdir
     if verbose:
         util.log_info('extracting %s...' % archive)
     zfile = zipfile.ZipFile(archive)
     try:
-        zfile.extractall()
+        zfile.extractall(outdir)
     finally:
         zfile.close()
     if verbose:
