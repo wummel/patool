@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the GNU tar program."""
+import os
+
 
 def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive."""
@@ -40,12 +42,15 @@ def create_tar (archive, compression, cmd, *args, **kwargs):
     return cmdlist
 
 def add_tar_opts (cmdlist, compression, verbose):
+    progname = os.path.basename(cmdlist[0])
     if compression == 'gzip':
         cmdlist.append('-z')
     elif compression == 'compress':
         cmdlist.append('-Z')
     elif compression == 'bzip2':
         cmdlist.append('-j')
+    elif compression in ('lzma', 'xz') and progname == 'bsdtar':
+        cmdlist.append('--%s' % compression)
     elif compression in ('lzma', 'xz', 'lzip'):
         # use the compression name as program name since
         # tar is picky which programs it can use

@@ -67,6 +67,55 @@ class TestArchives (ArchiveTest):
         self.archive_commands('t.tar.xz.foo', format="tar", compression="xz")
 
     @needs_program('file')
+    @needs_program('bsdtar')
+    def test_bsdtar_file (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.foo', format="tar")
+
+    @needs_program('file')
+    @needs_codec('bsdtar', 'gzip')
+    def test_bsdtar_gz_file (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
+
+    @needs_program('file')
+    @needs_codec('bsdtar', 'compress')
+    def test_bsdtar_z (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.Z.foo', format="tar", compression="compress")
+        self.archive_commands('t.taz.foo', format="tar", compression="compress")
+
+    @needs_program('file')
+    @needs_codec('bsdtar', 'bzip2')
+    def test_bsdtar_bz2 (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
+
+    # file(1) does not recognize .lzma files (at least not with --uncompress)
+    #@needs_program('file')
+    #@needs_codec('bsdtar', 'lzma')
+    #def test_bsdtar_lzma (self):
+    #    self.program = 'bsdtar'
+    #    self.archive_commands('t.tar.lzma.foo', format="tar", compression="lzma")
+
+    # even though clzip would support extracting .lz files, the
+    # file(1) --uncompress command does not use it for achive detection
+    @needs_program('lzip')
+    @needs_program('file')
+    @needs_codec('bsdtar', 'lzip')
+    def test_bsdtar_lzip (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.lz.foo', format="tar", compression="lzip")
+
+    @needs_program('file')
+    @needs_codec('bsdtar', 'xz')
+    def test_bsdtar_xz (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.xz.foo', format="tar", compression="xz")
+
+    @needs_program('file')
     @needs_program('star')
     def test_star (self):
         self.program = 'star'

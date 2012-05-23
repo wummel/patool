@@ -99,6 +99,48 @@ class TestArchives (ArchiveTest):
         self.program = 'star'
         self.archive_commands('t.tar.xz')
 
+    @needs_program('bsdtar')
+    def test_bsdtar (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar')
+
+    @needs_codec('bsdtar', 'gzip')
+    def test_bsdtar_gz (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.gz')
+        self.archive_commands('t.tgz')
+
+    @needs_program('bsdtar')
+    @needs_program('compress')
+    def test_bsdtar_z (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.Z')
+        self.archive_commands('t.taz')
+
+    @needs_codec('bsdtar', 'bzip2')
+    def test_bsdtar_bz2 (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.bz2')
+        self.archive_commands('t.tbz2')
+
+    @needs_codec('bsdtar', 'lzma')
+    def test_bsdtar_lzma (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.lzma')
+
+    # even though clzip would support extracting .lz files, the
+    # file(1) --uncompress command does not use it for achive detection
+    @needs_program('bsdtar')
+    @needs_program('lzip')
+    def test_bsdtar_lzip (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.lz')
+
+    @needs_codec('bsdtar', 'xz')
+    def test_bsdtar_xz (self):
+        self.program = 'bsdtar'
+        self.archive_commands('t.tar.xz')
+
     def test_py_tarfile (self):
         self.program = 'py_tarfile'
         self.archive_commands('t.tar')

@@ -112,7 +112,7 @@ ArchivePrograms = {
         'list': ('py_echo',),
     },
     'tar': {
-        None: ('tar', 'star', 'py_tarfile'),
+        None: ('tar', 'star', 'bsdtar', 'py_tarfile'),
     },
     'zip': {
         None: ('7z', '7za', 'py_zipfile'),
@@ -283,7 +283,7 @@ def program_supports_compression (program, compression):
     @return: True iff the program supports the given compression format
       natively, else False.
     """
-    if program in ('tar', 'star', 'py_tarfile'):
+    if program in ('tar', 'star', 'bsdtar', 'py_tarfile'):
         return compression in ('gzip', 'bzip2')
     return False
 
