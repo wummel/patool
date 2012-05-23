@@ -25,7 +25,10 @@ import os
 import shutil
 import glob
 import subprocess
-from distutils.core import setup
+try:
+    from cx_Freeze import setup, Executable
+except ImportError:
+    from distutils.core import setup
 try:
     # py2exe monkey-patches the distutils.core.Distribution class
     # So we need to import it before importing the Distribution class
@@ -34,7 +37,12 @@ try:
 except ImportError:
     # py2exe is not installed
     has_py2exe = False
-from distutils.core import Distribution
+try:
+    from cx_Freeze.dist import Distribution
+    executables = [Executable("patool")]
+except ImportError:
+    from distutils.core import Distribution
+    executables = None
 from distutils import util
 
 AppName = "patool"
@@ -42,16 +50,22 @@ AppVersion = "0.17"
 MyName = "Bastian Kleineidam"
 MyEmail = "calvin@users.sourceforge.net"
 
-# py2exe options for windows .exe packaging
+py_excludes = ['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb',
+  'email', 'calendar', 'ftplib', 'httplib', 'pickle', 'optparse','rfc822'
+]
+# py2exe options for Windows packaging
 py2exe_options = dict(
     packages=["encodings"],
-    excludes=['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb',
-    'email', 'calendar', 'ftplib', 'httplib', 'pickle', 'optparse',
-    'rfc822'],
+    excludes=py_excludes,
     # silence py2exe error about not finding msvcp90.dll
     dll_excludes=['MSVCP90.dll'],
     compressed=1,
     optimize=2,
+)
+# cx_Freeze for Linux RPM packaging
+cxfreeze_options = dict(
+    packages=["encodings"],
+    excludes=py_excludes,
 )
 
 # Microsoft Visual C++ runtime version (tested with Python 2.7.2)
@@ -226,7 +240,7 @@ except ImportError:
         pass
 
 
-setup (
+args = dict(
     name = AppName,
     version = AppVersion,
     description = "portable command line archive file manager",
@@ -260,7 +274,7 @@ installed.
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],
-    keywords = "archive,manager",
+    keywords = "archiver,compression,commandline",
     classifiers = [
         'Environment :: Console',
         'Topic :: System :: Archiving',
@@ -275,5 +289,9 @@ installed.
     },
     options = {
         "py2exe": py2exe_options,
+        "build_exe": cxfreeze_options,
     },
 )
+if executables:
+    args["executables"] = executables
+setup(**args)

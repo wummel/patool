@@ -7,6 +7,7 @@
 * Generate standalone Windows installer.
 * Initialize the internal MIME database correct on all platforms.
 * Improved option compatibility for the ar, cpio and tar programs.
+* Support RPM installer generation with cx_Freeze.
 
 
 0.16 "Game of thrones" (released 12.5.2012)
