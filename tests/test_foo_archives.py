@@ -212,7 +212,7 @@ class TestArchives (ArchiveTest):
     def test_py_echo (self):
         self.program = 'py_echo'
         self.archive_list('t.bz2.foo')
-        self.archive_list('t.Z.foo')
+        self.archive_list('t.txt.Z.foo')
         # file(1) does not recognize .lzma files
         #self.archive_list('t.lzma.foo')
         self.archive_list('t.txt.lz.foo')
@@ -230,7 +230,7 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.zip.foo')
         self.archive_list('t.zip.foo')
         self.archive_test('t.zip.foo')
-        self.archive_extract('t.jar.foo')
+        self.archive_extract('t.jar.foo', contents=None)
         self.archive_list('t.jar.foo')
         self.archive_test('t.jar.foo')
 
@@ -249,31 +249,28 @@ class TestArchives (ArchiveTest):
     @needs_program('gzip')
     def test_gzip (self):
         self.program = 'gzip'
-        self.archive_commands('t.gz.foo', format="gzip", singlefile=True)
         self.archive_commands('t.txt.gz.foo', format="gzip", singlefile=True)
-        self.archive_extract('t.Z.foo')
+        self.archive_extract('t.txt.Z.foo')
 
     @needs_program('file')
     @needs_program('gzip')
     def test_py_gzip (self):
         self.program = 'py_gzip'
-        self.archive_extract('t.gz.foo')
         self.archive_extract('t.txt.gz.foo')
         # gzip is used to test the created archive
-        self.archive_create('t.gz.foo', format="gzip", singlefile=True)
         self.archive_create('t.txt.gz.foo', format="gzip", singlefile=True)
 
     @needs_program('file')
     @needs_program('uncompress.real')
     def test_uncompress (self):
         self.program = 'uncompress.real'
-        self.archive_extract('t.Z.foo')
+        self.archive_extract('t.txt.Z.foo')
 
     @needs_program('file')
     @needs_program('compress')
     def test_compress (self):
         self.program = 'compress'
-        self.archive_create('t.Z.foo', format="compress", singlefile=True)
+        self.archive_create('t.txt.Z.foo', format="compress", singlefile=True)
 
     @needs_program('file')
     @needs_program('7z')
@@ -281,28 +278,28 @@ class TestArchives (ArchiveTest):
         self.program = '7z'
         self.archive_commands('t.7z.foo', format="7z")
         self.archive_commands('t.zip.foo', format="zip")
-        self.archive_list('t.gz.foo')
-        self.archive_list('t.bz2.foo')
+        self.archive_list('t.txt.gz.foo')
+        self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.jar.foo')
-        self.archive_list('t.Z.foo')
+        self.archive_list('t.txt.Z.foo')
         self.archive_list('t.cab.foo')
         self.archive_list('t.arj.foo')
         self.archive_list('t.cpio.foo')
         self.archive_list('t.rpm.foo')
         self.archive_list('t.deb.foo')
-        self.archive_extract('t.gz.foo')
-        self.archive_extract('t.bz2.foo')
-        self.archive_extract('t.jar.foo')
-        self.archive_extract('t.Z.foo')
+        self.archive_extract('t.txt.gz.foo')
+        self.archive_extract('t.txt.bz2.foo')
+        self.archive_extract('t.jar.foo', contents=None)
+        self.archive_extract('t.txt.Z.foo')
         self.archive_extract('t.cab.foo')
         self.archive_extract('t.arj.foo')
         self.archive_extract('t.cpio.foo')
-        self.archive_extract('t.rpm.foo')
-        self.archive_extract('t.deb.foo')
-        self.archive_test('t.gz.foo')
-        self.archive_test('t.bz2.foo')
+        self.archive_extract('t.rpm.foo', contents=None)
+        self.archive_extract('t.deb.foo', contents=None)
+        self.archive_test('t.txt.gz.foo')
+        self.archive_test('t.txt.bz2.foo')
         self.archive_test('t.jar.foo')
-        self.archive_test('t.Z.foo')
+        self.archive_test('t.txt.Z.foo')
         self.archive_test('t.cab.foo')
         self.archive_test('t.arj.foo')
         self.archive_test('t.cpio.foo')
@@ -315,28 +312,28 @@ class TestArchives (ArchiveTest):
         self.program = '7za'
         self.archive_commands('t.7z.foo', format="7z")
         self.archive_commands('t.zip.foo', format="zip")
-        self.archive_list('t.gz.foo')
-        self.archive_list('t.bz2.foo')
+        self.archive_list('t.txt.gz.foo')
+        self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.jar.foo')
-        self.archive_list('t.Z.foo')
+        self.archive_list('t.txt.Z.foo')
         self.archive_list('t.cab.foo')
         #self.archive_list('t.arj.foo')
         #self.archive_list('t.cpio.foo')
         self.archive_list('t.rpm.foo')
         #self.archive_list('t.deb.foo')
-        self.archive_extract('t.gz.foo')
-        self.archive_extract('t.bz2.foo')
-        self.archive_extract('t.jar.foo')
-        self.archive_extract('t.Z.foo')
+        self.archive_extract('t.txt.gz.foo')
+        self.archive_extract('t.txt.bz2.foo')
+        self.archive_extract('t.jar.foo', contents=None)
+        self.archive_extract('t.txt.Z.foo')
         self.archive_extract('t.cab.foo')
         #self.archive_extract('t.arj.foo')
         #self.archive_extract('t.cpio.foo')
-        #self.archive_extract('t.rpm.foo')
-        #self.archive_extract('t.deb.foo')
-        self.archive_test('t.gz.foo')
-        self.archive_test('t.bz2.foo')
+        #self.archive_extract('t.rpm.foo', contents=None)
+        #self.archive_extract('t.deb.foo', contents=None)
+        self.archive_test('t.txt.gz.foo')
+        self.archive_test('t.txt.bz2.foo')
         self.archive_test('t.jar.foo')
-        self.archive_test('t.Z.foo')
+        self.archive_test('t.txt.Z.foo')
         self.archive_test('t.cab.foo')
         #self.archive_test('t.arj.foo')
         #self.archive_test('t.cpio.foo')
@@ -426,14 +423,14 @@ class TestArchives (ArchiveTest):
     @needs_program('cpio')
     def test_rpm_extract (self):
         self.program = 'rpm2cpio'
-        self.archive_extract('t.rpm.foo')
+        self.archive_extract('t.rpm.foo', contents=None)
 
     @needs_program('file')
     @needs_program('dpkg-deb')
     def test_dpkg (self):
         self.program = 'dpkg'
         self.archive_list('t.deb.foo')
-        self.archive_extract('t.deb.foo')
+        self.archive_extract('t.deb.foo', contents=None)
         self.archive_test('t.deb.foo')
 
     @needs_program('file')
