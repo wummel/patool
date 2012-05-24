@@ -182,36 +182,36 @@ class TestArchives (ArchiveTest):
     @needs_program('bzip2')
     def test_bzip2 (self):
         self.program = 'bzip2'
-        self.archive_extract('t.bz2.foo')
-        self.archive_test('t.bz2.foo')
-        self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
+        self.archive_extract('t.txt.bz2.foo')
+        self.archive_test('t.txt.bz2.foo')
+        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
     def test_py_bz2 (self):
         self.program = 'py_bz2'
-        self.archive_extract('t.bz2.foo')
-        self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
+        self.archive_extract('t.txt.bz2.foo')
+        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
     @needs_program('pbzip2')
     def test_pbzip2 (self):
         self.program = 'pbzip2'
-        self.archive_extract('t.bz2.foo')
-        self.archive_test('t.bz2.foo')
-        self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
+        self.archive_extract('t.txt.bz2.foo')
+        self.archive_test('t.txt.bz2.foo')
+        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
     @needs_program('lbzip2')
     def test_lbzip2 (self):
         self.program = 'lbzip2'
-        self.archive_extract('t.bz2.foo')
-        self.archive_test('t.bz2.foo')
-        self.archive_create('t.bz2.foo', format="bzip2", singlefile=True)
+        self.archive_extract('t.txt.bz2.foo')
+        self.archive_test('t.txt.bz2.foo')
+        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
     def test_py_echo (self):
         self.program = 'py_echo'
-        self.archive_list('t.bz2.foo')
+        self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.txt.Z.foo')
         # file(1) does not recognize .lzma files
         #self.archive_list('t.lzma.foo')
