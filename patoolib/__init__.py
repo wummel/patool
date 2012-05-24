@@ -99,11 +99,10 @@ ArchivePrograms = {
         'list': ('nomarch',),
     },
     'bzip2': {
-        None: ('7z', '7za'),
-        'extract': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
-        'test': ('pbzip2', 'lbzip2', 'bzip2'),
+        'extract': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za', 'py_bz2'),
+        'test': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
         'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
-        'list': ('py_echo',),
+        'list': ('py_echo', '7z', '7za'),
     },
     'flac': {
         'extract': ('flac',),
@@ -441,7 +440,9 @@ def check_archive_arguments (archive, command, *args):
 
 
 def _handle_archive (archive, command, *args, **kwargs):
-    """Handle archive command; raising PatoolError on errors."""
+    """Handle archive command; raising PatoolError on errors.
+    @return: output directory if command is 'extract', else None
+    """
     check_archive_arguments(archive, command, *args)
     format, compression = kwargs.get("format"), kwargs.get("compression")
     if format is None:
@@ -474,7 +475,7 @@ def _handle_archive (archive, command, *args, **kwargs):
         cmdlist = get_archive_cmdlist(archive, compression, program, *args, **cmd_kwargs)
         if cmdlist:
             # an empty command list means the get_archive_cmdlist() function
-            # already handled the command (eg. when it's a builting Python
+            # already handled the command (eg. when it's a builtin Python
             # function)
             run_archive_cmdlist(cmdlist)
         if command == 'extract':
