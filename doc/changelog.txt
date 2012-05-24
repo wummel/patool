@@ -5,6 +5,7 @@
 * Added support for flac handling FLAC (.flac) files.
 * Added support for the BSD cpio and tar programs.
 * Added support for lhasa handling LZH (.lzh, .lha) files.
+* Added support for lcap handling CAB (.cab) files.
 * Generate standalone Windows .exe and Linux .rpm installer.
 * Initialize the internal MIME database correct on all platforms.
 * Improved option compatibility for the ar, cpio and tar programs.

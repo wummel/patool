@@ -169,6 +169,8 @@ class ArchiveTest (unittest.TestCase):
             elif self.program in ('rzip', 'shorten'):
                 program = 'py_echo'
                 command = 'list'
+            elif self.program == 'lcab':
+                program = 'cabextract'
             patoolib._handle_archive(archive, command, program=program)
         finally:
             os.chdir(basedir)

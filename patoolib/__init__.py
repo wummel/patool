@@ -104,6 +104,12 @@ ArchivePrograms = {
         'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
         'list': ('py_echo', '7z', '7za'),
     },
+    'cab': {
+        'extract': ('cabextract', '7z', 'orange'),
+        'create': ('lcab',),
+        'list': ('cabextract', '7z'),
+        'test': ('cabextract', '7z'),
+    },
     'flac': {
         'extract': ('flac',),
         'test': ('flac',),
@@ -155,11 +161,6 @@ ArchivePrograms = {
         'extract': ('unrar', '7z'),
         'list': ('unrar', '7z'),
         'test': ('unrar', '7z'),
-    },
-    'cab': {
-        'extract': ('cabextract', '7z', 'orange'),
-        'list': ('cabextract', '7z'),
-        'test': ('cabextract', '7z'),
     },
     'arj': {
         None: ('arj',),
