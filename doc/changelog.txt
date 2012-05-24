@@ -4,10 +4,10 @@
 * Added support for shorten handling SHN (.shn) files.
 * Added support for flac handling FLAC (.flac) files.
 * Added support for the BSD cpio and tar programs.
-* Generate standalone Windows installer.
+* Added support for lhasa handling LZH (.lzh, .lha) files.
+* Generate standalone Windows .exe and Linux .rpm installer.
 * Initialize the internal MIME database correct on all platforms.
 * Improved option compatibility for the ar, cpio and tar programs.
-* Support RPM installer generation with cx_Freeze.
 
 
 0.16 "Game of thrones" (released 12.5.2012)

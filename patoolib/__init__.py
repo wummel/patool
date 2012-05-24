@@ -128,6 +128,7 @@ ArchivePrograms = {
     },
     'lzh': {
         None: ('lha',),
+        'extract': ('lhasa',),
     },
     'lzip': {
         'extract': ('plzip', 'lzip', 'clzip', 'pdlzip'),
