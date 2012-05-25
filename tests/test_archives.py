@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from . import ArchiveTest, needs_os, needs_program, needs_codec, ContentSet
+from . import ArchiveTest, needs_os, needs_program, needs_codec, Content
 
 class TestArchives (ArchiveTest):
 
@@ -158,28 +158,28 @@ class TestArchives (ArchiveTest):
     @needs_program('bzip2')
     def test_bzip2 (self):
         self.program = 'bzip2'
-        self.archive_extract('t.txt.bz2', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         self.archive_test('t.txt.bz2')
         self.archive_create('t.txt.bz2', singlefile=True)
 
     @needs_program('bzip2')
     def test_py_bz2 (self):
         self.program = 'py_bz2'
-        self.archive_extract('t.txt.bz2', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         # bzip2 is used to test the created archive
         self.archive_create('t.txt.bz2', singlefile=True)
 
     @needs_program('pbzip2')
     def test_pbzip2 (self):
         self.program = 'pbzip2'
-        self.archive_extract('t.txt.bz2', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         self.archive_test('t.txt.bz2')
         self.archive_create('t.txt.bz2', singlefile=True)
 
     @needs_program('lbzip2')
     def test_lbzip2 (self):
         self.program = 'lbzip2'
-        self.archive_extract('t.txt.bz2', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         self.archive_test('t.txt.bz2')
         self.archive_create('t.txt.bz2', singlefile=True)
 
@@ -198,10 +198,10 @@ class TestArchives (ArchiveTest):
     @needs_program('unzip')
     def test_unzip (self):
         self.program = 'unzip'
-        self.archive_extract('t.zip', contents=None)
+        self.archive_extract('t.zip', check=None)
         self.archive_list('t.zip')
         self.archive_test('t.zip')
-        self.archive_extract('t.jar', contents=None)
+        self.archive_extract('t.jar', check=None)
         self.archive_list('t.jar')
         self.archive_test('t.jar')
 
@@ -218,12 +218,12 @@ class TestArchives (ArchiveTest):
     def test_gzip (self):
         self.program = 'gzip'
         self.archive_commands('t.txt.gz', singlefile=True)
-        self.archive_extract('t.txt.Z', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.Z', check=Content.Singlefile)
 
     @needs_program('gzip')
     def test_py_gzip (self):
         self.program = 'py_gzip'
-        self.archive_extract('t.txt.gz', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.gz', check=Content.Singlefile)
         # gzip is used to test the created archive
         self.archive_create('t.txt.gz', singlefile=True)
 
@@ -235,7 +235,7 @@ class TestArchives (ArchiveTest):
     @needs_program('uncompress.real')
     def test_uncompress (self):
         self.program = 'uncompress.real'
-        self.archive_extract('t.txt.Z', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.Z', check=Content.Singlefile)
 
     @needs_program('compress')
     def test_compress (self):
@@ -256,15 +256,15 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.cpio')
         self.archive_list('t.rpm')
         self.archive_list('t.deb')
-        self.archive_extract('t.txt.gz', contents=ContentSet.Singlefile)
-        self.archive_extract('t.txt.bz2', contents=ContentSet.Singlefile)
-        self.archive_extract('t.jar', contents=None)
-        self.archive_extract('t.txt.Z', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.gz', check=Content.Singlefile)
+        self.archive_extract('t.txt.bz2', check=Content.Singlefile)
+        self.archive_extract('t.jar', check=None)
+        self.archive_extract('t.txt.Z', check=Content.Singlefile)
         self.archive_extract('t.cab')
         self.archive_extract('t.arj')
         self.archive_extract('t.cpio')
-        self.archive_extract('t.rpm', contents=None)
-        self.archive_extract('t.deb', contents=None)
+        self.archive_extract('t.rpm', check=None)
+        self.archive_extract('t.deb', check=None)
         self.archive_test('t.txt.gz')
         self.archive_test('t.txt.bz2')
         self.archive_test('t.jar')
@@ -298,15 +298,15 @@ class TestArchives (ArchiveTest):
         #self.archive_list('t.cpio')
         self.archive_list('t.rpm')
         #self.archive_list('t.deb')
-        self.archive_extract('t.txt.gz', contents=ContentSet.Singlefile)
-        self.archive_extract('t.txt.bz2', contents=ContentSet.Singlefile)
-        self.archive_extract('t.jar', contents=None)
-        self.archive_extract('t.txt.Z', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.gz', check=Content.Singlefile)
+        self.archive_extract('t.txt.bz2', check=Content.Singlefile)
+        self.archive_extract('t.jar', check=None)
+        self.archive_extract('t.txt.Z', check=Content.Singlefile)
         self.archive_extract('t.cab')
         #self.archive_extract('t.arj')
         #self.archive_extract('t.cpio')
-        #self.archive_extract('t.rpm', contents=None)
-        #self.archive_extract('t.deb', contents=None)
+        #self.archive_extract('t.rpm', check=None)
+        #self.archive_extract('t.deb', check=None)
         self.archive_test('t.txt.gz')
         self.archive_test('t.txt.bz2')
         self.archive_test('t.jar')
@@ -332,7 +332,7 @@ class TestArchives (ArchiveTest):
     def test_cabextract (self):
         self.program = 'cabextract'
         self.archive_list('t.cab')
-        self.archive_extract('t.cab', contents=None)
+        self.archive_extract('t.cab', check=None)
 
     @needs_program('orange')
     def test_orange (self):
@@ -386,13 +386,13 @@ class TestArchives (ArchiveTest):
     @needs_program('cpio')
     def test_rpm_extract (self):
         self.program = 'rpm2cpio'
-        self.archive_extract('t.rpm', contents=None)
+        self.archive_extract('t.rpm', check=None)
 
     @needs_program('dpkg-deb')
     def test_dpkg (self):
         self.program = 'dpkg'
         self.archive_list('t.deb')
-        self.archive_extract('t.deb', contents=None)
+        self.archive_extract('t.deb', check=None)
         self.archive_test('t.deb')
 
     @needs_program('lzop')
@@ -404,35 +404,35 @@ class TestArchives (ArchiveTest):
     def test_lzma (self):
         self.program = 'lzma'
         self.archive_test('t.txt.lzma')
-        self.archive_extract('t.txt.lzma', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.lzma', check=Content.Singlefile)
         self.archive_create('t.txt.lzma', singlefile=True)
 
     @needs_program('lzip')
     def test_lzip (self):
         self.program = 'lzip'
         self.archive_test('t.txt.lz')
-        self.archive_extract('t.txt.lz', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.lz', check=Content.Singlefile)
         self.archive_create('t.txt.lz', singlefile=True)
 
     @needs_program('clzip')
     def test_clzip (self):
         self.program = 'clzip'
         self.archive_test('t.txt.lz')
-        self.archive_extract('t.txt.lz', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.lz', check=Content.Singlefile)
         self.archive_create('t.txt.lz', singlefile=True)
 
     @needs_program('plzip')
     def test_plzip (self):
         self.program = 'plzip'
         self.archive_test('t.txt.lz')
-        self.archive_extract('t.txt.lz', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.lz', check=Content.Singlefile)
         self.archive_create('t.txt.lz', singlefile=True)
 
     @needs_program('pdlzip')
     def test_pdlzip (self):
         self.program = 'pdlzip'
         self.archive_test('t.txt.lz')
-        self.archive_extract('t.txt.lz', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.lz', check=Content.Singlefile)
         self.archive_create('t.txt.lz', singlefile=True)
 
     @needs_program('unalz')
@@ -498,19 +498,19 @@ class TestArchives (ArchiveTest):
     @needs_program('mac')
     def test_mac (self):
         self.program = 'mac'
-        self.archive_extract('t.ape', contents=None)
+        self.archive_extract('t.ape', check=None)
         self.archive_test('t.ape')
         self.archive_create('t.ape', srcfile="t.wav")
 
     @needs_program('shorten')
     def test_shorten (self):
         self.program = 'shorten'
-        self.archive_extract('t.shn', contents=None)
+        self.archive_extract('t.shn', check=None)
         self.archive_create('t.shn', srcfile="t.wav")
 
     @needs_program('flac')
     def test_flac (self):
         self.program = 'flac'
-        self.archive_extract('t.flac', contents=None)
+        self.archive_extract('t.flac', check=None)
         self.archive_test('t.flac')
         self.archive_create('t.flac', srcfile="t.wav")

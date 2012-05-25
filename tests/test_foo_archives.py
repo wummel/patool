@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from tests import ArchiveTest, needs_os, needs_program, needs_codec, ContentSet
+from tests import ArchiveTest, needs_os, needs_program, needs_codec, Content
 
 class TestArchives (ArchiveTest):
 
@@ -21,28 +21,28 @@ class TestArchives (ArchiveTest):
     @needs_program('tar')
     def test_tar_file (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.foo', format="tar")
+        self.archive_commands('t.tar.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('tar', 'gzip')
     def test_tar_gz_file (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
-        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tar.gz.foo', skip_create=True)
+        self.archive_commands('t.tgz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('tar', 'compress')
     def test_tar_z (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.Z.foo', format="tar", compression="compress")
-        self.archive_commands('t.taz.foo', format="tar", compression="compress")
+        self.archive_commands('t.tar.Z.foo', skip_create=True)
+        self.archive_commands('t.taz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('tar', 'bzip2')
     def test_tar_bz2 (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
-        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tar.bz2.foo', skip_create=True)
+        self.archive_commands('t.tbz2.foo', skip_create=True)
 
     # file(1) does not recognize .lzma files (at least not with --uncompress)
     #@needs_program('file')
@@ -58,47 +58,47 @@ class TestArchives (ArchiveTest):
     @needs_codec('tar', 'lzip')
     def test_tar_lzip (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.lz.foo', format="tar", compression="lzip")
+        self.archive_commands('t.tar.lz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('tar', 'xz')
     def test_tar_xz (self):
         self.program = 'tar'
-        self.archive_commands('t.tar.xz.foo', format="tar", compression="xz")
+        self.archive_commands('t.tar.xz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_program('bsdtar')
     def test_bsdtar_file (self):
         self.program = 'bsdtar'
-        self.archive_commands('t.tar.foo', format="tar")
+        self.archive_commands('t.tar.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('bsdtar', 'gzip')
     def test_bsdtar_gz_file (self):
         self.program = 'bsdtar'
-        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
-        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tar.gz.foo', skip_create=True)
+        self.archive_commands('t.tgz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('bsdtar', 'compress')
     def test_bsdtar_z (self):
         self.program = 'bsdtar'
-        self.archive_commands('t.tar.Z.foo', format="tar", compression="compress")
-        self.archive_commands('t.taz.foo', format="tar", compression="compress")
+        self.archive_commands('t.tar.Z.foo', skip_create=True)
+        self.archive_commands('t.taz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('bsdtar', 'bzip2')
     def test_bsdtar_bz2 (self):
         self.program = 'bsdtar'
-        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
-        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tar.bz2.foo', skip_create=True)
+        self.archive_commands('t.tbz2.foo', skip_create=True)
 
     # file(1) does not recognize .lzma files (at least not with --uncompress)
     #@needs_program('file')
     #@needs_codec('bsdtar', 'lzma')
     #def test_bsdtar_lzma (self):
     #    self.program = 'bsdtar'
-    #    self.archive_commands('t.tar.lzma.foo', format="tar", compression="lzma")
+    #    self.archive_commands('t.tar.lzma.foo', skip_create=True)
 
     # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for achive detection
@@ -107,106 +107,102 @@ class TestArchives (ArchiveTest):
     @needs_codec('bsdtar', 'lzip')
     def test_bsdtar_lzip (self):
         self.program = 'bsdtar'
-        self.archive_commands('t.tar.lz.foo', format="tar", compression="lzip")
+        self.archive_commands('t.tar.lz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('bsdtar', 'xz')
     def test_bsdtar_xz (self):
         self.program = 'bsdtar'
-        self.archive_commands('t.tar.xz.foo', format="tar", compression="xz")
+        self.archive_commands('t.tar.xz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_program('star')
     def test_star (self):
         self.program = 'star'
-        self.archive_commands('t.tar.foo', format="tar")
+        self.archive_commands('t.tar.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('star', 'gzip')
     def test_star_gz (self):
         self.program = 'star'
-        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
-        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tar.gz.foo', skip_create=True)
+        self.archive_commands('t.tgz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('star', 'compress')
     def test_star_z (self):
         self.program = 'star'
-        self.archive_commands('t.tar.Z.foo', format="tar", compression="compress")
-        self.archive_commands('t.taz.foo', format="tar", compression="compress")
+        self.archive_commands('t.tar.Z.foo', skip_create=True)
+        self.archive_commands('t.taz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('star', 'bzip2')
     def test_star_bz2 (self):
         self.program = 'star'
-        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
-        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tar.bz2.foo', skip_create=True)
+        self.archive_commands('t.tbz2.foo', skip_create=True)
 
     # file(1) does not recognize .lzma files
     #@needs_program('file')
     #@needs_codec('star', 'lzma')
     #def test_star_lzma (self):
     #    self.program = 'star'
-    #    self.archive_commands('t.tar.lzma.foo', format="tar", compression="lzma")
+    #    self.archive_commands('t.tar.lzma.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('star', 'lzip')
     def test_star_lzip (self):
         self.program = 'star'
-        self.archive_commands('t.tar.lz.foo', format="tar", compression="lzip")
+        self.archive_commands('t.tar.lz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec('star', 'xz')
     def test_star_xz (self):
         self.program = 'star'
-        self.archive_commands('t.tar.xz.foo', format="tar", compression="xz")
+        self.archive_commands('t.tar.xz.foo', skip_create=True)
 
     @needs_program('file')
     def test_py_tarfile_file (self):
         self.program = 'py_tarfile'
-        self.archive_commands('t.tar.foo', format="tar")
+        self.archive_commands('t.tar.foo', skip_create=True)
 
     @needs_program('file')
     def test_py_tarfile_gz_file (self):
         self.program = 'py_tarfile'
-        self.archive_commands('t.tar.gz.foo', format="tar", compression="gzip")
-        self.archive_commands('t.tgz.foo', format="tar", compression="gzip")
+        self.archive_commands('t.tar.gz.foo', skip_create=True)
+        self.archive_commands('t.tgz.foo', skip_create=True)
 
     @needs_program('file')
     def test_py_tarfile_bz2 (self):
         self.program = 'py_tarfile'
-        self.archive_commands('t.tar.bz2.foo', format="tar", compression="bzip2")
-        self.archive_commands('t.tbz2.foo', format="tar", compression="bzip2")
+        self.archive_commands('t.tar.bz2.foo', skip_create=True)
+        self.archive_commands('t.tbz2.foo', skip_create=True)
 
     @needs_program('file')
     @needs_program('bzip2')
     def test_bzip2 (self):
         self.program = 'bzip2'
-        self.archive_extract('t.txt.bz2.foo', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
         self.archive_test('t.txt.bz2.foo')
-        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
     def test_py_bz2 (self):
         self.program = 'py_bz2'
-        self.archive_extract('t.txt.bz2.foo', contents=ContentSet.Singlefile)
-        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
+        self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('pbzip2')
     def test_pbzip2 (self):
         self.program = 'pbzip2'
-        self.archive_extract('t.txt.bz2.foo', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
         self.archive_test('t.txt.bz2.foo')
-        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
     @needs_program('lbzip2')
     def test_lbzip2 (self):
         self.program = 'lbzip2'
-        self.archive_extract('t.txt.bz2.foo', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
         self.archive_test('t.txt.bz2.foo')
-        self.archive_create('t.txt.bz2.foo', format="bzip2", singlefile=True)
 
     @needs_program('file')
     def test_py_echo (self):
@@ -227,57 +223,42 @@ class TestArchives (ArchiveTest):
     @needs_program('unzip')
     def test_unzip (self):
         self.program = 'unzip'
-        self.archive_extract('t.zip.foo', contents=None)
+        self.archive_extract('t.zip.foo', check=None)
         self.archive_list('t.zip.foo')
         self.archive_test('t.zip.foo')
-        self.archive_extract('t.jar.foo', contents=None)
+        self.archive_extract('t.jar.foo', check=None)
         self.archive_list('t.jar.foo')
         self.archive_test('t.jar.foo')
 
     @needs_program('file')
-    @needs_program('zip')
-    def test_zip (self):
-        self.program = 'zip'
-        self.archive_create('t.zip.foo', format="zip")
-
-    @needs_program('file')
     def test_py_zipfile (self):
         self.program = 'py_zipfile'
-        self.archive_commands('t.zip.foo', format="zip")
+        self.archive_commands('t.zip.foo', skip_create=True)
 
     @needs_program('file')
     @needs_program('gzip')
     def test_gzip (self):
         self.program = 'gzip'
-        self.archive_commands('t.txt.gz.foo', format="gzip", singlefile=True)
-        self.archive_extract('t.txt.Z.foo', contents=ContentSet.Singlefile)
+        self.archive_commands('t.txt.gz.foo', skip_create=True, check=None)
+        self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
 
     @needs_program('file')
-    @needs_program('gzip')
     def test_py_gzip (self):
         self.program = 'py_gzip'
-        self.archive_extract('t.txt.gz.foo', contents=ContentSet.Singlefile)
-        # gzip is used to test the created archive
-        self.archive_create('t.txt.gz.foo', format="gzip", singlefile=True)
+        self.archive_extract('t.txt.gz.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('uncompress.real')
     def test_uncompress (self):
         self.program = 'uncompress.real'
-        self.archive_extract('t.txt.Z.foo', contents=ContentSet.Singlefile)
-
-    @needs_program('file')
-    @needs_program('compress')
-    def test_compress (self):
-        self.program = 'compress'
-        self.archive_create('t.txt.Z.foo', format="compress", singlefile=True)
+        self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('7z')
     def test_p7zip_file (self):
         self.program = '7z'
-        self.archive_commands('t.7z.foo', format="7z")
-        self.archive_commands('t.zip.foo', format="zip")
+        self.archive_commands('t.7z.foo', skip_create=True)
+        self.archive_commands('t.zip.foo', skip_create=True)
         self.archive_list('t.txt.gz.foo')
         self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.jar.foo')
@@ -287,15 +268,15 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.cpio.foo')
         self.archive_list('t.rpm.foo')
         self.archive_list('t.deb.foo')
-        self.archive_extract('t.txt.gz.foo', contents=None)
-        self.archive_extract('t.txt.bz2.foo', contents=ContentSet.Singlefile)
-        self.archive_extract('t.jar.foo', contents=None)
-        self.archive_extract('t.txt.Z.foo', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.gz.foo', check=None)
+        self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
+        self.archive_extract('t.jar.foo', check=None)
+        self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
         self.archive_extract('t.cab.foo')
         self.archive_extract('t.arj.foo')
         self.archive_extract('t.cpio.foo')
-        self.archive_extract('t.rpm.foo', contents=None)
-        self.archive_extract('t.deb.foo', contents=None)
+        self.archive_extract('t.rpm.foo', check=None)
+        self.archive_extract('t.deb.foo', check=None)
         self.archive_test('t.txt.gz.foo')
         self.archive_test('t.txt.bz2.foo')
         self.archive_test('t.jar.foo')
@@ -310,8 +291,8 @@ class TestArchives (ArchiveTest):
     @needs_program('7za')
     def test_p7azip_file (self):
         self.program = '7za'
-        self.archive_commands('t.7z.foo', format="7z")
-        self.archive_commands('t.zip.foo', format="zip")
+        self.archive_commands('t.7z.foo', skip_create=True)
+        self.archive_commands('t.zip.foo', skip_create=True)
         self.archive_list('t.txt.gz.foo')
         self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.jar.foo')
@@ -321,15 +302,15 @@ class TestArchives (ArchiveTest):
         #self.archive_list('t.cpio.foo')
         self.archive_list('t.rpm.foo')
         #self.archive_list('t.deb.foo')
-        self.archive_extract('t.txt.gz.foo', contents=None)
-        self.archive_extract('t.txt.bz2.foo', contents=ContentSet.Singlefile)
-        self.archive_extract('t.jar.foo', contents=None)
-        self.archive_extract('t.txt.Z.foo', contents=ContentSet.Singlefile)
+        self.archive_extract('t.txt.gz.foo', check=None)
+        self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
+        self.archive_extract('t.jar.foo', check=None)
+        self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
         self.archive_extract('t.cab.foo')
         #self.archive_extract('t.arj.foo')
         #self.archive_extract('t.cpio.foo')
-        #self.archive_extract('t.rpm.foo', contents=None)
-        #self.archive_extract('t.deb.foo', contents=None)
+        #self.archive_extract('t.rpm.foo', check=None)
+        #self.archive_extract('t.deb.foo', check=None)
         self.archive_test('t.txt.gz.foo')
         self.archive_test('t.txt.bz2.foo')
         self.archive_test('t.jar.foo')
@@ -360,14 +341,14 @@ class TestArchives (ArchiveTest):
     @needs_program('rar')
     def test_rar (self):
         self.program = 'rar'
-        self.archive_commands('t.rar.foo', format="rar")
+        self.archive_commands('t.rar.foo', skip_create=True)
 
     @needs_program('file')
     @needs_program('cabextract')
     def test_cabextract (self):
         self.program = 'cabextract'
         self.archive_list('t.cab.foo')
-        self.archive_extract('t.cab.foo', contents=None)
+        self.archive_extract('t.cab.foo', check=None)
 
     @needs_program('file')
     @needs_program('orange')
@@ -375,36 +356,30 @@ class TestArchives (ArchiveTest):
         self.program = 'orange'
         self.archive_extract('t.cab.foo')
 
-    @needs_program('lcab')
-    @needs_program('cabextract')
-    def test_lcab (self):
-        self.program = 'lcab'
-        self.archive_create('t.cab.foo', format="cab")
-
     @needs_program('file')
     @needs_program('arj')
     def test_arj (self):
         self.program = 'arj'
-        self.archive_commands('t.arj.foo', format="arj")
+        self.archive_commands('t.arj.foo', skip_create=True)
 
     @needs_os('posix')
     @needs_program('file')
     @needs_program('ar')
     def test_ar (self):
         self.program = 'ar'
-        self.archive_commands('t.txt.a.foo', format='ar', singlefile=True, contents=None)
+        self.archive_commands('t.txt.a.foo', skip_create=True, check=None)
 
     @needs_program('file')
     @needs_program('cpio')
     def test_cpio (self):
         self.program = 'cpio'
-        self.archive_commands('t.cpio.foo', format="cpio")
+        self.archive_commands('t.cpio.foo', skip_create=True)
 
     @needs_program('file')
     @needs_program('bsdcpio')
     def test_bsdcpio (self):
         self.program = 'bsdcpio'
-        self.archive_commands('t.cpio.foo', format="cpio")
+        self.archive_commands('t.cpio.foo', skip_create=True)
 
     @needs_program('file')
     @needs_program('unace')
@@ -429,21 +404,21 @@ class TestArchives (ArchiveTest):
     @needs_program('cpio')
     def test_rpm_extract (self):
         self.program = 'rpm2cpio'
-        self.archive_extract('t.rpm.foo', contents=None)
+        self.archive_extract('t.rpm.foo', check=None)
 
     @needs_program('file')
     @needs_program('dpkg-deb')
     def test_dpkg (self):
         self.program = 'dpkg'
         self.archive_list('t.deb.foo')
-        self.archive_extract('t.deb.foo', contents=None)
+        self.archive_extract('t.deb.foo', check=None)
         self.archive_test('t.deb.foo')
 
     @needs_program('file')
     @needs_program('lzop')
     def test_lzop (self):
         self.program = 'lzop'
-        self.archive_commands('t.lzo.foo', format="lzop", singlefile=True)
+        self.archive_commands('t.lzo.foo', skip_create=True)
 
     # file(1) does not recognize .lzma files
     #@needs_program('file')
@@ -452,53 +427,47 @@ class TestArchives (ArchiveTest):
     #    self.program = 'lzma'
     #    self.archive_test('t.lzma.foo')
     #    self.archive_extract('t.lzma.foo')
-    #    self.archive_create('t.lzma.foo', format="lzma", singlefile=True)
 
     @needs_program('file')
     @needs_program('lzip')
     def test_lzip (self):
         self.program = 'lzip'
         self.archive_test('t.txt.lz.foo')
-        self.archive_extract('t.txt.lz.foo', contents=ContentSet.Singlefile)
-        self.archive_create('t.txt.lz.foo', format="lzip", singlefile=True)
+        self.archive_extract('t.txt.lz.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('clzip')
     def test_clzip (self):
         self.program = 'clzip'
         self.archive_test('t.txt.lz.foo')
-        self.archive_extract('t.txt.lz.foo', contents=ContentSet.Singlefile)
-        self.archive_create('t.txt.lz.foo', format="lzip", singlefile=True)
+        self.archive_extract('t.txt.lz.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('plzip')
     def test_plzip (self):
         self.program = 'plzip'
         self.archive_test('t.txt.lz.foo')
-        self.archive_extract('t.txt.lz.foo', contents=ContentSet.Singlefile)
-        self.archive_create('t.txt.lz.foo', format="lzip", singlefile=True)
+        self.archive_extract('t.txt.lz.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('pdlzip')
     def test_pdlzip (self):
         self.program = 'pdlzip'
         self.archive_test('t.txt.lz.foo')
-        self.archive_extract('t.txt.lz.foo', contents=ContentSet.Singlefile)
-        self.archive_create('t.txt.lz.foo', format="lzip", singlefile=True)
+        self.archive_extract('t.txt.lz.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('xz')
     def test_xz (self):
         self.program = 'xz'
         self.archive_test('t.txt.xz.foo')
-        self.archive_extract('t.txt.xz.foo', contents=ContentSet.Singlefile)
-        self.archive_create('t.txt.xz.foo', format="xz", singlefile=True)
+        self.archive_extract('t.txt.xz.foo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program('lha')
     def test_lha (self):
         self.program = 'lha'
-        self.archive_commands('t.lha.foo', format="lzh")
+        self.archive_commands('t.lha.foo', skip_create=True)
 
     # file(1) does not recognize .alz files
     #@needs_program('file')
@@ -512,7 +481,7 @@ class TestArchives (ArchiveTest):
     @needs_program('arc')
     def test_arc (self):
         self.program = 'arc'
-        self.archive_commands('t.arc.foo', format="arc", singlefile=True)
+        self.archive_commands('t.arc.foo', skip_create=True)
 
     @needs_program('nomarch')
     def test_nomarch (self):
@@ -534,13 +503,12 @@ class TestArchives (ArchiveTest):
     def test_rzip (self):
         self.program = 'rzip'
         self.archive_extract('t.txt.rz.foo')
-        self.archive_create('t.txt.rz.foo', format="rzip", singlefile=True)
 
     # XXX test failure
     #@needs_program('zoo')
     #def test_zoo (self):
     #    self.program = 'zoo'
-    #    self.archive_commands('t.zoo.foo', format="zoo", singlefile=True)
+    #    self.archive_commands('t.zoo.foo', skip_create=True)
 
     # xdms(1) cannot handle files without '.dms' extension
     #@needs_program('xdms')
@@ -554,21 +522,18 @@ class TestArchives (ArchiveTest):
     @needs_program('mac')
     def test_mac (self):
         self.program = 'mac'
-        self.archive_extract('t.ape.foo', contents=None)
-        self.archive_create('t.ape.foo', srcfile='t.wav')
+        self.archive_extract('t.ape.foo', check=None)
 
     # file(1) does not recognize .shn files
     #@needs_program('file')
     #@needs_program('shorten')
     #def test_shorten (self):
     #    self.program = 'shorten'
-    #    self.archive_extract('t.shn.foo', contents=None)
-    #    self.archive_create('t.shn.foo', srcfile='t.wav')
+    #    self.archive_extract('t.shn.foo', check=None)
 
     @needs_program('file')
     @needs_program('flac')
     def test_flac (self):
         self.program = 'flac'
-        self.archive_extract('t.flac.foo', contents=None)
+        self.archive_extract('t.flac.foo', check=None)
         self.archive_test('t.flac.foo')
-        self.archive_create('t.flac.foo', srcfile='t.wav', format='flac')
