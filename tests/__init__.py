@@ -84,13 +84,13 @@ class ArchiveTest (unittest.TestCase):
         os.chdir(tmpdir)
         try:
             output = patoolib._handle_archive(archive, 'extract', program=self.program, verbose=verbose)
-            self.check_extracted_contents(archive, output, contents)
+            self.check_extracted_archive(archive, output, contents)
         finally:
             if olddir:
                 os.chdir(olddir)
             shutil.rmtree(tmpdir)
 
-    def check_extracted_contents (self, archive, output, contents):
+    def check_extracted_archive (self, archive, output, contents):
         if contents == ContentSet.Recursive:
             # outdir is the 't' directory of the archive
             self.assertEqual(output, 't')
@@ -130,12 +130,10 @@ class ArchiveTest (unittest.TestCase):
         # determine filename which is added to the archive
         if srcfile is None:
             if singlefile:
-                srcfile = 'foo .txt'
-                contents = ContentSet.Singlefile
+                srcfile = 't.txt'
             else:
-                srcfile = 'foo dir'
-                contents = ContentSet.Recursive
-        srcfile = os.path.join(datadir, srcfile)
+                srcfile = 't'
+        os.chdir(datadir)
         # The format and compression arguments are needed for creating
         # archives with unusual file extensions.
         kwargs = dict(
@@ -147,37 +145,68 @@ class ArchiveTest (unittest.TestCase):
         # create again in verbose mode
         kwargs['verbose'] = True
         self._archive_create(archive, srcfile, kwargs)
-        # XXX check content
 
-    def _archive_create (self, filename, topack, kwargs):
+    def _archive_create (self, archive, srcfile, kwargs):
         """Create archive from filename."""
+        self.assertFalse(os.path.isabs(srcfile))
+        self.assertTrue(os.path.exists(srcfile))
         # create a temporary directory for creation
         tmpdir = patoolib.util.tmpdir(dir=basedir)
-        archive = os.path.join(tmpdir, filename)
-        os.chdir(tmpdir)
+        archive = os.path.join(tmpdir, archive)
+        self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
         try:
-            patoolib._handle_archive(archive, 'create', topack, **kwargs)
+            patoolib._handle_archive(archive, 'create', srcfile, **kwargs)
             self.assertTrue(os.path.isfile(archive))
-            # test the created archive
-            command = 'test'
-            program = self.program
-            # special case for programs that cannot test what they create
-            if self.program in ('compress', 'py_gzip'):
-                program = 'gzip'
-            elif self.program == 'py_bz2':
-                program = 'bzip2'
-            elif self.program == 'zip':
-                program = 'unzip'
-            elif self.program in ('rzip', 'shorten'):
-                program = 'py_echo'
-                command = 'list'
-            elif self.program == 'lcab':
-                program = 'cabextract'
-            patoolib._handle_archive(archive, command, program=program)
+            self.check_created_archive_with_test(archive)
+            self.check_created_archive_with_diff(archive, srcfile)
         finally:
-            os.chdir(basedir)
             shutil.rmtree(tmpdir)
 
+    def check_created_archive_with_test(self, archive):
+        command = 'test'
+        program = self.program
+        # special case for programs that cannot test what they create
+        if self.program in ('compress', 'py_gzip'):
+            program = 'gzip'
+        elif self.program == 'py_bz2':
+            program = 'bzip2'
+        elif self.program == 'zip':
+            program = 'unzip'
+        elif self.program in ('rzip', 'shorten'):
+            program = 'py_echo'
+            command = 'list'
+        elif self.program == 'lcab':
+            program = 'cabextract'
+        patoolib._handle_archive(archive, command, program=program)
+
+    def check_created_archive_with_diff(self, archive, srcfile):
+        """Extract created archive again and compare the contents."""
+        # diff srcfile and output
+        diff = patoolib.util.find_program("diff")
+        if not diff:
+            return
+        program = self.program
+        # special case for programs that cannot extract what they create
+        if self.program == 'lcab':
+            program = 'cabextract'
+        # XXX
+        tmpdir = patoolib.util.tmpdir(dir=basedir)
+        try:
+            olddir = os.getcwd()
+        except OSError:
+            olddir = None
+        os.chdir(tmpdir)
+        try:
+            output = patoolib._handle_archive(archive, 'extract', program=program)
+            print "XXX1", archive, tmpdir
+            print "XXX diff", srcfile, "with", output
+            res = patoolib.util.run([diff, "-urN", srcfile, output])
+            self.assertEqual(res, 0)
+        finally:
+            if olddir:
+                os.chdir(olddir)
+            shutil.rmtree(tmpdir)
+        
 
 def get_filecontent(filename):
     fo = open(filename)
