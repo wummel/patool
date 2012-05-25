@@ -10,6 +10,7 @@
 * Generate standalone Windows .exe and Linux .rpm installer.
 * Initialize the internal MIME database correct on all platforms.
 * Improved option compatibility for the ar, cpio and tar programs.
+* Require and use Python >=2.5
 
 
 0.16 "Game of thrones" (released 12.5.2012)

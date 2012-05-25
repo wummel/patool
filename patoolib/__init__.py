@@ -13,10 +13,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import sys
+if not hasattr(sys, "version_info") or sys.version_info < (2, 5, 0, "final", 0):
+    raise SystemExit("This program requires Python 2.5 or later.")
 import os
 import shutil
 import stat
-from patoolib import util
+from . import util
 
 # Supported archive commands
 ArchiveCommands = ('list', 'extract', 'test', 'create')
@@ -507,7 +510,7 @@ def get_archive_cmdlist_func (program, command, format):
     module = ProgramModules.get(key, key)
     # import archive handler function (eg. patoolib.programs.star.extract_tar)
     args = (module, command, format)
-    import_cmd = "from patoolib.programs.%s import %s_%s as func" % args
+    import_cmd = "from .programs.%s import %s_%s as func" % args
     try:
         exec import_cmd
     except ImportError:

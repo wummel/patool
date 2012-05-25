@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the bz2 Python module."""
-from patoolib import util
+from .. import util
 try:
     # try external bz2file module with multi-stream support
     import bz2file as bz2

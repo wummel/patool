@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the shorten program."""
-from patoolib import util
+from .. import util
 
 def extract_shn (archive, compression, cmd, **kwargs):
     """Decompress a SHN archive to a WAV file."""

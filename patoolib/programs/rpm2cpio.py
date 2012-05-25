@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rpm2cpio program."""
 import os
-from patoolib import util
+from .. import util
 
 def extract_rpm (archive, compression, cmd, **kwargs):
     """Extract a RPM archive."""

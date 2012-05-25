@@ -3,7 +3,7 @@ Installation
 
 First, install the required software.
 
-1. Python >= 2.4 from http://www.python.org/
+1. Python >= 2.5 from http://www.python.org/
    
    Be sure to also have installed the included distutils module.
    On most distributions, the distutils module is included in

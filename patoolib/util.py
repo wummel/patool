@@ -169,7 +169,7 @@ def guess_mime_mimedb (filename):
     mime, encoding = None, None
     if mimedb is not None:
         mime, encoding = mimedb.guess_type(filename, strict=False)
-    from patoolib import ArchiveMimetypes, ArchiveCompressions
+    from . import ArchiveMimetypes, ArchiveCompressions
     if mime not in ArchiveMimetypes and encoding in ArchiveCompressions:
         # Files like 't.txt.gz' are recognized with encoding as format, and
         # an unsupported mime-type like 'text/plain'. Fix this.
@@ -209,7 +209,7 @@ def guess_mime_file_mime (file_prog, filename):
     except OSError:
         # ignore errors, as file(1) is only a fallback
         return mime, encoding
-    from patoolib import ArchiveMimetypes
+    from . import ArchiveMimetypes
     if mime in Mime2Encoding:
         # try to look inside compressed archives
         cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]

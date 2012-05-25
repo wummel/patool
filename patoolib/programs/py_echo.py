@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands echoing data, implemented by the Python print
 statement."""
-from patoolib import util
+from .. import util
 
 
 def list_bzip2 (archive, compression, cmd, **kwargs):

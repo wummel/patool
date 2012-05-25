@@ -16,7 +16,7 @@
 """Archive commands for the cpio program."""
 import os
 import sys
-from patoolib import util
+from .. import util
 
 def extract_cpio (archive, compression, cmd, **kwargs):
     """Extract a CPIO archive."""

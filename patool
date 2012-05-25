@@ -17,9 +17,6 @@
 """
 patool [extract|list|create|formats] [sub-command-options] <command-args>
 """
-import sys
-if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
-    raise SystemExit("This program requires Python 2.4 or later.")
 import os
 from patoolib import handle_archive, list_formats, baker
 

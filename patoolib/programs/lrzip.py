@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lrzip program."""
 import os
-from patoolib import util
+from .. import util
 
 def extract_lrzip (archive, compression, cmd, **kwargs):
     """Extract a LRZIP archive."""

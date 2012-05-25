@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the uncompress.real program."""
-from patoolib import util
+from .. import util
 
 
 def create_compress (archive, compression, cmd, *args, **kwargs):

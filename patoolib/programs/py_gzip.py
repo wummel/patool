@@ -17,7 +17,7 @@
 from __future__ import absolute_import
 # now gzip refers to the Python standard module, not the local one
 import gzip
-from patoolib import util
+from .. import util
 
 READ_SIZE_BYTES = 1024*1024
 
