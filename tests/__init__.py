@@ -98,8 +98,10 @@ class ArchiveTest (unittest.TestCase):
             txtfile = os.path.join(output, 't.txt')
             self.check_textfile(txtfile, 't.txt')
         elif contents == ContentSet.Singlefile:
-            txtfile = output
-            self.check_textfile(txtfile, 't.txt')
+            # a non-existing directory to ensure files do not exist in it
+            ned = get_nonexisting_directory()
+            expected_output = os.path.basename(patoolib.util.get_single_outfile(ned, archive))
+            self.check_textfile(output, expected_output)
 
     def check_directory (self, dirname, expectedname):
         self.assertTrue(os.path.isdir(dirname), dirname)
@@ -245,3 +247,10 @@ def has_codec (program, codec):
     if patoolib.program_supports_compression(program, codec):
         return True
     return patoolib.util.find_program(codec)
+
+
+def get_nonexisting_directory():
+    d = os.path.join(os.getcwd(), "foo")
+    while os.path.exists(d):
+        d += 'a'
+    return d

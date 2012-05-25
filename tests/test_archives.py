@@ -198,7 +198,7 @@ class TestArchives (ArchiveTest):
     @needs_program('unzip')
     def test_unzip (self):
         self.program = 'unzip'
-        self.archive_extract('t.zip')
+        self.archive_extract('t.zip', contents=None)
         self.archive_list('t.zip')
         self.archive_test('t.zip')
         self.archive_extract('t.jar', contents=None)
@@ -332,7 +332,7 @@ class TestArchives (ArchiveTest):
     def test_cabextract (self):
         self.program = 'cabextract'
         self.archive_list('t.cab')
-        self.archive_extract('t.cab')
+        self.archive_extract('t.cab', contents=None)
 
     @needs_program('orange')
     def test_orange (self):
@@ -354,7 +354,7 @@ class TestArchives (ArchiveTest):
     @needs_program('ar')
     def test_ar (self):
         self.program = 'ar'
-        self.archive_commands('t.a', singlefile=True)
+        self.archive_commands('t.txt.a', singlefile=True)
 
     @needs_program('cpio')
     def test_cpio (self):
