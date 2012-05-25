@@ -190,6 +190,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.rz", "application/x-rzip", None)
         self.mime_test_mimedb("t.zoo", "application/x-zoo", None)
         self.mime_test_mimedb("t.dms", "application/x-dms", None)
+        self.mime_test_mimedb("t.shar", "application/x-shar", None)
         self.mime_test_mimedb("t.ape", "audio/x-ape", None)
         self.mime_test_mimedb("t.shn", "audio/x-shn", None)
         self.mime_test_mimedb("t.flac", "audio/flac", None)

@@ -1,11 +1,12 @@
 0.17 "" (released xx.xx.2012)
 
-* Added support for Monkey's Audio Compressor handling APE (.ape) files.
-* Added support for shorten handling SHN (.shn) files.
-* Added support for flac handling FLAC (.flac) files.
+* Added support for Monkey's Audio Compressor handling APE (.ape) archives.
+* Added support for shorten handling SHN (.shn) archives.
+* Added support for flac handling FLAC (.flac) archives.
 * Added support for the BSD cpio and tar programs.
-* Added support for lhasa handling LZH (.lzh, .lha) files.
-* Added support for lcap handling CAB (.cab) files.
+* Added support for lhasa handling LZH (.lzh, .lha) archives.
+* Added support for lcap handling CAB (.cab) archives.
+* Added support for shar handling SHAR (.shar) shell archives.
 * Generate standalone Windows .exe and Linux .rpm installer.
 * Initialize the internal MIME database correct on all platforms.
 * Improved option compatibility for the ar, cpio and tar programs.

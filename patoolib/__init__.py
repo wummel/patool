@@ -24,7 +24,7 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 # Supported archive formats
 ArchiveFormats = ('7z', 'ace', 'alzip', 'ape', 'ar', 'arc', 'arj', 'bzip2',
     'cab', 'compress', 'cpio', 'deb', 'dms', 'flac', 'gzip', 'lrzip', 'lzh',
-    'lzip', 'lzma', 'lzop', 'rar', 'rpm', 'rzip', 'shn', 'tar', 'xz',
+    'lzip', 'lzma', 'lzop', 'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'xz',
     'zip', 'zoo')
 
 # Supported compressions (used with tar for example)
@@ -64,6 +64,7 @@ ArchiveMimetypes = {
     'application/x-rzip': 'rzip',
     'application/x-zoo': 'zoo',
     'application/x-dms': 'dms',
+    'application/x-shar': 'shar',
     'audio/x-ape': 'ape',
     'audio/x-shn': 'shn',
     'audio/flac': 'flac',
@@ -127,7 +128,7 @@ ArchivePrograms = {
         'create': ('zip',),
     },
     'gzip': {
-        None: ('pigz', 'gzip', '7z', '7za'),
+        None: ('7z', '7za', 'pigz', 'gzip'),
         'extract': ('py_gzip',),
         'create': ('py_gzip',),
     },
@@ -197,6 +198,10 @@ ArchivePrograms = {
         'extract': ('rzip',),
         'list': ('py_echo',),
         'create': ('rzip',),
+    },
+    'shar': {
+        'create': ('shar',),
+        'extract': ('unshar',),
     },
     'shn': {
         'extract': ('shorten',),

@@ -175,6 +175,8 @@ class ArchiveTest (unittest.TestCase):
             command = 'list'
         elif self.program == 'lcab':
             program = 'cabextract'
+        elif self.program == 'shar':
+            return
         patoolib._handle_archive(archive, command, program=program)
 
     def check_created_archive_with_diff(self, archive, srcfile):
@@ -191,6 +193,8 @@ class ArchiveTest (unittest.TestCase):
             program = 'unzip'
         elif self.program == 'lcab':
             program = 'cabextract'
+        elif self.program == 'shar':
+            program = 'unshar'
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         try:
             olddir = os.getcwd()

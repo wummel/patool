@@ -514,3 +514,13 @@ class TestArchives (ArchiveTest):
         self.archive_extract('t.flac', check=None)
         self.archive_test('t.flac')
         self.archive_create('t.flac', srcfile="t.wav")
+
+    @needs_program('shar')
+    def test_shar (self):
+        self.program = 'shar'
+        self.archive_create('t.shar', singlefile=True)
+
+    @needs_program('unshar')
+    def test_unshar (self):
+        self.program = 'unshar'
+        self.archive_extract('t.shar', check=None)

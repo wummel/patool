@@ -64,6 +64,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, 'application/x-zoo', '.zoo')
     add_mimetype(mimedb, 'application/x-dms', '.dms')
     add_mimetype(mimedb, 'application/x-zip-compressed', '.crx')
+    add_mimetype(mimedb, 'application/x-shar', '.shar')
     add_mimetype(mimedb, 'audio/x-ape', '.ape')
     add_mimetype(mimedb, 'audio/x-shn', '.shn')
     add_mimetype(mimedb, 'audio/flac', '.flac')
