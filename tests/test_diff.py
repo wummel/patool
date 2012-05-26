@@ -16,7 +16,7 @@
 import unittest
 import os
 import patoolib
-from tests import datadir, needs_program
+from . import datadir, needs_program
 
 class ArchiveDiffTest (unittest.TestCase):
 

@@ -17,7 +17,7 @@ import unittest
 import os
 import shutil
 import patoolib
-from tests import datadir, needs_program, needs_one_program
+from . import datadir, needs_program, needs_one_program
 
 class ArchiveRepackTest (unittest.TestCase):
 

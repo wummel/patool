@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from tests import ArchiveTest, needs_os, needs_program, needs_codec, Content
+from . import ArchiveTest, needs_os, needs_program, needs_codec, Content
 
 class TestArchives (ArchiveTest):
 
