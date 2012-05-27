@@ -18,6 +18,7 @@
 patool [extract|list|create|formats] [sub-command-options] <command-args>
 """
 import os
+import sys
 from patoolib import handle_archive, list_formats, baker
 
 # parameter help and short options
