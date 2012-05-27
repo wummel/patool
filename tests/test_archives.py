@@ -516,6 +516,7 @@ class TestArchives (ArchiveTest):
         self.archive_create('t.flac', srcfile="t.wav")
 
     @needs_program('shar')
+    @needs_program('unshar')
     def test_shar (self):
         self.program = 'shar'
         self.archive_create('t.shar', singlefile=True)
