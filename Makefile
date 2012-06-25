@@ -15,6 +15,13 @@ else
   NUMPROCESSORS:=$(shell grep -c processor /proc/cpuinfo)
   CHMODMINUSMINUS:=--
 endif
++NOSETESTS:=$(shell which nosetests)
+# Nose options:
+# - do not show output of successful tests
+# - use multiple processors
+# - be verbose
+# - only run test_* methods
+NOSEOPTS:=--logging-clear-handlers --processes=$(NUMPROCESSORS) -v -m '^test_.*'
 # which test modules to run
 TESTS ?= tests/
 # set test options, eg. to "--nologcapture"
@@ -94,7 +101,7 @@ clean:
 
 .PHONY: test
 test:
-	$(PYTHON) $(NOSETESTS) -v --processes=$(NUMPROCESSORS) -m "^test_.*" $(TESTOPTS) $(TESTS)
+	$(PYTHON) $(NOSETESTS) $(NOSEOPTS) $(TESTOPTS) $(TESTS)
 
 doc/patool.txt: doc/patool.1
 	cols=`stty size | cut -d" " -f2`; stty cols 72; man -l doc/patool.1 | perl -pe 's/.\cH//g' > doc/patool.txt; stty cols $$cols
