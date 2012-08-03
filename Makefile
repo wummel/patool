@@ -1,9 +1,10 @@
 # This Makefile is only used by developers.
 PYVER:=2.7
 PYTHON:=python$(PYVER)
+APPNAME:=patool
 VERSION:=$(shell $(PYTHON) setup.py --version)
-ARCHIVE:=patool-$(VERSION).tar.gz
-ARCHIVE_WIN32:=patool-$(VERSION).win32.exe
+ARCHIVE:=$(APPNAME)-$(VERSION).tar.gz
+ARCHIVE_WIN32:=$(APPNAME)-$(VERSION).win32.exe
 PY_FILES_DIRS := patool setup.py patoolib tests
 PY2APPOPTS ?=
 ifeq ($(shell uname),Darwin)
@@ -37,7 +38,7 @@ chmod:
 
 .PHONY: dist
 dist:
-	git archive --format=tar --prefix=patool-$(VERSION)/ HEAD | gzip -9 > ../$(ARCHIVE)
+	git archive --format=tar --prefix=$(APPNAME)-$(VERSION)/ HEAD | gzip -9 > ../$(ARCHIVE)
 	[ -f ../$(ARCHIVE).sha1 ] || sha1sum ../$(ARCHIVE) > ../$(ARCHIVE).sha1
 	[ -f ../$(ARCHIVE).asc ] || gpg --detach-sign --armor ../$(ARCHIVE)
 	[ -f ../$(ARCHIVE_WIN32).sha1 ] || sha1sum ../$(ARCHIVE_WIN32) > ../$(ARCHIVE_WIN32).sha1
@@ -45,8 +46,14 @@ dist:
 #	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
 
 .PHONY: upload
-upload:
+upload:	dist/README.md
 	rsync -avP -e ssh ../$(ARCHIVE)* ../$(ARCHIVE_WIN32)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
+
+dist/README.md: doc/README-Download.md.tmpl doc/changelog.txt
+# copying readme for sourceforge downloads
+	sed -e 's/{APPNAME}/$(APPNAME)/g' -e 's/{VERSION}/$(VERSION)/g' $< > $@
+# append changelog
+	awk '/released/ {c++}; c==2 {exit}; {print "    " $$0}' doc/changelog.txt >> $@
 
 
 .PHONY: release
