@@ -11,6 +11,9 @@
 * Generate standalone Windows .exe and Linux .rpm installer.
 * Initialize the internal MIME database correct on all platforms.
 * Improved option compatibility for the ar, cpio and tar programs.
+* Rename the temporary output directory if it contains multiple files.
+  The name is the archive name without extension, which is more
+  readable than a random filename "UnpackXyz".
 * Require and use Python >=2.5
 
 

@@ -425,7 +425,7 @@ def make_user_readable (directory):
             make_dir_readable(os.path.join(root, dirname))
 
 
-def cleanup_outdir (outdir):
+def cleanup_outdir (outdir, archive):
     """Cleanup outdir after extraction and return target file name and
     result string."""
     make_user_readable(outdir)
@@ -435,7 +435,11 @@ def cleanup_outdir (outdir):
         # msg is a single directory or filename
         return msg, "`%s'" % msg
     # outdir remains unchanged
-    return outdir, "`%s' (%s)" % (outdir, msg)
+    # rename it to something more user-friendly (basically the archive
+    # name without extension)
+    outdir2 = util.get_single_outfile("", archive)
+    os.rename(outdir, outdir2)
+    return outdir2, "`%s' (%s)" % (outdir2, msg)
 
 
 def check_archive_arguments (archive, command, *args):
@@ -498,7 +502,7 @@ def _handle_archive (archive, command, *args, **kwargs):
             run_archive_cmdlist(cmdlist)
         if command == 'extract':
             if do_cleanup_outdir:
-                target, msg = cleanup_outdir(cmd_kwargs["outdir"])
+                target, msg = cleanup_outdir(cmd_kwargs["outdir"], archive)
                 util.log_info("%s extracted to %s" % (archive, msg))
             else:
                 target, msg = cmd_kwargs["outdir"], "`%s'" % cmd_kwargs["outdir"]
