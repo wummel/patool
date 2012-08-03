@@ -518,6 +518,13 @@ class TestArchives (ArchiveTest):
     #    self.archive_test('t.dms.foo')
     #    self.archive_list('t.dms.foo')
 
+    @needs_program('unadf')
+    def test_unadf (self):
+        self.program = 'unadf'
+        self.archive_extract('t.adf.foo', check=None)
+        self.archive_test('t.adf.foo')
+        self.archive_list('t.adf.foo')
+
     @needs_program('file')
     @needs_program('mac')
     def test_mac (self):

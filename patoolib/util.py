@@ -44,6 +44,7 @@ def add_mimedb_data(mimedb):
     mimedb.encodings_map['.lz'] = 'lzip'
     mimedb.suffix_map['.tbz2'] = '.tar.bz2'
     add_mimetype(mimedb, 'application/x-lzop', '.lzo')
+    add_mimetype(mimedb, 'application/x-adf', '.adf')
     add_mimetype(mimedb, 'application/x-arj', '.arj')
     add_mimetype(mimedb, 'application/x-lzma', '.lzma')
     add_mimetype(mimedb, 'application/x-xz', '.xz')
@@ -248,6 +249,7 @@ def get_file_mime_encoding (parts):
 FileText2Mime = {
     "7-zip archive data": "application/x-7z-compressed",
     "ACE archive data": "application/x-ace",
+    "Amiga DOS disk": "application/x-adf",
     "ARJ archive data": "application/x-arj",
     "bzip2 compressed data": "application/x-bzip2",
     "cpio archive": "application/x-cpio",

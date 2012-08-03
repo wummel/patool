@@ -25,9 +25,12 @@ from . import util
 ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
-ArchiveFormats = ('7z', 'ace', 'alzip', 'ape', 'ar', 'arc', 'arj', 'bzip2',
-    'cab', 'compress', 'cpio', 'deb', 'dms', 'flac', 'gzip', 'lrzip', 'lzh',
-    'lzip', 'lzma', 'lzop', 'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'xz',
+ArchiveFormats = (
+    '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
+    'bzip2', 'cab', 'compress', 'cpio', 'deb', 'dms',
+    'flac', 'gzip',
+    'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
+    'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'xz',
     'zip', 'zoo')
 
 # Supported compressions (used with tar for example)
@@ -36,6 +39,7 @@ ArchiveCompressions = ('bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz')
 
 # Map MIME types to archive format
 ArchiveMimetypes = {
+    'application/x-adf': 'adf',
     'application/x-bzip2': 'bzip2',
     'application/x-tar': 'tar',
     'application/x-gzip': 'gzip',
@@ -81,6 +85,11 @@ ArchivePrograms = {
         'extract': ('unace',),
         'test': ('unace',),
         'list': ('unace',),
+    },
+    'adf': {
+        'extract': ('unadf',),
+        'test': ('unadf',),
+        'list': ('unadf',),
     },
     'alzip': {
         'extract': ('unalz',),

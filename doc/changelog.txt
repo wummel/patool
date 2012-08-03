@@ -7,6 +7,7 @@
 * Added support for lhasa handling LZH (.lzh, .lha) archives.
 * Added support for lcap handling CAB (.cab) archives.
 * Added support for shar handling SHAR (.shar) shell archives.
+* Added support for unadf handling ADF (.adf) amiga disk archives.
 * Generate standalone Windows .exe and Linux .rpm installer.
 * Initialize the internal MIME database correct on all platforms.
 * Improved option compatibility for the ar, cpio and tar programs.
