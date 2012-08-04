@@ -209,7 +209,7 @@ class ArchiveTest (unittest.TestCase):
             if olddir:
                 os.chdir(olddir)
             shutil.rmtree(tmpdir)
-        
+
 
 def get_filecontent(filename):
     fo = open(filename)
