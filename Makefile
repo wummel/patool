@@ -4,6 +4,7 @@ PYTHON:=python$(PYVER)
 APPNAME:=patool
 VERSION:=$(shell $(PYTHON) setup.py --version)
 ARCHIVE:=$(APPNAME)-$(VERSION).tar.gz
+ARCHIVE_RPM:=$(APPNAME)-$(VERSION)-1.x86_64.rpm
 ARCHIVE_WIN32:=$(APPNAME)-$(VERSION).exe
 PY_FILES_DIRS := patool setup.py patoolib tests
 PY2APPOPTS ?=
@@ -39,15 +40,20 @@ chmod:
 .PHONY: dist
 dist:
 	git archive --format=tar --prefix=$(APPNAME)-$(VERSION)/ HEAD | gzip -9 > ../$(ARCHIVE)
+#	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
+
+.PHONY: sign
+sign:
 	[ -f ../$(ARCHIVE).sha1 ] || sha1sum ../$(ARCHIVE) > ../$(ARCHIVE).sha1
 	[ -f ../$(ARCHIVE).asc ] || gpg --detach-sign --armor ../$(ARCHIVE)
 	[ -f ../$(ARCHIVE_WIN32).sha1 ] || sha1sum ../$(ARCHIVE_WIN32) > ../$(ARCHIVE_WIN32).sha1
 	[ -f ../$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor ../$(ARCHIVE_WIN32)
-#	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
+	[ -f dist/$(ARCHIVE_RPM).sha1 ] || sha1sum dist/$(ARCHIVE_RPM) > dist/$(ARCHIVE_RPM).sha1
+	[ -f dist/$(ARCHIVE_RPM).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_RPM)
 
 .PHONY: upload
-upload:	doc/README.md
-	rsync -avP -e ssh ../$(ARCHIVE)* ../$(ARCHIVE_WIN32)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
+upload:	doc/README.md sign
+	rsync -avP -e ssh doc/README.md ../$(ARCHIVE)* ../$(ARCHIVE_WIN32)* dist/$(ARCHIVE_RPM)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
 
 doc/README.md: doc/README-Download.md.tmpl doc/changelog.txt
 # copying readme for sourceforge downloads
@@ -81,6 +87,10 @@ releasecheck: check test
 .PHONY: app
 app: clean chmod
 	$(PYTHON) setup.py py2app $(PY2APPOPTS)
+
+.PHONY: rpm
+rpm:
+	$(PYTHON) setup.py bdist_rpm
 
 # The check programs used here are mostly local scripts on my private system.
 # So for other developers there is no need to execute this target.
