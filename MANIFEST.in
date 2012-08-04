@@ -1,4 +1,4 @@
 include MANIFEST.in
-include COPYING doc/*.1 doc/*.txt
+include COPYING doc/*.1 doc/*.txt doc/*.tmpl doc/icon/*
 include Makefile *.bat *.bash-completion
 recursive-include tests *.py
