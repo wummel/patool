@@ -4,7 +4,7 @@ PYTHON:=python$(PYVER)
 APPNAME:=patool
 VERSION:=$(shell $(PYTHON) setup.py --version)
 ARCHIVE:=$(APPNAME)-$(VERSION).tar.gz
-ARCHIVE_WIN32:=$(APPNAME)-$(VERSION).win32.exe
+ARCHIVE_WIN32:=$(APPNAME)-$(VERSION).exe
 PY_FILES_DIRS := patool setup.py patoolib tests
 PY2APPOPTS ?=
 ifeq ($(shell uname),Darwin)
