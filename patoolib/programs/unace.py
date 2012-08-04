@@ -20,7 +20,10 @@ def extract_ace (archive, compression, cmd, **kwargs):
     cmdlist = [cmd, 'x']
     if not kwargs['verbose']:
         cmdlist.append('-c-')
-    cmdlist.extend([archive, kwargs['outdir']])
+    outdir = kwargs['outdir']
+    if not outdir.endswith('/'):
+        outdir += '/'
+    cmdlist.extend([archive, outdir])
     return cmdlist
 
 def list_ace (archive, compression, cmd, **kwargs):
