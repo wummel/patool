@@ -64,7 +64,7 @@ doc/README.md: doc/README-Download.md.tmpl doc/changelog.txt
 
 .PHONY: release
 release: clean releasecheck dist upload
-	git tag v$(VERSION)
+	git tag upstream/$(VERSION)
 	@echo "Register at Python Package Index..."
 	$(PYTHON) setup.py register
 	freecode-submit < patool.freecode
