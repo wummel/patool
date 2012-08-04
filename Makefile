@@ -46,10 +46,10 @@ dist:
 #	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
 
 .PHONY: upload
-upload:	dist/README.md
+upload:	doc/README.md
 	rsync -avP -e ssh ../$(ARCHIVE)* ../$(ARCHIVE_WIN32)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
 
-dist/README.md: doc/README-Download.md.tmpl doc/changelog.txt
+doc/README.md: doc/README-Download.md.tmpl doc/changelog.txt
 # copying readme for sourceforge downloads
 	sed -e 's/{APPNAME}/$(APPNAME)/g' -e 's/{VERSION}/$(VERSION)/g' $< > $@
 # append changelog
