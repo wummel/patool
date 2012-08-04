@@ -491,7 +491,7 @@ class TestArchives (ArchiveTest):
     @needs_program('xdms')
     def test_xdms (self):
         self.program = 'xdms'
-        self.archive_extract('t.dms')
+        self.archive_extract('t.dms', check=None)
         self.archive_list('t.dms')
         self.archive_test('t.dms')
 
