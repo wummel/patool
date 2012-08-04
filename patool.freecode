@@ -1,6 +1,6 @@
 Project: patool
-Version: 0.16
-Release-Focus: Major feature enhancements
+Version: 0.17
+Release-Focus: Minor feature enhancements
 Hide: N
 Website-URL: http://patool.sourceforge.net/
 Changelog-URL: http://patool.git.sourceforge.net/git/gitweb.cgi?p=patool/patool;a=blob;f=doc/changelog.txt;hb=HEAD
@@ -8,8 +8,13 @@ Tar/GZ-URL: http://downloads.sourceforge.net/patool/patool-${version}.tar.gz
 GIT-Tree-URL: http://patool.git.sourceforge.net/
 Windows-installer-URL: http://downloads.sourceforge.net/patool/patool-${version}.win32.exe
 
-Support for the lbzip2 and plzip archive programs has been added.
-Native support for handling BZIP2 (.bz2), GZIP (.gz), ZIP (.zip) and
-TAR (.tar) archives has been added.
-Convenience library functions have been added for people who want to use
-the patool functionality in other Python programs.
+Support for the following archive programs has been added:
+Monkey's Audio Compressor handling .ape archives,
+shorten handling .shn archives,
+flac handling .flac archives,
+lhasa handling .lzh and .lha archives,
+lcap handling .cab archives,
+shar handling .shar shell archives and
+unadf handling .adf amiga disk archives.
+Also, the internal MIME database is now initialized correctly
+on all platforms.

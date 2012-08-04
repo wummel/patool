@@ -1,4 +1,4 @@
-0.17 "" (released xx.xx.2012)
+0.17 "I am Bruce Lee" (released 4.8.2012)
 
 * Added support for Monkey's Audio Compressor handling APE (.ape) archives.
 * Added support for shorten handling SHN (.shn) archives.
