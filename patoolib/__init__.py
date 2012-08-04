@@ -118,7 +118,7 @@ ArchivePrograms = {
         'list': ('py_echo', '7z', '7za'),
     },
     'cab': {
-        'extract': ('cabextract', '7z', 'orange'),
+        'extract': ('cabextract', '7z'),
         'create': ('lcab',),
         'list': ('cabextract', '7z'),
         'test': ('cabextract', '7z'),

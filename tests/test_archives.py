@@ -334,11 +334,6 @@ class TestArchives (ArchiveTest):
         self.archive_list('t.cab')
         self.archive_extract('t.cab', check=None)
 
-    @needs_program('orange')
-    def test_orange (self):
-        self.program = 'orange'
-        self.archive_extract('t.cab')
-
     @needs_program('lcab')
     @needs_program('cabextract')
     def test_lcab (self):
