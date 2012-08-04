@@ -1,26 +1,27 @@
 {APPNAME} Downloads
 ======================
 
-{APPNAME} {VERSION} is available for download for Windows systems
-and in source format.
+{APPNAME} {VERSION} is available for download for Windows and
+Linux systems and in source format.
 
 Files
 ------
 
-* {APPNAME}-{VERSION}.exe
+* `{APPNAME}-{VERSION}.exe`:
   The Windows installer. If you run Windows, use this. The installer is
   signed with a local certificate signature.
-* {APPNAME}-{VERSION}.rpm
-  The RPM Linux installer. If you run Redhat, Fedora or another RPM based
-  Linux distribution, use this.
-* {APPNAME}-{VERSION}.tar.gz
+* `{APPNAME}-{VERSION}-1.x86_64.rpm`:
+  The Linux RPM package compiled for the x86/64bit architecture.
+  If you have an RPM based Linux distribution and a 64bit x86 processor,
+  use this.
+* `{APPNAME}-{VERSION}.tar.gz`:
   The source code. See `doc/install.txt` for compilation and installation
   instructions.
 
-The `.asc` are GPG signatures that you can use to verify that the
+The `.asc` files are GPG signatures that you can use to verify that the
 download is indeed made by the owner of the GPG key below (ie. me).
-Download the `.asc` file in the same directory as the `.tar.gz`
-file and run `gpg --verify {APPNAME}-{VERSION}.tar.gz`
+For example download the `.tar.gz.asc` file in the same directory as the
+`.tar.gz` file and run `gpg --verify {APPNAME}-{VERSION}.tar.gz`
 
 The GPG key used to sign these packages is 32EC6F3E. It can be
 downloaded with `gpg --keyserver wwwkeys.pgp.net --recv-keys 32EC6F3E`.
