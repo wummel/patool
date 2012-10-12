@@ -486,7 +486,7 @@ def _handle_archive (archive, command, *args, **kwargs):
             cmd_kwargs["outdir"] = kwargs["outdir"]
             do_cleanup_outdir = False
         else:
-            cmd_kwargs['outdir'] = util.tmpdir(dir=os.getcwd())
+            cmd_kwargs['outdir'] = util.tmpdir(dir=".")
             do_cleanup_outdir = True
     elif command == 'create' and os.path.basename(program) == 'arc' and \
          ".arc" in archive and not archive.endswith(".arc"):
