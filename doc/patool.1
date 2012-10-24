@@ -56,10 +56,12 @@ be removed and is left as it is.
 .br
 This is the default command if no command was given.
 .PP
-Files are always extracted to a unique temporary directory in the
-current working directory. If the archive contains exactly one
-file or directory, the archive contents are moved to the current
-working directory and the temporary directory will be removed.
+If the archive contains exactly one
+file or directory, the archive contents are extracted to the current
+working directory.
+Else the files are extracted in a newly created subdirectory of the current
+working directory. The new directory is named after the archive filename without
+the extension.
 .br
 This prevents cluttering the current working directory with a lot
 of files from the extracted archive.

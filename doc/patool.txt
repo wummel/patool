@@ -23,14 +23,14 @@ DESCRIPTION
        The  archive format is determined by the file(1) program and as
        a fallback by the archive file extension.
 
-       patool supports 7z (.7z), ACE (.ace), ALZIP (.alz), APE (.ape),
-       AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB (.cab), com‐
-       press (.Z), CPIO (.cpio), DEB (.deb), DMS (.dms), FLAC (.flac),
-       GZIP  (.gz),  LRZIP  (.lrz), LZH (.lha, .lzh), LZIP (.lz), LZMA
-       (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar), RZIP  (.rz),  SHN
-       (.shn),  TAR  (.tar), XZ (.xz), ZIP (.zip, .jar) and ZOO (.zoo)
-       formats.  It relies on helper applications to handle those  ar‐
-       chive formats (for example bzip2 for BZIP2 archives).
+       patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz),
+       APE  (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB
+       (.cab), compress (.Z), CPIO (.cpio), DEB  (.deb),  DMS  (.dms),
+       FLAC  (.flac), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh), LZIP
+       (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar),  RZIP
+       (.rz),  SHN  (.shn), TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and
+       ZOO (.zoo) formats.  It relies on helper applications to handle
+       those archive formats (for example bzip2 for BZIP2 archives).
 
        The  archive  formats  TAR (.tar), ZIP (.zip), BZIP2 (.bz2) and
        GZIP (.gz) are supported natively and  do  not  require  helper
@@ -52,11 +52,11 @@ COMMANDS
        be removed and is left as it is.
        This is the default command if no command was given.
 
-       Files are always extracted to a unique temporary  directory  in
-       the  current working directory. If the archive contains exactly
-       one file or directory, the archive contents are  moved  to  the
-       current  working  directory and the temporary directory will be
-       removed.
+       If the archive contains exactly one file or directory, the  ar‐
+       chive  contents are extracted to the current working directory.
+       Else the files are extracted in a newly created subdirectory of
+       the current working directory. The new directory is named after
+       the archive filename without the extension.
        This prevents cluttering the current working directory  with  a
        lot of files from the extracted archive.
 
