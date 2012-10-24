@@ -200,6 +200,7 @@ ArchivePrograms = {
     'lzop': {
         None: ('lzop',),
     },
+    # XXX Python 3.3 has native lzma module - use that after porting to 3.3
     'lzma': {
         'extract': ('lzma',),
         'list': ('py_echo',),
