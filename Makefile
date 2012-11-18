@@ -9,17 +9,14 @@ ARCHIVE_WIN32:=$(APPNAME)-$(VERSION).exe
 PY_FILES_DIRS := patool setup.py patoolib tests
 PY2APPOPTS ?=
 ifeq ($(shell uname),Darwin)
-  NUMPROCESSORS:=$(shell sysctl -a | grep machdep.cpu.core_count | cut -d " " -f 2)
   CHMODMINUSMINUS:=
 else
-  NUMPROCESSORS:=$(shell grep -c processor /proc/cpuinfo)
   CHMODMINUSMINUS:=--
 endif
 # Pytest options:
-# - use multiple processors
-# - write test results in file
-# - run all tests found in the "tests" subdirectory
-PYTESTOPTS:=-n $(NUMPROCESSORS) --resultlog=testresults.txt
+# --resultlog: write test results in file
+# -s: do not capture stdout/stderr (some tests fail otherwise)
+PYTESTOPTS:=--resultlog=testresults.txt -s
 # which test modules to run
 TESTS ?= tests/
 # set test options
