@@ -136,7 +136,7 @@ ArchivePrograms = {
         None: ('7z', '7za', 'py_zipfile'),
         'extract': ('unzip',),
         'list': ('unzip',),
-        'test': ('unzip',),
+        'test': ('zip', 'unzip',),
         'create': ('zip',),
     },
     'gzip': {

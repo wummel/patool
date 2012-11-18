@@ -23,3 +23,11 @@ def create_zip (archive, compression, cmd, *args, **kwargs):
     cmdlist.append(archive)
     cmdlist.extend(args)
     return cmdlist
+
+def test_zip (archive, compression, cmd, *args, **kwargs):
+    """Test a ZIP archive."""
+    cmdlist = [cmd, '--test']
+    if kwargs['verbose']:
+        cmdlist.append('-v')
+    cmdlist.append(archive)
+    return cmdlist
