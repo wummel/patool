@@ -24,6 +24,6 @@ def extract_adf (archive, compression, cmd, **kwargs):
 
 def list_adf (archive, compression, cmd, **kwargs):
     """List an ADF archive."""
-    return [cmd, '-r', archive]
+    return [cmd, '-l', archive]
 
 test_adf = list_adf
