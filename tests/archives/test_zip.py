@@ -23,9 +23,9 @@ class TestZip (ArchiveTest):
     @needs_program(program)
     def test_zip (self):
         self.archive_create('t.zip')
+        self.archive_test('t.zip')
 
     @needs_program('file')
     @needs_program(program)
     def test_zip_file (self):
-        self.archive_commands('t.zip.foo', skip_create=True)
-
+        self.archive_test('t.zip.foo')

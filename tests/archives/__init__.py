@@ -50,7 +50,8 @@ class ArchiveTest (unittest.TestCase):
         """Run archive commands list, test, extract and create.
         All keyword arguments are delegated to the create test function."""
         self.archive_list(filename)
-        self.archive_test(filename)
+        if not kwargs.get('skip_test'):
+            self.archive_test(filename)
         if kwargs.get('singlefile'):
             check_default = Content.Singlefile
         else:
@@ -106,7 +107,7 @@ class ArchiveTest (unittest.TestCase):
         self.assertEqual(os.path.basename(dirname), expectedname)
 
     def check_textfile (self, filename, expectedname):
-        self.assertTrue(os.path.isfile(filename), filename)
+        self.assertTrue(os.path.isfile(filename), repr(filename))
         self.assertEqual(os.path.basename(filename), expectedname)
         self.assertEqual(get_filecontent(filename), TextFileContent)
 

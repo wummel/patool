@@ -27,4 +27,5 @@ class TestPigz (ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_pigz_file (self):
-        self.archive_commands('t.txt.gz.foo', singlefile=True)
+        self.archive_commands('t.txt.gz.foo', singlefile=True,
+          skip_create=True, skip_test=True)

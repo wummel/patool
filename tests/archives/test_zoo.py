@@ -22,11 +22,9 @@ class TestZoo (ArchiveTest):
 
     @needs_program(program)
     def test_zoo(self):
-        # XXX test failure - zoo cannot read its own files back :-(
-        self.archive_commands('t.zoo', singlefile=True)
+        self.archive_commands('t.zoo', singlefile=True, check=None)
 
-    # XXX test failure
-    #@needs_program(program)
-    #def test_zoo_file(self):
-    #    self.archive_commands('t.zoo.foo', skip_create=True)
-
+    @needs_program('file')
+    @needs_program(program)
+    def test_zoo_file(self):
+        self.archive_commands('t.zoo.foo', skip_create=True, check=None, singlefile=True)
