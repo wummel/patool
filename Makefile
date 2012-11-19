@@ -95,7 +95,7 @@ count:
 clean:
 	find . -name \*.pyc -delete
 	find . -name \*.pyo -delete
-	rm -rf build dist
+	rm -rf build dist doc/README.md
 
 test:
 	$(PYTHON) -m pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
