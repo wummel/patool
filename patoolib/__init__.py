@@ -126,7 +126,7 @@ ArchivePrograms = {
         'test': ('cabextract', '7z'),
     },
     'chm': {
-        'extract': ('archmage',),
+        'extract': ('archmage', 'extract_chmLib'),
         'test': ('archmage',),
     },
     'flac': {
@@ -247,6 +247,7 @@ ProgramModules = {
     '7za': 'p7azip',
     'uncompress.real': 'uncompress',
     'dpkg-deb': 'dpkg',
+    'extract_chmlib': 'chmlib',
 }
 
 
