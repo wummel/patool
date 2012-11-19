@@ -17,6 +17,7 @@
 """
 patool [extract|list|create|formats] [sub-command-options] <command-args>
 """
+from __future__ import print_function
 import os
 import sys
 from patoolib import handle_archive, list_formats, baker
@@ -35,7 +36,7 @@ def handle_multi_archive(archives, cmd, **kwargs):
         if not os.path.isfile(archive):
             res = 1
             msg = "archive %r is not a file" % archive
-            print >>sys.stderr, "patool error:", msg
+            print("patool error:", msg, file=sys.stderr)
         else:
             newres = handle_archive(archive, cmd, **kwargs)
             # return error if one of the archives could not be extracted
@@ -94,7 +95,7 @@ def formats ():
 
 try:
     sys.exit(baker.run())
-except baker.CommandError, msg:
-    print >>sys.stderr, "patool error:", msg
+except baker.CommandError as msg:
+    print("patool error:", msg, file=sys.stderr)
     baker.help(sys.argv[0])
     sys.exit(1)

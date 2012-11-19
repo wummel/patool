@@ -82,6 +82,11 @@ def format_paras(paras, width, indent=0):
 def totype(v, default):
     """Tries to convert the value 'v' into the same type as 'default'.
     """
+    # Python3 does not have long, so fake it
+    try:
+        long
+    except NameError:
+        long = int
 
     t = type(default)
     if t is int:
@@ -188,10 +193,10 @@ class Baker(object):
 
         if defaults:
             # Zip up the keyword argument names with their defaults
-            keywords = dict(zip(arglist[0-len(defaults):], defaults))
+            keywords = dict(list(zip(arglist[0-len(defaults):], defaults)))
         elif has_kwargs:
             # Allow keyword arguments specified by params.
-            keywords = dict(zip(params.keys(), [""]*len(params)))
+            keywords = dict(list(zip(params.keys(), [""]*len(params))))
             # But set a flag to detect this
             self.param_keywords = True
         else:
@@ -409,7 +414,7 @@ class Baker(object):
                 # Process short option(s)
 
                 # For each character after the '-'...
-                for i in xrange(1, len(arg)):
+                for i in range(1, len(arg)):
                     char = arg[i]
                     if char not in shortchars:
                         continue

@@ -17,10 +17,10 @@
 """
 Setup file for the distuils module.
 """
-
+from __future__ import print_function
 import sys
-if not hasattr(sys, "version_info") or sys.version_info < (2, 4, 0, "final", 0):
-    raise SystemExit("This program requires Python 2.4 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (2, 7, 0, "final", 0):
+    raise SystemExit("This program requires Python 2.7 or later.")
 import os
 import shutil
 import glob
@@ -164,37 +164,37 @@ class InnoScript:
 
     def write_inno_script (self, fd):
         """Write Inno script contents."""
-        print >> fd, "; WARNING: This script has been created by py2exe. Changes to this script"
-        print >> fd, "; will be overwritten the next time py2exe is run!"
-        print >> fd, "[Setup]"
-        print >> fd, "AppName=%s" % self.name
-        print >> fd, "AppVerName=%s %s" % (self.name, self.version)
-        print >> fd, r"DefaultDirName={pf}\%s" % self.name
-        print >> fd, "DefaultGroupName=%s" % self.name
-        print >> fd, "OutputBaseFilename=%s" % self.distfilebase
-        print >> fd, "OutputDir=.."
-        print >> fd, "SetupIconFile=%s" % self.icon
-        print >> fd
+        print("; WARNING: This script has been created by py2exe. Changes to this script", file=fd)
+        print("; will be overwritten the next time py2exe is run!", file=fd)
+        print("[Setup]", file=fd)
+        print("AppName=%s" % self.name, file=fd)
+        print("AppVerName=%s %s" % (self.name, self.version), file=fd)
+        print(r"DefaultDirName={pf}\%s" % self.name, file=fd)
+        print("DefaultGroupName=%s" % self.name, file=fd)
+        print("OutputBaseFilename=%s" % self.distfilebase, file=fd)
+        print("OutputDir=..", file=fd)
+        print("SetupIconFile=%s" % self.icon, file=fd)
+        print(file=fd)
         # List of source files
         files = self.windows_exe_files + \
                 self.console_exe_files + \
                 self.service_exe_files + \
                 self.comserver_files + \
                 self.lib_files
-        print >> fd, '[Files]'
+        print('[Files]', file=fd)
         for path in files:
-            print >> fd, r'Source: "%s"; DestDir: "{app}\%s"; Flags: ignoreversion' % (path, os.path.dirname(path))
+            print(r'Source: "%s"; DestDir: "{app}\%s"; Flags: ignoreversion' % (path, os.path.dirname(path)), file=fd)
         # Set icon filename
-        print >> fd, '[Icons]'
+        print('[Icons]', file=fd)
         for path in self.windows_exe_files:
-            print >> fd, r'Name: "{group}\%s"; Filename: "{app}\%s"' % \
-                  (self.name, path)
-        print >> fd, r'Name: "{group}\Uninstall %s"; Filename: "{uninstallexe}"' % self.name
-        print >> fd
+            print(r'Name: "{group}\%s"; Filename: "{app}\%s"' %
+                  (self.name, path), file=fd)
+        print(r'Name: "{group}\Uninstall %s"; Filename: "{uninstallexe}"' % self.name, file=fd)
+        print(file=fd)
         # Uninstall optional log files
-        print >> fd, '[UninstallDelete]'
-        print >> fd, r'Type: files; Name: "{pf}\%s\patool*.exe.log"' % self.name
-        print >> fd
+        print('[UninstallDelete]', file=fd)
+        print(r'Type: files; Name: "{pf}\%s\patool*.exe.log"' % self.name, file=fd)
+        print(file=fd)
 
     def compile (self):
         """Compile Inno script with iscc.exe."""
@@ -209,7 +209,7 @@ class InnoScript:
             cmd = ['signtool.exe', 'sign', '/f', pfxfile, self.distfile]
             subprocess.check_call(cmd)
         else:
-            print "No signed installer: certificate %s not found." % pfxfile
+            print("No signed installer: certificate %s not found." % pfxfile)
 
 try:
     from py2exe.build_exe import py2exe as py2exe_build
@@ -222,16 +222,16 @@ try:
             """Generate py2exe installer."""
             # First, let py2exe do it's work.
             py2exe_build.run(self)
-            print "*** preparing the inno setup script ***"
+            print("*** preparing the inno setup script ***")
             lib_dir = self.lib_dir
             dist_dir = self.dist_dir
             # create the Installer, using the files py2exe has created.
             script = InnoScript(lib_dir, dist_dir, self.windows_exe_files,
                 self.console_exe_files, self.service_exe_files,
                 self.comserver_files, self.lib_files)
-            print "*** creating the inno setup script ***"
+            print("*** creating the inno setup script ***")
             script.create()
-            print "*** compiling the inno setup script ***"
+            print("*** compiling the inno setup script ***")
             script.compile()
             script.sign()
 except ImportError:

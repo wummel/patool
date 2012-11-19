@@ -13,12 +13,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import print_function
 import sys
-if not hasattr(sys, "version_info") or sys.version_info < (2, 5, 0, "final", 0):
-    raise SystemExit("This program requires Python 2.5 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (2, 7, 0, "final", 0):
+    raise SystemExit("This program requires Python 2.7 or later.")
 import os
 import shutil
 import stat
+import importlib
 from . import util
 
 # Supported archive commands
@@ -310,29 +312,29 @@ def program_supports_compression (program, compression):
 def list_formats ():
     """Print information about available archive formats to stdout."""
     for format in ArchiveFormats:
-        print format, "files:"
+        print(format, "files:")
         for command in ArchiveCommands:
             programs = ArchivePrograms[format]
             if command not in programs and None not in programs:
-                print "   %8s: - (not supported)" % command
+                print("   %8s: - (not supported)" % command)
                 continue
             try:
                 program = find_archive_program(format, command)
-                print "   %8s: %s" % (command, program),
+                print("   %8s: %s" % (command, program), end=' ')
                 if format == 'tar':
                     encs = [x for x in ArchiveCompressions if util.find_program(x)]
                     if encs:
-                        print "(supported compressions: %s)" % ", ".join(encs),
+                        print("(supported compressions: %s)" % ", ".join(encs), end=' ')
                 elif format == '7z':
                     if util.p7zip_supports_rar():
-                        print "(rar archives supported)",
+                        print("(rar archives supported)", end=' ')
                     else:
-                        print "(rar archives not supported)",
-                print
+                        print("(rar archives not supported)", end=' ')
+                print()
             except util.PatoolError:
                 handlers = programs.get(None, programs.get(command))
-                print "   %8s: - (no program found; install %s)" % \
-                      (command, util.strlist_with_or(handlers))
+                print("   %8s: - (no program found; install %s)" %
+                      (command, util.strlist_with_or(handlers)))
     return 0
 
 
@@ -521,15 +523,17 @@ def _handle_archive (archive, command, *args, **kwargs):
 def get_archive_cmdlist_func (program, command, format):
     # get python module for given archive program
     key = util.stripext(os.path.basename(program).lower())
-    module = ProgramModules.get(key, key)
-    # import archive handler function (eg. patoolib.programs.star.extract_tar)
-    args = (module, command, format)
-    import_cmd = "from .programs.%s import %s_%s as func" % args
+    modulename = ".programs." + ProgramModules.get(key, key)
+    # import the module
     try:
-        exec import_cmd
-    except ImportError:
-        raise util.PatoolError('ImportError executing %r' % import_cmd)
-    return locals()['func']
+        module = importlib.import_module(modulename, __name__)
+    except ImportError as msg:
+        raise util.PatoolError(msg)
+    # get archive handler function (eg. patoolib.programs.star.extract_tar)
+    try:
+        return getattr(module, '%s_%s' % (command, format))
+    except AttributeError as msg:
+        raise util.PatoolError(msg)
 
 
 def rmtree_log_error (func, path, exc):
@@ -542,7 +546,7 @@ def _diff_archives (archive1, archive2, **kwargs):
     """Show differences between two archives."""
     if util.is_same_file(archive1, archive2):
         msg = "no differences found: archive `%s' and `%s' are the same files"
-        print msg % (archive1, archive2)
+        print(msg % (archive1, archive2))
         return 0
     diff = util.find_program("diff")
     if not diff:
@@ -588,10 +592,10 @@ def handle_archive (archive, command, *args, **kwargs):
     except KeyboardInterrupt:
         util.log_error("aborted")
         res = 1
-    except util.PatoolError, msg:
+    except util.PatoolError as msg:
         util.log_error(msg)
         res = 1
-    except StandardError, msg:
+    except Exception as msg:
         util.log_internal_error()
         res = 1
     return res

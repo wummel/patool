@@ -14,12 +14,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
+import sys
 import patoolib
 import pytest
 
 basedir = os.path.dirname(__file__)
 datadir = os.path.join(basedir, 'data')
 
+# Python 3.x renamed the function name attribute
+if sys.version_info[0] > 2:
+    fnameattr = '__name__'
+else:
+    fnameattr = 'func_name'
 
 def needs_os (name):
     """Decorator skipping test if given program is not available."""
@@ -28,7 +34,7 @@ def needs_os (name):
             if os.name != name:
                 raise pytest.skip("operating system %s not found" % name)
             return f(*args, **kwargs)
-        newfunc.func_name = f.func_name
+        setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc
     return check_prog
 
@@ -40,7 +46,7 @@ def needs_program (program):
             if not patoolib.util.find_program(program):
                 raise pytest.skip("program `%s' not available" % program)
             return f(*args, **kwargs)
-        newfunc.func_name = f.func_name
+        setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc
     return check_prog
 
@@ -55,7 +61,7 @@ def needs_one_program (programs):
             else:
                 raise pytest.skip("None of programs %s available" % programs)
             return f(*args, **kwargs)
-        newfunc.func_name = f.func_name
+        setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc
     return check_prog
 
@@ -69,7 +75,7 @@ def needs_codec (program, codec):
             if not has_codec(program, codec):
                 raise pytest.skip("codec `%s' for program `%s' not available" % (codec, program))
             return f(*args, **kwargs)
-        newfunc.func_name = f.func_name
+        setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc
     return check_prog
 
@@ -81,5 +87,3 @@ def has_codec (program, codec):
     if patoolib.program_supports_compression(program, codec):
         return True
     return patoolib.util.find_program(codec)
-
-

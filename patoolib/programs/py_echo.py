@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands echoing data, implemented by the Python print
 statement."""
+from __future__ import print_function
 from .. import util
 
 
@@ -60,5 +61,5 @@ def list_flac (archive, compression, cmd, **kwargs):
 
 def stripext (cmd, archive, extension=""):
     """Print the name without suffix."""
-    print util.stripext(archive)+extension
+    print(util.stripext(archive)+extension)
     return None

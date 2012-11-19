@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Utility functions."""
+from __future__ import print_function
 import os
 import sys
 import subprocess
@@ -30,7 +31,7 @@ def init_mimedb():
     global mimedb
     try:
         mimedb = mimetypes.MimeTypes(strict=False)
-    except StandardError, msg:
+    except Exception as msg:
         log_error("could not initialize MIME database: %s" % msg)
         return
     add_mimedb_data(mimedb)
@@ -78,7 +79,7 @@ def add_mimetype(mimedb, mimetype, extension):
     mimedb.add_type(mimetype, extension, strict=strict)
 
 
-class PatoolError (StandardError):
+class PatoolError (Exception):
     """Raised when errors occur."""
     pass
 
@@ -324,7 +325,7 @@ def set_mode (filename, flags):
     if not (mode & flags):
         try:
             os.chmod(filename, flags | mode)
-        except OSError, msg:
+        except OSError as msg:
             log_error("could not set mode flags for `%s': %s" % (filename, msg))
 
 
@@ -375,20 +376,20 @@ def get_single_outfile (directory, archive, extension=""):
 
 def log_error (msg, out=sys.stderr):
     """Print error message to stderr (or any other given output)."""
-    print >> out, "patool error:", msg
+    print("patool error:", msg, file=out)
 
 
 def log_info (msg, out=sys.stdout):
     """Print info message to stdout (or any other given output)."""
-    print >> out, "patool:", msg
+    print("patool:", msg, file=out)
 
 
 def log_internal_error (out=sys.stderr):
     """Print internal error message to stderr."""
-    print >> out, "patool: internal error"
+    print("patool: internal error", file=out)
     traceback.print_exc()
-    print >> out, "System info:"
-    print >> out, "Python %s on %s" % (sys.version, sys.platform)
+    print("System info:", file=out)
+    print("Python %s on %s" % (sys.version, sys.platform), file=out)
 
 
 def p7zip_supports_rar ():
@@ -421,13 +422,17 @@ def append_to_path (path, directory):
 
 def get_nt_7z_dir ():
     """Return 7-Zip directory from registry, or an empty string."""
+    # Python 3.x renamed the _winreg module to winreg
     try:
-        import _winreg
-        key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip")
+        import _winreg as winreg
+    except ImportError:
+        import winreg
+    try:
+        key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip")
         try:
-            return _winreg.QueryValueEx(key, "Path")[0]
+            return winreg.QueryValueEx(key, "Path")[0]
         finally:
-            _winreg.CloseKey(key)
+            winreg.CloseKey(key)
     except WindowsError:
         return ""
 

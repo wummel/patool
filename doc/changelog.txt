@@ -1,6 +1,7 @@
 0.18 "" (released xx.xx.xxxx)
 
 * Fixed unadf archive listing.
+* Added support for Python 3.x and depend on Python >= 2.7.
 
 
 0.17 "I am Bruce Lee" (released 4.8.2012)
