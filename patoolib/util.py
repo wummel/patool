@@ -70,6 +70,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, 'audio/x-ape', '.ape')
     add_mimetype(mimedb, 'audio/x-shn', '.shn')
     add_mimetype(mimedb, 'audio/flac', '.flac')
+    add_mimetype(mimedb, 'application/x-chm', '.chm')
 
 
 def add_mimetype(mimedb, mimetype, extension):
@@ -274,6 +275,7 @@ FileText2Mime = {
     "DMS archive data": "application/x-dms",
     "Monkey's Audio": "audio/x-ape",
     "FLAC audio bitstream data": "audio/flac",
+    "MS Windows HtmlHelp Data": "application/x-chm",
 }
 
 def guess_mime_file_text (file_prog, filename):

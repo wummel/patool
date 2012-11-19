@@ -29,9 +29,8 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 # Supported archive formats
 ArchiveFormats = (
     '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
-    'bzip2', 'cab', 'compress', 'cpio', 'deb', 'dms',
-    'flac', 'gzip',
-    'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
+    'bzip2', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
+    'flac', 'gzip', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
     'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'xz',
     'zip', 'zoo')
 
@@ -55,6 +54,7 @@ ArchiveMimetypes = {
     'application/x-cab': 'cab',
     'application/vnd.ms-cab-compressed': 'cab',
     'application/x-arj': 'arj',
+    'application/x-chm': 'chm',
     'application/x-cpio': 'cpio',
     'application/x-redhat-package-manager': 'rpm',
     'application/x-rpm': 'rpm',
@@ -124,6 +124,10 @@ ArchivePrograms = {
         'create': ('lcab',),
         'list': ('cabextract', '7z'),
         'test': ('cabextract', '7z'),
+    },
+    'chm': {
+        'extract': ('archmage',),
+        'test': ('archmage',),
     },
     'flac': {
         'extract': ('flac',),
@@ -629,5 +633,5 @@ def diff (archive1, archive2, verbose=False):
 
 
 def repack (archive1, archive2, verbose=False):
-    """Repacke archive to different file and/or format."""
+    """Repack archive to different file and/or format."""
     return handle_archive(archive1, 'repack', archive2, verbose=verbose)
