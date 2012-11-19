@@ -204,7 +204,7 @@ class InnoScript:
 
     def sign (self):
         """Sign InnoSetup installer with local self-signed certificate."""
-        pfxfile = r'C:\certificate.pfx'
+        pfxfile = r'C:\patool.pfx'
         if os.path.isfile(pfxfile):
             cmd = ['signtool.exe', 'sign', '/f', pfxfile, self.distfile]
             subprocess.check_call(cmd)
