@@ -1,5 +1,5 @@
 :: Run patool test suite
-:: Copyright (C) 2010 Bastian Kleineidam
+:: Copyright (C) 2010-2012 Bastian Kleineidam
 :: This program is free software: you can redistribute it and/or modify
 :: it under the terms of the GNU General Public License as published by
 :: the Free Software Foundation, either version 3 of the License, or
@@ -14,5 +14,5 @@
 :: along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @echo off
 set PYDIR=C:\Python27
-%PYDIR%\python.exe %PYDIR%\scripts\nosetests -v -m "^test_.*" tests/
-@pause
+%PYDIR%\python.exe -m pytest tests
+pause
