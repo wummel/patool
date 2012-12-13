@@ -104,7 +104,7 @@ doc/patool.txt: doc/patool.1
 	cols=`stty size | cut -d" " -f2`; stty cols 72; man -l doc/patool.1 | perl -pe 's/.\cH//g' > doc/patool.txt; stty cols $$cols
 
 deb:
-	git-buildpackage --git-export-dir=../debian/build-area/ --git-upstream-branch=master --git-debian-branch=debian  --git-ignore-new
+	git-buildpackage --git-upstream-branch=master --git-debian-branch=debian  --git-ignore-new
 
 update-copyright:
 	update-copyright --holder="Bastian Kleineidam"
