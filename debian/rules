@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python2
+
+override_dh_auto_build:
+# force usage of setup.py over Makefile
+	dh_auto_build --buildsystem python_distutils
+	$(MAKE) doc/patool.txt
+
+# do not run test suite when building
+override_dh_auto_test:
+
+override_dh_installchangelogs:
+# install custom changelog
+	dh_installchangelogs doc/changelog.txt
+
+
+ROOT=$(CURDIR)/debian/patool
+
+override_dh_auto_install:
+	dh_auto_install --buildsystem python_distutils
+# install bash_completion script
+	install -m 644 patool.bash-completion $(ROOT)/etc/bash_completion.d/patool
+# install bts file
+	install -m 0644 debian/bts $(ROOT)/usr/share/bug/patool/control
+
+# use xz for debian binary package compression
+override_dh_builddeb:
+	dh_builddeb -- -Zxz
+

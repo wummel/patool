@@ -1,0 +1,39 @@
+Source: patool
+Section: utils
+Priority: optional
+Maintainer: Bastian Kleineidam <calvin@debian.org>
+Build-Depends: python-all-dev (>= 2.5), debhelper (>= 9)
+X-Python-Version: >= 2.5
+Standards-Version: 3.9.3
+Homepage: http://patool.sourceforge.net/
+
+Package: patool
+Architecture: any
+Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Recommends: file
+Provides: ${python:Provides}
+Suggests: arj, bzip2 | lbzip2 | pbzip2, cabextract, compress, cpio | bsdcpio,
+  lzop, p7zip-full, rar | unrar | unrar-nonfree, zip | unzip,
+  rpm2cpio, binutils, lha, unace | unace-nonfree, arc | nomarch, unalz,
+  lrzip (>= 0.551), tar | star | bsdtar, rzip, zoo, xdms, orange,
+  lzip | plzip | clzip | pdlzip, shar, flac, shorten, unadf
+Description: command line archive file manager
+ *** Unofficial package from calvin@debian.org ***
+ .
+ Various archive types can be created, extracted, tested, listed, compared
+ and repacked by patool. The archive format is determined by the archive
+ file extension and as a fallback with file(1).
+ .
+ patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz), AR (.a),
+ ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB (.cab), compress (.Z), CPIO (.cpio),
+ DEB (.deb), DMS (.dms), FLAC (.flac), GZIP (.gz), LZH (.lha, .lzh),
+ LZIP (.lz), LZMA (.lzma),  LZOP (.lzo), RAR (.rar), RPM (.rpm), RZIP (.rz),
+ SHAR (.shar), SHN (.shn),  TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and
+ ZOO (.zoo) formats.
+ .
+ It relies on helper applications to handle those archive formats
+ (for example bzip2 for BZIP2 archives).
+ .
+ The archive formats TAR (.tar), ZIP (.zip), BZIP2 (.bz2) and GZIP (.gz)
+ are supported natively and do not require helper applications to be
+ installed.

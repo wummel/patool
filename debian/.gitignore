@@ -1,0 +1,7 @@
+/files
+/*.debhelper
+/*.debhelper.log
+/patool
+/tmp
+/*.substvars
+/python-module-stampdir

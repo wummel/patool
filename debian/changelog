@@ -1,0 +1,96 @@
+patool (0.17-0calvin1) UNRELEASED; urgency=low
+
+  * New upstream release.
+  * Updated Standards version to 3.9.3
+  * Suggest newly supported alternatives plzip and pbzip2.
+  * Use debhelper compatibility level 9.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Wed, 23 May 2012 19:28:34 +0200
+
+patool (0.15-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Sun, 12 Feb 2012 09:18:58 +0100
+
+patool (0.13-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Mon, 24 Jan 2011 14:29:19 -0600
+
+patool (0.12-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Sat, 20 Nov 2010 21:42:21 +0100
+
+patool (0.11-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+  * Updated Standards version to 3.9.1 (no changes)
+
+ -- Bastian Kleineidam <calvin@debian.org>  Mon, 04 Oct 2010 20:36:05 +0200
+
+patool (0.10-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Sat, 10 Apr 2010 22:35:34 +0200
+
+patool (0.9-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+  * Suggest new supported archive programs (zoo, rzip).
+
+ -- Bastian Kleineidam <calvin@debian.org>  Thu, 18 Mar 2010 19:33:17 +0100
+
+patool (0.8-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Wed, 10 Mar 2010 19:45:33 +0100
+
+patool (0.7-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+  * Suggest new supported archive programs (arc, nomarch, unalz, lrzip).
+
+ -- Bastian Kleineidam <calvin@debian.org>  Mon, 08 Mar 2010 18:36:53 +0100
+
+patool (0.6-0calvin) unstable; urgency=low
+
+  * New upstream release.
+  * Suggest new supported archive programs (ar, lha, unace).
+
+ -- Bastian Kleineidam <calvin@debian.org>  Sat, 06 Mar 2010 19:31:12 +0100
+
+patool (0.5-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Thu, 04 Mar 2010 16:55:21 +0100
+
+patool (0.4-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Wed, 03 Mar 2010 21:19:48 +0100
+
+patool (0.3-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Tue, 23 Feb 2010 19:31:55 +0100
+
+patool (0.2-0calvin1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Mon, 22 Feb 2010 18:28:25 +0100
+
+patool (0.1-0calvin1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Sun, 21 Feb 2010 18:32:04 +0100
