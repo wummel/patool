@@ -1,12 +1,8 @@
 Patool
 =======
 
-Patool is a portable command line archive file manager.
-
-Introduction
-
 Various archive types can be  created,  extracted,  tested  and
-listed  by patool. The advantage of patool is its simplicity in
+listed with patool. The advantage of patool is its simplicity in
 handling archive files without having to remember a  myriad  of
 programs and options.
 
@@ -27,6 +23,7 @@ GZIP (.gz) are supported natively and  do  not  require  helper
 applications to be installed.
 
 Examples
+---------
 ```
 patool extract archive.zip otherarchive.rar
 patool test --verbose dist.tar.gz
