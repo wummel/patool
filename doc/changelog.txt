@@ -1,4 +1,4 @@
-0.18 "" (released xx.xx.xxxx)
+0.18 "Skyfall" (released 15.12.2012)
 
 * Fixed unadf archive listing.
 * Added support for Python 3.x.
