@@ -8,13 +8,6 @@ Tar/GZ-URL: https://github.com/downloads/wummel/patool/patool-${version}.tar.gz
 GIT-Tree-URL: https://github.com/wummel/patool.git
 Windows-installer-URL: http://github.com/downloads/wummel/patool/patool-${version}.win32.exe
 
-Support for the following archive programs has been added:
-Monkey's Audio Compressor handling .ape archives,
-shorten handling .shn archives,
-flac handling .flac archives,
-lhasa handling .lzh and .lha archives,
-lcap handling .cab archives,
-shar handling .shar shell archives and
-unadf handling .adf amiga disk archives.
-Also, the internal MIME database is now initialized correctly
-on all platforms.
+Support has been added for chmlib and archmage handling
+Microsoft ITSS/CHM (.chm) archives. Also the project moved from
+sourceforge to github.
