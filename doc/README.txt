@@ -32,3 +32,8 @@ patool create --verbose myfiles.zip file1.txt dir/
 patool diff release1.0.tar.gz release2.0.zip
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 ```
+
+Website
+--------
+See http://wummel.github.com/patool/ for more info and downloads.
+

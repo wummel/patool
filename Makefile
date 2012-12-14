@@ -3,7 +3,7 @@ PYVER:=2.7
 PYTHON:=python$(PYVER)
 APPNAME:=patool
 VERSION:=$(shell $(PYTHON) setup.py --version)
-ARCHIVE:=$(APPNAME)-$(VERSION).tar.gz
+ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
 ARCHIVE_RPM:=$(APPNAME)-$(VERSION)-1.x86_64.rpm
 ARCHIVE_WIN32:=$(APPNAME)-$(VERSION).exe
 PY_FILES_DIRS := patool setup.py patoolib tests
@@ -30,33 +30,30 @@ chmod:
 	find . -type d -exec chmod 755 {} \;
 
 dist:
-	git archive --format=tar --prefix=$(APPNAME)-$(VERSION)/ HEAD | gzip -9 > ../$(ARCHIVE)
-#	cd .. && zip -r - patool-git -x "**/.git/**" > $(HOME)/temp/share/patool-devel.zip
+	$(PYTHON) setup.py bdist_rpm
+	git archive --format=tar --prefix=$(APPNAME)-$(VERSION)/ HEAD | gzip -9 > dist/$(ARCHIVE_SOURCE)
+	[ ! -f ../$(ARCHIVE_WIN32) ] || cp ../$(ARCHIVE_WIN32) dist
 
 sign:
-	[ -f ../$(ARCHIVE).sha1 ] || sha1sum ../$(ARCHIVE) > ../$(ARCHIVE).sha1
-	[ -f ../$(ARCHIVE).asc ] || gpg --detach-sign --armor ../$(ARCHIVE)
-	[ -f ../$(ARCHIVE_WIN32).sha1 ] || sha1sum ../$(ARCHIVE_WIN32) > ../$(ARCHIVE_WIN32).sha1
-	[ -f ../$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor ../$(ARCHIVE_WIN32)
-	[ -f dist/$(ARCHIVE_RPM).sha1 ] || sha1sum dist/$(ARCHIVE_RPM) > dist/$(ARCHIVE_RPM).sha1
+	[ -f dist/$(ARCHIVE_SOURCE).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_SOURCE)
+	[ -f dist/$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WIN32)
 	[ -f dist/$(ARCHIVE_RPM).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_RPM)
 
-upload:	doc/README.md sign
-	rsync -avP -e ssh doc/README.md ../$(ARCHIVE)* ../$(ARCHIVE_WIN32)* dist/$(ARCHIVE_RPM)* calvin,patool@frs.sourceforge.net:/home/frs/project/p/pa/patool/$(VERSION)/
+upload:	dist/README.md sign
+	github-upload wummel patool dist/*
+	make -C $(HOMEPAGE)
 
-doc/README.md: doc/README-Download.md.tmpl doc/changelog.txt
-# copying readme for sourceforge downloads
+dist/README.md: doc/README-Download.md.tmpl doc/changelog.txt
+# copying readme for release
 	sed -e 's/{APPNAME}/$(APPNAME)/g' -e 's/{VERSION}/$(VERSION)/g' $< > $@
 # append changelog
 	awk '/released/ {c++}; c==2 {exit}; {print "    " $$0}' doc/changelog.txt >> $@
-
 
 release: clean releasecheck dist upload
 	git tag upstream/$(VERSION)
 	@echo "Register at Python Package Index..."
 	$(PYTHON) setup.py register
 	freecode-submit < patool.freecode
-
 
 releasecheck: check test
 	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
@@ -73,9 +70,6 @@ releasecheck: check test
 # Build OSX installer
 app: clean chmod
 	$(PYTHON) setup.py py2app $(PY2APPOPTS)
-
-rpm:
-	$(PYTHON) setup.py bdist_rpm
 
 # The check programs used here are mostly local scripts on my private system.
 # So for other developers there is no need to execute this target.
@@ -110,7 +104,7 @@ update-copyright:
 	update-copyright --holder="Bastian Kleineidam"
 
 changelog:
-	sftrack_changelog patool calvin@users.sourceforge.net doc/changelog.txt $(DRYRUN)
+	github-changelog $(DRYRUN) wummel patool doc/changelog.txt
 
-.PHONY: changelog update-copyright deb test clean count pyflakes check rpm app
+.PHONY: changelog update-copyright deb test clean count pyflakes check app
 .PHONY: releasecheck release upload sign dist chmod all

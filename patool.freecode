@@ -2,11 +2,11 @@ Project: patool
 Version: 0.17
 Release-Focus: Minor feature enhancements
 Hide: N
-Website-URL: http://patool.sourceforge.net/
-Changelog-URL: http://patool.git.sourceforge.net/git/gitweb.cgi?p=patool/patool;a=blob;f=doc/changelog.txt;hb=HEAD
-Tar/GZ-URL: http://downloads.sourceforge.net/patool/patool-${version}.tar.gz
-GIT-Tree-URL: http://patool.git.sourceforge.net/
-Windows-installer-URL: http://downloads.sourceforge.net/patool/patool-${version}.win32.exe
+Website-URL: http://github.com/wummel/patool
+Changelog-URL: https://github.com/wummel/patool/blob/master/doc/changelog.txt
+Tar/GZ-URL: https://github.com/downloads/wummel/patool/patool-${version}.tar.gz
+GIT-Tree-URL: https://github.com/wummel/patool.git
+Windows-installer-URL: http://github.com/downloads/wummel/patool/patool-${version}.win32.exe
 
 Support for the following archive programs has been added:
 Monkey's Audio Compressor handling .ape archives,
