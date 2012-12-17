@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>Patool by wummel</title>
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="a portable command line archive file manager">
+  <meta name="author" content="Bastian Kleineidam">
+  <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="media/css/stylesheet.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="media/css/pygment_trac.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="media/css/print.css" media="print" />
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <title>Patool by Bastian Kleineidam</title>
   </head>
 
-  <body>
-    <div id="container">
-      <div class="inner">
+<body>
+  <div id="container">
+    <div class="inner">
 
-        <header>
-          <h1>Patool</h1>
-          <h2>patool is a portable command line archive file manager</h2>
-        </header>
+  <header>
+    <h1>Patool</h1>
+    <h2>Patool is a portable command line archive file manager</h2>
+  </header>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/downloads/wummel/patool/patool-0.17.win32.exe" id="download-exe" class="button"><span>Download 0.17 installer</span></a>
-          <a href="https://github.com/downloads/wummel/patool/patool-0.17.tar.gz" id="download-tar-gz" class="button"><span>Download 0.17 source</span></a>
-          <a href="https://github.com/wummel/patool" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+  <section id="downloads" class="clearfix">
+    <a href="http://github.com/downloads/wummel/patool/patool-0.18.tar.gz" 
+      title="Download source .tar.gz package"
+      id="download-tar-gz" class="button"><span>Patool.tar.gz 0.18</span></a>
+    <a href="http://github.com/downloads/wummel/patool/patool-0.18.exe"
+      title="Download Windows .exe installer"
+      id="download-exe" class="button"><span>Patool.exe 0.18</span></a>
+    <a href="https://github.com/wummel/patool" id="view-on-github" class="button"><span>View on GitHub</span></a>
+<!--    <p>
+    <a href="https://github.com/wummel/patool/blob/master/patool.freecode">Release notes</a>
+    <a href="https://github.com/wummel/patool/blob/master/doc/changelog.txt">Changelog</a>
+    </p> -->
+  </section>
 
-        <hr>
+  <hr>
 
-        <section id="main_content">
-          <h1>Patool</h1>
+  <section id="main_content">
+    <h1>Introduction</h1>
 
 <p>Various archive types can be  created,  extracted,  tested  and
 listed with patool. The advantage of patool is its simplicity in
@@ -56,20 +66,32 @@ applications to be installed.</p>
 
 <h2>Examples</h2>
 
-<pre><code>patool extract archive.zip otherarchive.rar
+<pre><code># extract two archives
+patool extract archive.zip otherarchive.rar
+
+# test if archive is intact
 patool test --verbose dist.tar.gz
+
+# list files inside an archive
 patool list package.deb
+
+# create a new archive
 patool create --verbose myfiles.zip file1.txt dir/
+
+# list differences between two archive contents
 patool diff release1.0.tar.gz release2.0.zip
+
+# create a new archive in different format
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 </code></pre>
-        </section>
+  </section>
 
-        <footer>
-          Patool is maintained by <a href="https://github.com/wummel">wummel</a><br>
-        </footer>
+  <footer>
+    Patool is written and maintained by <a href="https://github.com/wummel">Bastian Kleineidam</a><br>
+  </footer>
         
-      </div>
-    </div>
-  </body>
+</div>
+
+  </div>
+</body>
 </html>

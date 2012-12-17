@@ -104,7 +104,7 @@ header h2 {
 
 a.button {
   -moz-border-radius: 30px;
-  -webkit-border-radius: 30px;                     
+  -webkit-border-radius: 30px;
   border-radius: 30px;
   border-top: solid 1px #cbcbcb;
   border-left: solid 1px #b7b7b7;
@@ -118,7 +118,7 @@ a.button {
   display: block;
   float: left;
   width: 179px;
-  margin-right: 14px;  
+  margin-right: 14px;
   background: #fdfdfd; /* Old browsers */
   background: -moz-linear-gradient(top,  #fdfdfd 0%, #f2f2f2 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
@@ -152,8 +152,8 @@ a.button span {
   height: 23px;
 }
 
-#download-zip span {
-  background: transparent url(../images/zip-icon.png) 12px 50% no-repeat;
+#download-exe span {
+  background: transparent url(../images/exe-icon.png) 12px 50% no-repeat;
 }
 #download-tar-gz span {
   background: transparent url(../images/tar-gz-icon.png) 12px 50% no-repeat;

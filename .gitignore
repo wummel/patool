@@ -1,1 +1,8 @@
+# our todos
 /todo
+# hyde files
+/.hyde_deps
+/content/
+/layout/
+/Makefile
+/*.yaml
