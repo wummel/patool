@@ -129,7 +129,7 @@ doc/$(LAPPNAME).txt: doc/$(LAPPNAME).1
 
 deb:
 # build a debian package
-	[ -f $(DEBORIGFILE) ] || cp dist/$(ARCHIVE_SOURCE) $(DEBORIGFILE) $(DEBUILDDIR)/$(APPNAME)_$(VERSION).orig.tar.gz
+	[ -f $(DEBORIGFILE) ] || cp dist/$(ARCHIVE_SOURCE) $(DEBORIGFILE) $(DEBUILDDIR)/$(LAPPNAME)_$(VERSION).orig.tar.gz
 	sed -i 's/VERSION:=.*/VERSION:=$(VERSION)/' $(DEBUILDDIR)/$(LAPPNAME).mak
 	[ -d $(DEBPACKAGEDIR) ] || (cd $(DEBUILDDIR); \
 	  patool extract $(DEBORIGFILE); \
@@ -137,8 +137,8 @@ deb:
 	  git checkout debian; \
 	  cp -r debian $(DEBPACKAGEDIR); \
 	  git checkout master)
-	rm -f $(DEBUILDDIR)/$(PACKAGE)
-	$(MAKE) -C $(DEBUILDDIR) $(PACKAGE)
+	rm -f $(DEBUILDDIR)/$(LAPPNAME)
+	$(MAKE) -C $(DEBUILDDIR) $(LAPPNAME)
 
 update-copyright:
 # update-copyright is a local tool which updates the copyright year for each

@@ -29,6 +29,7 @@ try:
     from cx_Freeze import setup, Executable
 except ImportError:
     from distutils.core import setup
+from distutils.command.register import register
 try:
     # py2exe monkey-patches the distutils.core.Distribution class
     # So we need to import it before importing the Distribution class
@@ -240,6 +241,16 @@ except ImportError:
         pass
 
 
+class MyRegister (register, object):
+    """Custom register command."""
+
+    def build_post_data(self, action):
+        """Force application name to lower case."""
+        data = super(MyRegister, self).build_post_data(action)
+        data['name'] = data['name'].lower()
+        return data
+
+
 args = dict(
     name = AppName,
     version = AppVersion,
@@ -287,6 +298,7 @@ installed.
     distclass = MyDistribution,
     cmdclass = {
         'py2exe': MyPy2exe,
+        'register': MyRegister,
     },
     options = {
         "py2exe": py2exe_options,
