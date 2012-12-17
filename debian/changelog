@@ -1,11 +1,12 @@
-patool (0.17-0calvin1) UNRELEASED; urgency=low
+patool (0.18-0calvin1) unstable; urgency=low
 
   * New upstream release.
   * Updated Standards version to 3.9.3
   * Suggest newly supported alternatives plzip and pbzip2.
   * Use debhelper compatibility level 9.
+  * Depend on Python >= 2.7
 
- -- Bastian Kleineidam <calvin@debian.org>  Wed, 23 May 2012 19:28:34 +0200
+ -- Bastian Kleineidam <calvin@debian.org>  Mon, 17 Dec 2012 20:19:58 +0100
 
 patool (0.15-0calvin1) unstable; urgency=low
 

@@ -2,10 +2,10 @@ Source: patool
 Section: utils
 Priority: optional
 Maintainer: Bastian Kleineidam <calvin@debian.org>
-Build-Depends: python-all-dev (>= 2.5), debhelper (>= 9)
-X-Python-Version: >= 2.5
+Build-Depends: python-all-dev (>= 2.7), debhelper (>= 9)
+X-Python-Version: >= 2.7
 Standards-Version: 3.9.3
-Homepage: http://patool.sourceforge.net/
+Homepage: http://wummel.github.com/patool/
 
 Package: patool
 Architecture: any

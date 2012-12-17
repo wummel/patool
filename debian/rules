@@ -15,7 +15,6 @@ override_dh_installchangelogs:
 # install custom changelog
 	dh_installchangelogs doc/changelog.txt
 
-
 ROOT=$(CURDIR)/debian/patool
 
 override_dh_auto_install:
@@ -28,4 +27,3 @@ override_dh_auto_install:
 # use xz for debian binary package compression
 override_dh_builddeb:
 	dh_builddeb -- -Zxz
-
