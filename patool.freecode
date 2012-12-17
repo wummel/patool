@@ -1,5 +1,5 @@
 Project: patool
-Version: 0.17
+Version: 0.18
 Release-Focus: Minor feature enhancements
 Hide: N
 Website-URL: http://github.com/wummel/patool
@@ -9,5 +9,5 @@ GIT-Tree-URL: https://github.com/wummel/patool.git
 Windows-installer-URL: http://github.com/downloads/wummel/patool/patool-${version}.win32.exe
 
 Support has been added for chmlib and archmage handling
-Microsoft ITSS/CHM (.chm) archives. Also the project moved from
-sourceforge to github.
+Microsoft ITSS/CHM (.chm) archives. The project moved from
+Sourceforge to Github.

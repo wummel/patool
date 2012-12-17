@@ -42,6 +42,7 @@ def create_tar (archive, compression, cmd, *args, **kwargs):
     return cmdlist
 
 def add_tar_opts (cmdlist, compression, verbose):
+    """Add tar options to cmdlist."""
     progname = os.path.basename(cmdlist[0])
     if compression == 'gzip':
         cmdlist.append('-z')

@@ -526,6 +526,7 @@ def _handle_archive (archive, command, *args, **kwargs):
 
 
 def get_archive_cmdlist_func (program, command, format):
+    """Get the Python function that executes the given program."""
     # get python module for given archive program
     key = util.stripext(os.path.basename(program).lower())
     modulename = ".programs." + ProgramModules.get(key, key)

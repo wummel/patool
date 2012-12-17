@@ -107,7 +107,9 @@ def totype(v, default):
         return v
 
 
-class CommandError(Exception): pass
+class CommandError(Exception):
+    """Error for baker commands."""
+    pass
 
 
 class Cmd(object):
@@ -116,6 +118,7 @@ class Cmd(object):
 
     def __init__(self, name, fn, argnames, keywords, shortopts,
                  has_varargs, has_kwargs, docstring, paramdocs):
+        """Store given metadata."""
         self.name = name
         self.fn = fn
         self.argnames = argnames
@@ -129,7 +132,10 @@ class Cmd(object):
 
 
 class Baker(object):
+    """Main class."""
+
     def __init__(self):
+        """Initialize command variables."""
         self.commands = {}
         self.defaultcommand = None
 
@@ -343,6 +349,7 @@ class Baker(object):
         sys.exit(0)
 
     def parse_args(self, scriptname, cmd, argv):
+        """Parse command arguments."""
         keywords = cmd.keywords
         shortopts = cmd.shortopts
 

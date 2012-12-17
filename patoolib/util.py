@@ -91,10 +91,13 @@ class memoized (object):
     not re-evaluated."""
 
     def __init__(self, func):
+        """Set func and init cache."""
         self.func = func
         self.cache = {}
 
     def __call__(self, *args):
+        """Try to find result for function arguments in local cache or
+        execute the function and fill the cache with the result."""
         try:
             return self.cache[args]
         except KeyError:

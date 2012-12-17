@@ -34,5 +34,6 @@ def create_ape (archive, compression, cmd, *args, **kwargs):
 
 
 def test_ape (archive, compression, cmd, **kwargs):
+    """Test an APE archive."""
     cmdlist = [cmd, archive, '-v']
     return cmdlist
