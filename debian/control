@@ -6,6 +6,8 @@ Build-Depends: python-all-dev (>= 2.7), debhelper (>= 9)
 X-Python-Version: >= 2.7
 Standards-Version: 3.9.3
 Homepage: http://wummel.github.com/patool/
+XS-Vcs-Git-Upstream: git://github.com/wummel/patool.git
+XS-Vcs-Browser-Upstream: https://github.com/wummel/patool
 
 Package: patool
 Architecture: any
