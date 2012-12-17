@@ -45,7 +45,7 @@ except ImportError:
     executables = None
 from distutils import util
 
-AppName = "patool"
+AppName = "Patool"
 AppVersion = "0.18"
 MyName = "Bastian Kleineidam"
 MyEmail = "calvin@users.sourceforge.net"
