@@ -7,7 +7,6 @@ AUTHOR:=$(shell $(PYTHON) setup.py --author)
 APPNAME:=$(shell $(PYTHON) setup.py --name)
 LAPPNAME:=$(shell echo $(APPNAME)|tr "[A-Z]" "[a-z]")
 ARCHIVE_SOURCE:=$(LAPPNAME)-$(VERSION).tar.gz
-ARCHIVE_RPM:=$(LAPPNAME)-$(VERSION)-1.x86_64.rpm
 ARCHIVE_WIN32:=$(LAPPNAME)-$(VERSION).exe
 GITUSER:=wummel
 GITREPO:=$(LAPPNAME)
@@ -38,18 +37,18 @@ chmod:
 	find . -type d -exec chmod 755 {} \;
 
 dist:
-	$(PYTHON) setup.py bdist_rpm
-	rm dist/*.src.rpm
+	[ -d dist ] || mkdir dist
 	git archive --format=tar --prefix=$(LAPPNAME)-$(VERSION)/ HEAD | gzip -9 > dist/$(ARCHIVE_SOURCE)
 	[ ! -f ../$(ARCHIVE_WIN32) ] || cp ../$(ARCHIVE_WIN32) dist
 
 sign:
 	[ -f dist/$(ARCHIVE_SOURCE).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_SOURCE)
 	[ -f dist/$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WIN32)
-	[ -f dist/$(ARCHIVE_RPM).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_RPM)
 
 upload:
-	github-upload $(GITUSER) $(GITREPO) dist/$(ARCHIVE_SOURCE)* dist/$(ARCHIVE_WIN32)* dist/$(ARCHIVE_RPM)*
+	github-upload $(GITUSER) $(GITREPO) \
+	  dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WIN32) \
+	  dist/$(ARCHIVE_SOURCE).asc dist/$(ARCHIVE_WIN32).asc
 
 homepage:
 # update metadata
