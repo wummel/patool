@@ -23,7 +23,7 @@ endif
 # Pytest options:
 # --resultlog: write test results in file
 # -s: do not capture stdout/stderr (some tests fail otherwise)
-PYTESTOPTS:=--resultlog=testresults.txt -s
+PYTESTOPTS:=--resultlog=testresults.txt -s --durations=0
 # which test modules to run
 TESTS ?= tests/
 # set test options
@@ -130,15 +130,14 @@ doc/$(LAPPNAME).txt: doc/$(LAPPNAME).1
 deb:
 # build a debian package
 	[ -f $(DEBORIGFILE) ] || cp dist/$(ARCHIVE_SOURCE) $(DEBORIGFILE) $(DEBUILDDIR)/$(LAPPNAME)_$(VERSION).orig.tar.gz
-	sed -i 's/VERSION:=.*/VERSION:=$(VERSION)/' $(DEBUILDDIR)/$(LAPPNAME).mak
+	sed -i -e 's/VERSION_$(LAPPNAME):=.*/VERSION_$(LAPPNAME):=$(VERSION)/' $(DEBUILDDIR)/$(LAPPNAME).mak
 	[ -d $(DEBPACKAGEDIR) ] || (cd $(DEBUILDDIR); \
 	  patool extract $(DEBORIGFILE); \
 	  cd $(CURDIR); \
 	  git checkout debian; \
 	  cp -r debian $(DEBPACKAGEDIR); \
 	  git checkout master)
-	rm -f $(DEBUILDDIR)/$(LAPPNAME)
-	$(MAKE) -C $(DEBUILDDIR) $(LAPPNAME)
+	$(MAKE) -C $(DEBUILDDIR) $(LAPPNAME)_clean $(LAPPNAME)
 
 update-copyright:
 # update-copyright is a local tool which updates the copyright year for each
