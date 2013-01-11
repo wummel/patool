@@ -1,4 +1,4 @@
 # watch control file for uscan
 version=3
 http://wummel.github.com/patool/ \
-  patool-(.*).tar.gz
+  http://github.com/downloads/wummel/patool/patool-(.*).tar.gz
