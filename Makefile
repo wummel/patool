@@ -58,7 +58,7 @@ homepage:
 	@echo "maintainer: $(MAINTAINER)" >> $(HOMEPAGE)/info.yaml
 	@echo "author: $(AUTHOR)" >> $(HOMEPAGE)/info.yaml
 # generate static files
-	make -C $(HOMEPAGE) gen
+	make -C $(HOMEPAGE) gen upload
 
 tag:
 # add and push the version tag
