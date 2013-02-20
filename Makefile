@@ -129,7 +129,7 @@ doc/$(LAPPNAME).txt: doc/$(LAPPNAME).1
 
 deb:
 # build a debian package
-	[ -f $(DEBORIGFILE) ] || cp dist/$(ARCHIVE_SOURCE) $(DEBORIGFILE) $(DEBUILDDIR)/$(LAPPNAME)_$(VERSION).orig.tar.gz
+	[ -f $(DEBORIGFILE) ] || cp dist/$(ARCHIVE_SOURCE) $(DEBORIGFILE)
 	sed -i -e 's/VERSION_$(LAPPNAME):=.*/VERSION_$(LAPPNAME):=$(VERSION)/' $(DEBUILDDIR)/$(LAPPNAME).mak
 	[ -d $(DEBPACKAGEDIR) ] || (cd $(DEBUILDDIR); \
 	  patool extract $(DEBORIGFILE); \
