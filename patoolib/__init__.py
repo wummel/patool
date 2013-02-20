@@ -79,6 +79,13 @@ ArchiveMimetypes = {
     'audio/flac': 'flac',
 }
 
+try:
+    # use Python 3 lzma module if available
+    import lzma
+    py_lzma = ('py_lzma',)
+except ImportError:
+    py_lzma = ()
+
 # List of programs supporting the given archive format and command.
 # If command is None, the program supports all commands (list, extract, ...)
 # Programs starting with "py_" are Python modules.
@@ -208,10 +215,10 @@ ArchivePrograms = {
     },
     # XXX Python 3.3 has native lzma module - use that after porting to 3.3
     'lzma': {
-        'extract': ('lzma',),
+        'extract': ('lzma',) + py_lzma,
         'list': ('py_echo',),
         'test': ('lzma',),
-        'create': ('lzma',),
+        'create': ('lzma',) + py_lzma,
     },
     'rzip': {
         'extract': ('rzip',),

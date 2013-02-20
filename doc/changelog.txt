@@ -1,5 +1,7 @@
 0.19 "" (released xx.xx.2013)
 
+* Support the lzma module in Python >= 3.3
+
 
 0.18 "Skyfall" (released 15.12.2012)
 
