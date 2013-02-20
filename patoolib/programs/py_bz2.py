@@ -32,14 +32,11 @@ def extract_bzip2 (archive, compression, cmd, **kwargs):
     targetname = util.get_single_outfile(outdir, archive)
     bz2file = bz2.BZ2File(archive)
     try:
-        targetfile = open(targetname, 'wb')
-        try:
+        with open(targetname, 'wb') as targetfile:
             data = bz2file.read(READ_SIZE_BYTES)
             while data:
                 targetfile.write(data)
                 data = bz2file.read(READ_SIZE_BYTES)
-        finally:
-            targetfile.close()
     finally:
         bz2file.close()
     if verbose:
@@ -57,16 +54,13 @@ def create_bzip2 (archive, compression, cmd, *args, **kwargs):
     bz2file = bz2.BZ2File(archive, 'wb')
     try:
         filename = args[0]
-        srcfile = open(filename)
-        try:
+        with open(filename) as srcfile:
             data = srcfile.read(READ_SIZE_BYTES)
             while data:
                 bz2file.write(data)
                 data = srcfile.read(READ_SIZE_BYTES)
             if verbose:
                 util.log_info('... added %s' % filename)
-        finally:
-            srcfile.close()
     finally:
         bz2file.close()
     return None

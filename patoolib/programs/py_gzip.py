@@ -30,14 +30,11 @@ def extract_gzip (archive, compression, cmd, **kwargs):
     targetname = util.get_single_outfile(outdir, archive)
     gzipfile = gzip.GzipFile(archive)
     try:
-        targetfile = open(targetname, 'wb')
-        try:
+        with open(targetname, 'wb') as targetfile:
             data = gzipfile.read(READ_SIZE_BYTES)
             while data:
                 targetfile.write(data)
                 data = gzipfile.read(READ_SIZE_BYTES)
-        finally:
-            targetfile.close()
     finally:
         gzipfile.close()
     if verbose:
@@ -55,16 +52,13 @@ def create_gzip (archive, compression, cmd, *args, **kwargs):
     gzipfile = gzip.GzipFile(archive, 'wb')
     try:
         filename = args[0]
-        srcfile = open(filename)
-        try:
+        with open(filename) as srcfile:
             data = srcfile.read(READ_SIZE_BYTES)
             while data:
                 gzipfile.write(data)
                 data = srcfile.read(READ_SIZE_BYTES)
             if verbose:
                 util.log_info('... added %s' % filename)
-        finally:
-            srcfile.close()
     finally:
         gzipfile.close()
     return None
