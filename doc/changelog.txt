@@ -1,3 +1,6 @@
+0.19 "" (released xx.xx.2013)
+
+
 0.18 "Skyfall" (released 15.12.2012)
 
 * Fixed unadf archive listing.
