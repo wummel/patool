@@ -6,7 +6,7 @@ python:
 # install some archive programs
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -qq arj bzip2 cabextract compress cpio lzop p7zip-full pbzip2 unrar-nonfree zip rpm2cpio binutils lha unace-nonfree nomarch unalz lrzip star rzip zoo xdms orange lzip clzip pdlzip
+  - sudo apt-get install -qq arj bzip2 cabextract cpio lzop p7zip-full pbzip2 unrar zip rpm2cpio binutils lha unace-nonfree nomarch unalz lrzip rzip zoo xdms orange lzip clzip pdlzip
 # command to install dependencies
 install:
   - pip install -r requirements.txt --use-mirrors
