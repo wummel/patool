@@ -5,14 +5,15 @@ First, install the required software.
 
 1. Python >= 2.7 from http://www.python.org/
    
-   Be sure to also have installed the included distutils module.
-   On most distributions, the distutils module is included in
-   an extra ``python-dev`` package.
-
 
 Now install the application.
 
-1.
+1. Installation with pip
+
+   If you have pip installed: ``pip install patool``
+
+2. Installation from source
+
    a) Installation as root
       
       Run ``sudo python setup.py install`` to install patool.
