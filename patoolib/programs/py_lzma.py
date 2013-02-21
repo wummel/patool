@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ def extract_lzma(archive, compression, cmd, **kwargs):
     targetname = util.get_single_outfile(outdir, archive)
     lzmafile = lzma.LZMAFile(archive)
     try:
-        with open(targetname, 'wb') as targetfile
+        with open(targetname, 'wb') as targetfile:
             data = lzmafile.read(READ_SIZE_BYTES)
             while data:
                 targetfile.write(data)
