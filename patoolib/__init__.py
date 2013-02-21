@@ -480,7 +480,6 @@ def _handle_archive (archive, command, *args, **kwargs):
     """Handle archive command; raising PatoolError on errors.
     @return: output directory if command is 'extract', else None
     """
-    check_archive_arguments(archive, command, *args)
     format, compression = kwargs.get("format"), kwargs.get("compression")
     if format is None:
         format, compression = get_archive_format(archive)
@@ -614,11 +613,12 @@ def _repack_archive (archive1, archive2, **kwargs):
 
 def handle_archive (archive, command, *args, **kwargs):
     """Handle archive file command; with nice error reporting."""
+    check_archive_arguments(archive, command, *args)
     try:
         if command == "diff":
-            res = _diff_archives(archive, args[0])
+            res = _diff_archives(archive, args[0], **kwargs)
         elif command == "repack":
-            res = _repack_archive(archive, args[0])
+            res = _repack_archive(archive, args[0], **kwargs)
         else:
             _handle_archive(archive, command, *args, **kwargs)
             res = 0
