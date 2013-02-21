@@ -1,10 +1,10 @@
-patool (0.19-0calvin1) UNRELEASED; urgency=low
+patool (0.19-0calvin1) unstable; urgency=low
 
   * New upstream release.
   * Updated Standards version to 3.9.4
   * Updated copyright
 
- -- Bastian Kleineidam <calvin@debian.org>  Wed, 20 Feb 2013 21:17:08 +0100
+ -- Bastian Kleineidam <calvin@debian.org>  Thu, 21 Feb 2013 07:03:33 +0100
 
 patool (0.18-0calvin1) unstable; urgency=low
 
