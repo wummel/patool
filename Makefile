@@ -1,6 +1,5 @@
 # This Makefile is only used by developers.
-PYVER:=2.7
-PYTHON:=python$(PYVER)
+PYTHON:=python
 VERSION:=$(shell $(PYTHON) setup.py --version)
 MAINTAINER:=$(shell $(PYTHON) setup.py --maintainer)
 AUTHOR:=$(shell $(PYTHON) setup.py --author)
