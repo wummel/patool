@@ -51,11 +51,11 @@ upload:
 
 homepage:
 # update metadata
-	@echo "version: $(VERSION)" > $(HOMEPAGE)/info.yaml
-	@echo "name: $(APPNAME)" >> $(HOMEPAGE)/info.yaml
-	@echo "lname: $(LAPPNAME)" >> $(HOMEPAGE)/info.yaml
-	@echo "maintainer: $(MAINTAINER)" >> $(HOMEPAGE)/info.yaml
-	@echo "author: $(AUTHOR)" >> $(HOMEPAGE)/info.yaml
+	@echo "version: \"$(VERSION)\"" > $(HOMEPAGE)/info.yaml
+	@echo "name: \"$(APPNAME)\"" >> $(HOMEPAGE)/info.yaml
+	@echo "lname: \"$(LAPPNAME)\"" >> $(HOMEPAGE)/info.yaml
+	@echo "maintainer: \"$(MAINTAINER)\"" >> $(HOMEPAGE)/info.yaml
+	@echo "author: \"$(AUTHOR)\"" >> $(HOMEPAGE)/info.yaml
 # generate static files
 	make -C $(HOMEPAGE) gen upload
 
