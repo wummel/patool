@@ -1,6 +1,8 @@
 0.19 "" (released xx.xx.2013)
 
 * Support the lzma module in Python >= 3.3
+* Optimize repacking of archives with the same format.
+  Closes: GH bug #1
 
 
 0.18 "Skyfall" (released 15.12.2012)

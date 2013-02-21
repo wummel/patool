@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,17 +21,33 @@ from . import datadir, needs_program, needs_one_program
 
 class ArchiveRepackTest (unittest.TestCase):
 
+    def repack(self, name1, name2):
+        """Repack archive with name1 to archive with name2."""
+        archive1 = os.path.join(datadir, name1)
+        tmpdir = patoolib.util.tmpdir()
+        try:
+            archive2 = os.path.join(tmpdir, name2)
+            res = patoolib.handle_archive(archive1, "repack", archive2)
+            self.assertEqual(res, 0)
+            res = patoolib.handle_archive(archive1, "diff", archive2)
+            # both archives have the same data
+            self.assertEqual(res, 0)
+        finally:
+            shutil.rmtree(tmpdir)
+
     @needs_program('diff')
     @needs_one_program(('tar', 'star', '7z'))
     @needs_one_program(('zip', '7z'))
     def test_repack (self):
-        archive1 = os.path.join(datadir, "t.tar")
-        tmpdir = patoolib.util.tmpdir()
-        try:
-            archive2 = os.path.join(tmpdir, "t.zip")
-            patoolib.handle_archive(archive1, "repack", archive2)
-            res = patoolib.handle_archive(archive1, "diff", archive2)
-        finally:
-            shutil.rmtree(tmpdir)
-        # both archives have the same data
-        self.assertEqual(res, 0)
+        self.repack('t.tar', 't.zip')
+
+    @needs_program('diff')
+    @needs_one_program(('gzip', '7z'))
+    @needs_one_program(('bzip2', '7z'))
+    def test_repack_same_format_different_compression (self):
+        self.repack('t.tar.gz', 't.tar.bz2')
+
+    @needs_program('diff')
+    def test_repack_same_format (self):
+        self.repack('t.tar.gz', 't1.tar.gz')
+        self.repack('t.zip', 't1.zip')

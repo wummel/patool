@@ -17,6 +17,7 @@
 from __future__ import print_function
 import os
 import sys
+import shutil
 import subprocess
 import mimetypes
 import tempfile
@@ -476,5 +477,19 @@ def is_same_file (filename1, filename2):
 def is_same_filename (filename1, filename2):
     """Check if filename1 and filename2 are the same filename."""
     return os.path.realpath(filename1) == os.path.realpath(filename2)
+
+
+def link_or_copy(src, dst, verbose=False):
+    """Try to make a hard link from src to dst and if that fails
+    copy the file. Hard links save some disk space and linking
+    should fail fast since no copying is involved.
+    """
+    if verbose:
+        log_info("Copying %s -> %s" % (src, dst))
+    try:
+        os.link(src, dst)
+    except OSError:
+        shutil.copy(src, dst)
+
 
 init_mimedb()

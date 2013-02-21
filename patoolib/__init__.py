@@ -580,13 +580,33 @@ def _diff_archives (archive1, archive2, **kwargs):
 
 def _repack_archive (archive1, archive2, **kwargs):
     """Repackage an archive to a different format."""
+    format1, compression1 = get_archive_format(archive1)
+    format2, compression2 = get_archive_format(archive2)
+    if format1 == format2 and compression1 == compression2:
+        # same format and compression allows to copy the file
+        try:
+            util.link_or_copy(archive1, archive2, verbose=kwargs.get('verbose'))
+            return 0
+        except OSError:
+            return 1
     tmpdir = util.tmpdir()
     try:
+        same_format = (format1 == format2 and compression1 and compression2)
+        if same_format:
+            # only decompress since the format is the same
+            kwargs['format'] = compression1
         _handle_archive(archive1, 'extract', outdir=tmpdir, **kwargs)
         archive = os.path.abspath(archive2)
         files = tuple(os.listdir(tmpdir))
+        olddir = os.getcwd()
         os.chdir(tmpdir)
-        _handle_archive(archive, 'create', *files, **kwargs)
+        try:
+            if same_format:
+                # only compress since the format is the same
+                kwargs['format'] = compression2
+            _handle_archive(archive, 'create', *files, **kwargs)
+        finally:
+            os.chdir(olddir)
         return 0
     finally:
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
