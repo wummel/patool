@@ -1,4 +1,4 @@
-0.19 "" (released xx.xx.2013)
+0.19 "The Kids Are All Right" (released 21.2.2013)
 
 * Support the lzma module in Python >= 3.3
 * Optimize repacking of archives with the same format.
