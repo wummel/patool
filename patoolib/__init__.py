@@ -213,7 +213,6 @@ ArchivePrograms = {
     'lzop': {
         None: ('lzop',),
     },
-    # XXX Python 3.3 has native lzma module - use that after porting to 3.3
     'lzma': {
         'extract': ('lzma',) + py_lzma,
         'list': ('py_echo',),
@@ -558,10 +557,11 @@ def _diff_archives (archive1, archive2, **kwargs):
     """Show differences between two archives."""
     if util.is_same_file(archive1, archive2):
         msg = "no differences found: archive `%s' and `%s' are the same files"
-        print(msg % (archive1, archive2))
+        util.log_info(msg % (archive1, archive2))
         return 0
     diff = util.find_program("diff")
     if not diff:
+        # XXX more helpful error message
         msg = "The diff(1) program is required for showing archive differences, please install it."
         raise util.PatoolError(msg)
     tmpdir1 = util.tmpdir()
