@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+# whitelist
+branches:
+  only:
+    - master
+# install some archive programs
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq arj bzip2 lbzip2 pbzip2 cabextract ncompress cpio bsdcpio lzop p7zip-full rar unrar zip unzip rpm2cpio binutils lha unace unace-nonfree arc nomarch unalz lrzip bsdtar rzip zoo xdms orange lzip plzip clzip pdlzip sharutils flac unadf
+# command to install dependencies
+install:
+  - pip install -r requirements.txt --use-mirrors
+# command to run tests
+script: make test
+#notifications:
+#  email: false
