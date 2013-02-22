@@ -3,6 +3,10 @@ python:
   - "2.7"
   - "3.2"
 #  - "3.3"
+# whitelist
+branches:
+  only:
+    - master
 # install some archive programs
 before_install:
   - sudo apt-get update -qq
