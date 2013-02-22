@@ -235,6 +235,8 @@ ArchivePrograms = {
     },
     'xz': {
         None: ('xz',),
+        'extract': py_lzma,
+        'create': py_lzma,
     },
     'zoo': {
         None: ('zoo',),

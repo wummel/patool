@@ -19,14 +19,14 @@ import lzma
 
 READ_SIZE_BYTES = 1024*1024
 
-def extract_lzma(archive, compression, cmd, **kwargs):
-    """Extract a LZMA archive with the lzma Python module."""
+def _extract(archive, compression, cmd, format, **kwargs):
+    """Extract an LZMA or XZ archive with the lzma Python module."""
     verbose = kwargs['verbose']
     outdir = kwargs['outdir']
     if verbose:
         util.log_info('extracting %s...' % archive)
     targetname = util.get_single_outfile(outdir, archive)
-    lzmafile = lzma.LZMAFile(archive)
+    lzmafile = lzma.LZMAFile(archive, format=format)
     try:
         with open(targetname, 'wb') as targetfile:
             data = lzmafile.read(READ_SIZE_BYTES)
@@ -39,15 +39,23 @@ def extract_lzma(archive, compression, cmd, **kwargs):
         util.log_info('... extracted to %s' % targetname)
     return None
 
+def extract_lzma(archive, compression, cmd, **kwargs):
+    """Extract an LZMA archive with the lzma Python module."""
+    return _extract(archive, compression, cmd, lzma.FORMAT_ALONE, **kwargs)
 
-def create_lzma(archive, compression, cmd, *args, **kwargs):
-    """Create a LZMA archive with the lzma Python module."""
+def extract_xz(archive, compression, cmd, **kwargs):
+    """Extract an XZ archive with the lzma Python module."""
+    return _extract(archive, compression, cmd, lzma.FORMAT_XZ, **kwargs)
+
+
+def _create(archive, compression, cmd, format, *args, **kwargs):
+    """Create an LZMA or XZ archive with the lzma Python module."""
     verbose = kwargs['verbose']
     if verbose:
         util.log_info('creating %s...' % archive)
     if len(args) > 1:
         util.log_error('multi-file compression not supported in Python lzma')
-    lzmafile = lzma.LZMAFile(archive, 'wb')
+    lzmafile = lzma.LZMAFile(archive, 'wb', format)
     try:
         filename = args[0]
         with open(filename) as srcfile:
@@ -60,3 +68,11 @@ def create_lzma(archive, compression, cmd, *args, **kwargs):
     finally:
         lzmafile.close()
     return None
+
+def create_lzma(archive, compression, cmd, *args, **kwargs):
+    """Create an LZMA archive with the lzma Python module."""
+    return _create(archive, compression, cmd, lzma.FORMAT_ALONE, *args, **kwargs)
+
+def create_xz(archive, compression, cmd, *args, **kwargs):
+    """Create an XZ archive with the lzma Python module."""
+    return _create(archive, compression, cmd, lzma.FORMAT_XZ, *args, **kwargs)

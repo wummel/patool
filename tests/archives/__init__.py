@@ -163,6 +163,8 @@ class ArchiveTest (unittest.TestCase):
             program = 'gzip'
         elif self.program == 'py_bz2':
             program = 'bzip2'
+        elif self.program == 'py_lzma':
+            program = 'xz'
         elif self.program == 'zip':
             program = 'unzip'
         elif self.program in ('rzip', 'shorten'):
