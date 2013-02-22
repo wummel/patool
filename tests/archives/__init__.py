@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,8 +36,12 @@ class Content:
     Recursive = 'recursive'
 
     # Singlefile archives for extraction have a text file t.txt
-    # Recursive archives for creation have a text file `foo .txt'
+    # Singlefile archives for creation have a text file `foo .txt'
     Singlefile = 'singlefile'
+
+    # Multifile archives for extraction have two text files: t.txt and t2.txt
+    # Multifile archives for creation have two text files: foo .txt and foo2 .txt
+    Multifile = 'multifile'
 
 
 class ArchiveTest (unittest.TestCase):
@@ -52,14 +56,7 @@ class ArchiveTest (unittest.TestCase):
         self.archive_list(filename)
         if not kwargs.get('skip_test'):
             self.archive_test(filename)
-        if kwargs.get('singlefile'):
-            check_default = Content.Singlefile
-        else:
-            check_default = Content.Recursive
-        check = kwargs.get('check', check_default)
-        if 'check' in kwargs:
-            del kwargs['check']
-        self.archive_extract(filename, check=check)
+        self.archive_extract(filename, check=kwargs.get('check', Content.Recursive))
         if not kwargs.get('skip_create'):
             self.archive_create(filename, **kwargs)
 
@@ -76,17 +73,15 @@ class ArchiveTest (unittest.TestCase):
         # create a temporary directory for extraction
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         try:
-            olddir = os.getcwd()
-        except OSError:
-            olddir = None
-        os.chdir(tmpdir)
-        try:
-            output = patoolib._handle_archive(archive, 'extract', program=self.program, verbose=verbose)
-            if check:
-                self.check_extracted_archive(archive, output, check)
+            olddir = patoolib.util.chdir(tmpdir)
+            try:
+                output = patoolib._handle_archive(archive, 'extract', program=self.program, verbose=verbose)
+                if check:
+                    self.check_extracted_archive(archive, output, check)
+            finally:
+                if olddir:
+                    os.chdir(olddir)
         finally:
-            if olddir:
-                os.chdir(olddir)
             shutil.rmtree(tmpdir)
 
     def check_extracted_archive (self, archive, output, check):
@@ -98,9 +93,14 @@ class ArchiveTest (unittest.TestCase):
             self.check_textfile(txtfile, 't.txt')
         elif check == Content.Singlefile:
             # a non-existing directory to ensure files do not exist in it
-            ned = get_nonexisting_directory()
+            ned = get_nonexisting_directory(os.getcwd())
             expected_output = os.path.basename(patoolib.util.get_single_outfile(ned, archive))
             self.check_textfile(output, expected_output)
+        elif check == Content.Multifile:
+            txtfile = os.path.join(output, 't.txt')
+            self.check_textfile(txtfile, 't.txt')
+            txtfile2 = os.path.join(output, 't2.txt')
+            self.check_textfile(txtfile2, 't2.txt')
 
     def check_directory (self, dirname, expectedname):
         self.assertTrue(os.path.isdir(dirname), dirname)
@@ -123,35 +123,42 @@ class ArchiveTest (unittest.TestCase):
         patoolib._handle_archive(archive, 'test', program=self.program)
         patoolib._handle_archive(archive, 'test', program=self.program, verbose=True)
 
-    def archive_create (self, archive, srcfile=None, singlefile=False):
+    def archive_create (self, archive, srcfiles=None, check=Content.Recursive):
         """Test archive creation."""
-        # determine filename which is added to the archive
-        if srcfile is None:
-            if singlefile:
-                srcfile = 't.txt'
+        if srcfiles is None:
+            if check == Content.Recursive:
+                srcfiles = ('t',)
+            elif check == Content.Singlefile:
+                srcfiles = ('t.txt',)
+            elif check == Content.Multifile:
+                srcfiles = ('t.txt', 't2.txt',)
             else:
-                srcfile = 't'
-        os.chdir(datadir)
-        # The format and compression arguments are needed for creating
-        # archives with unusual file extensions.
-        self._archive_create(archive, srcfile, program=self.program)
-        # create again in verbose mode
-        self._archive_create(archive, srcfile, program=self.program,
-            verbose=True)
+                raise ValueError('invalid check value %r' % check)
+        olddir = patoolib.util.chdir(datadir)
+        try:
+            # The format and compression arguments are needed for creating
+            # archives with unusual file extensions.
+            self._archive_create(archive, srcfiles, program=self.program)
+            # create again in verbose mode
+            self._archive_create(archive, srcfiles, program=self.program, verbose=True)
+        finally:
+            if olddir:
+                os.chdir(olddir)
 
-    def _archive_create (self, archive, srcfile, **kwargs):
+    def _archive_create (self, archive, srcfiles, **kwargs):
         """Create archive from filename."""
-        self.assertFalse(os.path.isabs(srcfile))
-        self.assertTrue(os.path.exists(srcfile))
+        for srcfile in srcfiles:
+            self.assertFalse(os.path.isabs(srcfile))
+            self.assertTrue(os.path.exists(srcfile))
         # create a temporary directory for creation
         tmpdir = patoolib.util.tmpdir(dir=basedir)
-        archive = os.path.join(tmpdir, archive)
-        self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
         try:
-            patoolib._handle_archive(archive, 'create', srcfile, **kwargs)
+            archive = os.path.join(tmpdir, archive)
+            self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
+            patoolib._handle_archive(archive, 'create', *srcfiles, **kwargs)
             self.assertTrue(os.path.isfile(archive))
             self.check_created_archive_with_test(archive)
-            self.check_created_archive_with_diff(archive, srcfile)
+            self.check_created_archive_with_diff(archive, srcfiles)
         finally:
             shutil.rmtree(tmpdir)
 
@@ -176,7 +183,7 @@ class ArchiveTest (unittest.TestCase):
             return
         patoolib._handle_archive(archive, command, program=program)
 
-    def check_created_archive_with_diff(self, archive, srcfile):
+    def check_created_archive_with_diff(self, archive, srcfiles):
         """Extract created archive again and compare the contents."""
         # diff srcfile and output
         diff = patoolib.util.find_program("diff")
@@ -194,30 +201,36 @@ class ArchiveTest (unittest.TestCase):
             program = 'unshar'
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         try:
-            olddir = os.getcwd()
-        except OSError:
-            olddir = None
-        os.chdir(tmpdir)
-        try:
-            output = patoolib._handle_archive(archive, 'extract', program=program)
-            res = patoolib.util.run([diff, "-urN", srcfile, output])
-            self.assertEqual(res, 0)
+            olddir = patoolib.util.chdir(tmpdir)
+            try:
+                output = patoolib._handle_archive(archive, 'extract', program=program)
+                if len(srcfiles) == 1:
+                    source = os.path.join(datadir, srcfiles[0])
+                    res = patoolib.util.run([diff, "-urN", source, output])
+                    self.assertEqual(res, 0)
+                else:
+                    for srcfile in srcfiles:
+                        source = os.path.join(datadir, srcfile)
+                        target = os.path.join(output, srcfile)
+                        res = patoolib.util.run([diff, "-urN", source, target])
+                        self.assertEqual(res, 0)
+            finally:
+                if olddir:
+                    os.chdir(olddir)
         finally:
-            if olddir:
-                os.chdir(olddir)
             shutil.rmtree(tmpdir)
 
 
 def get_filecontent(filename):
-    fo = open(filename)
-    try:
+    with open(filename) as fo:
         return fo.read()
-    finally:
-        fo.close()
 
 
-def get_nonexisting_directory():
-    d = os.path.join(os.getcwd(), "foo")
+def get_nonexisting_directory(basedir):
+    d = os.path.join(basedir, "foo")
     while os.path.exists(d):
         d += 'a'
+        if len(d) > 100:
+            # wtf
+            raise ValueError('could not find non-existing directory at %r' % basedir)
     return d
