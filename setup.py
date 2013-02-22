@@ -47,9 +47,9 @@ except ImportError:
 from distutils import util
 
 AppName = "Patool"
-AppVersion = "0.19"
+AppVersion = "1.0"
 MyName = "Bastian Kleineidam"
-MyEmail = "calvin@users.sourceforge.net"
+MyEmail = "bastian.kleineidam@web.de"
 
 py_excludes = ['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb',
   'email', 'calendar', 'ftplib', 'httplib', 'pickle', 'optparse','rfc822'
