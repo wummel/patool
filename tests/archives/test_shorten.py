@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ class TestShorten (ArchiveTest):
     @needs_program(program)
     def test_shorten(self):
         self.archive_extract('t.shn', check=None)
-        self.archive_create('t.shn', srcfile="t.wav")
+        self.archive_create('t.shn', srcfiles=("t.wav",))
 
     # file(1) does not recognize .shn files
     #@needs_program('file')

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ class TestXz (ArchiveTest):
 
     @needs_program(program)
     def test_xz(self):
-        self.archive_commands('t.txt.xz', singlefile=True)
+        self.archive_commands('t.txt.xz', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from . import ArchiveTest
+from . import ArchiveTest, Content
 from .. import needs_program
 
 class TestNomarch(ArchiveTest):
@@ -24,12 +24,12 @@ class TestNomarch(ArchiveTest):
     def test_nomarch(self):
         self.archive_test('t.arc')
         self.archive_list('t.arc')
-        self.archive_extract('t.arc')
+        self.archive_extract('t.arc', check=Content.Multifile)
 
     @needs_program('file')
     @needs_program(program)
     def test_nomarch_file(self):
         self.archive_test('t.arc.foo')
         self.archive_list('t.arc.foo')
-        self.archive_extract('t.arc.foo')
+        self.archive_extract('t.arc.foo', check=Content.Multifile)
 

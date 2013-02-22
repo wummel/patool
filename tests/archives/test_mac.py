@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class TestMac (ArchiveTest):
     def test_mac(self):
         self.archive_extract('t.ape', check=None)
         self.archive_test('t.ape')
-        self.archive_create('t.ape', srcfile="t.wav")
+        self.archive_create('t.ape', srcfiles=("t.wav",))
 
     @needs_program('file')
     @needs_program(program)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from . import ArchiveTest
+from . import ArchiveTest, Content
 from .. import needs_program
 
 class TestPigz (ArchiveTest):
@@ -22,10 +22,10 @@ class TestPigz (ArchiveTest):
 
     @needs_program(program)
     def test_pigz (self):
-        self.archive_commands('t.txt.gz', singlefile=True)
+        self.archive_commands('t.txt.gz', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)
     def test_pigz_file (self):
-        self.archive_commands('t.txt.gz.foo', singlefile=True,
+        self.archive_commands('t.txt.gz.foo', check=Content.Singlefile,
           skip_create=True, skip_test=True)

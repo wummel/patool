@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class TestClzip (ArchiveTest):
     def test_clzip(self):
         self.archive_test('t.txt.lz')
         self.archive_extract('t.txt.lz', check=Content.Singlefile)
-        self.archive_create('t.txt.lz', singlefile=True)
+        self.archive_create('t.txt.lz', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)

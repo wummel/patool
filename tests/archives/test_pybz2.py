@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class TestPybz2 (ArchiveTest):
     def test_py_bz2 (self):
         self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         # bzip2 is used to test the created archive
-        self.archive_create('t.txt.bz2', singlefile=True)
+        self.archive_create('t.txt.bz2', check=Content.Singlefile)
 
     @needs_program('file')
     def test_py_bz2_file (self):
