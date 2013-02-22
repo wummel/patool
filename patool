@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -70,8 +70,7 @@ def test (archive, *archives, **kwargs):
 @baker.command(shortopts=shortopts, params=params)
 def create (archive, file1, *files, **kwargs):
     """Create an archive from given files."""
-    allfiles = (file1,)+files
-    return handle_archive(archive, 'create', *allfiles, **kwargs)
+    return handle_archive(archive, 'create', file1, *files, **kwargs)
 
 
 @baker.command(shortopts=shortopts, params=params)
@@ -79,6 +78,13 @@ def diff (archive1, archive2, **kwargs):
     """Show differences between two archives."""
     from patoolib import diff
     return diff(archive1, archive2, **kwargs)
+
+
+@baker.command(shortopts=shortopts, params=params)
+def search(pattern, archive1, *archives, **kwargs):
+    """Search for pattern in all given archives."""
+    from patoolib import search
+    return search(pattern, archive1, *archives, **kwargs)
 
 
 @baker.command(shortopts=shortopts, params=params)

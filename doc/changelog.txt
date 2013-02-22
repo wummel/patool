@@ -1,3 +1,10 @@
+1.0 "" (released xx.xx.2013)
+
+* Add support for grepping in archive contents.
+* Fixed Python lzma archive handling.
+* Fixed lzop and lrzip archive handling.
+
+
 0.19 "The Kids Are All Right" (released 21.2.2013)
 
 * Support the lzma module in Python >= 3.3

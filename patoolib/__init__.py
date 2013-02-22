@@ -473,6 +473,12 @@ def check_archive_arguments (archive, command, *args):
         if not args:
             raise util.PatoolError("missing second archive filename for diff")
         util.check_existing_filename(args[0])
+    elif command == 'search':
+        if not archive:
+            # archive is the search pattern
+            raise util.PatoolError("empty search pattern")
+        for arg in args:
+            util.check_existing_filename(arg)
     else:
         util.check_existing_filename(archive)
 
@@ -563,7 +569,6 @@ def _diff_archives (archive1, archive2, **kwargs):
         return 0
     diff = util.find_program("diff")
     if not diff:
-        # XXX more helpful error message
         msg = "The diff(1) program is required for showing archive differences, please install it."
         raise util.PatoolError(msg)
     tmpdir1 = util.tmpdir()
@@ -577,6 +582,32 @@ def _diff_archives (archive1, archive2, **kwargs):
             shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
     finally:
         shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
+
+
+def _search_archives(pattern, *archives, **kwargs):
+    """Search for given pattern in all archives."""
+    grep = util.find_program("grep")
+    if not grep:
+        msg = "The grep(1) program is required for searching archive contents, please install it."
+        raise util.PatoolError(msg)
+    errors = 0
+    for archive in archives:
+        try:
+            errors += _search_archive(grep, pattern, archive, **kwargs)
+        except util.PatoolError as msg:
+            util.log_error("grep error: %s" % msg)
+            errors += 1
+    return errors
+
+
+def _search_archive(grep, pattern, archive, **kwargs):
+    """Extract one archive and search for given pattern in extracted files."""
+    tmpdir = util.tmpdir()
+    try:
+        _handle_archive(archive, 'extract', outdir=tmpdir, **kwargs)
+        return util.run([grep, "-r", "-e", pattern, "."], cwd=tmpdir)
+    finally:
+        shutil.rmtree(tmpdir, onerror=rmtree_log_error)
 
 
 def _repack_archive (archive1, archive2, **kwargs):
@@ -619,6 +650,8 @@ def handle_archive (archive, command, *args, **kwargs):
     try:
         if command == "diff":
             res = _diff_archives(archive, args[0], **kwargs)
+        elif command == "search":
+            res = _search_archives(archive, *args, **kwargs)
         elif command == "repack":
             res = _repack_archive(archive, args[0], **kwargs)
         else:
@@ -661,6 +694,11 @@ def create (archive, *filenames, **kwargs):
 def diff (archive1, archive2, verbose=False):
     """Print differences between two archives."""
     return handle_archive(archive1, 'diff', archive2, verbose=verbose)
+
+
+def search(pattern, *archives, **kwargs):
+    """Search pattern in archive members."""
+    return handle_archive(pattern, 'search', *archives, **kwargs)
 
 
 def repack (archive1, archive2, verbose=False):

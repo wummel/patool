@@ -10,8 +10,9 @@ SYNOPSIS
         patool   extract   [--verbose]   [--outdir=DIRNAME]  <archive-
        file>...
         patool create [--verbose] <archive-file> [files...]
-        patool diff <archive1> <archive2>
-        patool repack <archive1> <archive2>
+        patool diff [--verbose] <archive1> <archive2>
+        patool search [--verbose] <pattern> <archive-file>...
+        patool repack [--verbose] <archive1> <archive2>
         patool formats
 
 DESCRIPTION
@@ -42,10 +43,21 @@ EXAMPLES
          patool list package.deb
          patool create --verbose myfiles.zip file1.txt dir/
          patool diff release1.0.tar.gz release2.0.zip
+         patool search "def urlopen" python-3.3.tar.gz
          patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 
 COMMANDS
-       Several commands and options are available.
+       The following rules apply to all commands:
+
+       ·   Existing files are never overwritten.
+
+       ·   The original archive will never be removed.
+
+       ·   Verbose  operation  displays  more  info  about what patool
+           does. It also displays more info from the  helper  applica‐
+           tion if it's supported.
+
+       Several commands are available.
 
    extract
        Extract  files from an archive. The original archive will never
@@ -63,16 +75,8 @@ COMMANDS
        All  extracted  files are ensured that they are readable by the
        current user.
 
-       -v, --verbose
-              Be verbose when extracting (if  the  helper  application
-              supports it).
-
    list
        List files in an archive.
-
-       -v, --verbose
-              Verbose  archive listing (if the helper application sup‐
-              ports it).
 
    create
        Create an archive from given files. At least on  of  the  given
@@ -80,21 +84,18 @@ COMMANDS
        are ignored).  The format of the archive to  create  is  deter‐
        mined by the archive file extension.
 
-       -v, --verbose
-              Verbose  operation  (if  the helper application supports
-              it).
-
    test
-       Test files in an archive. If the helper  application  does  not
+       Test  files  in  an archive. If the helper application does not
        support testing, the archive contents are listed instead.
 
-       -v, --verbose
-              Verbose  archive testing (if the helper application sup‐
-              ports it).
-
    diff
-       Show differences between two archives with the diff(1) utility.
+       Show differences between two archives with the diff(1) program.
        The diff options used are -urN.
+
+   search
+       Search  in archive contents for given pattern using the grep(1)
+       program.  The grep options used are -r; additional options  can
+       be supplied with the GREP_OPTIONS environment variable.
 
    repack
        Repackage  archive  to  a  different format. The target archive
@@ -112,11 +113,11 @@ HELP OPTION
          patool extract --help - display help for the extract command
 
 AUTHOR
-       Bastian Kleineidam <calvin@users.sourceforge.net>
+       Bastian Kleineidam <bastian.kleineidam@web.de>
 
 COPYRIGHT
-       Copyright © 2010-2012 Bastian Kleineidam
+       Copyright © 2010-2013 Bastian Kleineidam
 
 
 
-patool                       February 2010                   PATOOL(1)
+patool                       February 2013                   PATOOL(1)
