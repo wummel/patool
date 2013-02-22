@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -66,8 +66,8 @@ class TestMime (unittest.TestCase):
         #self.mime_test_file("t.lzma.foo", "application/x-lzma", None)
         self.mime_test_file("t.txt.lz", "application/x-lzip", None)
         self.mime_test_file("t.txt.lz.foo", "application/x-lzip", None)
-        self.mime_test_file("t.lzo", "application/x-lzop", None)
-        self.mime_test_file("t.lzo.foo", "application/x-lzop", None)
+        self.mime_test_file("t.txt.lzo", "application/x-lzop", None)
+        self.mime_test_file("t.txt.lzo.foo", "application/x-lzop", None)
         self.mime_test_file("t.rar", "application/x-rar", None)
         self.mime_test_file("t.rar.foo", "application/x-rar", None)
         self.mime_test_file("t.rpm", "application/x-rpm", None)
