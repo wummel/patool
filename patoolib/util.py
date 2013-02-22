@@ -492,4 +492,16 @@ def link_or_copy(src, dst, verbose=False):
         shutil.copy(src, dst)
 
 
+def chdir(directory):
+    """Remember and return current directory before calling os.chdir().
+    If the current directory could not be determined, return None.
+    """
+    try:
+        olddir = os.getcwd()
+    except OSError:
+        olddir = None
+    os.chdir(directory)
+    return olddir
+
+
 init_mimedb()
