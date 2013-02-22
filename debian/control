@@ -16,7 +16,7 @@ Suggests: arj, bzip2 | lbzip2 | pbzip2, cabextract, compress, cpio | bsdcpio,
   lzop, p7zip-full, rar | unrar | unrar-nonfree, zip | unzip,
   rpm2cpio, binutils, lha, unace | unace-nonfree, arc | nomarch, unalz,
   lrzip (>= 0.551), tar (>= 1.26) | star | bsdtar, rzip, zoo, xdms, orange,
-  lzip | plzip | clzip | pdlzip, shar, flac, shorten, unadf
+  lzip | plzip | clzip | pdlzip, sharutils, flac, shorten, unadf
 Description: command line archive file manager
  *** Unofficial package from calvin@debian.org ***
  .
