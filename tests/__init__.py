@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@ import os
 import sys
 import patoolib
 import pytest
+import importlib
 
 basedir = os.path.dirname(__file__)
 datadir = os.path.join(basedir, 'data')
@@ -27,43 +28,42 @@ if sys.version_info[0] > 2:
 else:
     fnameattr = 'func_name'
 
-def needs_os (name):
-    """Decorator skipping test if given program is not available."""
-    def check_prog (f):
-        def newfunc (*args, **kwargs):
-            if os.name != name:
-                raise pytest.skip("operating system %s not found" % name)
-            return f(*args, **kwargs)
-        setattr(newfunc, fnameattr, getattr(f, fnameattr))
+def _need_func(testfunc, name, description):
+    """Decorator skipping test if given testfunc returns False."""
+    def check_func(func):
+        def newfunc(*args, **kwargs):
+            if not testfunc(name):
+                raise pytest.skip("%s %r is not available" % (description, name))
+            return func(*args, **kwargs)
+        setattr(newfunc, fnameattr, getattr(func, fnameattr))
         return newfunc
-    return check_prog
+    return check_func
 
 
-def needs_program (program):
+def needs_os(name):
+    """Decorator skipping test if given operating system is not available."""
+    return _need_func(lambda x: os.name == x, name, 'operating system')
+
+
+def needs_program(name):
     """Decorator skipping test if given program is not available."""
-    def check_prog (f):
-        def newfunc (*args, **kwargs):
-            if not patoolib.util.find_program(program):
-                raise pytest.skip("program `%s' not available" % program)
-            return f(*args, **kwargs)
-        setattr(newfunc, fnameattr, getattr(f, fnameattr))
-        return newfunc
-    return check_prog
+    return _need_func(lambda x: patoolib.util.find_program(x), name, 'program')
 
 
-def needs_one_program (programs):
+def needs_one_program(programs):
     """Decorator skipping test if not one of given programs are available."""
-    def check_prog (f):
-        def newfunc (*args, **kwargs):
-            for program in programs:
-                if patoolib.util.find_program(program):
-                    break
-            else:
-                raise pytest.skip("None of programs %s available" % programs)
-            return f(*args, **kwargs)
-        setattr(newfunc, fnameattr, getattr(f, fnameattr))
-        return newfunc
-    return check_prog
+    return _need_func(lambda x: all(map(patoolib.util.find_program, x)), programs, 'programs')
+
+
+def needs_module(name):
+    """Decorator skipping test if given module is not available."""
+    def has_module(module):
+        try:
+            importlib.import_module(module)
+            return True
+        except ImportError:
+            return False
+    return _need_func(has_module, name, 'Python module')
 
 
 def needs_codec (program, codec):
