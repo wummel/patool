@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,14 +19,12 @@ from .. import util
 
 def extract_lrzip (archive, compression, cmd, **kwargs):
     """Extract a LRZIP archive."""
-    # Since extracted files will be placed in the current directory,
-    # the cwd argument has to be the output directory.
     cmdlist = [cmd, '-d']
     if kwargs['verbose']:
         cmdlist.append('-v')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
-    return (cmdlist, {'cwd': kwargs['outdir']})
+    return cmdlist
 
 def test_lrzip (archive, compression, cmd, **kwargs):
     """Test a LRZIP archive."""

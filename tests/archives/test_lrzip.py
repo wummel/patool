@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from . import ArchiveTest
+from . import ArchiveTest, Content
 from .. import needs_program
 
 class TestLrzip (ArchiveTest):
@@ -23,8 +23,8 @@ class TestLrzip (ArchiveTest):
     @needs_program(program)
     def test_lrzip(self):
         self.archive_test('t.txt.lrz')
-        self.archive_extract('t.txt.lrz')
-        self.archive_create('t.txt.lrz', singlefile=True)
+        self.archive_extract('t.txt.lrz', check=Content.Singlefile)
+        self.archive_create('t.txt.lrz', check=Content.Singlefile)
 
     # file(1) does not recognize .lrz files
     #@needs_program('file')
@@ -32,5 +32,5 @@ class TestLrzip (ArchiveTest):
     #def test_lrzip_file(self):
     #    self.archive_test('t.txt.lrz.foo')
     #    self.archive_extract('t.txt.lrz.foo')
-    #    self.archive_create('t.txt.lrz.foo', format="lrzip", singlefile=True)
+    #    self.archive_create('t.txt.lrz.foo', format="lrzip", check=Content.Singlefile)
 
