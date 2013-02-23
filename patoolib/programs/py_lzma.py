@@ -58,7 +58,7 @@ def _create(archive, compression, cmd, format, *args, **kwargs):
     lzmafile = lzma.LZMAFile(archive, 'wb', format)
     try:
         filename = args[0]
-        with open(filename) as srcfile:
+        with open(filename, 'rb') as srcfile:
             data = srcfile.read(READ_SIZE_BYTES)
             while data:
                 lzmafile.write(data)

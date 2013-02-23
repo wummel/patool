@@ -52,7 +52,7 @@ def create_gzip (archive, compression, cmd, *args, **kwargs):
     gzipfile = gzip.GzipFile(archive, 'wb')
     try:
         filename = args[0]
-        with open(filename) as srcfile:
+        with open(filename, 'rb') as srcfile:
             data = srcfile.read(READ_SIZE_BYTES)
             while data:
                 gzipfile.write(data)

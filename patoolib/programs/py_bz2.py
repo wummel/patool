@@ -54,7 +54,7 @@ def create_bzip2 (archive, compression, cmd, *args, **kwargs):
     bz2file = bz2.BZ2File(archive, 'wb')
     try:
         filename = args[0]
-        with open(filename) as srcfile:
+        with open(filename, 'rb') as srcfile:
             data = srcfile.read(READ_SIZE_BYTES)
             while data:
                 bz2file.write(data)
