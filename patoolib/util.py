@@ -114,9 +114,10 @@ class memoized (object):
         return self.func.__doc__
 
 
-def backtick (cmd):
-    """Return output from command."""
-    return subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+def backtick (cmd, encoding='utf-8'):
+    """Return decoded output from command."""
+    data = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+    return data.decode(encoding)
 
 
 def run (cmd, **kwargs):
