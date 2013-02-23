@@ -30,6 +30,7 @@ patool test --verbose dist.tar.gz
 patool list package.deb
 patool create --verbose myfiles.zip file1.txt dir/
 patool diff release1.0.tar.gz release2.0.zip
+patool search "def urlopen" python-3.3.tar.gz
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 ```
 
