@@ -22,10 +22,10 @@ class TestRzip (ArchiveTest):
 
     @needs_program(program)
     def test_rzip(self):
-        self.archive_extract('t.txt.rz')
+        self.archive_extract('t.txt.rz', check=Content.Singlefile)
         self.archive_create('t.txt.rz', check=Content.Singlefile)
 
     @needs_program(program)
     def test_rzip_file(self):
-        self.archive_extract('t.txt.rz.foo')
+        self.archive_extract('t.txt.rz.foo', check=Content.Singlefile)
 

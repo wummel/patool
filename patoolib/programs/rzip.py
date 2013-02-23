@@ -13,23 +13,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the lrzip program."""
+"""Archive commands for the rzip program."""
 import os
 from .. import util
 
 def extract_rzip (archive, compression, cmd, **kwargs):
-    """Extract a RZIP archive."""
-    # Since extracted files will be placed in the current directory,
-    # the cwd argument has to be the output directory.
+    """Extract an RZIP archive."""
     cmdlist = [cmd, '-d', '-k']
     if kwargs['verbose']:
         cmdlist.append('-v')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
-    cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
-    return (cmdlist, {'cwd': kwargs['outdir']})
+    cmdlist.extend(["-o", outfile, archive])
+    return cmdlist
 
 def create_rzip (archive, compression, cmd, *args, **kwargs):
-    """Create a RZIP archive."""
+    """Create an RZIP archive."""
     cmdlist = [cmd, '-k', '-o', archive]
     if kwargs['verbose']:
         cmdlist.append('-v')
