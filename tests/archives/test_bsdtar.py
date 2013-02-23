@@ -44,12 +44,11 @@ class TestBsdtar (ArchiveTest):
     def test_bsdtar_lzma (self):
         self.archive_commands('t.tar.lzma')
 
-    # even though clzip would support extracting .lz files, the
-    # file(1) --uncompress command does not use it for achive detection
-    @needs_program(program)
-    @needs_program('lzip')
-    def test_bsdtar_lzip (self):
-        self.archive_commands('t.tar.lz')
+    # bsdtar cannot read archives created with tar and lzip
+    #@needs_program(program)
+    #@needs_program('lzip')
+    #def test_bsdtar_lzip (self):
+    #    self.archive_commands('t.tar.lz')
 
     @needs_codec(program, 'xz')
     def test_bsdtar_xz (self):
@@ -84,13 +83,12 @@ class TestBsdtar (ArchiveTest):
     #def test_bsdtar_lzma_file (self):
     #    self.archive_commands('t.tar.lzma.foo', skip_create=True)
 
-    # even though clzip would support extracting .lz files, the
-    # file(1) --uncompress command does not use it for achive detection
-    @needs_program('lzip')
-    @needs_program('file')
-    @needs_codec(program, 'lzip')
-    def test_bsdtar_lzip_file (self):
-        self.archive_commands('t.tar.lz.foo', skip_create=True)
+    # bsdtar cannot read archives created with tar and lzip
+    #@needs_program('lzip')
+    #@needs_program('file')
+    #@needs_codec(program, 'lzip')
+    #def test_bsdtar_lzip_file (self):
+    #    self.archive_commands('t.tar.lz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec(program, 'xz')
