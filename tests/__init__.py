@@ -87,3 +87,15 @@ def has_codec (program, codec):
     if patoolib.program_supports_compression(program, codec):
         return True
     return patoolib.util.find_program(codec)
+
+
+def skip_on_travis():
+    """Skip test if TRAVIS build environment is detected."""
+    def check_func(func):
+        def newfunc(*args, **kwargs):
+            if "TRAVIS" in os.environ:
+                raise pytest.skip("Skip on TRAVIS CI build.")
+            return func(*args, **kwargs)
+        setattr(newfunc, fnameattr, getattr(func, fnameattr))
+        return newfunc
+    return check_func
