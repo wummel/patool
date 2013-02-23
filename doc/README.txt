@@ -37,3 +37,10 @@ Website
 --------
 See http://wummel.github.com/patool/ for more info and downloads.
 
+Test suite status
+------------------
+Patool has extensive unit tests to ensure the code quality.
+[Travis CI](https://travis-ci.org/) is used for continuous build
+and test integration.
+
+[![Build Status](https://travis-ci.org/wummel/patool.png)](https://travis-ci.org/wummel/patool)
