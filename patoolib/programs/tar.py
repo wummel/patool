@@ -20,14 +20,14 @@ import os
 def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive."""
     cmdlist = [cmd, '--extract']
-    add_tar_opts(cmdlist, compression, kwargs['verbose'])
+    add_tar_opts(cmdlist, compression, kwargs['verbosity'])
     cmdlist.extend(["--file", archive, '--directory', kwargs['outdir']])
     return cmdlist
 
 def list_tar (archive, compression, cmd, **kwargs):
     """List a TAR archive."""
     cmdlist = [cmd, '--list']
-    add_tar_opts(cmdlist, compression, kwargs['verbose'])
+    add_tar_opts(cmdlist, compression, kwargs['verbosity'])
     cmdlist.extend(["--file", archive])
     return cmdlist
 
@@ -36,12 +36,12 @@ test_tar = list_tar
 def create_tar (archive, compression, cmd, *args, **kwargs):
     """Create a TAR archive."""
     cmdlist = [cmd, '--create']
-    add_tar_opts(cmdlist, compression, kwargs['verbose'])
+    add_tar_opts(cmdlist, compression, kwargs['verbosity'])
     cmdlist.extend(["--file", archive, '--'])
     cmdlist.extend(args)
     return cmdlist
 
-def add_tar_opts (cmdlist, compression, verbose):
+def add_tar_opts (cmdlist, compression, verbosity):
     """Add tar options to cmdlist."""
     progname = os.path.basename(cmdlist[0])
     if compression == 'gzip':
@@ -58,5 +58,5 @@ def add_tar_opts (cmdlist, compression, verbose):
         program = compression
         # set compression program
         cmdlist.extend(['--use-compress-program', program])
-    if verbose:
+    if verbosity > 1:
         cmdlist.append('--verbose')

@@ -15,15 +15,9 @@
 .SH NAME
 patool - portable command line archive file manager
 .SH SYNOPSIS
- \fBpatool\fP (\fBlist\fP|\fBtest\fP) [\fB\-\-verbose\fP] <\fIarchive-file\fP>...
- \fBpatool\fP \fBextract\fP [\fB\-\-verbose\fP] [\fB\-\-outdir=\fP\fIDIRNAME\fP] <\fIarchive-file\fP>...
- \fBpatool\fP \fBcreate\fP [\fB\-\-verbose\fP] <\fIarchive-file\fP> [\fIfiles\fP...]
- \fBpatool\fP \fBdiff\fP [\fB\-\-verbose\fP] <\fIarchive1\fP> <\fIarchive2\fP>
- \fBpatool\fP \fBsearch\fP [\fB\-\-verbose\fP] <\fIpattern\fP> <\fIarchive-file\fP>...
- \fBpatool\fP \fBrepack\fP [\fB\-\-verbose\fP] <\fIarchive1\fP> <\fIarchive2\fP>
- \fBpatool\fP \fBformats\fP
+ \fBpatool\fP [\fIglobal-options\fP] (\fBlist\fP|\fBtest\fP|\fBextract\fP|\fBcreate\fP|\fBdiff\fP|\fBsearch\fP|\fBrepack\fP|\fBformats\fP) [\fIcommand-options\fP] <\fIcommand-arguments\fP>...
 .SH DESCRIPTION
-Various archive types can be created, extracted, tested and listed by
+Various archive types can be created, extracted, tested, listed, searched, repacked and compared by
 \fBpatool\fP. The advantage of patool is its simplicity in handling archive
 files without having to remember a myriad of programs and options.
 .PP
@@ -39,67 +33,90 @@ TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and ZOO (.zoo) formats.
 It relies on helper applications to handle those archive formats
 (for example bzip2 for BZIP2 archives).
 .PP
-The archive formats TAR (.tar), ZIP (.zip), BZIP2 (.bz2) and GZIP (.gz)
+The archive formats TAR, ZIP, BZIP2 and GZIP
 are supported natively and do not require helper applications to be
 installed.
 .SH EXAMPLES
   \fBpatool extract archive.zip otherarchive.rar\fP
-  \fBpatool test --verbose dist.tar.gz\fP
+  \fBpatool --verbose test dist.tar.gz\fP
   \fBpatool list package.deb\fP
-  \fPpatool create --verbose myfiles.zip file1.txt dir/\fP
+  \fPpatool --verbose create myfiles.zip file1.txt dir/\fP
   \fBpatool diff release1.0.tar.gz release2.0.zip\fP
   \fBpatool search "def urlopen" python-3.3.tar.gz\fP
   \fBpatool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2\fP
+.SH GLOBAL OPTIONS
+.TP
+\fB\-v\fP, \fB\-\-verbose\fP
+Display more info about what patool does, and display the output
+of helper applications. Can be given multiple times to increase
+the output even more.
 .SH COMMANDS
 The following rules apply to all commands:
 .IP "\(bu" 4
 Existing files are never overwritten.
 .IP "\(bu" 4
 The original archive will never be removed.
-.IP "\(bu" 4
-Verbose operation displays more info about what patool does. It also
-displays more info from the helper application if it's supported.
 .PP
-Several commands are available.
+The following commands are available.
 .SS extract
-Extract files from an archive. The original archive will never
-be removed and is left as it is.
-.br
-This is the default command if no command was given.
+\fBpatool\fP \fBextract\fP [\fIoptions\fP] <\fIarchive\fP>...
+.PP
+Extract files from given archives. The original archives will never
+be removed and are left as is.
+.PP
+Options:
+.TP
+\fB\-\-outdir\fP DIRECTORY
+Extract to the given output directory. Default is to extract to
+the current working directory.
 .PP
 If the archive contains exactly one
-file or directory, the archive contents are extracted to the current
-working directory.
-Else the files are extracted in a newly created subdirectory of the current
-working directory. The new directory is named after the archive filename without
+file or directory, the archive contents are extracted directly to the
+output directory.
+Else the files are extracted in a newly created subdirectory of the output
+directory. The new directory is named after the archive filename without
 the extension.
 .br
-This prevents cluttering the current working directory with a lot
+This prevents cluttering the output directory with a lot
 of files from the extracted archive.
 .PP
 All extracted files are ensured that they are readable by the
 current user.
 .SS list
-List files in an archive.
+\fBpatool\fP \fBlist\fP <\fIarchive\fP>...
+.PP
+List files in archives.
 .SS create
-Create an archive from given files. At least on of the given files to add
-to the archive has to exist (non-existing files are ignored).
+\fBpatool\fP \fBcreate\fP <\fIarchive\fP> <\fIfile-or-directory\fP>...
+.PP
+Create an archive from given files. All of the given files to add
+to the archive must be readable by the current user.
 The format of the archive to create is determined by the archive file
 extension.
 .SS test
-Test files in an archive. If the helper application does not support
+\fBpatool\fP \fBtest\fP <\fIarchive\fP>...
+.PP
+Test the given archives. If the helper application does not support
 testing, the archive contents are listed instead.
 .SS diff
+\fBpatool\fP \fBdiff\fP <\fIarchive1\fP> <\fIarchive2\fP>
+.PP
 Show differences between two archives with the \fBdiff(1)\fP program.
 The diff options used are \fB\-urN\fP.
 .SS search
+\fBpatool\fP \fBsearch\fP <\fIpattern\fP> <\fIarchive\fP>
+.PP
 Search in archive contents for given pattern using the \fBgrep(1)\fP program.
 The grep options used are \fB\-r\fP; additional options can be supplied
 with the \fBGREP_OPTIONS\fP environment variable.
 .SS repack
+\fBpatool\fP \fBrepack\fP <\fIarchive\fP> <\fIarchive_new\fP>
+.PP
 Repackage archive to a different format. The target archive format is
-determined by the file extension.
+determined by the file extension of \fIarchive_new\fP.
 .SS formats
+\fBpatool\fP \fBformats\fP
+.PP
 Show all supported archive formats (ie. which helper applications
 are available).
 .SH HELP OPTION

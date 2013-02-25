@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ extract_lzop = extract_singlefile_standard
 def list_lzop (archive, compression, cmd, **kwargs):
     """List a LZOP archive."""
     cmdlist = [cmd, '--list']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
     return cmdlist
@@ -31,7 +31,7 @@ def list_lzop (archive, compression, cmd, **kwargs):
 def test_lzop (archive, compression, cmd, **kwargs):
     """Test a LZOP archive."""
     cmdlist = [cmd, '--test']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
     return cmdlist
@@ -39,7 +39,7 @@ def test_lzop (archive, compression, cmd, **kwargs):
 def create_lzop (archive, compression, cmd, *args, **kwargs):
     """Create a LZOP archive."""
     cmdlist = [cmd]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-o', archive, '--'])
     cmdlist.extend(args)

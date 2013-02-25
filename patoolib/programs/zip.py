@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 def create_zip (archive, compression, cmd, *args, **kwargs):
     """Create a ZIP archive."""
     cmdlist = [cmd, '-r']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.append(archive)
     cmdlist.extend(args)
@@ -27,7 +27,7 @@ def create_zip (archive, compression, cmd, *args, **kwargs):
 def test_zip (archive, compression, cmd, *args, **kwargs):
     """Test a ZIP archive."""
     cmdlist = [cmd, '--test']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,36 +18,25 @@ import os
 
 def extract_rar (archive, compression, cmd, **kwargs):
     """Extract a RAR archive."""
-    cmdlist = [cmd, 'x']
-    if not kwargs['verbose']:
-        cmdlist.append('-c-')
-    cmdlist.extend(['--', os.path.abspath(archive)])
+    cmdlist = [cmd, 'x', '--', os.path.abspath(archive)]
     return (cmdlist, {'cwd': kwargs['outdir']})
 
 def list_rar (archive, compression, cmd, **kwargs):
     """List a RAR archive."""
     cmdlist = [cmd]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
-        cmdlist.append('-c-')
     cmdlist.extend(['--', archive])
     return cmdlist
 
 def test_rar (archive, compression, cmd, **kwargs):
     """Test a RAR archive."""
-    cmdlist = [cmd, 't']
-    if not kwargs['verbose']:
-        cmdlist.append('-c-')
-    cmdlist.extend(['--', archive])
-    return cmdlist
+    return [cmd, 't', '--', archive]
 
 def create_rar (archive, compression, cmd, *args, **kwargs):
     """Create a RAR archive."""
-    cmdlist = [cmd, 'a']
-    if not kwargs['verbose']:
-        cmdlist.append('-c-')
-    cmdlist.extend(['-r', '--', archive])
+    cmdlist = [cmd, 'a', '-r', '--', archive]
     cmdlist.extend(args)
     return cmdlist

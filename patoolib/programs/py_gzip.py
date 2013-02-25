@@ -23,42 +23,34 @@ READ_SIZE_BYTES = 1024*1024
 
 def extract_gzip (archive, compression, cmd, **kwargs):
     """Extract a GZIP archive with the gzip Python module."""
-    verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    if verbose:
-        util.log_info('extracting %s...' % archive)
     targetname = util.get_single_outfile(outdir, archive)
-    gzipfile = gzip.GzipFile(archive)
     try:
-        with open(targetname, 'wb') as targetfile:
-            data = gzipfile.read(READ_SIZE_BYTES)
-            while data:
-                targetfile.write(data)
+        with gzip.GzipFile(archive) as gzipfile:
+            with open(targetname, 'wb') as targetfile:
                 data = gzipfile.read(READ_SIZE_BYTES)
-    finally:
-        gzipfile.close()
-    if verbose:
-        util.log_info('... extracted to %s' % targetname)
+                while data:
+                    targetfile.write(data)
+                    data = gzipfile.read(READ_SIZE_BYTES)
+    except Exception as err:
+        msg = "error extracting %s to %s: %s" % (archive, targetname, err)
+        raise util.PatoolError(msg)
     return None
 
 
 def create_gzip (archive, compression, cmd, *args, **kwargs):
     """Create a GZIP archive with the gzip Python module."""
-    verbose = kwargs['verbose']
-    if verbose:
-        util.log_info('creating %s...' % archive)
     if len(args) > 1:
-        util.log_error('multi-file compression not supported in Python gzip')
-    gzipfile = gzip.GzipFile(archive, 'wb')
+        raise util.PatoolError('multi-file compression not supported in Python gzip')
     try:
-        filename = args[0]
-        with open(filename, 'rb') as srcfile:
-            data = srcfile.read(READ_SIZE_BYTES)
-            while data:
-                gzipfile.write(data)
+        with gzip.GzipFile(archive, 'wb') as gzipfile:
+            filename = args[0]
+            with open(filename, 'rb') as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)
-            if verbose:
-                util.log_info('... added %s' % filename)
-    finally:
-        gzipfile.close()
+                while data:
+                    gzipfile.write(data)
+                    data = srcfile.read(READ_SIZE_BYTES)
+    except Exception as err:
+        msg = "error creating %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None

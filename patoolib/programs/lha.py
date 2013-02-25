@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 def extract_lzh (archive, compression, cmd, **kwargs):
     """Extract a LZH archive."""
     opts = 'x'
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         opts += 'v'
     opts += "w=%s" % kwargs['outdir']
     return [cmd, opts, archive]
@@ -26,7 +26,7 @@ def extract_lzh (archive, compression, cmd, **kwargs):
 def list_lzh (archive, compression, cmd, **kwargs):
     """List a LZH archive."""
     cmdlist = [cmd]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
@@ -36,14 +36,14 @@ def list_lzh (archive, compression, cmd, **kwargs):
 def test_lzh (archive, compression, cmd, **kwargs):
     """Test a LZH archive."""
     opts = 't'
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         opts += 'v'
     return [cmd, opts, archive]
 
 def create_lzh (archive, compression, cmd, *args, **kwargs):
     """Create a LZH archive."""
     opts = 'a'
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         opts += 'v'
     cmdlist = [cmd, opts, archive]
     cmdlist.extend(args)

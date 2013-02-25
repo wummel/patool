@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,8 +32,4 @@ def create_flac (archive, compression, cmd, *args, **kwargs):
 
 def test_flac (archive, compression, cmd, **kwargs):
     """Test a FLAC file."""
-    cmdlist = [cmd, '--test']
-    if not kwargs['verbose']:
-        cmdlist.append('-s')
-    cmdlist.append(archive)
-    return cmdlist
+    return [cmd, '--test', archive]

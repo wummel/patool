@@ -21,22 +21,18 @@ READ_SIZE_BYTES = 1024*1024
 
 def _extract(archive, compression, cmd, format, **kwargs):
     """Extract an LZMA or XZ archive with the lzma Python module."""
-    verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    if verbose:
-        util.log_info('extracting %s...' % archive)
     targetname = util.get_single_outfile(outdir, archive)
-    lzmafile = lzma.LZMAFile(archive, format=format)
     try:
-        with open(targetname, 'wb') as targetfile:
-            data = lzmafile.read(READ_SIZE_BYTES)
-            while data:
-                targetfile.write(data)
+        with lzma.LZMAFile(archive, format=format) as lzmafile:
+            with open(targetname, 'wb') as targetfile:
                 data = lzmafile.read(READ_SIZE_BYTES)
-    finally:
-        lzmafile.close()
-    if verbose:
-        util.log_info('... extracted to %s' % targetname)
+                while data:
+                    targetfile.write(data)
+                    data = lzmafile.read(READ_SIZE_BYTES)
+    except Exception as err:
+        msg = "error extracting %s to %s: %s" % (archive, targetname, err)
+        raise util.PatoolError(msg)
     return None
 
 def extract_lzma(archive, compression, cmd, **kwargs):
@@ -50,23 +46,19 @@ def extract_xz(archive, compression, cmd, **kwargs):
 
 def _create(archive, compression, cmd, format, *args, **kwargs):
     """Create an LZMA or XZ archive with the lzma Python module."""
-    verbose = kwargs['verbose']
-    if verbose:
-        util.log_info('creating %s...' % archive)
     if len(args) > 1:
-        util.log_error('multi-file compression not supported in Python lzma')
-    lzmafile = lzma.LZMAFile(archive, 'wb', format)
+        raise util.PatoolError('multi-file compression not supported in Python lzma')
     try:
-        filename = args[0]
-        with open(filename, 'rb') as srcfile:
-            data = srcfile.read(READ_SIZE_BYTES)
-            while data:
-                lzmafile.write(data)
+        with lzma.LZMAFile(archive, 'wb', format) as lzmafile:
+            filename = args[0]
+            with open(filename, 'rb') as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)
-            if verbose:
-                util.log_info('... added %s' % filename)
-    finally:
-        lzmafile.close()
+                while data:
+                    lzmafile.write(data)
+                    data = srcfile.read(READ_SIZE_BYTES)
+    except Exception as err:
+        msg = "error creating %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None
 
 def create_lzma(archive, compression, cmd, *args, **kwargs):

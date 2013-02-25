@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,13 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rzip program."""
-import os
 from .. import util
 
 def extract_rzip (archive, compression, cmd, **kwargs):
     """Extract an RZIP archive."""
     cmdlist = [cmd, '-d', '-k']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend(["-o", outfile, archive])
@@ -29,7 +28,7 @@ def extract_rzip (archive, compression, cmd, **kwargs):
 def create_rzip (archive, compression, cmd, *args, **kwargs):
     """Create an RZIP archive."""
     cmdlist = [cmd, '-k', '-o', archive]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(args)
     return cmdlist

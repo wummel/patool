@@ -15,93 +15,149 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-patool [extract|list|create|formats] [sub-command-options] <command-args>
+patool [global-options] {extract|list|create|diff|search|formats} [sub-command-options] <command-args>
 """
-from __future__ import print_function
-import os
 import sys
-from patoolib import handle_archive, list_formats, baker
-
-# parameter help and short options
-params = {
-    "verbose": "Verbose operation (if the helper application supports it).",
-}
-shortopts = {"verbose": "v"}
+import argparse
+import patoolib
+from patoolib.util import log_error, log_internal_error, PatoolError
 
 
-def handle_multi_archive(archives, cmd, **kwargs):
-    """Handle a multi-archive command."""
+def run_extract(args):
+    """Extract files from archive(s)."""
     res = 0
-    for archive in archives:
-        if not os.path.isfile(archive):
-            res = 1
-            msg = "archive %r is not a file" % archive
-            print("patool error:", msg, file=sys.stderr)
-        else:
-            newres = handle_archive(archive, cmd, **kwargs)
-            # return error if one of the archives could not be extracted
-            if newres:
-                res = newres
+    for archive in args.archive:
+        try:
+            patoolib.extract_archive(archive, verbosity=args.verbosity, outdir=args.outdir)
+        except PatoolError as msg:
+            log_error("error extracting %s: %s" % (archive, msg))
+            res += 1
     return res
 
 
-extract_params = {
-  "outdir": "Extract to given directory.",
-}
-extract_params.update(params)
-@baker.command(default=True, shortopts=shortopts, params=extract_params)
-def extract (archive, *archives, **kwargs):
-    """Extract files from archive(s)."""
-    return handle_multi_archive((archive,)+archives, 'extract', **kwargs)
-
-
-@baker.command(shortopts=shortopts, params=params)
-def list (archive, *archives, **kwargs):
+def run_list(args):
     """List files in archive(s)."""
-    return handle_multi_archive((archive,)+archives, 'list', **kwargs)
+    res = 0
+    for archive in args.archive:
+        try:
+            patoolib.list_archive(archive, verbosity=args.verbosity)
+        except PatoolError as msg:
+            log_error("error listing %s: %s" % (archive, msg))
+            res += 1
+    return res
 
 
-@baker.command(shortopts=shortopts, params=params)
-def test (archive, *archives, **kwargs):
+def run_test(args):
     """Test files in archive(s)."""
-    return handle_multi_archive((archive,)+archives, 'test', **kwargs)
+    res = 0
+    for archive in args.archive:
+        try:
+            patoolib.test_archive(archive, verbosity=args.verbosity)
+        except PatoolError as msg:
+            log_error("error testing %s: %s" % (archive, msg))
+            res += 1
+    return res
 
 
-@baker.command(shortopts=shortopts, params=params)
-def create (archive, file1, *files, **kwargs):
+def run_create(args):
     """Create an archive from given files."""
-    return handle_archive(archive, 'create', file1, *files, **kwargs)
+    res = 0
+    try:
+        patoolib.create_archive(args.archive, args.filename, verbosity=args.verbosity)
+    except PatoolError as msg:
+        log_error("error creating %s: %s" % (args.archive, msg))
+        res = 1
+    return res
 
 
-@baker.command(shortopts=shortopts, params=params)
-def diff (archive1, archive2, **kwargs):
+def run_diff(args):
     """Show differences between two archives."""
-    from patoolib import diff
-    return diff(archive1, archive2, **kwargs)
+    try:
+        res = patoolib.diff_archives(args.archive1, args.archive2, verbosity=args.verbosity)
+    except PatoolError as msg:
+        log_error("error showing differences between %s and %s: %s" % (args.archive1, args.archive2, msg))
+        res = 2
+    return res
 
 
-@baker.command(shortopts=shortopts, params=params)
-def search(pattern, archive1, *archives, **kwargs):
-    """Search for pattern in all given archives."""
-    from patoolib import search
-    return search(pattern, archive1, *archives, **kwargs)
+def run_search(args):
+    """Search for pattern in given archive."""
+    try:
+        res = patoolib.search_archive(args.pattern, args.archive, verbosity=args.verbosity)
+    except PatoolError as msg:
+        log_error("error searching %s: %s" % (args.archive, msg))
+        res = 2
+    return res
 
 
-@baker.command(shortopts=shortopts, params=params)
-def repack (archive1, archive2, **kwargs):
+def run_repack(args):
     """Repackage one archive in another format."""
-    from patoolib import repack
-    return repack(archive1, archive2, **kwargs)
+    res = 0
+    try:
+        patoolib.repack_archive(args.archive_src, args.archive_dst, verbosity=args.verbosity)
+    except PatoolError as msg:
+        log_error("error repacking %s: %s" % (args.archive_src, msg))
+        res = 1
+    return res
 
 
-@baker.command
-def formats ():
+def run_formats (args):
     """List supported and available archive formats."""
-    return list_formats()
+    patoolib.list_formats()
+    return 0
 
-try:
-    sys.exit(baker.run())
-except baker.CommandError as msg:
-    print("patool error:", msg, file=sys.stderr)
-    baker.help(sys.argv[0])
-    sys.exit(1)
+
+def create_argparser():
+    """Construct and return an argument parser."""
+    parser = argparse.ArgumentParser(description="A commandline archive handler.")
+    parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
+    subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
+    # extract
+    parser_extract = subparsers.add_parser('extract', help='extract one or more archives')
+    parser_extract.add_argument('--outdir', help="output directory to extract to")
+    parser_extract.add_argument('archive', nargs='+', help="an archive file")
+    # list
+    parser_list = subparsers.add_parser('list', help='list members or one or more archives')
+    parser_list.add_argument('archive', nargs='+', help="an archive file")
+    # create
+    parser_create = subparsers.add_parser('create', help='create an archive')
+    parser_create.add_argument('archive', help="the archive file; the file extension determines the archive program")
+    parser_create.add_argument('filename', nargs='+', help="a file or directory to add to the archive; note that some archive programs do not support directories")
+    # test
+    parser_test = subparsers.add_parser('test', help='test an archive')
+    parser_test.add_argument('archive', nargs='+', help='an archive file')
+    # repack
+    parser_repack = subparsers.add_parser('repack', help='repack an archive to a different format')
+    parser_repack.add_argument('archive_src', help='source archive file')
+    parser_repack.add_argument('archive_dst', help='target archive file')
+    # diff
+    parser_diff = subparsers.add_parser('diff', help='show differences between two archives')
+    parser_diff.add_argument('archive1', help='the first archive file')
+    parser_diff.add_argument('archive2', help='the second archive file')
+    # search
+    parser_search = subparsers.add_parser('search', help="search contents of archive members")
+    parser_search.add_argument('pattern', help='the grep(1) compatible search pattern')
+    parser_search.add_argument('archive', help='the archive file')
+    # formats
+    subparsers.add_parser('formats', help="show supported archive formats")
+    return parser
+
+
+def main():
+    """Parse options and execute commands."""
+    try:
+        argparser = create_argparser()
+        args = argparser.parse_args()
+        # run subcommand function
+        return globals()["run_%s" % args.command](args)
+    except KeyboardInterrupt:
+        log_error("aborted")
+        res = 1
+    except Exception:
+        log_internal_error()
+        res = 2
+    return res
+
+
+if __name__ == '__main__':
+    sys.exit(main())

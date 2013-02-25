@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,14 +19,14 @@ from .tar import add_tar_opts as add_star_opts
 def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive."""
     cmdlist = [cmd, '-x']
-    add_star_opts(cmdlist, compression, kwargs['verbose'])
+    add_star_opts(cmdlist, compression, kwargs['verbosity'])
     cmdlist.extend(['-C', kwargs['outdir'], 'file=%s' % archive])
     return cmdlist
 
 def list_tar (archive, compression, cmd, **kwargs):
     """List a TAR archive."""
     cmdlist = [cmd, '-n']
-    add_star_opts(cmdlist, compression, kwargs['verbose'])
+    add_star_opts(cmdlist, compression, kwargs['verbosity'])
     cmdlist.append("file=%s" % archive)
     return cmdlist
 
@@ -35,7 +35,7 @@ test_tar = list_tar
 def create_tar (archive, compression, cmd, *args, **kwargs):
     """Create a TAR archive."""
     cmdlist = [cmd, '-c']
-    add_star_opts(cmdlist, compression, kwargs['verbose'])
+    add_star_opts(cmdlist, compression, kwargs['verbosity'])
     cmdlist.append("file=%s" % archive)
     cmdlist.extend(args)
     return cmdlist

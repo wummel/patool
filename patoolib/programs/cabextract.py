@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 def extract_cab (archive, compression, cmd, **kwargs):
     """Extract a CAB archive."""
     cmdlist = [cmd, '-d', kwargs['outdir']]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 0:
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist
@@ -26,7 +26,7 @@ def extract_cab (archive, compression, cmd, **kwargs):
 def list_cab (archive, compression, cmd, **kwargs):
     """List a CAB archive."""
     cmdlist = [cmd, '-l']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 0:
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2011-2012 Bastian Kleineidam
+# Copyright (C) 2011-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ def extract_dms (archive, compression, cmd, **kwargs):
     """Extract a DMS archive."""
     check_archive_ext(archive)
     cmdlist = [cmd, '-d', kwargs['outdir']]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(['u', archive])
     return cmdlist

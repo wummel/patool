@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import patoolib
-from . import datadir, needs_program
+import sys
+from patoolib.util import run_checked
+from . import datadir, needs_program, patool_cmd
 
 class ArchiveDiffTest (unittest.TestCase):
 
@@ -26,6 +27,4 @@ class ArchiveDiffTest (unittest.TestCase):
     def test_diff (self):
         archive1 = os.path.join(datadir, "t.tar")
         archive2 = os.path.join(datadir, "t.zip")
-        res = patoolib.handle_archive(archive1, "diff", archive2)
-        # both archives have the same data
-        self.assertEqual(res, 0)
+        run_checked([sys.executable, patool_cmd, "-vv", "diff", archive1, archive2])

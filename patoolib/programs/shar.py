@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@ from .. import util
 def create_shar (archive, compression, cmd, *args, **kwargs):
     """Create a SHAR archive."""
     cmdlist = [util.shell_quote(cmd)]
-    if not kwargs['verbose']:
-        cmdlist.append('-q')
     cmdlist.extend([util.shell_quote(x) for x in args])
     cmdlist.extend(['>', util.shell_quote(archive)])
     return (cmdlist, {'shell': True})

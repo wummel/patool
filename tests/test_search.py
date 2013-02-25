@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import patoolib
-from . import datadir, needs_program
+import sys
+from patoolib.util import run_checked
+from . import datadir, needs_program, patool_cmd
 
 class ArchiveSearchTest (unittest.TestCase):
 
@@ -25,7 +26,10 @@ class ArchiveSearchTest (unittest.TestCase):
     @needs_program('tar')
     def test_search(self):
         pattern = "42"
-        archive1 = os.path.join(datadir, "t.tar")
-        archive2 = os.path.join(datadir, "t.zip")
-        res = patoolib.handle_archive(pattern, "search", archive1, archive2)
-        self.assertEqual(res, 0)
+        archive = os.path.join(datadir, "t.tar")
+        self.search(pattern, archive)
+        archive = os.path.join(datadir, "t.zip")
+        self.search(pattern, archive)
+
+    def search(self, pattern, archive):
+        run_checked([sys.executable, patool_cmd, "-vv", "search", pattern, archive])

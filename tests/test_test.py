@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2013 Bastian Kleineidam
+# Copyright (C) 2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,11 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
+import os
 import sys
 from patoolib.util import run_checked
-from . import patool_cmd
+from . import datadir, needs_program, patool_cmd
 
-class TestFormats (unittest.TestCase):
+class ArchiveTestTest (unittest.TestCase):
 
-    def test_list_formats (self):
-        run_checked([sys.executable, patool_cmd, "-vv", 'formats'])
+    @needs_program('7z')
+    def test_test(self):
+        archive = os.path.join(datadir, "t .7z")
+        run_checked([sys.executable, patool_cmd, "test", archive])

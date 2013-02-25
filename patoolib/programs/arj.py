@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,39 +17,27 @@
 
 def extract_arj (archive, compression, cmd, **kwargs):
     """Extract a ARJ archive."""
-    cmdlist = [cmd, 'x', '-r', '-y']
-    if not kwargs['verbose']:
-        cmdlist.append('-i-')
-    cmdlist.extend([archive, kwargs['outdir']])
-    return cmdlist
+    return [cmd, 'x', '-r', '-y', archive, kwargs['outdir']]
 
 
 def list_arj (archive, compression, cmd, **kwargs):
     """List a ARJ archive."""
     cmdlist = [cmd]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
-        cmdlist.append('-i-')
     cmdlist.extend(['-r', '-y', archive])
     return cmdlist
 
 
 def test_arj (archive, compression, cmd, **kwargs):
     """Test a ARJ archive."""
-    cmdlist = [cmd, 't']
-    if not kwargs['verbose']:
-        cmdlist.append('-i-')
-    cmdlist.extend(['-r', '-y', archive])
-    return cmdlist
+    return [cmd, 't', '-r', '-y', archive]
 
 
 def create_arj (archive, compression, cmd, *args, **kwargs):
     """Create a ARJ archive."""
-    cmdlist = [cmd, 'a', '-r', '-y']
-    if not kwargs['verbose']:
-        cmdlist.append('-i-')
-    cmdlist.append(archive)
+    cmdlist = [cmd, 'a', '-r', '-y', archive]
     cmdlist.extend(args)
     return cmdlist

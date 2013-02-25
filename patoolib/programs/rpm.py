@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 def list_rpm (archive, compression, cmd, **kwargs):
     """List a RPM archive."""
     cmdlist = [cmd, '-q', '-l']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-p', '--', archive])
     return cmdlist
@@ -26,7 +26,7 @@ def list_rpm (archive, compression, cmd, **kwargs):
 def test_rpm (archive, compression, cmd, **kwargs):
     """Test a RPM archive."""
     cmdlist = [cmd, 'V']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-p', '--', archive])
     return cmdlist

@@ -309,7 +309,7 @@ installed.
     classifiers = [
         'Environment :: Console',
         'Topic :: System :: Archiving',
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Programming Language :: Python',
         'Operating System :: OS Independent',

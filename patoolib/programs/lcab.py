@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 def create_cab (archive, compression, cmd, *args, **kwargs):
     """Create a CAB archive."""
     cmdlist = [cmd, '-r']
-    if not kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-q')
     cmdlist.extend(args)
     cmdlist.append(archive)

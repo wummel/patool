@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ from .. import util
 def create_compress (archive, compression, cmd, *args, **kwargs):
     """Create a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.append('-c')
     cmdlist.extend([util.shell_quote(x) for x in args])

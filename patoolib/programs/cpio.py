@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ def extract_cpio (archive, compression, cmd, **kwargs):
     if sys.platform.startswith('linux') and not cmd.endswith('bsdcpio'):
         cmdlist.extend(['--no-absolute-filenames',
         '--force-local', '--nonmatching', r'"*\.\.*"'])
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
     return (cmdlist, {'cwd': kwargs['outdir'], 'shell': True})
@@ -34,7 +34,7 @@ def extract_cpio (archive, compression, cmd, **kwargs):
 def list_cpio (archive, compression, cmd, **kwargs):
     """List a CPIO archive."""
     cmdlist = [cmd, '-i', '-t']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-F', archive])
     return cmdlist
@@ -44,7 +44,7 @@ test_cpio = list_cpio
 def create_cpio(archive, compression, cmd, *args, **kwargs):
     """Create a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--create']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     if len(args) != 0:
         findcmd = ['find']

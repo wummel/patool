@@ -22,6 +22,9 @@ import shutil
 import stat
 import importlib
 from . import util
+__all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
+    'create_archive', 'diff_archives', 'search_archive', 'repack_archive']
+
 
 # Supported archive commands
 ArchiveCommands = ('list', 'extract', 'test', 'create')
@@ -348,10 +351,9 @@ def list_formats ():
                 handlers = programs.get(None, programs.get(command))
                 print("   %8s: - (no program found; install %s)" %
                       (command, util.strlist_with_or(handlers)))
-    return 0
 
 
-AllowedConfigKeys = ("verbose", "program")
+AllowedConfigKeys = ("verbosity", "program")
 
 def clean_config_keys (kwargs):
     """Remove invalid configuration keys from arguments."""
@@ -369,7 +371,7 @@ def parse_config (archive, format, compression, command, **kwargs):
        is not supported.
     """
     config = {
-        'verbose': False,
+        'verbosity': 0,
     }
     config['program'] = find_archive_program(format, command)
     for key, value in kwargs.items():
@@ -410,14 +412,14 @@ def move_outdir_orphan (outdir):
     return (False, "multiple files in root")
 
 
-def run_archive_cmdlist (archive_cmdlist):
+def run_archive_cmdlist (archive_cmdlist, verbosity=0):
     """Run archive command."""
     # archive_cmdlist is a command list with optional keyword arguments
     if isinstance(archive_cmdlist, tuple):
         cmdlist, runkwargs = archive_cmdlist
     else:
         cmdlist, runkwargs = archive_cmdlist, {}
-    util.run_checked(cmdlist, **runkwargs)
+    return util.run_checked(cmdlist, verbosity=verbosity, **runkwargs)
 
 
 def make_file_readable (filename):
@@ -458,31 +460,6 @@ def cleanup_outdir (outdir, archive):
     return outdir2, "`%s' (%s)" % (outdir2, msg)
 
 
-def check_archive_arguments (archive, command, *args):
-    """Check for invalid archive command arguments."""
-    if command == 'create':
-        util.check_archive_filelist(args)
-        util.check_new_filename(archive)
-    elif command == 'repack':
-        util.check_existing_filename(archive)
-        if not args:
-            raise util.PatoolError("missing target archive filename for repack")
-        util.check_new_filename(args[0])
-    elif command == 'diff':
-        util.check_existing_filename(archive)
-        if not args:
-            raise util.PatoolError("missing second archive filename for diff")
-        util.check_existing_filename(args[0])
-    elif command == 'search':
-        if not archive:
-            # archive is the search pattern
-            raise util.PatoolError("empty search pattern")
-        for arg in args:
-            util.check_existing_filename(arg)
-    else:
-        util.check_existing_filename(archive)
-
-
 def _handle_archive (archive, command, *args, **kwargs):
     """Handle archive command; raising PatoolError on errors.
     @return: output directory if command is 'extract', else None
@@ -494,16 +471,13 @@ def _handle_archive (archive, command, *args, **kwargs):
     check_archive_command(command)
     config_kwargs = clean_config_keys(kwargs)
     config = parse_config(archive, format, compression, command, **config_kwargs)
-    # check if archive already exists
-    if command == 'create' and os.path.exists(archive):
-        raise util.PatoolError("archive `%s' already exists" % archive)
     program = config['program']
     get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
     # prepare keyword arguments for command list
-    cmd_kwargs = dict(verbose=config['verbose'])
+    cmd_kwargs = dict(verbosity=config['verbosity'])
     origarchive = None
     if command == 'extract':
-        if "outdir" in kwargs:
+        if kwargs.get('outdir'):
             cmd_kwargs["outdir"] = kwargs["outdir"]
             do_cleanup_outdir = False
         else:
@@ -520,13 +494,14 @@ def _handle_archive (archive, command, *args, **kwargs):
             # an empty command list means the get_archive_cmdlist() function
             # already handled the command (eg. when it's a builtin Python
             # function)
-            run_archive_cmdlist(cmdlist)
+            run_archive_cmdlist(cmdlist, verbosity=config['verbosity'])
         if command == 'extract':
             if do_cleanup_outdir:
                 target, msg = cleanup_outdir(cmd_kwargs["outdir"], archive)
-                util.log_info("%s extracted to %s" % (archive, msg))
             else:
                 target, msg = cmd_kwargs["outdir"], "`%s'" % cmd_kwargs["outdir"]
+            if config['verbosity'] >= 0:
+                util.log_info("... %s extracted to %s." % (archive, msg))
             return target
         elif command == 'create' and origarchive:
             shutil.move(archive, origarchive)
@@ -561,11 +536,12 @@ def rmtree_log_error (func, path, exc):
     util.log_error(msg)
 
 
-def _diff_archives (archive1, archive2, **kwargs):
-    """Show differences between two archives."""
+def _diff_archives (archive1, archive2, verbosity=0):
+    """Show differences between two archives.
+    @return 0 if archives are the same, else 1
+    @raises: PatoolError on errors
+    """
     if util.is_same_file(archive1, archive2):
-        msg = "no differences found: archive `%s' and `%s' are the same files"
-        util.log_info(msg % (archive1, archive2))
         return 0
     diff = util.find_program("diff")
     if not diff:
@@ -573,65 +549,51 @@ def _diff_archives (archive1, archive2, **kwargs):
         raise util.PatoolError(msg)
     tmpdir1 = util.tmpdir()
     try:
-        path1 = _handle_archive(archive1, 'extract', outdir=tmpdir1, **kwargs)
+        path1 = _handle_archive(archive1, 'extract', outdir=tmpdir1, verbosity=-1)
         tmpdir2 = util.tmpdir()
         try:
-            path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2, **kwargs)
-            return util.run([diff, "-urN", path1, path2])
+            path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2, verbosity=-1)
+            return util.run_checked([diff, "-urN", path1, path2], verbosity=1, ret_ok=(0, 1))
         finally:
             shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
     finally:
         shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
 
 
-def _search_archives(pattern, *archives, **kwargs):
-    """Search for given pattern in all archives."""
+def _search_archive(pattern, archive, verbosity=0):
+    """Search for given pattern in an archive."""
     grep = util.find_program("grep")
     if not grep:
         msg = "The grep(1) program is required for searching archive contents, please install it."
         raise util.PatoolError(msg)
-    errors = 0
-    for archive in archives:
-        try:
-            errors += _search_archive(grep, pattern, archive, **kwargs)
-        except util.PatoolError as msg:
-            util.log_error("grep error: %s" % msg)
-            errors += 1
-    return errors
-
-
-def _search_archive(grep, pattern, archive, **kwargs):
-    """Extract one archive and search for given pattern in extracted files."""
     tmpdir = util.tmpdir()
     try:
-        _handle_archive(archive, 'extract', outdir=tmpdir, **kwargs)
-        return util.run([grep, "-r", "-e", pattern, "."], cwd=tmpdir)
+        path = _handle_archive(archive, 'extract', outdir=tmpdir, verbosity=-1)
+        return util.run_checked([grep, "-r", "-e", pattern, "."], ret_ok=(0, 1), verbosity=1, cwd=path)
     finally:
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
 
 
-def _repack_archive (archive1, archive2, **kwargs):
+def _repack_archive (archive1, archive2, verbosity=0):
     """Repackage an archive to a different format."""
     format1, compression1 = get_archive_format(archive1)
     format2, compression2 = get_archive_format(archive2)
     if format1 == format2 and compression1 == compression2:
         # same format and compression allows to copy the file
-        try:
-            util.link_or_copy(archive1, archive2, verbose=kwargs.get('verbose'))
-            return 0
-        except OSError:
-            return 1
+        util.link_or_copy(archive1, archive2, verbosity=verbosity)
+        return
     tmpdir = util.tmpdir()
     try:
+        kwargs = dict(verbosity=verbosity, outdir=tmpdir)
         same_format = (format1 == format2 and compression1 and compression2)
         if same_format:
             # only decompress since the format is the same
             kwargs['format'] = compression1
-        _handle_archive(archive1, 'extract', outdir=tmpdir, **kwargs)
+        path = _handle_archive(archive1, 'extract', **kwargs)
         archive = os.path.abspath(archive2)
-        files = tuple(os.listdir(tmpdir))
+        files = tuple(os.listdir(path))
         olddir = os.getcwd()
-        os.chdir(tmpdir)
+        os.chdir(path)
         try:
             if same_format:
                 # only compress since the format is the same
@@ -639,68 +601,82 @@ def _repack_archive (archive1, archive2, **kwargs):
             _handle_archive(archive, 'create', *files, **kwargs)
         finally:
             os.chdir(olddir)
-        return 0
     finally:
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
 
 
-def handle_archive (archive, command, *args, **kwargs):
-    """Handle archive file command; with nice error reporting."""
-    check_archive_arguments(archive, command, *args)
-    try:
-        if command == "diff":
-            res = _diff_archives(archive, args[0], **kwargs)
-        elif command == "search":
-            res = _search_archives(archive, *args, **kwargs)
-        elif command == "repack":
-            res = _repack_archive(archive, args[0], **kwargs)
-        else:
-            _handle_archive(archive, command, *args, **kwargs)
-            res = 0
-    except KeyboardInterrupt:
-        util.log_error("aborted")
-        res = 1
-    except util.PatoolError as msg:
-        util.log_error(msg)
-        res = 1
-    except Exception as msg:
-        util.log_internal_error()
-        res = 1
+# the patool library API
+
+def extract_archive(archive, verbosity=0, outdir=None, program=None):
+    """Extract given archive."""
+    util.check_existing_filename(archive)
+    if verbosity >= 0:
+        util.log_info("Extracting %s ..." % archive)
+    return _handle_archive(archive, 'extract', verbosity=verbosity, outdir=outdir, program=program)
+
+
+def list_archive(archive, verbosity=0, program=None):
+    """List given archive."""
+    util.check_existing_filename(archive)
+    if verbosity >= 0:
+        util.log_info("Listing %s ..." % archive)
+    return _handle_archive(archive, 'list', verbosity=verbosity, program=program)
+
+
+def test_archive(archive, verbosity=0, program=None):
+    """Test given archive."""
+    util.check_existing_filename(archive)
+    if verbosity >= 0:
+        util.log_info("Testing %s ..." % archive)
+    res = _handle_archive(archive, 'test', verbosity=verbosity, program=program)
+    if verbosity >= 0:
+        util.log_info("... tested ok.")
     return res
 
 
-# convenience functions
-
-def extract (archive, verbose=False, outdir=None):
-    """Extract given archive."""
-    return handle_archive(archive, 'extract', verbose=verbose, outdir=outdir)
-
-
-def list (archive, verbose=False):
-    """List given archive."""
-    return handle_archive(archive, 'list', verbose=verbose)
-
-
-def test (archive, verbose=False):
-    """Test given archive."""
-    return handle_archive(archive, 'test', verbose=verbose)
-
-
-def create (archive, *filenames, **kwargs):
+def create_archive(archive, filenames, verbosity=0, program=None):
     """Create given archive with given files."""
-    return handle_archive(archive, 'create', *filenames, **kwargs)
+    util.check_new_filename(archive)
+    util.check_archive_filelist(filenames)
+    if verbosity >= 0:
+        util.log_info("Creating %s ..." % archive)
+    res = _handle_archive(archive, 'create', *tuple(filenames), verbosity=verbosity, program=program)
+    if verbosity >= 0:
+        util.log_info("... %s created." % archive)
+    return res
 
 
-def diff (archive1, archive2, verbose=False):
+def diff_archives(archive1, archive2, verbosity=0):
     """Print differences between two archives."""
-    return handle_archive(archive1, 'diff', archive2, verbose=verbose)
+    util.check_existing_filename(archive1)
+    util.check_existing_filename(archive2)
+    if verbosity >= 0:
+        util.log_info("Comparing %s with %s ..." % (archive1, archive2))
+    res = _diff_archives(archive1, archive2, verbosity=verbosity)
+    if res == 0 and verbosity >= 0:
+        util.log_info("... no differences found.")
 
 
-def search(pattern, *archives, **kwargs):
+def search_archive(pattern, archive, verbosity=0):
     """Search pattern in archive members."""
-    return handle_archive(pattern, 'search', *archives, **kwargs)
+    if not pattern:
+        raise util.PatoolError("empty search pattern")
+    util.check_existing_filename(archive)
+    if verbosity >= 0:
+        util.log_info("Searching %r in %s ..." % (pattern, archive))
+    res = _search_archive(pattern, archive, verbosity=verbosity)
+    if res == 1 and verbosity >= 0:
+        util.log_info("... %r not found" % pattern)
+    return res
 
 
-def repack (archive1, archive2, verbose=False):
+def repack_archive (archive, archive_new, verbosity=0):
     """Repack archive to different file and/or format."""
-    return handle_archive(archive1, 'repack', archive2, verbose=verbose)
+    util.check_existing_filename(archive)
+    util.check_new_filename(archive_new)
+    if verbosity >= 0:
+        util.log_info("Repacking %s to %s ..." % (archive, archive_new))
+    res = _repack_archive(archive, archive_new, verbosity=verbosity)
+    if verbosity >= 0:
+        util.log_info("... repacking successful.")
+    return res

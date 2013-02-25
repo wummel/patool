@@ -21,6 +21,7 @@ import importlib
 
 basedir = os.path.dirname(__file__)
 datadir = os.path.join(basedir, 'data')
+patool_cmd = os.path.join(os.path.dirname(basedir), "patool")
 
 # Python 3.x renamed the function name attribute
 if sys.version_info[0] > 2:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,11 +17,7 @@
 
 def extract_7z (archive, compression, cmd, **kwargs):
     """Extract a 7z archive."""
-    cmdlist = [cmd, 'x']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.extend(['-o%s' % kwargs['outdir'], '--', archive])
-    return cmdlist
+    return [cmd, 'x', '-o%s' % kwargs['outdir'], '--', archive]
 
 extract_bzip2 = \
   extract_gzip = \
@@ -37,12 +33,7 @@ extract_bzip2 = \
 
 def list_7z (archive, compression, cmd, **kwargs):
     """List a 7z archive."""
-    cmdlist = [cmd, 'l']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.append('--')
-    cmdlist.append(archive)
-    return cmdlist
+    return [cmd, 'l', '--', archive]
 
 list_bzip2 = \
   list_gzip = \
@@ -59,12 +50,7 @@ list_bzip2 = \
 
 def test_7z (archive, compression, cmd, **kwargs):
     """Test a 7z archive."""
-    cmdlist = [cmd, 't']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.append('--')
-    cmdlist.append(archive)
-    return cmdlist
+    return [cmd, 't', '--', archive]
 
 test_bzip2 = \
   test_gzip = \
@@ -81,11 +67,7 @@ test_bzip2 = \
 
 def create_7z (archive, compression, cmd, *args, **kwargs):
     """Create a 7z archive."""
-    cmdlist = [cmd, 'a']
-    if not kwargs['verbose']:
-        cmdlist.append('-bd')
-    cmdlist.append('--')
-    cmdlist.append(archive)
+    cmdlist = [cmd, 'a', '--', archive]
     cmdlist.extend(args)
     return cmdlist
 

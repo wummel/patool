@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 def extract_deb (archive, compression, cmd, **kwargs):
     """Extract a DEB archive."""
     cmdlist = [cmd]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('--vextract')
     else:
         cmdlist.append('--extract')

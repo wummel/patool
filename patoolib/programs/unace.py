@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 def extract_ace (archive, compression, cmd, **kwargs):
     """Extract a ACE archive."""
     cmdlist = [cmd, 'x']
-    if not kwargs['verbose']:
-        cmdlist.append('-c-')
     outdir = kwargs['outdir']
     if not outdir.endswith('/'):
         outdir += '/'
@@ -29,18 +27,13 @@ def extract_ace (archive, compression, cmd, **kwargs):
 def list_ace (archive, compression, cmd, **kwargs):
     """List a ACE archive."""
     cmdlist = [cmd]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
-        cmdlist.append('-c-')
     cmdlist.append(archive)
     return cmdlist
 
 def test_ace (archive, compression, cmd, **kwargs):
     """Test a ACE archive."""
-    cmdlist = [cmd, 't']
-    if not kwargs['verbose']:
-        cmdlist.append('-c-')
-    cmdlist.append(archive)
-    return cmdlist
+    return [cmd, 't', archive]

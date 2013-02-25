@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ from .. import util
 def extract_compress (archive, compression, cmd, **kwargs):
     """Extract a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend(['-c', util.shell_quote(archive), '>',

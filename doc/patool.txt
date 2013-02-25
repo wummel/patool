@@ -6,45 +6,46 @@ NAME
        patool - portable command line archive file manager
 
 SYNOPSIS
-        patool (list|test) [--verbose] <archive-file>...
-        patool   extract   [--verbose]   [--outdir=DIRNAME]  <archive-
-       file>...
-        patool create [--verbose] <archive-file> [files...]
-        patool diff [--verbose] <archive1> <archive2>
-        patool search [--verbose] <pattern> <archive-file>...
-        patool repack [--verbose] <archive1> <archive2>
-        patool formats
+        patool  [global-options]
+                (list|test|extract|create|diff|search|repack|formats)
+                [command-options]   <command-arguments>...
 
 DESCRIPTION
-       Various archive types can be  created,  extracted,  tested  and
-       listed  by patool. The advantage of patool is its simplicity in
-       handling archive files without having to remember a  myriad  of
-       programs and options.
+       Various  archive  types  can  be  created,  extracted,  tested,
+       listed, searched, repacked and compared by patool.  The  advan‐
+       tage  of  patool  is  its  simplicity in handling archive files
+       without having to remember a myriad of programs and options.
 
-       The  archive format is determined by the file(1) program and as
+       The archive format is determined by the file(1) program and  as
        a fallback by the archive file extension.
 
        patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz),
-       APE  (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB
-       (.cab), compress (.Z), CPIO (.cpio), DEB  (.deb),  DMS  (.dms),
-       FLAC  (.flac), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh), LZIP
-       (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar),  RZIP
-       (.rz),  SHN  (.shn), TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and
+       APE (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2),  CAB
+       (.cab),  compress  (.Z),  CPIO (.cpio), DEB (.deb), DMS (.dms),
+       FLAC (.flac), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh),  LZIP
+       (.lz),  LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar), RZIP
+       (.rz), SHN (.shn), TAR (.tar), XZ (.xz), ZIP (.zip,  .jar)  and
        ZOO (.zoo) formats.  It relies on helper applications to handle
        those archive formats (for example bzip2 for BZIP2 archives).
 
-       The  archive  formats  TAR (.tar), ZIP (.zip), BZIP2 (.bz2) and
-       GZIP (.gz) are supported natively and  do  not  require  helper
-       applications to be installed.
+       The archive formats TAR, ZIP,  BZIP2  and  GZIP  are  supported
+       natively   and   do  not  require  helper  applications  to  be
+       installed.
 
 EXAMPLES
          patool extract archive.zip otherarchive.rar
-         patool test --verbose dist.tar.gz
+         patool --verbose test dist.tar.gz
          patool list package.deb
-         patool create --verbose myfiles.zip file1.txt dir/
+         patool --verbose create myfiles.zip file1.txt dir/
          patool diff release1.0.tar.gz release2.0.zip
          patool search "def urlopen" python-3.3.tar.gz
          patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
+
+GLOBAL OPTIONS
+       -v, --verbose
+              Display more info about what patool  does,  and  display
+              the output of helper applications. Can be given multiple
+              times to increase the output even more.
 
 COMMANDS
        The following rules apply to all commands:
@@ -53,55 +54,72 @@ COMMANDS
 
        ·   The original archive will never be removed.
 
-       ·   Verbose  operation  displays  more  info  about what patool
-           does. It also displays more info from the  helper  applica‐
-           tion if it's supported.
-
-       Several commands are available.
+       The following commands are available.
 
    extract
-       Extract  files from an archive. The original archive will never
-       be removed and is left as it is.
-       This is the default command if no command was given.
+       patool extract [options] <archive>...
+
+       Extract files from given archives. The original  archives  will
+       never be removed and are left as is.
+
+       Options:
+
+       --outdir DIRECTORY
+              Extract  to  the  given  output directory. Default is to
+              extract to the current working directory.
 
        If the archive contains exactly one file or directory, the  ar‐
-       chive  contents are extracted to the current working directory.
+       chive  contents are extracted directly to the output directory.
        Else the files are extracted in a newly created subdirectory of
-       the current working directory. The new directory is named after
-       the archive filename without the extension.
-       This prevents cluttering the current working directory  with  a
-       lot of files from the extracted archive.
+       the  output directory. The new directory is named after the ar‐
+       chive filename without the extension.
+       This prevents cluttering the output directory  with  a  lot  of
+       files from the extracted archive.
 
        All  extracted  files are ensured that they are readable by the
        current user.
 
    list
-       List files in an archive.
+       patool list <archive>...
+
+       List files in archives.
 
    create
-       Create an archive from given files. At least on  of  the  given
-       files  to  add  to the archive has to exist (non-existing files
-       are ignored).  The format of the archive to  create  is  deter‐
-       mined by the archive file extension.
+       patool create <archive> <file-or-directory>...
+
+       Create an archive from given files. All of the given  files  to
+       add  to  the archive must be readable by the current user.  The
+       format of the archive to create is determined  by  the  archive
+       file extension.
 
    test
-       Test  files  in  an archive. If the helper application does not
+       patool test <archive>...
+
+       Test  the  given  archives.  If the helper application does not
        support testing, the archive contents are listed instead.
 
    diff
+       patool diff <archive1> <archive2>
+
        Show differences between two archives with the diff(1) program.
        The diff options used are -urN.
 
    search
+       patool search <pattern> <archive>
+
        Search  in archive contents for given pattern using the grep(1)
        program.  The grep options used are -r; additional options  can
        be supplied with the GREP_OPTIONS environment variable.
 
    repack
+       patool repack <archive> <archive_new>
+
        Repackage  archive  to  a  different format. The target archive
-       format is determined by the file extension.
+       format is determined by the file extension of archive_new.
 
    formats
+       patool formats
+
        Show all supported archive formats (ie. which  helper  applica‐
        tions are available).
 

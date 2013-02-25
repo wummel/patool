@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,6 +28,6 @@ def extract_rpm (archive, compression, cmd, **kwargs):
         '--extract', '--make-directories', '--preserve-modification-time',
         '--no-absolute-filenames', '--force-local', '--nonmatching',
         r'"*\.\.*"']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     return (cmdlist, {'cwd': kwargs['outdir'], 'shell': True})

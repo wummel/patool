@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the zipfile Python module."""
+from __future__ import print_function
 from .. import util
 import zipfile
 import os
@@ -23,49 +24,43 @@ READ_SIZE_BYTES = 1024*1024
 
 def list_zip (archive, compression, cmd, **kwargs):
     """List member of a ZIP archive with the zipfile Python module."""
-    verbose = kwargs['verbose']
-    if verbose:
-        util.log_info('listing %s...' % archive)
-    zfile = zipfile.ZipFile(archive, "r")
+    verbosity = kwargs['verbosity']
     try:
-        for name in zfile.namelist():
-            util.log_info('member %s' % name)
-    finally:
-        zfile.close()
+        with zipfile.ZipFile(archive, "r") as zfile:
+            for name in zfile.namelist():
+                if verbosity >= 0:
+                    print(name)
+    except Exception as err:
+        msg = "error listing %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None
 
 test_zip = list_zip
 
 def extract_zip (archive, compression, cmd, **kwargs):
     """Extract a ZIP archive with the zipfile Python module."""
-    verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    if verbose:
-        util.log_info('extracting %s...' % archive)
-    zfile = zipfile.ZipFile(archive)
     try:
-        zfile.extractall(outdir)
-    finally:
-        zfile.close()
-    if verbose:
-        util.log_info('... extracted to %s' % outdir)
+        with zipfile.ZipFile(archive) as zfile:
+            zfile.extractall(outdir)
+    except Exception as err:
+        msg = "error extracting %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None
 
 
 def create_zip (archive, compression, cmd, *args, **kwargs):
     """Create a ZIP archive with the zipfile Python module."""
-    verbose = kwargs['verbose']
-    if verbose:
-        util.log_info('creating %s...' % archive)
-    zfile = zipfile.ZipFile(archive, 'w')
     try:
-        for filename in args:
-            if os.path.isdir(filename):
-                write_directory(zfile, filename)
-            else:
-                zfile.write(filename)
-    finally:
-        zfile.close()
+        with zipfile.ZipFile(archive, 'w') as zfile:
+            for filename in args:
+                if os.path.isdir(filename):
+                    write_directory(zfile, filename)
+                else:
+                    zfile.write(filename)
+    except Exception as err:
+        msg = "error creating %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None
 
 

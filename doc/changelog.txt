@@ -1,6 +1,7 @@
 1.0 "" (released xx.xx.2013)
 
-* Add support for grepping in archive contents.
+* Add support for searching in archive contents.
+* Allow multiple --verbose options to increase program output.
 * Fixed Python lzma archive handling.
 * Fixed lzop, lrzip and rzip archive handling.
 * Fixed Python 3.x support.

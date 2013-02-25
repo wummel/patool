@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,46 +22,38 @@ READ_SIZE_BYTES = 1024*1024
 
 def list_tar (archive, compression, cmd, **kwargs):
     """List a TAR archive with the tarfile Python module."""
-    verbose = kwargs['verbose']
-    if verbose:
-        util.log_info('listing %s...' % archive)
-    tfile = tarfile.open(archive)
     try:
-        tfile.list(verbose=verbose)
-    finally:
-        tfile.close()
+        with tarfile.open(archive) as tfile:
+            tfile.list(verbose=kwargs["verbosity"]>1)
+    except Exception as err:
+        msg = "error listing %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None
 
 test_tar = list_tar
 
 def extract_tar (archive, compression, cmd, **kwargs):
     """Extract a TAR archive with the tarfile Python module."""
-    verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    if verbose:
-        util.log_info('extracting %s...' % archive)
-    tfile = tarfile.open(archive)
     try:
-        tfile.extractall(path=outdir)
-    finally:
-        tfile.close()
-    if verbose:
-        util.log_info('... extracted to %s' % outdir)
+        with tarfile.open(archive) as tfile:
+            tfile.extractall(path=outdir)
+    except Exception as err:
+        msg = "error extracting %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None
 
 
 def create_tar (archive, compression, cmd, *args, **kwargs):
     """Create a TAR archive with the tarfile Python module."""
-    verbose = kwargs['verbose']
-    if verbose:
-        util.log_info('creating %s...' % archive)
     mode = get_tar_mode(compression)
-    tfile = tarfile.open(archive, mode)
     try:
-        for filename in args:
-            tfile.add(filename)
-    finally:
-        tfile.close()
+        with tarfile.open(archive, mode) as tfile:
+            for filename in args:
+                tfile.add(filename)
+    except Exception as err:
+        msg = "error creating %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None
 
 
@@ -73,6 +65,6 @@ def get_tar_mode (compression):
         return 'w:bz2'
     if compression:
         msg = 'pytarfile does not support %s for tar compression'
-        util.log_error(msg % compression)
+        raise util.PatoolError(msg % compression)
     # no compression
     return 'w'

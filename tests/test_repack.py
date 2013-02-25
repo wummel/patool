@@ -15,23 +15,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
+import sys
 import shutil
-import patoolib
-from . import datadir, needs_program, needs_one_program
+from patoolib import util
+from . import datadir, needs_program, needs_one_program, patool_cmd
 
 class ArchiveRepackTest (unittest.TestCase):
 
     def repack(self, name1, name2):
         """Repack archive with name1 to archive with name2."""
         archive1 = os.path.join(datadir, name1)
-        tmpdir = patoolib.util.tmpdir()
+        tmpdir = util.tmpdir()
         try:
             archive2 = os.path.join(tmpdir, name2)
-            res = patoolib.handle_archive(archive1, "repack", archive2)
-            self.assertEqual(res, 0)
-            res = patoolib.handle_archive(archive1, "diff", archive2)
-            # both archives have the same data
-            self.assertEqual(res, 0)
+            util.run_checked([sys.executable, patool_cmd, "-vv", "repack", archive1, archive2])
+            util.run_checked([sys.executable, patool_cmd, "diff", archive1, archive2])
         finally:
             shutil.rmtree(tmpdir)
 

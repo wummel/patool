@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ import os
 def extract_ar (archive, compression, cmd, **kwargs):
     """Extract a AR archive."""
     opts = 'x'
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         opts += 'v'
     cmdlist = [cmd, opts, os.path.abspath(archive)]
     return (cmdlist, {'cwd': kwargs['outdir']})
@@ -27,7 +27,7 @@ def extract_ar (archive, compression, cmd, **kwargs):
 def list_ar (archive, compression, cmd, **kwargs):
     """List a AR archive."""
     opts = 't'
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         opts += 'v'
     return [cmd, opts, archive]
 
@@ -36,7 +36,7 @@ test_ar = list_ar
 def create_ar (archive, compression, cmd, *args, **kwargs):
     """Create a AR archive."""
     opts = 'rc'
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         opts += 'v'
     cmdlist = [cmd, opts, archive]
     cmdlist.extend(args)

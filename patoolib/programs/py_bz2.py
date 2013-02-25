@@ -21,46 +21,39 @@ try:
 except ImportError:
     import bz2
 
+# read in 1MB chunks
 READ_SIZE_BYTES = 1024*1024
 
 def extract_bzip2 (archive, compression, cmd, **kwargs):
     """Extract a BZIP2 archive with the bz2 Python module."""
-    verbose = kwargs['verbose']
     outdir = kwargs['outdir']
-    if verbose:
-        util.log_info('extracting %s...' % archive)
     targetname = util.get_single_outfile(outdir, archive)
-    bz2file = bz2.BZ2File(archive)
     try:
-        with open(targetname, 'wb') as targetfile:
-            data = bz2file.read(READ_SIZE_BYTES)
-            while data:
-                targetfile.write(data)
+        with bz2.BZ2File(archive) as bz2file:
+            with open(targetname, 'wb') as targetfile:
                 data = bz2file.read(READ_SIZE_BYTES)
-    finally:
-        bz2file.close()
-    if verbose:
-        util.log_info('... extracted to %s' % targetname)
+                while data:
+                    targetfile.write(data)
+                    data = bz2file.read(READ_SIZE_BYTES)
+    except Exception as err:
+        msg = "error extracting %s to %s: %s" % (archive, targetname, err)
+        raise util.PatoolError(msg)
     return None
 
 
 def create_bzip2 (archive, compression, cmd, *args, **kwargs):
     """Create a BZIP2 archive with the bz2 Python module."""
-    verbose = kwargs['verbose']
-    if verbose:
-        util.log_info('creating %s...' % archive)
     if len(args) > 1:
-        util.log_error('multi-file compression not supported in Python bz2')
-    bz2file = bz2.BZ2File(archive, 'wb')
+        raise util.PatoolError('multi-file compression not supported in Python bz2')
     try:
-        filename = args[0]
-        with open(filename, 'rb') as srcfile:
-            data = srcfile.read(READ_SIZE_BYTES)
-            while data:
-                bz2file.write(data)
+        with bz2.BZ2File(archive, 'wb') as bz2file:
+            filename = args[0]
+            with open(filename, 'rb') as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)
-            if verbose:
-                util.log_info('... added %s' % filename)
-    finally:
-        bz2file.close()
+                while data:
+                    bz2file.write(data)
+                    data = srcfile.read(READ_SIZE_BYTES)
+    except Exception as err:
+        msg = "error creating %s: %s" % (archive, err)
+        raise util.PatoolError(msg)
     return None

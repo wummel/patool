@@ -20,7 +20,7 @@ from .. import util
 def extract_lrzip (archive, compression, cmd, **kwargs):
     """Extract a LRZIP archive."""
     cmdlist = [cmd, '-d']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     outfile = util.get_single_outfile(kwargs['outdir'], archive)
     cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
@@ -29,7 +29,7 @@ def extract_lrzip (archive, compression, cmd, **kwargs):
 def test_lrzip (archive, compression, cmd, **kwargs):
     """Test a LRZIP archive."""
     cmdlist = [cmd, '-t']
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist
@@ -37,7 +37,7 @@ def test_lrzip (archive, compression, cmd, **kwargs):
 def create_lrzip (archive, compression, cmd, *args, **kwargs):
     """Create a LRZIP archive."""
     cmdlist = [cmd, '-o', archive]
-    if kwargs['verbose']:
+    if kwargs['verbosity'] > 1:
         cmdlist.append('-v')
     cmdlist.extend(args)
     return cmdlist
