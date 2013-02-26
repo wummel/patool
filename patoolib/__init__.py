@@ -285,16 +285,13 @@ def check_archive_format (format, compression):
         raise util.PatoolError("unkonwn archive compression `%s'" % compression)
 
 
-def check_archive_command (command):
-    """Make sure archive command is valid."""
-    if command not in ArchiveCommands:
-        raise util.PatoolError("invalid archive command `%s'" % command)
-
-
-def find_archive_program (format, command):
+def find_archive_program (format, command, program=None):
     """Find suitable archive program for given format and mode."""
     commands = ArchivePrograms[format]
     programs = []
+    if program is not None:
+        # try a specific program first
+        programs.append(program)
     # first try the universal programs with key None
     for key in (None, command):
         if key in commands:
@@ -321,7 +318,7 @@ def program_supports_compression (program, compression):
       natively, else False.
     """
     if program in ('tar', 'star', 'bsdtar', 'py_tarfile'):
-        return compression in ('gzip', 'bzip2')
+        return compression in ('gzip', 'bzip2') + py_lzma
     return False
 
 
@@ -353,35 +350,9 @@ def list_formats ():
                       (command, util.strlist_with_or(handlers)))
 
 
-AllowedConfigKeys = ("verbosity", "program")
-
-def clean_config_keys (kwargs):
-    """Remove invalid configuration keys from arguments."""
-    config_kwargs = dict(kwargs)
-    for key in kwargs:
-        if key not in AllowedConfigKeys:
-            del config_kwargs[key]
-    return config_kwargs
-
-
-def parse_config (archive, format, compression, command, **kwargs):
-    """The configuration determines which program to use for which
-    archive format for the given command.
-    @raises: PatoolError if command for given format and compression
-       is not supported.
-    """
-    config = {
-        'verbosity': 0,
-    }
-    config['program'] = find_archive_program(format, command)
-    for key, value in kwargs.items():
-        if value is not None:
-            if key == 'program':
-                program = util.find_program(value)
-                if program:
-                    value = program
-            config[key] = value
-    program = os.path.basename(config['program'])
+def check_program_compression(archive, command, program, compression):
+    """Check if a program supports the given compression."""
+    program = os.path.basename(program)
     if compression:
         # check if compression is supported
         if not program_supports_compression(program, compression):
@@ -393,7 +364,6 @@ def parse_config (archive, format, compression, command, **kwargs):
             if not comp_prog:
                 msg = "cannot %s archive `%s': compression `%s' not supported"
                 raise util.PatoolError(msg % (command, archive, compression))
-    return config
 
 
 def move_outdir_orphan (outdir):
@@ -460,57 +430,86 @@ def cleanup_outdir (outdir, archive):
     return outdir2, "`%s' (%s)" % (outdir2, msg)
 
 
-def _handle_archive (archive, command, *args, **kwargs):
-    """Handle archive command; raising PatoolError on errors.
+def _extract_archive(archive, verbosity=0, outdir=None, program=None, format=None, compression=None):
+    """Extract an archive.
     @return: output directory if command is 'extract', else None
     """
-    format, compression = kwargs.get("format"), kwargs.get("compression")
     if format is None:
         format, compression = get_archive_format(archive)
     check_archive_format(format, compression)
-    check_archive_command(command)
-    config_kwargs = clean_config_keys(kwargs)
-    config = parse_config(archive, format, compression, command, **config_kwargs)
-    program = config['program']
-    get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
-    # prepare keyword arguments for command list
-    cmd_kwargs = dict(verbosity=config['verbosity'])
-    origarchive = None
-    if command == 'extract':
-        if kwargs.get('outdir'):
-            cmd_kwargs["outdir"] = kwargs["outdir"]
-            do_cleanup_outdir = False
-        else:
-            cmd_kwargs['outdir'] = util.tmpdir(dir=".")
-            do_cleanup_outdir = True
-    elif command == 'create' and os.path.basename(program) == 'arc' and \
-         ".arc" in archive and not archive.endswith(".arc"):
-        # the arc program mangles the archive name if it contains ".arc"
-        origarchive = archive
-        archive = util.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
+    program = find_archive_program(format, 'extract', program=program)
+    check_program_compression(archive, 'extract', program, compression)
+    get_archive_cmdlist = get_archive_cmdlist_func(program, 'extract', format)
+    if outdir is None:
+        outdir = util.tmpdir(dir=".")
+        do_cleanup_outdir = True
+    else:
+        do_cleanup_outdir = False
     try:
-        cmdlist = get_archive_cmdlist(archive, compression, program, *args, **cmd_kwargs)
+        cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, outdir)
         if cmdlist:
             # an empty command list means the get_archive_cmdlist() function
             # already handled the command (eg. when it's a builtin Python
             # function)
-            run_archive_cmdlist(cmdlist, verbosity=config['verbosity'])
-        if command == 'extract':
-            if do_cleanup_outdir:
-                target, msg = cleanup_outdir(cmd_kwargs["outdir"], archive)
-            else:
-                target, msg = cmd_kwargs["outdir"], "`%s'" % cmd_kwargs["outdir"]
-            if config['verbosity'] >= 0:
-                util.log_info("... %s extracted to %s." % (archive, msg))
-            return target
-        elif command == 'create' and origarchive:
-            shutil.move(archive, origarchive)
+            run_archive_cmdlist(cmdlist, verbosity=verbosity)
+        if do_cleanup_outdir:
+            target, msg = cleanup_outdir(outdir, archive)
+        else:
+            target, msg = outdir, "`%s'" % outdir
+        if verbosity >= 0:
+            util.log_info("... %s extracted to %s." % (archive, msg))
+        return target
     finally:
-        if command == "extract":
+        # try to remove an empty temporary output directory
+        if do_cleanup_outdir:
             try:
-                os.rmdir(cmd_kwargs["outdir"])
+                os.rmdir(outdir)
             except OSError:
                 pass
+
+
+
+def _create_archive(archive, filenames, verbosity=0, program=None, format=None, compression=None):
+    """Create an archive."""
+    if format is None:
+        format, compression = get_archive_format(archive)
+    check_archive_format(format, compression)
+    program = find_archive_program(format, 'create', program=program)
+    check_program_compression(archive, 'create', program, compression)
+    get_archive_cmdlist = get_archive_cmdlist_func(program, 'create', format)
+    origarchive = None
+    if os.path.basename(program) == 'arc' and \
+       ".arc" in archive and not archive.endswith(".arc"):
+        # the arc program mangles the archive name if it contains ".arc"
+        origarchive = archive
+        archive = util.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
+    cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, filenames)
+    if cmdlist:
+        # an empty command list means the get_archive_cmdlist() function
+        # already handled the command (eg. when it's a builtin Python
+        # function)
+        run_archive_cmdlist(cmdlist, verbosity=verbosity)
+    if origarchive:
+        shutil.move(archive, origarchive)
+
+
+def _handle_archive (archive, command, verbosity=0, program=None, format=None, compression=None):
+    """Test and list archives."""
+    if format is None:
+        format, compression = get_archive_format(archive)
+    check_archive_format(format, compression)
+    if command not in ('list', 'test'):
+        raise util.PatoolError("invalid archive command `%s'" % command)
+    program = find_archive_program(format, command, program=program)
+    check_program_compression(archive, command, program, compression)
+    get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
+    # prepare keyword arguments for command list
+    cmdlist = get_archive_cmdlist(archive, compression, program, verbosity)
+    if cmdlist:
+        # an empty command list means the get_archive_cmdlist() function
+        # already handled the command (eg. when it's a builtin Python
+        # function)
+        run_archive_cmdlist(cmdlist, verbosity=verbosity)
 
 
 def get_archive_cmdlist_func (program, command, format):
@@ -549,10 +548,10 @@ def _diff_archives (archive1, archive2, verbosity=0):
         raise util.PatoolError(msg)
     tmpdir1 = util.tmpdir()
     try:
-        path1 = _handle_archive(archive1, 'extract', outdir=tmpdir1, verbosity=-1)
+        path1 = _extract_archive(archive1, outdir=tmpdir1, verbosity=-1)
         tmpdir2 = util.tmpdir()
         try:
-            path2 = _handle_archive(archive2, 'extract', outdir=tmpdir2, verbosity=-1)
+            path2 = _extract_archive(archive2, outdir=tmpdir2, verbosity=-1)
             return util.run_checked([diff, "-urN", path1, path2], verbosity=1, ret_ok=(0, 1))
         finally:
             shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
@@ -568,7 +567,7 @@ def _search_archive(pattern, archive, verbosity=0):
         raise util.PatoolError(msg)
     tmpdir = util.tmpdir()
     try:
-        path = _handle_archive(archive, 'extract', outdir=tmpdir, verbosity=-1)
+        path = _extract_archive(archive, outdir=tmpdir, verbosity=-1)
         return util.run_checked([grep, "-r", "-e", pattern, "."], ret_ok=(0, 1), verbosity=1, cwd=path)
     finally:
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
@@ -589,16 +588,17 @@ def _repack_archive (archive1, archive2, verbosity=0):
         if same_format:
             # only decompress since the format is the same
             kwargs['format'] = compression1
-        path = _handle_archive(archive1, 'extract', **kwargs)
+        path = _extract_archive(archive1, **kwargs)
         archive = os.path.abspath(archive2)
         files = tuple(os.listdir(path))
         olddir = os.getcwd()
         os.chdir(path)
         try:
+            kwargs = dict(verbosity=verbosity)
             if same_format:
                 # only compress since the format is the same
                 kwargs['format'] = compression2
-            _handle_archive(archive, 'create', *files, **kwargs)
+            _create_archive(archive, files, **kwargs)
         finally:
             os.chdir(olddir)
     finally:
@@ -612,11 +612,12 @@ def extract_archive(archive, verbosity=0, outdir=None, program=None):
     util.check_existing_filename(archive)
     if verbosity >= 0:
         util.log_info("Extracting %s ..." % archive)
-    return _handle_archive(archive, 'extract', verbosity=verbosity, outdir=outdir, program=program)
+    return _extract_archive(archive, verbosity=verbosity, outdir=outdir, program=program)
 
 
-def list_archive(archive, verbosity=0, program=None):
+def list_archive(archive, verbosity=1, program=None):
     """List given archive."""
+    # Set default verbosity to 1 since the listing output should be visible.
     util.check_existing_filename(archive)
     if verbosity >= 0:
         util.log_info("Listing %s ..." % archive)
@@ -640,7 +641,7 @@ def create_archive(archive, filenames, verbosity=0, program=None):
     util.check_archive_filelist(filenames)
     if verbosity >= 0:
         util.log_info("Creating %s ..." % archive)
-    res = _handle_archive(archive, 'create', *tuple(filenames), verbosity=verbosity, program=program)
+    res = _create_archive(archive, filenames, verbosity=verbosity, program=program)
     if verbosity >= 0:
         util.log_info("... %s created." % archive)
     return res

@@ -20,27 +20,27 @@ from . import extract_singlefile_standard
 extract_lzop = extract_singlefile_standard
 
 
-def list_lzop (archive, compression, cmd, **kwargs):
+def list_lzop (archive, compression, cmd, verbosity):
     """List a LZOP archive."""
     cmdlist = [cmd, '--list']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_lzop (archive, compression, cmd, **kwargs):
+def test_lzop (archive, compression, cmd, verbosity):
     """Test a LZOP archive."""
     cmdlist = [cmd, '--test']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('--verbose')
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def create_lzop (archive, compression, cmd, *args, **kwargs):
+def create_lzop (archive, compression, cmd, verbosity, filenames):
     """Create a LZOP archive."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-o', archive, '--'])
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist

@@ -15,11 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lcab program."""
 
-def create_cab (archive, compression, cmd, *args, **kwargs):
+def create_cab (archive, compression, cmd, verbosity, filenames):
     """Create a CAB archive."""
     cmdlist = [cmd, '-r']
-    if kwargs['verbosity'] > 1:
-        cmdlist.append('-q')
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     cmdlist.append(archive)
     return cmdlist

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,47 +19,28 @@ from __future__ import print_function
 from .. import util
 
 
-def list_bzip2 (archive, compression, cmd, **kwargs):
+def list_bzip2 (archive, compression, cmd, verbosity):
     """List a BZIP2 archive."""
-    return stripext(cmd, archive)
+    return stripext(cmd, archive, verbosity)
 
-def list_compress (archive, compression, cmd, **kwargs):
-    """List a compress archive."""
-    return stripext(cmd, archive)
+list_compress = \
+  list_lzma = \
+  list_xz = \
+  list_lzip = \
+  list_lrzip = \
+  list_rzip = \
+  list_bzip2
 
-def list_lzma (archive, compression, cmd, **kwargs):
-    """List a LZMA archive."""
-    return stripext(cmd, archive)
-
-def list_xz (archive, compression, cmd, **kwargs):
-    """List a XZ archive."""
-    return stripext(cmd, archive)
-
-def list_lzip (archive, compression, cmd, **kwargs):
-    """List a LZIP archive."""
-    return stripext(cmd, archive)
-
-def list_lrzip (archive, compression, cmd, **kwargs):
-    """List a LRZIP archive."""
-    return stripext(cmd, archive)
-
-def list_rzip (archive, compression, cmd, **kwargs):
-    """List a RZIP archive."""
-    return stripext(cmd, archive)
-
-def list_ape (archive, compression, cmd, **kwargs):
+def list_ape (archive, compression, cmd, verbosity):
     """List an APE archive."""
-    return stripext(cmd, archive, extension=".wav")
+    return stripext(cmd, archive, verbosity, extension=".wav")
 
-def list_shn (archive, compression, cmd, **kwargs):
-    """List a SHN archive."""
-    return stripext(cmd, archive, extension=".wav")
+list_shn = \
+  list_flac = \
+  list_ape
 
-def list_flac (archive, compression, cmd, **kwargs):
-    """List a FLAC archive."""
-    return stripext(cmd, archive, extension=".wav")
-
-def stripext (cmd, archive, extension=""):
+def stripext (cmd, archive, verbosity, extension=""):
     """Print the name without suffix."""
-    print(util.stripext(archive)+extension)
+    if verbosity >= 0:
+        print(util.stripext(archive)+extension)
     return None

@@ -16,24 +16,21 @@
 """Archive commands for the MAC.exe program."""
 from .. import util
 
-def extract_ape (archive, compression, cmd, **kwargs):
+def extract_ape (archive, compression, cmd, verbosity, outdir):
     """Decompress an APE archive to a WAV file."""
-    outfile = util.get_single_outfile(kwargs['outdir'], archive,
-      extension=".wav")
-    cmdlist = [cmd, archive, outfile, '-d']
-    return cmdlist
+    outfile = util.get_single_outfile(outdir, archive, extension=".wav")
+    return [cmd, archive, outfile, '-d']
 
 
-def create_ape (archive, compression, cmd, *args, **kwargs):
+def create_ape (archive, compression, cmd, verbosity, filenames):
     """Compress a WAV file to an APE archive."""
     cmdlist = [cmd]
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     cmdlist.append(archive)
     cmdlist.append('-c2000')
     return cmdlist
 
 
-def test_ape (archive, compression, cmd, **kwargs):
+def test_ape (archive, compression, cmd, verbosity):
     """Test an APE archive."""
-    cmdlist = [cmd, archive, '-v']
-    return cmdlist
+    return [cmd, archive, '-v']

@@ -14,17 +14,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the tarfile Python module."""
-from .. import util
+from .. import util, py_lzma
 import tarfile
 
 READ_SIZE_BYTES = 1024*1024
 
 
-def list_tar (archive, compression, cmd, **kwargs):
+def list_tar (archive, compression, cmd, verbosity):
     """List a TAR archive with the tarfile Python module."""
     try:
         with tarfile.open(archive) as tfile:
-            tfile.list(verbose=kwargs["verbosity"]>1)
+            tfile.list(verbose=verbosity>1)
     except Exception as err:
         msg = "error listing %s: %s" % (archive, err)
         raise util.PatoolError(msg)
@@ -32,9 +32,8 @@ def list_tar (archive, compression, cmd, **kwargs):
 
 test_tar = list_tar
 
-def extract_tar (archive, compression, cmd, **kwargs):
+def extract_tar (archive, compression, cmd, verbosity, outdir):
     """Extract a TAR archive with the tarfile Python module."""
-    outdir = kwargs['outdir']
     try:
         with tarfile.open(archive) as tfile:
             tfile.extractall(path=outdir)
@@ -44,12 +43,12 @@ def extract_tar (archive, compression, cmd, **kwargs):
     return None
 
 
-def create_tar (archive, compression, cmd, *args, **kwargs):
+def create_tar (archive, compression, cmd, verbosity, filenames):
     """Create a TAR archive with the tarfile Python module."""
     mode = get_tar_mode(compression)
     try:
         with tarfile.open(archive, mode) as tfile:
-            for filename in args:
+            for filename in filenames:
                 tfile.add(filename)
     except Exception as err:
         msg = "error creating %s: %s" % (archive, err)
@@ -63,6 +62,8 @@ def get_tar_mode (compression):
         return 'w:gz'
     if compression == 'bzip2':
         return 'w:bz2'
+    if compression == 'lzma' and py_lzma:
+        return 'w:xz'
     if compression:
         msg = 'pytarfile does not support %s for tar compression'
         raise util.PatoolError(msg % compression)

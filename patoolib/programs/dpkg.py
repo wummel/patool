@@ -15,17 +15,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the dpkg-deb program."""
 
-def extract_deb (archive, compression, cmd, **kwargs):
+def extract_deb (archive, compression, cmd, verbosity, outdir):
     """Extract a DEB archive."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('--vextract')
     else:
         cmdlist.append('--extract')
-    cmdlist.extend(['--', archive, kwargs['outdir']])
+    cmdlist.extend(['--', archive, outdir])
     return cmdlist
 
-def list_deb (archive, compression, cmd, **kwargs):
+def list_deb (archive, compression, cmd, verbosity):
     """List a DEB archive."""
     return [cmd, '--contents', '--', archive]
 

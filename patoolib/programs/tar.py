@@ -17,28 +17,28 @@
 import os
 
 
-def extract_tar (archive, compression, cmd, **kwargs):
+def extract_tar (archive, compression, cmd, verbosity, outdir):
     """Extract a TAR archive."""
     cmdlist = [cmd, '--extract']
-    add_tar_opts(cmdlist, compression, kwargs['verbosity'])
-    cmdlist.extend(["--file", archive, '--directory', kwargs['outdir']])
+    add_tar_opts(cmdlist, compression, verbosity)
+    cmdlist.extend(["--file", archive, '--directory', outdir])
     return cmdlist
 
-def list_tar (archive, compression, cmd, **kwargs):
+def list_tar (archive, compression, cmd, verbosity):
     """List a TAR archive."""
     cmdlist = [cmd, '--list']
-    add_tar_opts(cmdlist, compression, kwargs['verbosity'])
+    add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive])
     return cmdlist
 
 test_tar = list_tar
 
-def create_tar (archive, compression, cmd, *args, **kwargs):
+def create_tar (archive, compression, cmd, verbosity, filenames):
     """Create a TAR archive."""
     cmdlist = [cmd, '--create']
-    add_tar_opts(cmdlist, compression, kwargs['verbosity'])
+    add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive, '--'])
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist
 
 def add_tar_opts (cmdlist, compression, verbosity):

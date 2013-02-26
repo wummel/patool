@@ -15,36 +15,36 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lha program."""
 
-def extract_lzh (archive, compression, cmd, **kwargs):
+def extract_lzh (archive, compression, cmd, verbosity, outdir):
     """Extract a LZH archive."""
     opts = 'x'
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         opts += 'v'
-    opts += "w=%s" % kwargs['outdir']
+    opts += "w=%s" % outdir
     return [cmd, opts, archive]
 
-def list_lzh (archive, compression, cmd, **kwargs):
+def list_lzh (archive, compression, cmd, verbosity):
     """List a LZH archive."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
     cmdlist.append(archive)
     return cmdlist
 
-def test_lzh (archive, compression, cmd, **kwargs):
+def test_lzh (archive, compression, cmd, verbosity):
     """Test a LZH archive."""
     opts = 't'
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         opts += 'v'
     return [cmd, opts, archive]
 
-def create_lzh (archive, compression, cmd, *args, **kwargs):
+def create_lzh (archive, compression, cmd, verbosity, filenames):
     """Create a LZH archive."""
     opts = 'a'
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         opts += 'v'
     cmdlist = [cmd, opts, archive]
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist

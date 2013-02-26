@@ -17,23 +17,23 @@
 from .. import util
 
 
-def extract_dms (archive, compression, cmd, **kwargs):
+def extract_dms (archive, compression, cmd, verbosity, outdir):
     """Extract a DMS archive."""
     check_archive_ext(archive)
-    cmdlist = [cmd, '-d', kwargs['outdir']]
-    if kwargs['verbosity'] > 1:
+    cmdlist = [cmd, '-d', outdir]
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['u', archive])
     return cmdlist
 
 
-def list_dms (archive, compression, cmd, **kwargs):
+def list_dms (archive, compression, cmd, verbosity):
     """List a DMS archive."""
     check_archive_ext(archive)
     return [cmd, 'v', archive]
 
 
-def test_dms (archive, compression, cmd, **kwargs):
+def test_dms (archive, compression, cmd, verbosity):
     """Test a DMS archive."""
     check_archive_ext(archive)
     return [cmd, 't', archive]

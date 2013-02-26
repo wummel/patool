@@ -15,19 +15,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the zip program."""
 
-def create_zip (archive, compression, cmd, *args, **kwargs):
+def create_zip (archive, compression, cmd, verbosity, filenames):
     """Create a ZIP archive."""
     cmdlist = [cmd, '-r']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.append(archive)
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist
 
-def test_zip (archive, compression, cmd, *args, **kwargs):
+def test_zip (archive, compression, cmd, verbosity):
     """Test a ZIP archive."""
     cmdlist = [cmd, '--test']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist

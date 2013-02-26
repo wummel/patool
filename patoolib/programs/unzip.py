@@ -15,26 +15,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unzip program."""
 
-def extract_zip (archive, compression, cmd, **kwargs):
+def extract_zip (archive, compression, cmd, verbosity, outdir):
     """Extract a ZIP archive."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
-    cmdlist.extend(['--', archive, '-d', kwargs['outdir']])
+    cmdlist.extend(['--', archive, '-d', outdir])
     return cmdlist
 
-def list_zip (archive, compression, cmd, **kwargs):
+def list_zip (archive, compression, cmd, verbosity):
     """List a ZIP archive."""
     cmdlist = [cmd, '-l']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_zip (archive, compression, cmd, **kwargs):
+def test_zip (archive, compression, cmd, verbosity):
     """Test a ZIP archive."""
     cmdlist = [cmd, '-t']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['--', archive])
     return cmdlist

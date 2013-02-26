@@ -15,15 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the arj program."""
 
-def extract_arj (archive, compression, cmd, **kwargs):
-    """Extract a ARJ archive."""
-    return [cmd, 'x', '-r', '-y', archive, kwargs['outdir']]
+def extract_arj (archive, compression, cmd, verbosity, outdir):
+    """Extract an ARJ archive."""
+    return [cmd, 'x', '-r', '-y', archive, outdir]
 
 
-def list_arj (archive, compression, cmd, **kwargs):
-    """List a ARJ archive."""
+def list_arj (archive, compression, cmd, verbosity):
+    """List an ARJ archive."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
@@ -31,13 +31,13 @@ def list_arj (archive, compression, cmd, **kwargs):
     return cmdlist
 
 
-def test_arj (archive, compression, cmd, **kwargs):
-    """Test a ARJ archive."""
+def test_arj (archive, compression, cmd, verbosity):
+    """Test an ARJ archive."""
     return [cmd, 't', '-r', '-y', archive]
 
 
-def create_arj (archive, compression, cmd, *args, **kwargs):
-    """Create a ARJ archive."""
+def create_arj (archive, compression, cmd, verbosity, filenames):
+    """Create an ARJ archive."""
     cmdlist = [cmd, 'a', '-r', '-y', archive]
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist

@@ -21,10 +21,10 @@ extract_gzip = extract_compress = extract_singlefile_standard
 test_gzip = test_compress = test_singlefile_standard
 create_gzip = create_singlefile_standard
 
-def list_gzip (archive, compression, cmd, **kwargs):
+def list_gzip (archive, compression, cmd, verbosity):
     """List a GZIP archive."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 0:
+    if verbosity > 0:
         cmdlist.append('-v')
     cmdlist.extend(['-l', '--', archive])
     return cmdlist

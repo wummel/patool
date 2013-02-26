@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,19 +16,20 @@
 """Archive commands for the shorten program."""
 from .. import util
 
-def extract_shn (archive, compression, cmd, **kwargs):
+def extract_shn (archive, compression, cmd, verbosity, outdir):
     """Decompress a SHN archive to a WAV file."""
     cmdlist = [util.shell_quote(cmd)]
-    outfile = util.get_single_outfile(kwargs['outdir'], archive,
-      extension=".wav")
+    outfile = util.get_single_outfile(outdir, archive, extension=".wav")
     cmdlist.extend(['-x', '-', util.shell_quote(outfile), '<',
         util.shell_quote(archive)])
     return (cmdlist, {'shell': True})
 
 
-def create_shn (archive, compression, cmd, *args, **kwargs):
+def create_shn (archive, compression, cmd, verbosity, filenames):
     """Compress a WAV file to a SHN archive."""
+    if len(filenames) > 1:
+        raise util.PatoolError("multiple filenames for shorten not supported")
     cmdlist = [util.shell_quote(cmd)]
     cmdlist.extend(['-', util.shell_quote(archive), '<',
-        util.shell_quote(args[0])])
+        util.shell_quote(filenames[0])])
     return (cmdlist, {'shell': True})

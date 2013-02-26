@@ -16,20 +16,19 @@
 """Archive commands for the flac program."""
 from .. import util
 
-def extract_flac (archive, compression, cmd, **kwargs):
+def extract_flac (archive, compression, cmd, verbosity, outdir):
     """Decompress a FLAC archive to a WAV file."""
-    outfile = util.get_single_outfile(kwargs['outdir'], archive,
-      extension=".wav")
+    outfile = util.get_single_outfile(outdir, archive, extension=".wav")
     cmdlist = [cmd, '--decode', archive, '--output-name', outfile]
     return cmdlist
 
 
-def create_flac (archive, compression, cmd, *args, **kwargs):
+def create_flac (archive, compression, cmd, verbosity, filenames):
     """Compress a WAV file to a FLAC archive."""
-    cmdlist = [cmd, args[0], '--output-name', archive]
+    cmdlist = [cmd, filenames[0], '--output-name', archive]
     return cmdlist
 
 
-def test_flac (archive, compression, cmd, **kwargs):
+def test_flac (archive, compression, cmd, verbosity):
     """Test a FLAC file."""
     return [cmd, '--test', archive]

@@ -16,26 +16,26 @@
 """Archive commands for the star program."""
 from .tar import add_tar_opts as add_star_opts
 
-def extract_tar (archive, compression, cmd, **kwargs):
+def extract_tar (archive, compression, cmd, verbosity, outdir):
     """Extract a TAR archive."""
     cmdlist = [cmd, '-x']
-    add_star_opts(cmdlist, compression, kwargs['verbosity'])
-    cmdlist.extend(['-C', kwargs['outdir'], 'file=%s' % archive])
+    add_star_opts(cmdlist, compression, verbosity)
+    cmdlist.extend(['-C', outdir, 'file=%s' % archive])
     return cmdlist
 
-def list_tar (archive, compression, cmd, **kwargs):
+def list_tar (archive, compression, cmd, verbosity):
     """List a TAR archive."""
     cmdlist = [cmd, '-n']
-    add_star_opts(cmdlist, compression, kwargs['verbosity'])
+    add_star_opts(cmdlist, compression, verbosity)
     cmdlist.append("file=%s" % archive)
     return cmdlist
 
 test_tar = list_tar
 
-def create_tar (archive, compression, cmd, *args, **kwargs):
+def create_tar (archive, compression, cmd, verbosity, filenames):
     """Create a TAR archive."""
     cmdlist = [cmd, '-c']
-    add_star_opts(cmdlist, compression, kwargs['verbosity'])
+    add_star_opts(cmdlist, compression, verbosity)
     cmdlist.append("file=%s" % archive)
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist

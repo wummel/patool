@@ -18,37 +18,37 @@ import os
 import sys
 from .. import util
 
-def extract_cpio (archive, compression, cmd, **kwargs):
+def extract_cpio (archive, compression, cmd, verbosity, outdir):
     """Extract a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
         '--preserve-modification-time']
     if sys.platform.startswith('linux') and not cmd.endswith('bsdcpio'):
         cmdlist.extend(['--no-absolute-filenames',
         '--force-local', '--nonmatching', r'"*\.\.*"'])
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
-    return (cmdlist, {'cwd': kwargs['outdir'], 'shell': True})
+    return (cmdlist, {'cwd': outdir, 'shell': True})
 
 
-def list_cpio (archive, compression, cmd, **kwargs):
+def list_cpio (archive, compression, cmd, verbosity):
     """List a CPIO archive."""
     cmdlist = [cmd, '-i', '-t']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-F', archive])
     return cmdlist
 
 test_cpio = list_cpio
 
-def create_cpio(archive, compression, cmd, *args, **kwargs):
+def create_cpio(archive, compression, cmd, verbosity, filenames):
     """Create a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--create']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
-    if len(args) != 0:
+    if len(filenames) != 0:
         findcmd = ['find']
-        findcmd.extend([util.shell_quote(x) for x in args])
+        findcmd.extend([util.shell_quote(x) for x in filenames])
         findcmd.extend(['-print0', '|'])
         cmdlist[0:0] = findcmd
         cmdlist.append('-0')

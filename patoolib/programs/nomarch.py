@@ -16,21 +16,21 @@
 """Archive commands for the nomarch program."""
 import os
 
-def extract_arc (archive, compression, cmd, **kwargs):
-    """Extract a ARC archive."""
+def extract_arc (archive, compression, cmd, verbosity, outdir):
+    """Extract an ARC archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
     cmdlist = [cmd, os.path.abspath(archive)]
-    return (cmdlist, {'cwd': kwargs['outdir']})
+    return (cmdlist, {'cwd': outdir})
 
-def list_arc (archive, compression, cmd, **kwargs):
-    """List a ARC archive."""
+def list_arc (archive, compression, cmd, verbosity):
+    """List an ARC archive."""
     cmdlist = [cmd, '-l']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist
 
-def test_arc (archive, compression, cmd, **kwargs):
-    """Test a ARC archive."""
+def test_arc (archive, compression, cmd, verbosity):
+    """Test an ARC archive."""
     return [cmd, '-t', archive]

@@ -22,11 +22,11 @@ extract_xz = extract_singlefile_standard
 test_xz = test_singlefile_standard
 create_xz = create_singlefile_standard
 
-def list_xz (archive, compression, cmd, **kwargs):
+def list_xz (archive, compression, cmd, verbosity):
     """List a XZ archive."""
     cmdlist = [cmd]
     cmdlist.append('-l')
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist

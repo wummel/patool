@@ -24,9 +24,8 @@ except ImportError:
 # read in 1MB chunks
 READ_SIZE_BYTES = 1024*1024
 
-def extract_bzip2 (archive, compression, cmd, **kwargs):
+def extract_bzip2 (archive, compression, cmd, verbosity, outdir):
     """Extract a BZIP2 archive with the bz2 Python module."""
-    outdir = kwargs['outdir']
     targetname = util.get_single_outfile(outdir, archive)
     try:
         with bz2.BZ2File(archive) as bz2file:
@@ -41,13 +40,13 @@ def extract_bzip2 (archive, compression, cmd, **kwargs):
     return None
 
 
-def create_bzip2 (archive, compression, cmd, *args, **kwargs):
+def create_bzip2 (archive, compression, cmd, verbosity, filenames):
     """Create a BZIP2 archive with the bz2 Python module."""
-    if len(args) > 1:
+    if len(filenames) > 1:
         raise util.PatoolError('multi-file compression not supported in Python bz2')
     try:
         with bz2.BZ2File(archive, 'wb') as bz2file:
-            filename = args[0]
+            filename = filenames[0]
             with open(filename, 'rb') as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)
                 while data:

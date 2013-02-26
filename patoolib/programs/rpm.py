@@ -15,18 +15,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rpm program."""
 
-def list_rpm (archive, compression, cmd, **kwargs):
+def list_rpm (archive, compression, cmd, verbosity):
     """List a RPM archive."""
     cmdlist = [cmd, '-q', '-l']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-p', '--', archive])
     return cmdlist
 
-def test_rpm (archive, compression, cmd, **kwargs):
+def test_rpm (archive, compression, cmd, verbosity):
     """Test a RPM archive."""
     cmdlist = [cmd, 'V']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-p', '--', archive])
     return cmdlist

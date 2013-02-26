@@ -17,12 +17,12 @@
 from .. import util
 
 
-def extract_compress (archive, compression, cmd, **kwargs):
+def extract_compress (archive, compression, cmd, verbosity, outdir):
     """Extract a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
-    outfile = util.get_single_outfile(kwargs['outdir'], archive)
+    outfile = util.get_single_outfile(outdir, archive)
     cmdlist.extend(['-c', util.shell_quote(archive), '>',
                     util.shell_quote(outfile)])
     return (cmdlist, {'shell': True})

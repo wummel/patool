@@ -15,32 +15,32 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from .. import util
 
-def extract_singlefile_standard (archive, compression, cmd, **kwargs):
+def extract_singlefile_standard (archive, compression, cmd, verbosity, outdir):
     """Standard routine to extract a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
-    outfile = util.get_single_outfile(kwargs['outdir'], archive)
+    outfile = util.get_single_outfile(outdir, archive)
     cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
         util.shell_quote(outfile)])
     return (cmdlist, {'shell': True})
 
 
-def test_singlefile_standard (archive, compression, cmd, **kwargs):
+def test_singlefile_standard (archive, compression, cmd, verbosity):
     """Standard routine to test a singlefile archive (like gzip)."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-t', '--', archive])
     return cmdlist
 
 
-def create_singlefile_standard (archive, compression, cmd, *args, **kwargs):
+def create_singlefile_standard (archive, compression, cmd, verbosity, filenames):
     """Standard routine to create a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['-c', '--'])
-    cmdlist.extend([util.shell_quote(x) for x in args])
+    cmdlist.extend([util.shell_quote(x) for x in filenames])
     cmdlist.extend(['>', util.shell_quote(archive)])
     return (cmdlist, {'shell': True})

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,15 +18,15 @@ import os
 from .. import util
 
 
-def extract_chm (archive, compression, cmd, **kwargs):
+def extract_chm (archive, compression, cmd, verbosity, outdir):
     """Extract a CHM archive."""
     # archmage can only extract in non-existing directories
     # so a nice dirname is created
     name = util.get_single_outfile("", archive)
-    outdir = os.path.join(kwargs['outdir'], name)
-    return [cmd, '-x', os.path.abspath(archive), outdir]
+    outfile = os.path.join(outdir, name)
+    return [cmd, '-x', os.path.abspath(archive), outfile]
 
 
-def test_chm (archive, compression, cmd, **kwargs):
+def test_chm (archive, compression, cmd, verbosity):
     """Test a CHM archive."""
     return [cmd, '-d', os.path.abspath(archive)]

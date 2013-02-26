@@ -16,27 +16,27 @@
 """Archive commands for the rar program."""
 import os
 
-def extract_rar (archive, compression, cmd, **kwargs):
+def extract_rar (archive, compression, cmd, verbosity, outdir):
     """Extract a RAR archive."""
     cmdlist = [cmd, 'x', '--', os.path.abspath(archive)]
-    return (cmdlist, {'cwd': kwargs['outdir']})
+    return (cmdlist, {'cwd': outdir})
 
-def list_rar (archive, compression, cmd, **kwargs):
+def list_rar (archive, compression, cmd, verbosity):
     """List a RAR archive."""
     cmdlist = [cmd]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_rar (archive, compression, cmd, **kwargs):
+def test_rar (archive, compression, cmd, verbosity):
     """Test a RAR archive."""
     return [cmd, 't', '--', archive]
 
-def create_rar (archive, compression, cmd, *args, **kwargs):
+def create_rar (archive, compression, cmd, verbosity, filenames):
     """Create a RAR archive."""
     cmdlist = [cmd, 'a', '-r', '--', archive]
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 """Archive commands for the unshar program."""
 import os
 
-def extract_shar (archive, compression, cmd, **kwargs):
+def extract_shar (archive, compression, cmd, verbosity, outdir):
     """Extract a SHAR archive."""
     cmdlist = [cmd, os.path.abspath(archive)]
-    return (cmdlist, {'cwd': kwargs['outdir']})
+    return (cmdlist, {'cwd': outdir})

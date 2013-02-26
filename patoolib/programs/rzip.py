@@ -16,19 +16,19 @@
 """Archive commands for the rzip program."""
 from .. import util
 
-def extract_rzip (archive, compression, cmd, **kwargs):
+def extract_rzip (archive, compression, cmd, verbosity, outdir):
     """Extract an RZIP archive."""
     cmdlist = [cmd, '-d', '-k']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
-    outfile = util.get_single_outfile(kwargs['outdir'], archive)
+    outfile = util.get_single_outfile(outdir, archive)
     cmdlist.extend(["-o", outfile, archive])
     return cmdlist
 
-def create_rzip (archive, compression, cmd, *args, **kwargs):
+def create_rzip (archive, compression, cmd, verbosity, filenames):
     """Create an RZIP archive."""
     cmdlist = [cmd, '-k', '-o', archive]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist

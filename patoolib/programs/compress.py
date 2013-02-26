@@ -17,12 +17,12 @@
 from .. import util
 
 
-def create_compress (archive, compression, cmd, *args, **kwargs):
+def create_compress (archive, compression, cmd, verbosity, filenames):
     """Create a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.append('-c')
-    cmdlist.extend([util.shell_quote(x) for x in args])
+    cmdlist.extend([util.shell_quote(x) for x in filenames])
     cmdlist.extend(['>', util.shell_quote(archive)])
     return (cmdlist, {'shell': True})

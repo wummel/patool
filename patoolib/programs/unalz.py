@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unalz program."""
 
-def extract_alzip (archive, compression, cmd, **kwargs):
+def extract_alzip (archive, compression, cmd, verbosity, outdir):
     """Extract a ALZIP archive."""
-    return [cmd, '-d', kwargs['outdir'], archive]
+    return [cmd, '-d', outdir, archive]
 
 
-def list_alzip (archive, compression, cmd, **kwargs):
+def list_alzip (archive, compression, cmd, verbosity):
     """List a ALZIP archive."""
     return [cmd, '-l', archive]
 

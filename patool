@@ -40,7 +40,8 @@ def run_list(args):
     res = 0
     for archive in args.archive:
         try:
-            patoolib.list_archive(archive, verbosity=args.verbosity)
+            # increase default verbosity since the listing output should be visible
+            patoolib.list_archive(archive, verbosity=args.verbosity + 1)
         except PatoolError as msg:
             log_error("error listing %s: %s" % (archive, msg))
             res += 1

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2013 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,26 +16,26 @@
 """Archive commands for the zoo program."""
 import os
 
-def extract_zoo (archive, compression, cmd, **kwargs):
+def extract_zoo (archive, compression, cmd, verbosity, outdir):
     """Extract a ZOO archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
     cmdlist = [cmd, '-extract', os.path.abspath(archive)]
-    return (cmdlist, {'cwd': kwargs['outdir']})
+    return (cmdlist, {'cwd': outdir})
 
 
-def list_zoo (archive, compression, cmd, **kwargs):
+def list_zoo (archive, compression, cmd, verbosity):
     """List a ZOO archive."""
     return [cmd, '-list', archive]
 
 
-def test_zoo (archive, compression, cmd, **kwargs):
+def test_zoo (archive, compression, cmd, verbosity):
     """Test a ZOO archive."""
     return [cmd, '-test', archive]
 
 
-def create_zoo (archive, compression, cmd, *args, **kwargs):
+def create_zoo (archive, compression, cmd, verbosity, filenames):
     """Create a ZOO archive."""
     cmdlist = [cmd, '-add', archive]
-    cmdlist.extend(args)
+    cmdlist.extend(filenames)
     return cmdlist

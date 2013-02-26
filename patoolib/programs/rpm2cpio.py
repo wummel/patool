@@ -17,7 +17,7 @@
 import os
 from .. import util
 
-def extract_rpm (archive, compression, cmd, **kwargs):
+def extract_rpm (archive, compression, cmd, verbosity, outdir):
     """Extract a RPM archive."""
     # also check cpio
     cpio = util.find_program("cpio")
@@ -28,6 +28,6 @@ def extract_rpm (archive, compression, cmd, **kwargs):
         '--extract', '--make-directories', '--preserve-modification-time',
         '--no-absolute-filenames', '--force-local', '--nonmatching',
         r'"*\.\.*"']
-    if kwargs['verbosity'] > 1:
+    if verbosity > 1:
         cmdlist.append('-v')
-    return (cmdlist, {'cwd': kwargs['outdir'], 'shell': True})
+    return (cmdlist, {'cwd': outdir, 'shell': True})
