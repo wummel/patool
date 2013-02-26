@@ -1,8 +1,10 @@
 Patool
 =======
 
-Various archive types can be  created,  extracted,  tested  and
-listed with patool. The advantage of patool is its simplicity in
+Patool is an archive file manager for the commandline console.
+
+Various archive formats can be  created,  extracted,  tested, listed,
+searched, repacked and compared with patool. The advantage of patool is its simplicity in
 handling archive files without having to remember a  myriad  of
 programs and options.
 

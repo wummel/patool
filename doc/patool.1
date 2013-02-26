@@ -13,11 +13,11 @@
 .\"
 .TH PATOOL "1" "February 2013" "patool"
 .SH NAME
-patool - portable command line archive file manager
+patool - portable archive file manager for the commandline console
 .SH SYNOPSIS
  \fBpatool\fP [\fIglobal-options\fP] (\fBlist\fP|\fBtest\fP|\fBextract\fP|\fBcreate\fP|\fBdiff\fP|\fBsearch\fP|\fBrepack\fP|\fBformats\fP) [\fIcommand-options\fP] <\fIcommand-arguments\fP>...
 .SH DESCRIPTION
-Various archive types can be created, extracted, tested, listed, searched, repacked and compared by
+Various archive formats can be created, extracted, tested, listed, searched, repacked and compared by
 \fBpatool\fP. The advantage of patool is its simplicity in handling archive
 files without having to remember a myriad of programs and options.
 .PP
@@ -41,7 +41,7 @@ installed.
   \fBpatool --verbose test dist.tar.gz\fP
   \fBpatool list package.deb\fP
   \fPpatool --verbose create myfiles.zip file1.txt dir/\fP
-  \fBpatool diff release1.0.tar.gz release2.0.zip\fP
+  \fBpatool diff release1.0.tar.xz release2.0.zip\fP
   \fBpatool search "def urlopen" python-3.3.tar.gz\fP
   \fBpatool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2\fP
 .SH GLOBAL OPTIONS
@@ -56,17 +56,19 @@ The following rules apply to all commands:
 Existing files are never overwritten.
 .IP "\(bu" 4
 The original archive will never be removed.
+.IP "\(bu" 4
+Files outside the outut directory will never be created. This relies on
+archive program options to prevent unpacking of files with an absolute
+path name (eg. \fB\-\-no\-absolute\-filenames\fP for \fBcpio(1)\fP).
 .PP
 The following commands are available.
 .SS extract
-\fBpatool\fP \fBextract\fP [\fIoptions\fP] <\fIarchive\fP>...
+\fBpatool\fP \fBextract\fP [\fB\-\-outdir\fP \fIdirectory\fP] <\fIarchive\fP>...
 .PP
 Extract files from given archives. The original archives will never
 be removed and are left as is.
-.PP
-Options:
 .TP
-\fB\-\-outdir\fP DIRECTORY
+\fB\-\-outdir\fP \fIdirectory\fP
 Extract to the given output directory. Default is to extract to
 the current working directory.
 .PP

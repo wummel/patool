@@ -273,10 +273,11 @@ class MyRegister (register, object):
 args = dict(
     name = AppName,
     version = AppVersion,
-    description = "portable command line archive file manager",
-    long_description = """Various archive types can be created, extracted, tested and listed by
-patool. The advantage of patool is its simplicity in handling archive
-files without having to remember a myriad of programs and options.
+    description = "portable archive file manager for the commandline console",
+    long_description = """Various archive formats can be created, extracted, tested, listed,
+searched, compared and repacked by patool. The advantage of patool
+is its simplicity in handling archive files without having to remember
+a myriad of programs and options.
 
 The archive format is determined by the file(1) program and as a
 fallback by the archive file extension.
@@ -305,7 +306,7 @@ installed.
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],
-    keywords = "archiver,compression,commandline",
+    keywords = "archiver,archive,compression,commandline,console,manager",
     classifiers = [
         'Environment :: Console',
         'Topic :: System :: Archiving',
