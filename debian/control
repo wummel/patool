@@ -20,9 +20,9 @@ Suggests: arj, bzip2 | lbzip2 | pbzip2, cabextract | lcab, ncompress,
 Description: command line archive file manager
  *** Unofficial package from calvin@debian.org ***
  .
- Various archive types can be created, extracted, tested, listed, compared
- and repacked by patool. The archive format is determined by the archive
- file extension and as a fallback with file(1).
+ Various archive formats can be created, extracted, tested, listed,
+ compared, searched and repacked by patool. The archive format is
+ determined by the archive  file extension and as a fallback with file(1).
  .
  patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz), AR (.a),
  ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB (.cab), compress (.Z), CPIO (.cpio),
