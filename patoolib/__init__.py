@@ -224,9 +224,9 @@ ArchivePrograms = {
         None: ('lzop',),
     },
     'lzma': {
-        'extract': ('lzma',) + py_lzma,
-        'list': ('py_echo',),
-        'test': ('lzma',),
+        'extract': ('7z', 'lzma') + py_lzma,
+        'list': ('7z', 'py_echo'),
+        'test': ('7z', 'lzma'),
         'create': ('lzma',) + py_lzma,
     },
     'rzip': {
