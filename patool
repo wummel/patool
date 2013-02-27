@@ -141,6 +141,11 @@ def create_argparser():
     parser_search.add_argument('archive', help='the archive file')
     # formats
     subparsers.add_parser('formats', help="show supported archive formats")
+    try:
+        import argcomplete
+        argcomplete.autocomplete(parser)
+    except ImportError:
+        pass
     return parser
 
 
