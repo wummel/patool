@@ -33,6 +33,7 @@ class Test7z (ArchiveTest):
         self.archive_list('t.cpio')
         self.archive_list('t.rpm')
         self.archive_list('t.deb')
+        self.archive_list('t.iso')
         self.archive_extract('t.txt.gz', check=Content.Singlefile)
         self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         self.archive_extract('t.jar', check=None)
@@ -42,6 +43,7 @@ class Test7z (ArchiveTest):
         self.archive_extract('t.cpio')
         self.archive_extract('t.rpm', check=None)
         self.archive_extract('t.deb', check=None)
+        self.archive_extract('t.iso')
         self.archive_test('t.txt.gz')
         self.archive_test('t.txt.bz2')
         self.archive_test('t.jar')
@@ -51,6 +53,7 @@ class Test7z (ArchiveTest):
         self.archive_test('t.cpio')
         self.archive_test('t.rpm')
         self.archive_test('t.deb')
+        self.archive_test('t.iso')
 
     @needs_codec(program, 'rar')
     def test_7z_rar (self):
@@ -73,6 +76,7 @@ class Test7z (ArchiveTest):
         self.archive_list('t.cpio.foo')
         self.archive_list('t.rpm.foo')
         self.archive_list('t.deb.foo')
+        self.archive_list('t.iso.foo')
         self.archive_extract('t.txt.gz.foo', check=None)
         self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
         self.archive_extract('t.jar.foo', check=None)
@@ -82,6 +86,7 @@ class Test7z (ArchiveTest):
         self.archive_extract('t.cpio.foo')
         self.archive_extract('t.rpm.foo', check=None)
         self.archive_extract('t.deb.foo', check=None)
+        self.archive_extract('t.iso.foo')
         self.archive_test('t.txt.gz.foo')
         self.archive_test('t.txt.bz2.foo')
         self.archive_test('t.jar.foo')
@@ -91,6 +96,7 @@ class Test7z (ArchiveTest):
         self.archive_test('t.cpio.foo')
         self.archive_test('t.rpm.foo')
         self.archive_test('t.deb.foo')
+        self.archive_test('t.iso.foo')
 
     @needs_program('file')
     @needs_codec(program, 'rar')

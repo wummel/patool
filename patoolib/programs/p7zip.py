@@ -29,6 +29,7 @@ extract_bzip2 = \
   extract_cpio = \
   extract_rpm = \
   extract_deb = \
+  extract_iso = \
   extract_7z
 
 def list_7z (archive, compression, cmd, verbosity):
@@ -45,6 +46,7 @@ list_bzip2 = \
   list_cpio = \
   list_rpm = \
   list_deb = \
+  list_iso = \
   list_7z
 
 
@@ -62,6 +64,7 @@ test_bzip2 = \
   test_cpio = \
   test_rpm = \
   test_deb = \
+  test_iso = \
   test_7z
 
 

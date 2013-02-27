@@ -180,6 +180,8 @@ class ArchiveTest (unittest.TestCase):
             command = patoolib.list_archive
         elif self.program == 'lcab':
             program = 'cabextract'
+        elif self.program == 'genisoimage':
+            program = '7z'
         elif self.program == 'shar':
             return
         command(archive, program=program)
@@ -200,6 +202,8 @@ class ArchiveTest (unittest.TestCase):
             program = 'cabextract'
         elif self.program == 'shar':
             program = 'unshar'
+        elif self.program == 'genisoimage':
+            program = '7z'
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         try:
             olddir = patoolib.util.chdir(tmpdir)
