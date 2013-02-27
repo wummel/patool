@@ -244,7 +244,7 @@ ArchivePrograms = {
         'create': ('shorten',),
     },
     'xz': {
-        None: ('xz',),
+        None: ('xz', '7z'),
         'extract': py_lzma,
         'create': py_lzma,
     },

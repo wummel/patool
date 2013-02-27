@@ -30,6 +30,7 @@ extract_bzip2 = \
   extract_rpm = \
   extract_deb = \
   extract_iso = \
+  extract_xz = \
   extract_7z
 
 def list_7z (archive, compression, cmd, verbosity):
@@ -47,6 +48,7 @@ list_bzip2 = \
   list_rpm = \
   list_deb = \
   list_iso = \
+  list_xz = \
   list_7z
 
 
@@ -65,6 +67,7 @@ test_bzip2 = \
   test_rpm = \
   test_deb = \
   test_iso = \
+  test_xz = \
   test_7z
 
 
@@ -75,4 +78,5 @@ def create_7z (archive, compression, cmd, verbosity, filenames):
     return cmdlist
 
 create_zip = \
+  create_xz = \
   create_7z
