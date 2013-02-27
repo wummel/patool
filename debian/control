@@ -2,13 +2,13 @@ Source: patool
 Section: utils
 Priority: optional
 Maintainer: Bastian Kleineidam <calvin@debian.org>
-Build-Depends: python-all-dev (>= 2.7), debhelper (>= 9)
+Build-Depends: python-all (>= 2.7), debhelper (>= 9)
 X-Python-Version: >= 2.7
 Standards-Version: 3.9.4
 Homepage: http://wummel.github.com/patool/
 
 Package: patool
-Architecture: any
+Architecture: all
 Depends: ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Recommends: file
 Provides: ${python:Provides}
@@ -22,18 +22,18 @@ Description: command line archive file manager
  .
  Various archive formats can be created, extracted, tested, listed,
  compared, searched and repacked by patool. The archive format is
- determined by the archive  file extension and as a fallback with file(1).
+ determined with file(1) and as a fallback by the archive file extension.
  .
  patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz), AR (.a),
  ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB (.cab), compress (.Z), CPIO (.cpio),
  DEB (.deb), DMS (.dms), FLAC (.flac), GZIP (.gz), LZH (.lha, .lzh),
- LZIP (.lz), LZMA (.lzma),  LZOP (.lzo), RAR (.rar), RPM (.rpm), RZIP (.rz),
- SHAR (.shar), SHN (.shn),  TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and
+ LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RAR (.rar), RPM (.rpm), RZIP (.rz),
+ SHAR (.shar), SHN (.shn), TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and
  ZOO (.zoo) formats.
  .
  It relies on helper applications to handle those archive formats
  (for example bzip2 for BZIP2 archives).
  .
- The archive formats TAR (.tar), ZIP (.zip), BZIP2 (.bz2) and GZIP (.gz)
+ The archive formats TAR, ZIP, BZIP2 and GZIP
  are supported natively and do not require helper applications to be
  installed.
