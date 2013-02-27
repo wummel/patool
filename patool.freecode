@@ -8,5 +8,6 @@ Tar/GZ-URL: https://github.com/downloads/wummel/patool/patool-${version}.tar.gz
 GIT-Tree-URL: https://github.com/wummel/patool.git
 Windows-installer-URL: http://github.com/downloads/wummel/patool/patool-${version}.win32.exe
 
-Archive contents can now be searched. Python 3.x support has been fixed.
+Archive contents can now be searched. Support for ISO images has been
+added. Python 3.x support has been fixed.
 Handling of lzma, lzop, lrzip and rzip archives has been fixed.
