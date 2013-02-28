@@ -17,8 +17,10 @@
 """
 patool [global-options] {extract|list|create|diff|search|formats} [sub-command-options] <command-args>
 """
+from __future__ import print_function
 import sys
 import argparse
+import pydoc
 import patoolib
 from patoolib.util import log_error, log_internal_error, PatoolError
 
@@ -108,9 +110,34 @@ def run_formats (args):
     return 0
 
 
+class ArgumentParser(argparse.ArgumentParser):
+    """Custom argument parser."""
+
+    def print_help(self, file=None):
+        """Paginate help message on TTYs."""
+        msg = self.format_help()
+        if file is None:
+            file = sys.stdout
+        if hasattr(file, "isatty") and file.isatty():
+            pydoc.pager(msg)
+        else:
+            print(msg, file=file)
+
+Examples = """\
+EXAMPLES
+  patool extract archive.zip otherarchive.rar
+  patool --verbose test dist.tar.gz
+  patool list package.deb
+  patool --verbose create myfiles.zip file1.txt dir/
+  patool diff release1.0.tar.xz release2.0.zip
+  patool search "def urlopen" python-3.3.tar.gz
+  patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
+"""
+
 def create_argparser():
     """Construct and return an argument parser."""
-    parser = argparse.ArgumentParser(description="A commandline archive handler.")
+    parser = ArgumentParser(description="A commandline archive handler.",
+        epilog=Examples, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
     subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
     # extract
@@ -141,6 +168,7 @@ def create_argparser():
     parser_search.add_argument('archive', help='the archive file')
     # formats
     subparsers.add_parser('formats', help="show supported archive formats")
+    # optional bash completion
     try:
         import argcomplete
         argcomplete.autocomplete(parser)
