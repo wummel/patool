@@ -3,6 +3,7 @@
 * Add support for searching in archive contents.
 * Add support for ISO image handling.
 * Allow multiple --verbose options to increase program output.
+* Add patool.exe to the PATH in the windows installer.
 * Fixed Python lzma archive handling.
 * Fixed lzop, lrzip and rzip archive handling.
 * Fixed Python 3.x support.

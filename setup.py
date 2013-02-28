@@ -178,7 +178,7 @@ class InnoScript:
         print("SetupIconFile=%s" % self.icon, file=fd)
         print(file=fd)
         print("[Tasks]", file=fd)
-        print("Name: modifypath; Description: Add app directory to environment PATH; Flags: unchecked", file=fd)
+        print("Name: modifypath; Description: Add application directory to %PATH%; Flags: checked", file=fd)
         print(file=fd)
         # List of source files
         files = self.windows_exe_files + \
@@ -194,8 +194,9 @@ class InnoScript:
         for path in self.windows_exe_files:
             print(r'Name: "{group}\%s"; Filename: "{app}\%s"' %
                   (self.name, path), file=fd)
-        if self.console_exe_files:
-            print(r'Name: "{group}\Patool command prompt"; Filename: "cmd.exe"', file=fd)
+        for path in self.console_exe_files:
+            name = os.path.basename(path).capitalize()
+            print(r'Name: "{group}\%s help"; Filename: "cmd.exe"; Parameters "/C %s --help";' % (name, path), file=fd)
         print(r'Name: "{group}\Uninstall %s"; Filename: "{uninstallexe}"' % self.name, file=fd)
         print(file=fd)
         # Uninstall optional log files
@@ -207,13 +208,13 @@ class InnoScript:
         print("""\
 const
     ModPathName = 'modifypath';
-    ModPathType = 'user'; 
+    ModPathType = 'user';
 
-function ModPathDir(): TArrayOfString; 
-begin 
-    setArrayLength(Result, 1) 
-    Result[0] := ExpandConstant('{app}'); 
-end; 
+function ModPathDir(): TArrayOfString;
+begin
+    setArrayLength(Result, 1)
+    Result[0] := ExpandConstant('{app}');
+end;
 #include "modpath.iss"
 """, file=fd)
         shutil.copy(r"scripts\modpath.iss", "dist")
