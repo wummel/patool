@@ -178,7 +178,7 @@ class InnoScript:
         print("SetupIconFile=%s" % self.icon, file=fd)
         print(file=fd)
         print("[Tasks]", file=fd)
-        print("Name: modifypath; Description: Add application directory to %PATH%; Flags: checked", file=fd)
+        print("Name: modifypath; Description: Add application directory to %PATH%;", file=fd)
         print(file=fd)
         # List of source files
         files = self.windows_exe_files + \
@@ -196,7 +196,7 @@ class InnoScript:
                   (self.name, path), file=fd)
         for path in self.console_exe_files:
             name = os.path.basename(path).capitalize()
-            print(r'Name: "{group}\%s help"; Filename: "cmd.exe"; Parameters "/C %s --help";' % (name, path), file=fd)
+            print(r'Name: "{group}\%s help"; Filename: "cmd.exe"; Parameters: "/K %s --help";' % (name, path), file=fd)
         print(r'Name: "{group}\Uninstall %s"; Filename: "{uninstallexe}"' % self.name, file=fd)
         print(file=fd)
         # Uninstall optional log files
