@@ -17,7 +17,7 @@ Suggests: arj, bzip2 | lbzip2 | pbzip2, cabextract | lcab, ncompress,
   rpm2cpio, binutils, lha, unace | unace-nonfree, arc | nomarch, unalz,
   lrzip (>= 0.551), tar (>= 1.26) | star | bsdtar, rzip, zoo, xdms, orange,
   lzip | plzip | clzip | pdlzip, sharutils, flac, shorten, unadf, archmage,
-  python-argcomplete
+  genisoimage, python-argcomplete
 Description: command line archive file manager
  *** Unofficial package from calvin@debian.org ***
  .
@@ -27,7 +27,7 @@ Description: command line archive file manager
  .
  patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz), AR (.a),
  ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB (.cab), compress (.Z), CPIO (.cpio),
- DEB (.deb), DMS (.dms), FLAC (.flac), GZIP (.gz), LZH (.lha, .lzh),
+ DEB (.deb), DMS (.dms), FLAC (.flac), GZIP (.gz), ISO (.iso), LZH (.lha, .lzh),
  LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RAR (.rar), RPM (.rpm), RZIP (.rz),
  SHAR (.shar), SHN (.shn), TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and
  ZOO (.zoo) formats.
