@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="description" content="a portable command line archive file manager">
+  <meta name="description" content="a portable archive file manager for the commandline console">
   <meta name="author" content="Bastian Kleineidam">
   <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="media/css/stylesheet.css" media="screen" />
@@ -21,16 +21,16 @@
 
   <header>
     <h1>Patool</h1>
-    <h2>Patool is a portable command line archive file manager</h2>
+    <h2>Patool is a portable archive file manager</h2>
   </header>
 
   <section id="downloads" class="clearfix">
-    <a href="http://github.com/downloads/wummel/patool/patool-0.19.tar.gz" 
+    <a href="http://github.com/downloads/wummel/patool/patool-1.0.tar.gz" 
       title="Download source .tar.gz package"
-      id="download-tar-gz" class="button"><span>Patool.tar.gz 0.19</span></a>
-    <a href="http://github.com/downloads/wummel/patool/patool-0.19.exe"
+      id="download-tar-gz" class="button"><span>Patool.tar.gz 1.0</span></a>
+    <a href="http://github.com/downloads/wummel/patool/patool-1.0.exe"
       title="Download Windows .exe installer"
-      id="download-exe" class="button"><span>Patool.exe 0.19</span></a>
+      id="download-exe" class="button"><span>Patool.exe 1.0</span></a>
     <a href="https://github.com/wummel/patool" id="view-on-github" class="button"><span>View on GitHub</span></a>
 <!--    <p>
     <a href="https://github.com/wummel/patool/blob/master/patool.freecode">Release notes</a>
@@ -43,8 +43,9 @@
   <section id="main_content">
     <h1>Introduction</h1>
 
-<p>Various archive types can be  created,  extracted,  tested  and
-listed with patool. The advantage of patool is its simplicity in
+<p>Various archive types can be  created,  extracted,  tested, listed,
+compared, searched  and
+repacked with patool. The advantage of patool is its simplicity in
 handling archive files without having to remember a  myriad  of
 programs and options.</p>
 
@@ -89,13 +90,22 @@ patool create --verbose myfiles.zip file1.txt dir/
 # list differences between two archive contents
 patool diff release1.0.tar.gz release2.0.zip
 
-# create a new archive in different format
+# search archive contents
+patool search "def urlopen" python-3.3.tar.gz
+
+# compress the archive in a different format
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 </code></pre>
+
+<h2>Donate</h2>
+<p>If you like patool, consider a donation to support it. Thanks!</p>
+<p>
+<a class="coinbase-button" data-code="68700cb93764006463b42de8920e7ef3" data-button-style="donation_small" href="https://coinbase.com/checkouts/68700cb93764006463b42de8920e7ef3">Donate Bitcoins</a><script src="https://coinbase.com/assets/button.js" type="text/javascript"></script>
+</p>
   </section>
 
   <footer>
-    Patool is written and maintained by <a href="https://github.com/wummel">Bastian Kleineidam</a><br>
+    Patool is written and maintained by <a href="https://github.com/wummel/">Bastian Kleineidam</a><br>
   </footer>
         
 </div>
