@@ -142,6 +142,7 @@ class InnoScript:
         if not self.dist_dir[-1] in "\\/":
             self.dist_dir += "\\"
         self.name = AppName
+        self.lname = AppName.lower()
         self.version = AppVersion
         self.windows_exe_files = [self.chop(p) for p in windows_exe_files]
         self.console_exe_files = [self.chop(p) for p in console_exe_files]
@@ -201,7 +202,9 @@ class InnoScript:
         print(file=fd)
         # Uninstall optional log files
         print('[UninstallDelete]', file=fd)
-        print(r'Type: files; Name: "{pf}\%s\patool*.exe.log"' % self.name, file=fd)
+        for path in (self.windows_exe_files + self.console_exe_files):
+            exename = os.path.basename(path)
+            print(r'Type: files; Name: "{pf}\%s\%s.log"' % (self.name, exename), file=fd)
         print(file=fd)
         # Add app dir to PATH
         print("[Code]", file=fd)
@@ -229,7 +232,7 @@ end;
     def sign (self):
         """Sign InnoSetup installer with local self-signed certificate."""
         print("*** signing the inno setup installer ***")
-        pfxfile = r'C:\patool.pfx'
+        pfxfile = r'C:\%s.pfx' % self.lname
         if os.path.isfile(pfxfile):
             path = get_windows_sdk_path()
             signtool = os.path.join(path, "bin", "signtool.exe")
