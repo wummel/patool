@@ -19,8 +19,6 @@ Suggests: arj, bzip2 | lbzip2 | pbzip2, cabextract | lcab, ncompress,
   lzip | plzip | clzip | pdlzip, sharutils, flac, shorten, unadf, archmage,
   genisoimage, python-argcomplete
 Description: command line archive file manager
- *** Unofficial package from calvin@debian.org ***
- .
  Various archive formats can be created, extracted, tested, listed,
  compared, searched and repacked by patool. The archive format is
  determined with file(1) and as a fallback by the archive file extension.

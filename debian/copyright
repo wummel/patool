@@ -4,10 +4,16 @@ This is patool, written and maintained by Bastian Kleineidam
 The original source can always be found at:
 	http://wummel.github.com/patool/
 
-Vcs-Git-Upstream: git://github.com/wummel/patool.git
-Vcs-Browser-Upstream: https://github.com/wummel/patool
+Copyright:
+  Copyright (C) 2010-2013 Bastian Kleineidam
 
-Copyright (C) 2010-2013 Bastian Kleineidam
+Upstream VCS:
+  git://github.com/wummel/patool.git
+
+Upstream VCS browser:
+ https://github.com/wummel/patool
+
+License:
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
