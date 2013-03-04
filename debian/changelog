@@ -1,8 +1,8 @@
-patool (1.0-1) UNRELEASED; urgency=low
+patool (1.0-1) unstable; urgency=low
 
-  * Official release (Closes: #nnnn)
+  * Official release (Closes: #702029)
 
- -- Bastian Kleineidam <calvin@debian.org>  Fri, 01 Mar 2013 21:40:10 +0100
+ -- Bastian Kleineidam <calvin@debian.org>  Mon, 04 Mar 2013 19:12:32 +0100
 
 patool (1.0-0calvin1) unstable; urgency=low
 
