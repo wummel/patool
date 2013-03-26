@@ -13,12 +13,6 @@ HOMEPAGE:=$(HOME)/public_html/$(LAPPNAME)-webpage.git
 DEBUILDDIR:=$(HOME)/projects/debian/official
 DEBORIGFILE:=$(DEBUILDDIR)/$(LAPPNAME)_$(VERSION).orig.tar.gz
 DEBPACKAGEDIR:=$(DEBUILDDIR)/$(LAPPNAME)-$(VERSION)
-PY2APPOPTS ?=
-ifeq ($(shell uname),Darwin)
-  CHMODMINUSMINUS:=
-else
-  CHMODMINUSMINUS:=--
-endif
 # Pytest options:
 # --resultlog: write test results in file
 # -s: do not capture stdout/stderr (some tests fail otherwise)
@@ -30,10 +24,6 @@ TESTOPTS=
 
 all:
 
-
-chmod:
-	-chmod -R a+rX,u+w,go-w $(CHMODMINUSMINUS) *
-	find . -type d -exec chmod 755 {} \;
 
 dist:
 	[ -d dist ] || mkdir dist
@@ -87,10 +77,6 @@ releasecheck: test check
 	@if ! grep "Version: $(VERSION)" $(LAPPNAME).freecode > /dev/null; then \
 	  echo "Could not release: edit $(LAPPNAME).freecode version"; false; \
 	fi
-
-app: clean chmod
-# Build OSX installer
-	$(PYTHON) setup.py py2app $(PY2APPOPTS)
 
 check:
 # The check programs used here are mostly local scripts on my private system.
@@ -150,4 +136,4 @@ changelog:
 	github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) doc/changelog.txt
 
 .PHONY: changelog update-copyright deb test clean count pyflakes check app
-.PHONY: releasecheck release upload sign dist chmod all tag register
+.PHONY: releasecheck release upload sign dist all tag register
