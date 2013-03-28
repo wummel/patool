@@ -136,7 +136,7 @@ EXAMPLES
 
 def create_argparser():
     """Construct and return an argument parser."""
-    parser = ArgumentParser(description="A commandline archive handler.",
+    parser = ArgumentParser(description="An archive file manager.",
         epilog=Examples, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
     subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
