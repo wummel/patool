@@ -159,7 +159,7 @@ ArchivePrograms = {
     'gzip': {
         None: ('7z', '7za', 'pigz', 'gzip'),
         'extract': ('py_gzip',),
-        'create': ('py_gzip',),
+        'create': ('zopfli', 'py_gzip'),
     },
     'iso': {
         'extract': ('7z',),
