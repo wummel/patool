@@ -9,7 +9,8 @@ ARCHIVE_SOURCE:=$(LAPPNAME)-$(VERSION).tar.gz
 ARCHIVE_WIN32:=$(LAPPNAME)-$(VERSION).exe
 GITUSER:=wummel
 GITREPO:=$(LAPPNAME)
-HOMEPAGE:=$(HOME)/public_html/$(LAPPNAME)-webpage.git
+HOMEPAGE:=$(HOME)/public_html/$(LAPPNAME)-webpage
+HOMEPAGE_META:=$(HOMEPAGE)/app.yaml
 DEBUILDDIR:=$(HOME)/projects/debian/official
 DEBORIGFILE:=$(DEBUILDDIR)/$(LAPPNAME)_$(VERSION).orig.tar.gz
 DEBPACKAGEDIR:=$(DEBUILDDIR)/$(LAPPNAME)-$(VERSION)
@@ -41,11 +42,11 @@ upload:
 
 homepage:
 # update metadata
-	@echo "version: \"$(VERSION)\"" > $(HOMEPAGE)/info.yaml
-	@echo "name: \"$(APPNAME)\"" >> $(HOMEPAGE)/info.yaml
-	@echo "lname: \"$(LAPPNAME)\"" >> $(HOMEPAGE)/info.yaml
-	@echo "maintainer: \"$(MAINTAINER)\"" >> $(HOMEPAGE)/info.yaml
-	@echo "author: \"$(AUTHOR)\"" >> $(HOMEPAGE)/info.yaml
+	@echo "version: \"$(VERSION)\"" > $(HOMEPAGE_META)
+	@echo "name: \"$(APPNAME)\"" >> $(HOMEPAGE_META)
+	@echo "lname: \"$(LAPPNAME)\"" >> $(HOMEPAGE_META)
+	@echo "maintainer: \"$(MAINTAINER)\"" >> $(HOMEPAGE_META)
+	@echo "author: \"$(AUTHOR)\"" >> $(HOMEPAGE_META)
 # generate static files
 	make -C $(HOMEPAGE) gen upload
 
