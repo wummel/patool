@@ -1,7 +1,7 @@
 Patool
 =======
 
-Patool is an archive file manager for the commandline console.
+Patool is an archive file manager.
 
 Various archive formats can be  created,  extracted,  tested, listed,
 searched, repacked and compared with patool. The advantage of patool is its simplicity in
