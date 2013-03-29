@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{%- block content %}
+<header>
+  <h1>{{site.app.name}}</h1>
+  <h2>{{site.app.name}} is a portable archive file manager</h2>
+</header>
+
+<section id="downloads" class="clearfix">
+  <a href="http://github.com/downloads/wummel/{{site.app.lname}}/{{site.app.lname}}-{{site.app.version}}.tar.gz" 
+    title="Download source .tar.gz package"
+    id="download-tar-gz" class="button"><span>{{site.app.name}}.tar.gz {{site.app.version}}</span></a>
+  <a href="http://github.com/downloads/wummel/{{site.app.lname}}/{{site.app.lname}}-{{site.app.version}}.exe"
+    title="Download Windows .exe installer"
+    id="download-exe" class="button"><span>{{site.app.name}}.exe {{site.app.version}}</span></a>
+  <a href="https://github.com/wummel/patool" id="view-on-github" class="button"><span>View on GitHub</span></a>
+<!--    <p>
+    <a href="https://github.com/wummel/patool/blob/master/patool.freecode">Release notes</a>
+    <a href="https://github.com/wummel/patool/blob/master/doc/changelog.txt">Changelog</a>
+    </p> -->
+</section>
+
+<hr>
+
+<section id="main_content">
+{{page.content}}
+</section>
+
+<footer>
+  {{site.app.name}} is written and maintained by <a href="https://github.com/wummel/">{{site.app.maintainer}}</a><br>
+</footer>
+
+{%- endblock %}

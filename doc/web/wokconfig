@@ -1,0 +1,3 @@
+app: !include app.yaml
+output_dir: ~/public_html/patool-webpage.git
+output_exclude: ["todo"]

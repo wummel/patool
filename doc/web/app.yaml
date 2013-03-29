@@ -1,0 +1,6 @@
+version: "1.0"
+name: "Patool"
+lname: "patool"
+maintainer: "Bastian Kleineidam"
+author: "Bastian Kleineidam"
+output_exclude: [".*", "todo"]
