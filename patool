@@ -22,7 +22,7 @@ import sys
 import argparse
 import pydoc
 import patoolib
-from patoolib.util import log_error, log_internal_error, PatoolError
+from patoolib.util import log_error, log_internal_error, PatoolError, App
 
 
 def run_extract(args):
@@ -134,10 +134,16 @@ EXAMPLES
   patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 """
 
+Version = """\
+VERSION
+  %s
+""" % App
+
 def create_argparser():
     """Construct and return an argument parser."""
+    epilog = Examples + "\n" + Version
     parser = ArgumentParser(description="An archive file manager.",
-        epilog=Examples, formatter_class=argparse.RawDescriptionHelpFormatter)
+        epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
     subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
     # extract
