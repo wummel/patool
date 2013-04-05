@@ -1,6 +1,7 @@
 1.1 "" (released xx.xx.2013)
 
 * Add support for zopfli, Googles new zlib compressor.
+* Fix an error repacking compressed tar archives with 7z.
 
 
 1.0 "Robot and Frank" (released 1.3.2013)

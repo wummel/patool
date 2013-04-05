@@ -15,14 +15,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the 7z program."""
 
-def extract_7z (archive, compression, cmd, verbosity, outdir):
+def extract_7z(archive, compression, cmd, verbosity, outdir):
     """Extract a 7z archive."""
     return [cmd, 'x', '-o%s' % outdir, '--', archive]
 
+def extract_7z_singlefile(archive, compression, cmd, verbosity, outdir):
+    """Extract a singlefile archive (eg. gzip or bzip2) with '7z e'.
+    This makes sure a single file and no subdirectories are created,
+    which would cause errors with patool repack."""
+    return [cmd, 'e', '-o%s' % outdir, '--', archive]
+
 extract_bzip2 = \
   extract_gzip = \
-  extract_zip = \
   extract_compress = \
+  extract_xz = \
+  extract_lzma = \
+  extract_7z_singlefile
+
+extract_zip = \
   extract_rar = \
   extract_cab = \
   extract_arj = \
@@ -30,8 +40,6 @@ extract_bzip2 = \
   extract_rpm = \
   extract_deb = \
   extract_iso = \
-  extract_xz = \
-  extract_lzma = \
   extract_7z
 
 def list_7z (archive, compression, cmd, verbosity):
