@@ -47,7 +47,7 @@ except ImportError:
 from distutils import util
 
 AppName = "Patool"
-AppVersion = "1.0"
+AppVersion = "1.1"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
