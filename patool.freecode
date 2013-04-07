@@ -1,6 +1,6 @@
 Project: patool
-Version: 1.0
-Release-Focus: Major feature enhancements
+Version: 1.1
+Release-Focus: Minor bugfixes
 Hide: N
 Website-URL: http://wummel.github.com/patool/
 Changelog-URL: https://github.com/wummel/patool/blob/master/doc/changelog.txt
@@ -8,6 +8,5 @@ Tar/GZ-URL: https://github.com/downloads/wummel/patool/patool-${version}.tar.gz
 GIT-Tree-URL: https://github.com/wummel/patool.git
 Windows-installer-URL: http://github.com/downloads/wummel/patool/patool-${version}.win32.exe
 
-Archive contents can now be searched. Support for ISO images has been
-added. Python 3.x support has been fixed.
-Handling of lzma, lzop, lrzip and rzip archives has been fixed.
+An error with repacking compressed tar archives with 7z has been
+fixed. Support for the zopfli compressor has been added.

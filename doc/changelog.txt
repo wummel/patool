@@ -1,4 +1,4 @@
-1.1 "" (released xx.xx.2013)
+1.1 "Clerks" (released 7.4.2013)
 
 * Add support for zopfli, Googles new zlib compressor.
 * Fix an error repacking compressed tar archives with 7z.
