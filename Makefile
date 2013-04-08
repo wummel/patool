@@ -105,7 +105,10 @@ clean:
 	find . -name \*.pyo -delete
 	rm -rf build dist
 
-test:
+localbuild:
+	$(PYTHON) setup.py build
+
+test:	localbuild
 	$(PYTHON) -m pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
 
 doc/$(LAPPNAME).txt: doc/$(LAPPNAME).1
@@ -135,5 +138,6 @@ changelog:
 # closes issues mentioned in the changelog entries.
 	github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) doc/changelog.txt
 
-.PHONY: changelog update-copyright deb test clean count pyflakes check app
+.PHONY: changelog update-copyright deb test clean count pyflakes check
 .PHONY: releasecheck release upload sign dist all tag register homepage
+.PHONY: localbuild doccheck

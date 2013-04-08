@@ -22,8 +22,8 @@ import sys
 import argparse
 import pydoc
 import patoolib
-from patoolib.util import log_error, log_internal_error, PatoolError, App
-
+from patoolib.util import log_error, log_internal_error, PatoolError
+from patoolib.configuration import App
 
 def run_extract(args):
     """Extract files from archive(s)."""

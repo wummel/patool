@@ -23,6 +23,7 @@ import mimetypes
 import tempfile
 import time
 import traceback
+from . import configuration
 try:
     from shutil import which
 except ImportError:
@@ -78,10 +79,6 @@ except ImportError:
                         return name
         return None
 
-
-AppName = "patool"
-App = "%s 1.1" % AppName
-SupportUrl = "https://github.com/wummel/patool/issues"
 
 # internal MIME database
 mimedb = None
@@ -471,7 +468,7 @@ at %(url)s and include at least the information below:
 Not disclosing some of the information below due to privacy reasons is ok.
 I will try to help you nonetheless, but you have to give me something
 I can work with ;) .
-""" % dict(app=AppName, url=SupportUrl), file=out)
+""" % dict(app=configuration.AppName, url=configuration.SupportUrl), file=out)
     if etype is None:
         etype = sys.exc_info()[0]
     if evalue is None:
@@ -483,7 +480,7 @@ I can work with ;) .
     print_app_info(out=out)
     print_locale_info(out=out)
     print(os.linesep,
-            "******** %s internal error, over and out ********" % AppName, file=out)
+      "******** %s internal error, over and out ********" % configuration.AppName, file=out)
 
 def print_env_info(key, out=sys.stderr):
     """If given environment key is defined, print it out."""
@@ -501,7 +498,7 @@ def print_locale_info(out=sys.stderr):
 def print_app_info(out=sys.stderr):
     """Print system and application info (output defaults to stderr)."""
     print("System info:", file=out)
-    print(App, file=out)
+    print(configuration.App, file=out)
     print("Python %(version)s on %(platform)s" %
                     {"version": sys.version, "platform": sys.platform}, file=out)
     stime = strtime(time.time())
