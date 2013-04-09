@@ -38,7 +38,7 @@ patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 
 Website
 --------
-See http://wummel.github.com/patool/ for more info and downloads.
+See http://wummel.github.io/patool/ for more info and downloads.
 
 Test suite status
 ------------------

@@ -2,7 +2,7 @@ Project: patool
 Version: 1.1
 Release-Focus: Minor bugfixes
 Hide: N
-Website-URL: http://wummel.github.com/patool/
+Website-URL: http://wummel.github.io/patool/
 Changelog-URL: https://github.com/wummel/patool/blob/master/doc/changelog.txt
 Tar/GZ-URL: https://github.com/downloads/wummel/patool/patool-${version}.tar.gz
 GIT-Tree-URL: https://github.com/wummel/patool.git
