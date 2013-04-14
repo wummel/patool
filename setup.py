@@ -455,7 +455,6 @@ installed.
     maintainer_email = MyEmail,
     license = "GPL",
     url = "http://wummel.github.io/patool/",
-    download_url="http://wummel.github.io/patool/files/",
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],
