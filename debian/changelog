@@ -1,14 +1,17 @@
-patool (1.2-1) unstable; urgency=low
-
-  * New upstream release.
-
- -- Bastian Kleineidam <calvin@debian.org>  Wed, 10 Apr 2013 18:56:58 +0200
-
 patool (1.1-1) unstable; urgency=low
 
   * New upstream release.
 
- -- Bastian Kleineidam <calvin@debian.org>  Sun, 07 Apr 2013 17:35:54 +0200
+ -- Bastian Kleineidam <calvin@debian.org>  Sun, 14 Apr 2013 14:41:58 +0200
+
+patool (1.0-2) unstable; urgency=low
+
+  * Start with a clean debian/changelog.
+  * Remove unofficial remark from debian/control
+  * Do not install custom bts file for reportbug.
+  * Use machine-readable debian/copyright information.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Tue, 05 Mar 2013 19:44:45 +0100
 
 patool (1.0-1) unstable; urgency=low
 
