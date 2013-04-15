@@ -5,7 +5,7 @@ Maintainer: Bastian Kleineidam <calvin@debian.org>
 Build-Depends: python-all (>= 2.7), debhelper (>= 9)
 X-Python-Version: >= 2.7
 Standards-Version: 3.9.4
-Homepage: http://wummel.github.com/patool/
+Homepage: http://wummel.github.io/patool/
 
 Package: patool
 Architecture: all
