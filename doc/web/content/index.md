@@ -41,6 +41,8 @@ The easy way with pip:
 pip install patool
 ```
 
+For Python 2.x you'll need at least Python 2.7, for Python 3.x at least Python 3.3.
+
 If you install from source read the
 [installation instructions](https://github.com/wummel/patool/blob/master/doc/install.txt).
 

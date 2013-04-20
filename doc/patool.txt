@@ -134,6 +134,13 @@ HELP OPTION
          patool --help - display help for patool
          patool extract --help - display help for the extract command
 
+SHELL ALIASES
+       Aliases save some typing:
+         alias pl='patool list'
+         alias px='patool extract'
+         alias pc='patool create'
+         alias pd='patool diff'
+
 AUTHOR
        Bastian Kleineidam <bastian.kleineidam@web.de>
 
