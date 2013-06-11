@@ -55,7 +55,7 @@ COMMANDS
 
        ·   The original archive will never be removed.
 
-       ·   Files  outside  the  outut directory will never be created.
+       ·   Files  outside  the output directory will never be created.
            This relies on archive program options to prevent unpacking
            of  files  with  an  absolute  path  name  (eg.  --no-abso‐
            lute-filenames for cpio(1)).
