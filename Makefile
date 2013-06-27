@@ -16,7 +16,7 @@ DEBPACKAGEDIR:=$(DEBUILDDIR)/$(LAPPNAME)-$(VERSION)
 # Pytest options:
 # --resultlog: write test results in file
 # -s: do not capture stdout/stderr (some tests fail otherwise)
-PYTESTOPTS?=--resultlog=testresults.txt -s --durations=0
+PYTESTOPTS?=--resultlog=testresults.txt -s
 # which test modules to run
 TESTS ?= tests/
 # set test options
