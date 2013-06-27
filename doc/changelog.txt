@@ -1,4 +1,7 @@
-1.2 "" (released xx.xx.2013)
+1.2 "" (released 27.6.2013)
+
+* Fix detection of *.gz with newer libmagic versions.
+  Closes: GH bug #2
 
 
 1.1 "Clerks" (released 7.4.2013)

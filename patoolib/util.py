@@ -226,7 +226,7 @@ def guess_mime (filename):
 
 
 Encoding2Mime = {
-    'gzip': "application/x-gzip",
+    'gzip': "application/gzip",
     'bzip2': "application/x-bzip2",
     'compress': "application/x-compress",
     'lzma': "application/x-lzma",
@@ -234,6 +234,8 @@ Encoding2Mime = {
     'xz': "application/x-xz",
 }
 Mime2Encoding = dict([(_val, _key) for _key, _val in Encoding2Mime.items()])
+# libmagic before version 5.14 identified .gz files as application/x-gzip
+Mime2Encoding['application/x-gzip'] = 'gzip'
 
 
 def guess_mime_mimedb (filename):
