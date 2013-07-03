@@ -22,6 +22,8 @@ import shutil
 import stat
 import importlib
 from . import util
+from .version import __version__
+
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
     'create_archive', 'diff_archives', 'search_archive', 'repack_archive']
 

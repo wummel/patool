@@ -50,7 +50,7 @@ from distutils import util
 from distutils.file_util import write_file
 
 AppName = "Patool"
-AppVersion = "1.2"
+AppVersion = "to be fetched from patoolib/version.py"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
@@ -76,6 +76,13 @@ cxfreeze_options = dict(
 MSVCP90Version = '9.0.21022.8'
 MSVCP90Token = '1fc8b3b9a1e18e3b'
 
+def get_version():
+    # Get version number, avoiding importing patoolib.
+    f = open(os.path.join("patoolib", "version.py"))
+    exec(f.read())
+    f.close()
+    return __version__
+AppVersion = get_version()
 
 def normpath (path):
     """Norm a path name to platform specific notation."""
