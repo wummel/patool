@@ -1,7 +1,7 @@
 Development with the patoolib library
 ======================================
 
-The patool funtionality can also be used in other Python programs.
+The patool functionality can also be used in other Python programs.
 To do this, install the patool program, import the library and
 use one or more of the convenience functions.
 
