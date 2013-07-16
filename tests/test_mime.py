@@ -61,9 +61,8 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.txt.gz.foo", ("application/gzip", "application/x-gzip"))
         self.mime_test_file("t.jar", "application/zip")
         self.mime_test_file("t.jar.foo", "application/zip")
-        # file(1) does not recognize .lzma files
-        #self.mime_test_file("t.lzma", "application/x-lzma")
-        #self.mime_test_file("t.lzma.foo", "application/x-lzma")
+        self.mime_test_file("t.txt.lzma", "application/x-lzma")
+        self.mime_test_file("t.txt.lzma.foo", "application/x-lzma")
         self.mime_test_file("t.txt.lz", "application/x-lzip")
         self.mime_test_file("t.txt.lz.foo", "application/x-lzip")
         self.mime_test_file("t.txt.lzo", "application/x-lzop")
@@ -82,8 +81,8 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.tgz", "application/x-tar", "gzip")
         self.mime_test_file("t.tar.xz", "application/x-tar", "xz")
         self.mime_test_file("t.tar.Z", "application/x-tar", "compress")
-        # file(1) does not recognize .lzma files
-        #self.mime_test_file("t.tar.lzma", "application/x-tar", "lzma")
+        self.mime_test_file("t.tar.lzma", "application/x-tar", "lzma")
+        # file(1) cannot uncompress .lzma files
         #self.mime_test_file("t.tar.lzma.foo", "application/x-tar", "lzma")
         self.mime_test_file("t.txt.xz", "application/x-xz")
         self.mime_test_file("t.txt.xz.foo", "application/x-xz")
@@ -105,9 +104,8 @@ class TestMime (unittest.TestCase):
         #self.mime_test_file("t.alz.foo", "application/x-alzip")
         self.mime_test_file("t.arc", "application/x-arc")
         self.mime_test_file("t.arc.foo", "application/x-arc")
-        # file(1) does not recognize .lrz files
-        #self.mime_test_file("t.txt.lrz", "application/x-lrzip")
-        #self.mime_test_file("t.txt.lrz.foo", "application/x-lrzip")
+        self.mime_test_file("t.txt.lrz", "application/x-lrzip")
+        self.mime_test_file("t.txt.lrz.foo", "application/x-lrzip")
         self.mime_test_file("t.txt.rz", "application/x-rzip")
         self.mime_test_file("t.txt.rz.foo", "application/x-rzip")
         self.mime_test_file("t.zoo", "application/x-zoo")

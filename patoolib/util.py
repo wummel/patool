@@ -23,7 +23,7 @@ import mimetypes
 import tempfile
 import time
 import traceback
-from . import configuration
+from . import configuration, ArchiveMimetypes, ArchiveCompressions
 try:
     from shutil import which
 except ImportError:
@@ -245,7 +245,6 @@ def guess_mime_mimedb (filename):
     mime, encoding = None, None
     if mimedb is not None:
         mime, encoding = mimedb.guess_type(filename, strict=False)
-    from . import ArchiveMimetypes, ArchiveCompressions
     if mime not in ArchiveMimetypes and encoding in ArchiveCompressions:
         # Files like 't.txt.gz' are recognized with encoding as format, and
         # an unsupported mime-type like 'text/plain'. Fix this.
@@ -262,7 +261,7 @@ def guess_mime_file (filename):
     """
     mime, encoding = None, None
     base, ext = os.path.splitext(filename)
-    if ext.lower() in ('.lzma', '.alz', '.lrz'):
+    if ext.lower() in ('.alz',):
         # let mimedb recognize these extensions
         return mime, encoding
     if os.path.isfile(filename):
@@ -271,6 +270,27 @@ def guess_mime_file (filename):
             mime, encoding = guess_mime_file_mime(file_prog, filename)
             if mime is None:
                 mime = guess_mime_file_text(file_prog, filename)
+                encoding = None
+    if mime in Mime2Encoding:
+        # try to look inside compressed archives
+        cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]
+        try:
+            outparts = backtick(cmd).strip().split(";")
+        except OSError:
+            # ignore errors, as file(1) is only a fallback
+            return mime, encoding
+        mime2 = outparts[0].split(" ", 1)[0]
+        if mime2 in ('application/x-empty', 'application/octet-stream'):
+            # The uncompressor program file(1) uses is not installed
+            # or is not able to uncompress.
+            # Try to get mime information from the file extension.
+            mime2, encoding2 = guess_mime_mimedb(filename)
+            if mime2 in ArchiveMimetypes:
+                mime = mime2
+                encoding = encoding2
+        elif mime2 in ArchiveMimetypes:
+            mime = mime2
+            encoding = get_file_mime_encoding(outparts)
     return mime, encoding
 
 
@@ -284,27 +304,7 @@ def guess_mime_file_mime (file_prog, filename):
         mime = backtick(cmd).strip()
     except OSError:
         # ignore errors, as file(1) is only a fallback
-        return mime, encoding
-    from . import ArchiveMimetypes
-    if mime in Mime2Encoding:
-        # try to look inside compressed archives
-        cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]
-        try:
-            outparts = backtick(cmd).strip().split(";")
-        except OSError:
-            # ignore errors, as file(1) is only a fallback
-            return mime, encoding
-        mime2 = outparts[0].split(" ", 1)[0]
-        if mime2 == 'application/x-empty':
-            # The uncompressor program file(1) uses is not installed.
-            # Try to get mime information from the file extension.
-            mime2, encoding2 = guess_mime_mimedb(filename)
-            if mime2 in ArchiveMimetypes:
-                mime = mime2
-                encoding = encoding2
-        elif mime2 in ArchiveMimetypes:
-            mime = mime2
-            encoding = get_file_mime_encoding(outparts)
+        pass
     if mime not in ArchiveMimetypes:
         mime, encoding = None, None
     return mime, encoding
@@ -331,6 +331,8 @@ FileText2Mime = {
     "ASCII cpio archive": "application/x-cpio",
     "Debian binary package": "application/x-debian-package",
     "gzip compressed data": "application/x-gzip",
+    "LZMA compressed data": "application/x-lzma",
+    "LRZIP compressed data": "application/x-lrzip",
     "lzop compressed data": "application/x-lzop",
     "Microsoft Cabinet archive data": "application/vnd.ms-cab-compressed",
     "RAR archive data": "application/x-rar",
@@ -361,7 +363,7 @@ def guess_mime_file_text (file_prog, filename):
         return None
     # match output against known strings
     for matcher, mime in FileText2Mime.items():
-        if output.startswith(matcher):
+        if output.startswith(matcher) and mime in ArchiveMimetypes:
             return mime
     return None
 

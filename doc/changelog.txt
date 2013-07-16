@@ -2,6 +2,7 @@
 
 * Add patoolib.__version__ (see PEP 396).
   Closes: GH bug #3
+* Improved detection of LZMA and LRZIP files with file(1).
 
 
 1.2 (released 27.6.2013)
