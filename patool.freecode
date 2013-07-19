@@ -3,9 +3,9 @@ Version: 1.3
 Hide: N
 Website-URL: http://wummel.github.io/patool/
 Changelog-URL: https://github.com/wummel/patool/blob/master/doc/changelog.txt
-Tar/GZ-URL: https://github.com/downloads/wummel/patool/patool-${version}.tar.gz
+Tar/GZ-URL: http://wummel.github.io/patool/dist/patool-${version}.tar.gz
 GIT-Tree-URL: https://github.com/wummel/patool.git
-Windows-installer-URL: http://github.com/downloads/wummel/patool/patool-${version}.win32.exe
+Windows-installer-URL: http://wummel.github.io/patool/dist/patool-${version}.win32.exe
 
 Missing modules in the Windows installer have been added.
 Detection of LZMA and LRZIP files with file(1) has been improved.
