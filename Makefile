@@ -9,7 +9,8 @@ ARCHIVE_SOURCE:=$(LAPPNAME)-$(VERSION).tar.gz
 ARCHIVE_WIN32:=$(LAPPNAME)-$(VERSION).exe
 GITUSER:=wummel
 GITREPO:=$(LAPPNAME)
-WEB_META:=doc/web/app.yaml
+WEBPAGE:=$(HOME)/public_html/patool-webpage.git
+WEBMETA:=doc/web/app.yaml
 DEBUILDDIR:=$(HOME)/projects/debian/official
 DEBORIGFILE:=$(DEBUILDDIR)/$(LAPPNAME)_$(VERSION).orig.tar.gz
 DEBPACKAGEDIR:=$(DEBUILDDIR)/$(LAPPNAME)-$(VERSION)
@@ -35,9 +36,9 @@ sign:
 	[ -f dist/$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WIN32)
 
 upload:
-	github-upload $(GITUSER) $(GITREPO) \
-	  dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WIN32) \
-	  dist/$(ARCHIVE_SOURCE).asc dist/$(ARCHIVE_WIN32).asc
+	cp dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WIN32) \
+	  dist/$(ARCHIVE_SOURCE).asc dist/$(ARCHIVE_WIN32).asc \
+	  $(WEBPAGE)/dist
 
 homepage:
 # update metadata
