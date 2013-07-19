@@ -59,7 +59,7 @@ py_excludes = ['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb',
 ]
 # py2exe options for Windows packaging
 py2exe_options = dict(
-    packages=["encodings"],
+    packages=["encodings", 'patoolib.programs'],
     excludes=py_excludes,
     # silence py2exe error about not finding msvcp90.dll
     dll_excludes=['MSVCP90.dll'],
@@ -68,7 +68,7 @@ py2exe_options = dict(
 )
 # cx_Freeze for Linux RPM packaging
 cxfreeze_options = dict(
-    packages=["encodings"],
+    packages=["encodings", 'patoolib.programs'],
     excludes=py_excludes,
 )
 
