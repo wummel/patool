@@ -4,6 +4,7 @@
   Closes: GH bug #3
 * Improved detection of LZMA and LRZIP files with file(1).
 * Add missing patoolib.programs to Windows installer.
+  Closes: GH bug #5
 
 
 1.2 (released 27.6.2013)
