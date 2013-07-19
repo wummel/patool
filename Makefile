@@ -42,12 +42,12 @@ upload:
 
 homepage:
 # update metadata
-	@echo "version: \"$(VERSION)\"" > $(WEB_META)
-	@echo "name: \"$(APPNAME)\"" >> $(WEB_META)
-	@echo "lname: \"$(LAPPNAME)\"" >> $(WEB_META)
-	@echo "maintainer: \"$(MAINTAINER)\"" >> $(WEB_META)
-	@echo "author: \"$(AUTHOR)\"" >> $(WEB_META)
-	git add $(WEB_META)
+	@echo "version: \"$(VERSION)\"" > $(WEBMETA)
+	@echo "name: \"$(APPNAME)\"" >> $(WEBMETA)
+	@echo "lname: \"$(LAPPNAME)\"" >> $(WEBMETA)
+	@echo "maintainer: \"$(MAINTAINER)\"" >> $(WEBMETA)
+	@echo "author: \"$(AUTHOR)\"" >> $(WEBMETA)
+	git add $(WEBMETA)
 	git cm "Updated web meta data."
 # relase website
 	$(MAKE) -C doc/web release
