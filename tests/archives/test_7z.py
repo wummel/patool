@@ -58,6 +58,7 @@ class Test7z (ArchiveTest):
         self.archive_test('t.rpm')
         self.archive_test('t.deb')
         self.archive_test('t.iso')
+        self.archive_create('t.txt.gz', check=Content.Singlefile)
 
     @needs_codec(program, 'rar')
     def test_7z_rar (self):

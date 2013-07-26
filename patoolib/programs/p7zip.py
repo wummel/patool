@@ -90,4 +90,5 @@ def create_7z (archive, compression, cmd, verbosity, filenames):
 
 create_zip = \
   create_xz = \
+  create_gzip = \
   create_7z

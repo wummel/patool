@@ -40,6 +40,7 @@ class Test7za (ArchiveTest):
         self.archive_test('t.jar')
         self.archive_test('t.txt.Z')
         self.archive_test('t.cab')
+        self.archive_create('t.txt.gz', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)

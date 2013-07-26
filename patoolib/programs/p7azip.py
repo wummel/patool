@@ -44,4 +44,5 @@ from .p7zip import \
   test_cab, \
   test_7z, \
   create_7z, \
-  create_zip
+  create_zip, \
+  create_gzip
