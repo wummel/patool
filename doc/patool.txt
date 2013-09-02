@@ -135,7 +135,8 @@ HELP OPTION
          patool extract --help - display help for the extract command
 
 SHELL ALIASES
-       Aliases save some typing:
+       When running under a Unix shell the following  aliases  can  be
+       defined to save some typing:
          alias pl='patool list'
          alias px='patool extract'
          alias pc='patool create'
@@ -149,4 +150,4 @@ COPYRIGHT
 
 
 
-patool                       February 2013                   PATOOL(1)
+patool                         July 2013                     PATOOL(1)
