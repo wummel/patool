@@ -1,4 +1,4 @@
-1.4 (released xx.xx.2013)
+1.4 (released 2.9.2013)
 
 * Add missing GZIP creation support for 7z modules.
   Closes: GH bug #6
