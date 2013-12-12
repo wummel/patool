@@ -362,7 +362,7 @@ end;
     def sign (self):
         """Sign InnoSetup installer with local self-signed certificate."""
         print("*** signing the inno setup installer ***")
-        pfxfile = r'C:\%s.pfx' % self.lname
+        pfxfile = r'scripts\%s.pfx' % self.lname
         if os.path.isfile(pfxfile):
             path = get_windows_sdk_path()
             signtool = os.path.join(path, "bin", "signtool.exe")
