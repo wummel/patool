@@ -1,3 +1,9 @@
+patool (1.4-2) unstable; urgency=low
+
+  * Updated debian/watch
+
+ -- Bastian Kleineidam <calvin@debian.org>  Wed, 15 Jan 2014 20:05:45 +0100
+
 patool (1.4-1) unstable; urgency=low
 
   * New upstream release.
