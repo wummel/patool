@@ -45,6 +45,8 @@ API
 You can use patool functions from other Python applications.
 Log output will be on sys.stdout and sys.stderr.
 On errors, `PatoolError` will be raised.
+Note that extra options such as password input or customization
+for specific archive programs are not supported.
 
 ```
 import patoolib
