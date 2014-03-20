@@ -385,7 +385,7 @@ def move_outdir_orphan (outdir):
     if len(entries) == 1:
         src = os.path.join(outdir, entries[0])
         dst = os.path.join(os.path.dirname(outdir), entries[0])
-        if os.path.exists(dst):
+        if os.path.exists(dst) or os.path.islink(dst):
             return (False, "local file exists")
         shutil.move(src, dst)
         os.rmdir(outdir)
