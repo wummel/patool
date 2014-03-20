@@ -50,7 +50,7 @@ from distutils import util
 from distutils.file_util import write_file
 
 AppName = "Patool"
-AppVersion = "1.4"
+AppVersion = "1.5"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
