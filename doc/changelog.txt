@@ -1,4 +1,4 @@
-1.5 (released xx.xx.2014)
+1.5 (released 30.3.2014)
 
 * Fix detection of existing broken symlinks when unpacking.
 

@@ -1,5 +1,5 @@
 Project: patool
-Version: 1.4
+Version: 1.5
 Hide: N
 Website-URL: http://wummel.github.io/patool/
 Changelog-URL: https://github.com/wummel/patool/blob/master/doc/changelog.txt
@@ -7,4 +7,4 @@ Tar/GZ-URL: http://wummel.github.io/patool/dist/patool-${version}.tar.gz
 GIT-Tree-URL: https://github.com/wummel/patool.git
 Windows-installer-URL: http://wummel.github.io/patool/dist/patool-${version}.win32.exe
 
-GZIP creation support for 7z modules has been added.
+Fix detection of existing broken symlinks when unpacking.
