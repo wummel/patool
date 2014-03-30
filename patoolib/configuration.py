@@ -1,4 +1,4 @@
-# Copyright (C) 2013 Bastian Kleineidam
+# Copyright (C) 2013-2014 Bastian Kleineidam
 """
 Define basic configuration data like version or application name.
 """
