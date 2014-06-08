@@ -9,7 +9,7 @@ ARCHIVE_SOURCE:=$(LAPPNAME)-$(VERSION).tar.gz
 ARCHIVE_WIN32:=$(LAPPNAME)-$(VERSION).exe
 GITUSER:=wummel
 GITREPO:=$(LAPPNAME)
-WEBPAGE:=$(HOME)/public_html/patool-webpage.git
+HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/app.yaml
 DEBUILDDIR:=$(HOME)/projects/debian/official
 DEBORIGFILE:=$(DEBUILDDIR)/$(LAPPNAME)_$(VERSION).orig.tar.gz
@@ -35,10 +35,14 @@ sign:
 	[ -f dist/$(ARCHIVE_SOURCE).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_SOURCE)
 	[ -f dist/$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WIN32)
 
-upload:
-	cp dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WIN32) \
-	  dist/$(ARCHIVE_SOURCE).asc dist/$(ARCHIVE_WIN32).asc \
-	  $(WEBPAGE)/dist
+upload:	upload_source upload_binary
+
+upload_source:
+	twine upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_SOURCE).asc
+
+upload_binary:
+	cp dist/$(ARCHIVE_WIN32) dist/$(ARCHIVE_WIN32).asc \
+	  $(HOMEPAGE)/dist
 
 homepage:
 # update metadata
@@ -80,6 +84,7 @@ releasecheck: test check
 	@if ! grep "Version: $(VERSION)" $(LAPPNAME).freecode > /dev/null; then \
 	  echo "Could not release: edit $(LAPPNAME).freecode version"; false; \
 	fi
+	$(PYTHON) setup.py check --restructuredtext
 
 check:
 # The check programs used here are mostly local scripts on my private system.
