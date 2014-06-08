@@ -1,3 +1,9 @@
+1.6 (released xx.xx.2014)
+
+* Search /usr/local/lib for p7zip RAR modules.
+  Closes: GH bug #10
+
+
 1.5 (released 30.3.2014)
 
 * Fix detection of existing broken symlinks when unpacking.

@@ -526,12 +526,19 @@ def strtimezone():
     return "%+04d" % (-zone//3600)
 
 
-def p7zip_supports_rar ():
+def p7zip_supports_rar():
     """Determine if the RAR codec is installed for 7z program."""
     if os.name == 'nt':
         # Assume RAR support is compiled into the binary.
         return True
-    return os.path.exists('/usr/lib/p7zip/Codecs/Rar29.so')
+    # the subdirectory and codec name
+    codecname = 'p7zip/Codecs/Rar29.so'
+    # search canonical user library dirs
+    for libdir in ('/usr/lib', '/usr/local/lib'):
+        fname = os.path.join(libdir, codecname)
+        if os.path.exists(fname):
+            return True
+    return False
 
 
 @memoized
