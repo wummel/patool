@@ -1,5 +1,4 @@
 version: "1.6"
-name: "Patool"
-lname: "patool"
+name: "patool"
 maintainer: "Bastian Kleineidam"
 author: "Bastian Kleineidam"

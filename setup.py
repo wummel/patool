@@ -44,12 +44,11 @@ try:
 except ImportError:
     from distutils.core import Distribution
     executables = None
-from distutils.command.register import register
 from distutils.command.install_lib import install_lib
 from distutils import util
 from distutils.file_util import write_file
 
-AppName = "Patool"
+AppName = "patool"
 AppVersion = "1.6"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
@@ -272,7 +271,6 @@ class InnoScript:
         if not self.dist_dir[-1] in "\\/":
             self.dist_dir += "\\"
         self.name = AppName
-        self.lname = AppName.lower()
         self.version = AppVersion
         self.windows_exe_files = [self.chop(p) for p in windows_exe_files]
         self.console_exe_files = [self.chop(p) for p in console_exe_files]
@@ -416,16 +414,6 @@ except ImportError:
         pass
 
 
-class MyRegister (register, object):
-    """Custom register command."""
-
-    def build_post_data(self, action):
-        """Force application name to lower case."""
-        data = super(MyRegister, self).build_post_data(action)
-        data['name'] = data['name'].lower()
-        return data
-
-
 args = dict(
     name = AppName,
     version = AppVersion,
@@ -474,7 +462,6 @@ installed.
     cmdclass = {
         'install_lib': MyInstallLib,
         'py2exe': MyPy2exe,
-        'register': MyRegister,
     },
     options = {
         "py2exe": py2exe_options,
