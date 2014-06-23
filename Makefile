@@ -71,8 +71,6 @@ release: clean releasecheck
 register:
 	@echo "Register at Python Package Index..."
 	$(PYTHON) setup.py register
-	@echo "Submitting to freecode.org..."
-	freecode-submit < $(APPNAME).freecode
 
 releasecheck: test check
 	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
@@ -81,9 +79,6 @@ releasecheck: test check
 	@if [ ! -f ../$(ARCHIVE_WIN32) ]; then \
 	  echo "Missing WIN32 distribution archive at ../$(ARCHIVE_WIN32)"; \
 	  false; \
-	fi
-	@if ! grep "Version: $(VERSION)" $(APPNAME).freecode > /dev/null; then \
-	  echo "Could not release: edit $(APPNAME).freecode version"; false; \
 	fi
 	$(PYTHON) setup.py check --restructuredtext
 
