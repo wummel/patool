@@ -2,7 +2,7 @@
 """
 Define basic configuration data like version or application name.
 """
-import _Patool_configdata as configdata
+import _patool_configdata as configdata
 
 Version = configdata.version
 ReleaseDate = configdata.release_date
