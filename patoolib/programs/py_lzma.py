@@ -48,7 +48,7 @@ def _create(archive, compression, cmd, format, verbosity, filenames):
     if len(filenames) > 1:
         raise util.PatoolError('multi-file compression not supported in Python lzma')
     try:
-        with lzma.LZMAFile(archive, 'wb', format) as lzmafile:
+        with lzma.LZMAFile(archive, mode='wb', format=format) as lzmafile:
             filename = filenames[0]
             with open(filename, 'rb') as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)
