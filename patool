@@ -188,8 +188,11 @@ def main():
     try:
         argparser = create_argparser()
         args = argparser.parse_args()
+        if args.command is None:
+            # Python 3.3.1 under linux allows an empty command somehow
+            argparser.error("too few arguments")
         # run subcommand function
-        return globals()["run_%s" % args.command](args)
+        res = globals()["run_%s" % args.command](args)
     except KeyboardInterrupt:
         log_error("aborted")
         res = 1
