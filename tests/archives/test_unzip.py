@@ -28,6 +28,9 @@ class TestUnzip (ArchiveTest):
         self.archive_extract('t.jar', check=None)
         self.archive_list('t.jar')
         self.archive_test('t.jar')
+        self.archive_extract('t.epub', check=None)
+        self.archive_list('t.epub')
+        self.archive_test('t.epub')
 
     @needs_program('file')
     @needs_program(program)
@@ -38,4 +41,6 @@ class TestUnzip (ArchiveTest):
         self.archive_extract('t.jar.foo', check=None)
         self.archive_list('t.jar.foo')
         self.archive_test('t.jar.foo')
-
+        self.archive_extract('t.epub.foo', check=None)
+        self.archive_list('t.epub.foo')
+        self.archive_test('t.epub.foo')

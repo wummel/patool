@@ -124,6 +124,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.chm", "application/x-chm")
         self.mime_test_file("t.chm.foo", "application/x-chm")
         self.mime_test_file("t.iso", "application/x-iso9660-image")
+        self.mime_test_file("t.epub", "application/zip")
 
     @needs_program('file')
     @needs_program('lzip')
@@ -198,3 +199,4 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.adf", "application/x-adf")
         self.mime_test_mimedb("t.chm", "application/x-chm")
         self.mime_test_mimedb("t.iso", "application/x-iso9660-image")
+        self.mime_test_mimedb("t.epub", "application/zip")
