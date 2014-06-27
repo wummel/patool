@@ -129,7 +129,7 @@ doc/$(APPNAME).txt: doc/$(APPNAME).1
 deb:
 # build a debian package
 	[ -f $(DEBORIGFILE) ] || cp dist/$(ARCHIVE_SOURCE) $(DEBORIGFILE)
-	sed -i -e 's/VERSION_$(APPNAME):=.*/VERSION_$(LAPPNAME):=$(VERSION)/' $(DEBUILDDIR)/$(LAPPNAME).mak
+	sed -i -e 's/VERSION_$(APPNAME):=.*/VERSION_$(APPNAME):=$(VERSION)/' $(DEBUILDDIR)/$(APPNAME).mak
 	[ -d $(DEBPACKAGEDIR) ] || (cd $(DEBUILDDIR); \
 	  patool extract $(DEBORIGFILE); \
 	  cd $(CURDIR); \
