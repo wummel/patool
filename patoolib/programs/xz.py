@@ -16,6 +16,7 @@
 """Archive commands for the xz program."""
 from . import extract_singlefile_standard, \
     test_singlefile_standard, create_singlefile_standard
+from .. import util
 
 
 extract_xz = extract_singlefile_standard
@@ -30,3 +31,34 @@ def list_xz (archive, compression, cmd, verbosity):
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist
+
+
+def extract_lzma(archive, compression, cmd, verbosity, outdir):
+    """Extract an LZMA archive."""
+    cmdlist = [util.shell_quote(cmd), '--format=lzma']
+    if verbosity > 1:
+        cmdlist.append('-v')
+    outfile = util.get_single_outfile(outdir, archive)
+    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
+        util.shell_quote(outfile)])
+    return (cmdlist, {'shell': True})
+
+
+def test_lzma(archive, compression, cmd, verbosity):
+    """Test an LZMA archive."""
+    cmdlist = [cmd, '--format=lzma']
+    if verbosity > 1:
+        cmdlist.append('-v')
+    cmdlist.extend(['--test', archive])
+    return cmdlist
+
+
+def create_lzma(archive, compression, cmd, verbosity, filenames):
+    """Create an LZMA archive."""
+    cmdlist = [util.shell_quote(cmd), '--format=lzma']
+    if verbosity > 1:
+        cmdlist.append('-v')
+    cmdlist.extend(['-c', '--'])
+    cmdlist.extend([util.shell_quote(x) for x in filenames])
+    cmdlist.extend(['>', util.shell_quote(archive)])
+    return (cmdlist, {'shell': True})

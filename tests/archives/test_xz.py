@@ -30,3 +30,8 @@ class TestXz (ArchiveTest):
         self.archive_test('t.txt.xz.foo')
         self.archive_extract('t.txt.xz.foo', check=Content.Singlefile)
 
+    @needs_program(program)
+    def test_lzma(self):
+        self.archive_test('t.txt.lzma')
+        self.archive_extract('t.txt.lzma', check=Content.Singlefile)
+        self.archive_create('t.txt.lzma', check=Content.Singlefile)

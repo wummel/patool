@@ -226,10 +226,10 @@ ArchivePrograms = {
         None: ('lzop',),
     },
     'lzma': {
-        'extract': ('7z', 'lzma') + py_lzma,
+        'extract': ('7z', 'lzma', 'xz') + py_lzma,
         'list': ('7z', 'py_echo'),
-        'test': ('7z', 'lzma'),
-        'create': ('lzma',) + py_lzma,
+        'test': ('7z', 'lzma', 'xz'),
+        'create': ('lzma', 'xz') + py_lzma,
     },
     'rzip': {
         'extract': ('rzip',),
