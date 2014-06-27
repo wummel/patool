@@ -31,6 +31,8 @@ class TestUnzip (ArchiveTest):
         self.archive_extract('t.epub', check=None)
         self.archive_list('t.epub')
         self.archive_test('t.epub')
+        self.archive_list('t.apk')
+        self.archive_test('t.apk')
 
     @needs_program('file')
     @needs_program(program)
@@ -44,3 +46,5 @@ class TestUnzip (ArchiveTest):
         self.archive_extract('t.epub.foo', check=None)
         self.archive_list('t.epub.foo')
         self.archive_test('t.epub.foo')
+        self.archive_list('t.apk.foo')
+        self.archive_test('t.apk.foo')

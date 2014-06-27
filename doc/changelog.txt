@@ -2,7 +2,7 @@
 
 * Configure the xz program to also extract LZMA files.
 * Fixed creation of LZMA files with the Python lzma module.
-* Handle *.epub files as ZIP files.
+* Handle *.epub and *.apk files as ZIP files.
 
  
 1.6 (released 8.6.2014)
