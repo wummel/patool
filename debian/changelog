@@ -1,3 +1,9 @@
+patool (1.7-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Bastian Kleineidam <calvin@debian.org>  Fri, 27 Jun 2014 18:00:38 +0200
+
 patool (1.6-1) unstable; urgency=low
 
   * New upstream release.
