@@ -65,7 +65,7 @@ tag:
 # Make a new release by calling all the distinct steps in the correct order.
 # Each step is a separate target so that it's easy to do this manually if
 # anything screwed up.
-release: clean releasecheck
+release: distclean releasecheck
 	$(MAKE) dist sign upload homepage tag register changelog deb
 
 register:
@@ -105,9 +105,16 @@ count:
 	@sloccount patool patoolib
 
 clean:
-	find . -name \*.pyc -delete
-	find . -name \*.pyo -delete
-	rm -rf build dist
+	-$(PYTHON) setup.py clean --all
+	find . -name '*.py[co]' -exec rm -f {} \;
+
+distclean:	clean
+	rm -rf build dist $(APPNAME).egg-info
+	rm -f _$(APPNAME)_configdata.py MANIFEST
+# clean aborted dist builds and output files
+	rm -f testresults.txt
+	rm -rf $(APPNAME)-$(VERSION)
+	rm -f *-stamp*
 
 localbuild:
 	$(PYTHON) setup.py build
