@@ -38,8 +38,10 @@ Installation
 The easy way with pip:
 
 ```bash
-pip install patool
+sudo pip install patool
 ```
+
+After that there should exist a ```/usr/bin/patool``` binary.
 
 For Python 2.x you'll need at least Python 2.7, for Python 3.x at least Python 3.3.
 
