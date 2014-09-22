@@ -1,6 +1,7 @@
 1.8 (released xx.xx.xxxx)
 
 * Added support for ZPAQ archives.
+  Closes: GH bug #14
 
 
 1.7 (released 27.6.2014)
