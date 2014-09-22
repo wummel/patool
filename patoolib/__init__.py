@@ -36,7 +36,7 @@ ArchiveFormats = (
     'bzip2', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
     'flac', 'gzip', 'iso', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
     'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'xz',
-    'zip', 'zoo')
+    'zip', 'zoo', 'zpaq')
 
 # Supported compressions (used with tar for example)
 # Note that all compressions must also be archive formats
@@ -80,6 +80,7 @@ ArchiveMimetypes = {
     'application/x-zip-compressed': 'zip',
     'application/x-zoo': 'zoo',
     'application/zip': 'zip',
+    'application/zpaq': 'zpaq',
     'audio/x-ape': 'ape',
     'audio/x-shn': 'shn',
     'audio/flac': 'flac',
@@ -252,6 +253,9 @@ ArchivePrograms = {
     },
     'zoo': {
         None: ('zoo',),
+    },
+    'zpaq': {
+        None: ('zpaq',),
     },
     'dms': {
         'extract': ('xdms',),

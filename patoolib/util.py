@@ -131,6 +131,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, 'application/x-iso9660-image', '.iso')
     add_mimetype(mimedb, 'application/zip', '.epub')
     add_mimetype(mimedb, 'application/zip', '.apk')
+    add_mimetype(mimedb, 'application/zpaq', '.zpaq')
 
 
 def add_mimetype(mimedb, mimetype, extension):
@@ -353,6 +354,7 @@ FileText2Mime = {
     "Monkey's Audio": "audio/x-ape",
     "FLAC audio bitstream data": "audio/flac",
     "MS Windows HtmlHelp Data": "application/x-chm",
+    "ZPAQ stream": "application/zpaq",
 }
 
 def guess_mime_file_text (file_prog, filename):
