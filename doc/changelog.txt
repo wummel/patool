@@ -1,5 +1,7 @@
 1.8 (released xx.xx.xxxx)
 
+* Added support for ZPAQ archives.
+
 
 1.7 (released 27.6.2014)
 
@@ -7,7 +9,7 @@
 * Fixed creation of LZMA files with the Python lzma module.
 * Handle *.epub and *.apk files as ZIP files.
 
- 
+
 1.6 (released 8.6.2014)
 
 * Search /usr/local/lib for p7zip RAR modules.

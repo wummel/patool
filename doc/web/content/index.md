@@ -25,8 +25,9 @@ APE  (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB
 (.cab), COMPRESS (.Z), CPIO (.cpio), DEB  (.deb),  DMS  (.dms),
 FLAC  (.flac), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh), LZIP
 (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar),  RZIP
-(.rz),  SHN  (.shn), TAR (.tar), XZ (.xz), ZIP (.zip, .jar) and
-ZOO (.zoo) formats.  It relies on helper applications to handle
+(.rz),  SHN  (.shn), TAR (.tar), XZ (.xz), ZIP (.zip, .jar),
+ZOO (.zoo) and ZPAQ (.zpaq) formats.
+It relies on helper applications to handle
 those archive formats (for example bzip2 for BZIP2 archives).
 
 The  archive  formats  TAR, ZIP, BZIP2 and
