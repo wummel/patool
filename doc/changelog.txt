@@ -2,6 +2,8 @@
 
 * Added support for ZPAQ archives.
   Closes: GH bug #14
+* Use options for maximum compression when creating archives
+  and the archive program has such options.
 
 
 1.7 (released 27.6.2014)

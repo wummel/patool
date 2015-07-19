@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012-2014 Bastian Kleineidam
+# Copyright (C) 2012-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ def extract_flac (archive, compression, cmd, verbosity, outdir):
 
 def create_flac (archive, compression, cmd, verbosity, filenames):
     """Compress a WAV file to a FLAC archive."""
-    cmdlist = [cmd, filenames[0], '--output-name', archive]
+    cmdlist = [cmd, filenames[0], '--best', '--output-name', archive]
     return cmdlist
 
 

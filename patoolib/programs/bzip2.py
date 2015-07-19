@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ def create_bzip2 (archive, compression, cmd, verbosity, filenames):
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-z', '--'])
+    cmdlist.extend(['-c', '-z', '-9', '--'])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
     cmdlist.extend(['>', util.shell_quote(archive)])
     return (cmdlist, {'shell': True})

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012-2014 Bastian Kleineidam
+# Copyright (C) 2012-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ def _create(archive, compression, cmd, format, verbosity, filenames):
     if len(filenames) > 1:
         raise util.PatoolError('multi-file compression not supported in Python lzma')
     try:
-        with lzma.LZMAFile(archive, mode='wb', format=format) as lzmafile:
+        with lzma.LZMAFile(archive, mode='wb', format=format, preset=9) as lzmafile:
             filename = filenames[0]
             with open(filename, 'rb') as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)

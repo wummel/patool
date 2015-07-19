@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ def extract_rzip (archive, compression, cmd, verbosity, outdir):
 
 def create_rzip (archive, compression, cmd, verbosity, filenames):
     """Create an RZIP archive."""
-    cmdlist = [cmd, '-k', '-o', archive]
+    cmdlist = [cmd, '-k', '-9', '-o', archive]
     if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(filenames)

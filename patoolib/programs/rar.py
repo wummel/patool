@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,6 +37,6 @@ def test_rar (archive, compression, cmd, verbosity):
 
 def create_rar (archive, compression, cmd, verbosity, filenames):
     """Create a RAR archive."""
-    cmdlist = [cmd, 'a', '-r', '--', archive]
+    cmdlist = [cmd, 'a', '-r', '-m5', '--', archive]
     cmdlist.extend(filenames)
     return cmdlist

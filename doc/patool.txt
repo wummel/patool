@@ -1,4 +1,4 @@
-PATOOL(1)                                                    PATOOL(1)
+PATOOL(1)               General Commands Manual              PATOOL(1)
 
 
 
@@ -91,10 +91,11 @@ COMMANDS
    create
        patool create <archive> <file-or-directory>...
 
-       Create an archive from given files. All of the given  files  to
-       add  to  the archive must be readable by the current user.  The
-       format of the archive to create is determined  by  the  archive
-       file extension.
+       Create  an  archive from given files. All of the given files to
+       add to the archive must be readable by the current  user.   The
+       format  of  the  archive to create is determined by the archive
+       file extension. If the archive program has options to  maximize
+       file compression, patool uses those options.
 
    test
        patool test <archive>...
@@ -146,7 +147,7 @@ AUTHOR
        Bastian Kleineidam <bastian.kleineidam@web.de>
 
 COPYRIGHT
-       Copyright © 2010-2014 Bastian Kleineidam
+       Copyright © 2010-2015 Bastian Kleineidam
 
 
 

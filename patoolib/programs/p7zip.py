@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ test_bzip2 = \
 
 def create_7z (archive, compression, cmd, verbosity, filenames):
     """Create a 7z archive."""
-    cmdlist = [cmd, 'a', '--', archive]
+    cmdlist = [cmd, 'a', '-mx=9', '--', archive]
     cmdlist.extend(filenames)
     return cmdlist
 
