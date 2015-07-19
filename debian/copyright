@@ -4,7 +4,7 @@ Upstream-Contact: Bastian Kleineidam <bastian.kleineidam@web.de>
 Source: http://wummel.github.io/patool/
 
 Files: *
-Copyright: Copyright (C) 2010-2013 Bastian Kleineidam
+Copyright: Copyright (C) 2010-2015 Bastian Kleineidam
 License: GPL-3+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@ License: GPL-3+
  `/usr/share/common-licenses/GPL-3'.
 
 Files: debian/*
-Copyright: Copyright (C) 2010-2013 Bastian Kleineidam
+Copyright: Copyright (C) 2010-2015 Bastian Kleineidam
 License: GPL-3+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
