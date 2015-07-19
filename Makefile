@@ -29,13 +29,13 @@ dist:
 	[ -d dist ] || mkdir dist
 	$(PYTHON) setup.py sdist --formats=tar
 	gzip --best dist/$(APPNAME)-$(VERSION).tar
-	[ ! -f ../$(ARCHIVE_WIN32) ] || cp ../$(ARCHIVE_WIN32) dist
+#	[ ! -f ../$(ARCHIVE_WIN32) ] || cp ../$(ARCHIVE_WIN32) dist
 
 sign:
 	[ -f dist/$(ARCHIVE_SOURCE).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_SOURCE)
-	[ -f dist/$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WIN32)
+#	[ -f dist/$(ARCHIVE_WIN32).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WIN32)
 
-upload:	upload_source upload_binary
+upload:	upload_source #upload_binary
 
 upload_source:
 	twine upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_SOURCE).asc
@@ -76,10 +76,10 @@ releasecheck: test check
 	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
 	  echo "Could not release: edit doc/changelog.txt release date"; false; \
 	fi
-	@if [ ! -f ../$(ARCHIVE_WIN32) ]; then \
-	  echo "Missing WIN32 distribution archive at ../$(ARCHIVE_WIN32)"; \
-	  false; \
-	fi
+#	@if [ ! -f ../$(ARCHIVE_WIN32) ]; then \
+#	  echo "Missing WIN32 distribution archive at ../$(ARCHIVE_WIN32)"; \
+#	  false; \
+#	fi
 	$(PYTHON) setup.py check --restructuredtext
 
 check:
