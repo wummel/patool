@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import mimetypes
 import tempfile
 import time
 import traceback
+import locale
 from . import configuration, ArchiveMimetypes, ArchiveCompressions
 try:
     from shutil import which
@@ -283,7 +284,12 @@ def guess_mime_file (filename):
             # ignore errors, as file(1) is only a fallback
             return mime, encoding
         mime2 = outparts[0].split(" ", 1)[0]
-        if mime2 in ('application/x-empty', 'application/octet-stream'):
+        # Some file(1) implementations return an empty or unknown mime type
+        # when the uncompressor program is not installed, other
+        # implementation return the original file type.
+        # The following detects both cases.
+        if (mime2 in ('application/x-empty', 'application/octet-stream') or
+            mime2 in Mime2Encoding):
             # The uncompressor program file(1) uses is not installed
             # or is not able to uncompress.
             # Try to get mime information from the file extension.
@@ -382,6 +388,12 @@ def check_existing_filename (filename, onlyfiles=True):
         raise PatoolError("`%s' is not a file" % filename)
 
 
+def check_writable_filename(filename):
+    """Ensure that the given filename is writable."""
+    if not os.access(filename, os.W_OK):
+        raise PatoolError("file `%s' is not writable" % filename)
+
+
 def check_new_filename (filename):
     """Check that filename does not already exist."""
     if os.path.exists(filename):
@@ -408,6 +420,31 @@ def set_mode (filename, flags):
             os.chmod(filename, flags | mode)
         except OSError as msg:
             log_error("could not set mode flags for `%s': %s" % (filename, msg))
+
+
+def get_filesize(filename):
+    """Return file size in Bytes, or -1 on error."""
+    return os.path.getsize(filename)
+
+
+def strsize(b, grouping=True):
+    """Return human representation of bytes b. A negative number of bytes
+    raises a value error."""
+    if b < 0:
+        raise ValueError("Invalid negative byte number")
+    if b < 1024:
+        return u"%sB" % locale.format("%d", b, grouping)
+    if b < 1024 * 10:
+        return u"%sKB" % locale.format("%d", (b // 1024), grouping)
+    if b < 1024 * 1024:
+        return u"%sKB" % locale.format("%.2f", (float(b) / 1024), grouping)
+    if b < 1024 * 1024 * 10:
+        return u"%sMB" % locale.format("%.2f", (float(b) / (1024*1024)), grouping)
+    if b < 1024 * 1024 * 1024:
+        return u"%sMB" % locale.format("%.1f", (float(b) / (1024*1024)), grouping)
+    if b < 1024 * 1024 * 1024 * 10:
+        return u"%sGB" % locale.format("%.2f", (float(b) / (1024*1024*1024)), grouping)
+    return u"%sGB" % locale.format("%.1f", (float(b) / (1024*1024*1024)), grouping)
 
 
 def tmpdir (dir=None):

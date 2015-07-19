@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -59,6 +59,7 @@ class Test7z (ArchiveTest):
         self.archive_test('t.deb')
         self.archive_test('t.iso')
         self.archive_create('t.txt.gz', check=Content.Singlefile)
+        self.archive_create('t.txt.bz2', check=Content.Singlefile)
 
     @needs_codec(program, 'rar')
     def test_7z_rar (self):

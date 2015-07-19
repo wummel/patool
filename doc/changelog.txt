@@ -1,9 +1,12 @@
-1.8 (released xx.xx.xxxx)
+1.8 (released 19.7.2015)
 
 * Added support for ZPAQ archives.
   Closes: GH bug #14
 * Use options for maximum compression when creating archives
   and the archive program has such options.
+* Added a new "recompress" command which tries to reduce the
+  size of the compressed archive.
+* Add BZIP2 creation to 7z and 7za commands.
 
 
 1.7 (released 27.6.2014)

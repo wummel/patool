@@ -15,9 +15,10 @@
 .SH NAME
 patool - portable archive file manager
 .SH SYNOPSIS
- \fBpatool\fP [\fIglobal-options\fP] (\fBlist\fP|\fBtest\fP|\fBextract\fP|\fBcreate\fP|\fBdiff\fP|\fBsearch\fP|\fBrepack\fP|\fBformats\fP) [\fIcommand-options\fP] <\fIcommand-arguments\fP>...
+ \fBpatool\fP [\fIglobal-options\fP] (\fBlist\fP|\fBtest\fP|\fBextract\fP|\fBcreate\fP|\fBdiff\fP|\fBsearch\fP|\fBrepack\fP|\fBrecompressfP|\fBformats\fP) [\fIcommand-options\fP] <\fIcommand-arguments\fP>...
 .SH DESCRIPTION
-Various archive formats can be created, extracted, tested, listed, searched, repacked and compared by
+Various archive formats can be created, extracted, tested, listed, searched,
+repacked, recompressed and compared by
 \fBpatool\fP. The advantage of patool is its simplicity in handling archive
 files without having to remember a myriad of programs and options.
 .PP
@@ -44,6 +45,7 @@ installed.
   \fBpatool diff release1.0.tar.xz release2.0.zip\fP
   \fBpatool search "def urlopen" python-3.3.tar.gz\fP
   \fBpatool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2\fP
+  \fBpatool recompress images.zip\fP
 .SH GLOBAL OPTIONS
 .TP
 \fB\-v\fP, \fB\-\-verbose\fP
@@ -117,6 +119,11 @@ with the \fBGREP_OPTIONS\fP environment variable.
 .PP
 Repackage archive to a different format. The target archive format is
 determined by the file extension of \fIarchive_new\fP.
+.SS recompress
+\fBpatool\fP \fBrecompress\fP <\fIarchive\fP>
+.PP
+Recompress archive to a smaller file size. If the resulting file is
+not smaller, the archive is left unchanged.
 .SS formats
 \fBpatool\fP \fBformats\fP
 .PP

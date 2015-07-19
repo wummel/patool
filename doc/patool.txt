@@ -7,30 +7,31 @@ NAME
 
 SYNOPSIS
         patool         [global-options]        (list|test|extract|cre‐
-       ate|diff|search|repack|formats)   [command-options]   <command-
-       arguments>...
+       ate|diff|search|repack|recompressfP|formats)  [command-options]
+       <command-arguments>...
 
 DESCRIPTION
        Various  archive  formats  can  be  created, extracted, tested,
-       listed, searched, repacked and compared by patool.  The  advan‐
-       tage  of  patool  is  its  simplicity in handling archive files
-       without having to remember a myriad of programs and options.
+       listed,  searched,  repacked,  recompressed  and  compared   by
+       patool.  The  advantage of patool is its simplicity in handling
+       archive files without having to remember a myriad  of  programs
+       and options.
 
-       The archive format is determined by the file(1) program and  as
+       The  archive format is determined by the file(1) program and as
        a fallback by the archive file extension.
 
        patool supports 7z (.7z), ACE (.ace), ADF (.adf), ALZIP (.alz),
-       APE (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2),  CAB
-       (.cab),  COMPRESS  (.Z),  CPIO (.cpio), DEB (.deb), DMS (.dms),
-       FLAC (.flac), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH  (.lha,
-       .lzh),  LZIP  (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR
-       (.rar), RZIP (.rz), SHN  (.shn),  TAR  (.tar),  XZ  (.xz),  ZIP
-       (.zip,  .jar)  and  ZOO  (.zoo)  formats.   It relies on helper
-       applications to handle those archive formats (for example bzip2
-       for BZIP2 archives).
+       APE  (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB
+       (.cab), COMPRESS (.Z), CPIO (.cpio), DEB  (.deb),  DMS  (.dms),
+       FLAC  (.flac), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha,
+       .lzh), LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RPM  (.rpm),  RAR
+       (.rar),  RZIP  (.rz),  SHN  (.shn),  TAR  (.tar), XZ (.xz), ZIP
+       (.zip, .jar), ZOO (.zoo) and ZPAQ (.zpaq) formats.   It  relies
+       on  helper  applications  to  handle those archive formats (for
+       example bzip2 for BZIP2 archives).
 
-       The  archive  formats  TAR,  ZIP,  BZIP2 and GZIP are supported
-       natively  and  do  not  require  helper  applications   to   be
+       The archive formats TAR, ZIP,  BZIP2  and  GZIP  are  supported
+       natively   and   do  not  require  helper  applications  to  be
        installed.
 
 EXAMPLES
@@ -41,10 +42,11 @@ EXAMPLES
          patool diff release1.0.tar.xz release2.0.zip
          patool search "def urlopen" python-3.3.tar.gz
          patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
+         patool recompress images.zip
 
 GLOBAL OPTIONS
        -v, --verbose
-              Display  more  info  about what patool does, and display
+              Display more info about what patool  does,  and  display
               the output of helper applications. Can be given multiple
               times to increase the output even more.
 
@@ -55,7 +57,7 @@ COMMANDS
 
        ·   The original archive will never be removed.
 
-       ·   Files  outside  the output directory will never be created.
+       ·   Files outside the output directory will never  be  created.
            This relies on archive program options to prevent unpacking
            of  files  with  an  absolute  path  name  (eg.  --no-abso‐
            lute-filenames for cpio(1)).
@@ -65,22 +67,22 @@ COMMANDS
    extract
        patool extract [--outdir directory] <archive>...
 
-       Extract files from given archives. The original  archives  will
+       Extract  files  from given archives. The original archives will
        never be removed and are left as is.
 
        --outdir directory
-              Extract  to  the  given  output directory. Default is to
+              Extract to the given output  directory.  Default  is  to
               extract to the current working directory.
 
-       If the archive contains exactly one file or directory, the  ar‐
-       chive  contents are extracted directly to the output directory.
+       If  the archive contains exactly one file or directory, the ar‐
+       chive contents are extracted directly to the output  directory.
        Else the files are extracted in a newly created subdirectory of
-       the  output directory. The new directory is named after the ar‐
+       the output directory. The new directory is named after the  ar‐
        chive filename without the extension.
-       This prevents cluttering the output directory  with  a  lot  of
+       This  prevents  cluttering  the  output directory with a lot of
        files from the extracted archive.
 
-       All  extracted  files are ensured that they are readable by the
+       All extracted files are ensured that they are readable  by  the
        current user.
 
    list
@@ -122,21 +124,27 @@ COMMANDS
        Repackage  archive  to  a  different format. The target archive
        format is determined by the file extension of archive_new.
 
+   recompress
+       patool recompress <archive>
+
+       Recompress archive to a smaller file  size.  If  the  resulting
+       file is not smaller, the archive is left unchanged.
+
    formats
        patool formats
 
-       Show all supported archive formats (ie. which  helper  applica‐
+       Show  all  supported archive formats (ie. which helper applica‐
        tions are available).
 
 HELP OPTION
-       Specifying  the help option displays help for patool itself, or
+       Specifying the help option displays help for patool itself,  or
        a command.
        For example:
          patool --help - display help for patool
          patool extract --help - display help for the extract command
 
 SHELL ALIASES
-       When running under a Unix shell the following  aliases  can  be
+       When  running  under  a Unix shell the following aliases can be
        defined to save some typing:
          alias pl='patool list'
          alias px='patool extract'

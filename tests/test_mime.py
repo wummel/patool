@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -125,7 +125,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.chm.foo", "application/x-chm")
         self.mime_test_file("t.iso", "application/x-iso9660-image")
         self.mime_test_file("t.epub", "application/zip")
-        self.mime_test_file("t.apk", "application/zip")
+        self.mime_test_file("t.apk", ("application/zip", "application/java-archive"))
         self.mime_test_file("t.zpaq", "application/zpaq")
         self.mime_test_file("t.zpaq.foo", "application/zpaq")
 
@@ -182,6 +182,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.tbz2", "application/x-tar", "bzip2")
         self.mime_test_mimedb("t.tgz", "application/x-tar", "gzip")
         self.mime_test_mimedb("t.txt.gz", "application/gzip")
+        self.mime_test_mimedb("t.txt.bz2", "application/x-bzip2")
         self.mime_test_mimedb("t .xz", "application/x-xz")
         self.mime_test_mimedb("t.Z", "application/x-compress")
         self.mime_test_mimedb("t.zip", ("application/zip", "application/x-zip-compressed"))

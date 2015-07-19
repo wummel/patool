@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2014 Bastian Kleineidam
+# Copyright (C) 2010-2015 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@ import importlib
 # PEP 396
 from .configuration import Version as __version__
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
-    'create_archive', 'diff_archives', 'search_archive', 'repack_archive']
+    'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
+    'recompress_archive']
 
 
 # Supported archive commands
@@ -128,10 +129,11 @@ ArchivePrograms = {
         'list': ('nomarch',),
     },
     'bzip2': {
-        'extract': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za', 'py_bz2'),
-        'test': ('pbzip2', 'lbzip2', 'bzip2', '7z', '7za'),
+        None: ('7z', '7za'),
+        'extract': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
+        'test': ('pbzip2', 'lbzip2', 'bzip2'),
         'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
-        'list': ('py_echo', '7z', '7za'),
+        'list': ('py_echo'),
     },
     'cab': {
         'extract': ('cabextract', '7z'),
@@ -483,7 +485,6 @@ def _extract_archive(archive, verbosity=0, outdir=None, program=None, format=Non
                 pass
 
 
-
 def _create_archive(archive, filenames, verbosity=0, program=None, format=None, compression=None):
     """Create an archive."""
     if format is None:
@@ -620,6 +621,44 @@ def _repack_archive (archive1, archive2, verbosity=0):
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
 
 
+def _recompress_archive(archive, verbosity=0):
+    """Try to recompress an archive to smaller size."""
+    format, compression = get_archive_format(archive)
+    if compression:
+        # only recompress the compression itself (eg. for .tar.xz)
+        format = compression
+    tmpdir = util.tmpdir()
+    tmpdir2 = util.tmpdir()
+    base, ext = os.path.splitext(os.path.basename(archive))
+    archive2 = util.get_single_outfile(tmpdir2, base, extension=ext)
+    try:
+        # extract
+        kwargs = dict(verbosity=verbosity, format=format, outdir=tmpdir)
+        path = _extract_archive(archive, **kwargs)
+        # compress to new file
+        olddir = os.getcwd()
+        os.chdir(path)
+        try:
+            kwargs = dict(verbosity=verbosity, format=format)
+            files = tuple(os.listdir(path))
+            _create_archive(archive2, files, **kwargs)
+        finally:
+            os.chdir(olddir)
+        # check file sizes and replace if new file is smaller
+        filesize = util.get_filesize(archive)
+        filesize2 = util.get_filesize(archive2)
+        if filesize2 < filesize:
+            # replace file
+            os.remove(archive)
+            shutil.move(archive2, archive)
+            diffsize = filesize - filesize2
+            return "... recompressed file is now %s smaller." % util.strsize(diffsize)
+    finally:
+        shutil.rmtree(tmpdir, onerror=rmtree_log_error)
+        shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
+    return "... recompressed file is not smaller, leaving archive as is."
+
+
 # the patool library API
 
 def extract_archive(archive, verbosity=0, outdir=None, program=None):
@@ -696,3 +735,15 @@ def repack_archive (archive, archive_new, verbosity=0):
     if verbosity >= 0:
         util.log_info("... repacking successful.")
     return res
+
+
+def recompress_archive(archive, verbosity=0):
+    """Recompress an archive to hopefully smaller size."""
+    util.check_existing_filename(archive)
+    util.check_writable_filename(archive)
+    if verbosity >= 0:
+        util.log_info("Recompressing %s ..." % (archive,))
+    res = _recompress_archive(archive, verbosity=verbosity)
+    if res and verbosity >= 0:
+        util.log_info(res)
+    return 0
