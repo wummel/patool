@@ -10,7 +10,7 @@ GITUSER:=wummel
 GITREPO:=$(APPNAME)
 HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/app.yaml
-DEBUILDDIR:=$(HOME)/projects/debian/official
+DEBUILDDIR:=$(HOME)/projects/debian/unofficial
 DEBORIGFILE:=$(DEBUILDDIR)/$(APPNAME)_$(VERSION).orig.tar.gz
 DEBPACKAGEDIR:=$(DEBUILDDIR)/$(APPNAME)-$(VERSION)
 # Pytest options:
