@@ -29,11 +29,12 @@ def list_zpaq(archive, compression, cmd, verbosity):
 
 def create_zpaq(archive, compression, cmd, verbosity, filenames):
     """Create a ZPAQ archive."""
-    cmdlist = [cmd, 'c', archive]
+    cmdlist = [cmd, 'a', archive]
     cmdlist.extend(filenames)
+    cmdlist.extend(['-method', '4'])
     return cmdlist
 
 
 def test_zpaq(archive, compression, cmd, verbosity):
     """Test a ZPAQ archive."""
-    return [cmd, 'l', archive]
+    return [cmd, 'x', archive, '-test']
