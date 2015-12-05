@@ -5,6 +5,9 @@
 * Add more search paths for rar libraries.
   Patch by vitlav
   Closes: GH bug #30
+* Fix support URL
+  Closes: GH bug #28
+
 
 1.8 (released 19.7.2015)
 
