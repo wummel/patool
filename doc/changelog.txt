@@ -9,6 +9,8 @@
   Closes: GH bug #28
 * Updated PyPI trove classifiers to include Python 3
   Closes: GH bug #25
+* Escape output messages before logging them.
+  Closes: GH bug #29
 
 
 1.8 (released 19.7.2015)
