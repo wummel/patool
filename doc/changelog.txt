@@ -7,6 +7,8 @@
   Closes: GH bug #30
 * Fix support URL
   Closes: GH bug #28
+* Updated PyPI trove classifiers to include Python 3
+  Closes: GH bug #25
 
 
 1.8 (released 19.7.2015)
