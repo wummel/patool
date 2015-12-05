@@ -1,3 +1,8 @@
+1.9 (released xx.xx.2015)
+
+* Fix ZPAQ archive creation.
+  Patch by vitlav
+
 1.8 (released 19.7.2015)
 
 * Added support for ZPAQ archives.
