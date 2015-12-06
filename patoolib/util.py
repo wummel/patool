@@ -17,7 +17,6 @@
 from __future__ import print_function
 import os
 import sys
-import codecs
 import shutil
 import subprocess
 import mimetypes
@@ -493,14 +492,6 @@ def get_single_outfile (directory, archive, extension=""):
     return outfile + extension
 
 
-def init_log():
-    """Wrap sys.stdout and sys.stderr in encoding-aware stream writers."""
-    encoding = locale.getpreferredencoding()
-    errors = 'backslashreplace'
-    sys.stdout = codecs.getwriter(encoding)(sys.stdout, errors)
-    sys.stderr = codecs.getwriter(encoding)(sys.stderr, errors)
-
-
 def log_error (msg, out=sys.stderr):
     """Print error message to stderr (or any other given output)."""
     print("patool error:", msg, file=out)
@@ -695,5 +686,4 @@ def chdir(directory):
     return olddir
 
 
-init_log()
 init_mimedb()
