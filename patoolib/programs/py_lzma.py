@@ -19,7 +19,7 @@ import lzma
 
 READ_SIZE_BYTES = 1024*1024
 
-def _extract(archive, compression, cmd, format, verbosity, interactive, outdir):
+def _extract(archive, compression, cmd, format, verbosity, outdir):
     """Extract an LZMA or XZ archive with the lzma Python module."""
     targetname = util.get_single_outfile(outdir, archive)
     try:
@@ -43,7 +43,7 @@ def extract_xz(archive, compression, cmd, verbosity, interactive, outdir):
     return _extract(archive, compression, cmd, lzma.FORMAT_XZ, verbosity, outdir)
 
 
-def _create(archive, compression, cmd, format, verbosity, interactive, filenames):
+def _create(archive, compression, cmd, format, verbosity, filenames):
     """Create an LZMA or XZ archive with the lzma Python module."""
     if len(filenames) > 1:
         raise util.PatoolError('multi-file compression not supported in Python lzma')
