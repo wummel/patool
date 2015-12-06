@@ -9,6 +9,9 @@
   Closes: GH bug #28
 * Updated PyPI trove classifiers to include Python 3
   Closes: GH bug #25
+* Added new option --non-interactive to avoid commandline prompts of
+  archive programs.
+  Closes: GH bug #16, #24
 
 
 1.8 (released 19.7.2015)
