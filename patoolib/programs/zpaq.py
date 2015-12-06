@@ -16,18 +16,18 @@
 """Archive commands for the zpaq program."""
 import os
 
-def extract_zpaq(archive, compression, cmd, verbosity, outdir):
+def extract_zpaq(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a ZPAQ archive."""
     cmdlist = [cmd, 'x', os.path.abspath(archive)]
     return (cmdlist, {'cwd': outdir})
 
 
-def list_zpaq(archive, compression, cmd, verbosity):
+def list_zpaq(archive, compression, cmd, verbosity, interactive):
     """List a ZPAQ archive."""
     return [cmd, 'l', archive]
 
 
-def create_zpaq(archive, compression, cmd, verbosity, filenames):
+def create_zpaq(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a ZPAQ archive."""
     cmdlist = [cmd, 'a', archive]
     cmdlist.extend(filenames)
@@ -35,6 +35,6 @@ def create_zpaq(archive, compression, cmd, verbosity, filenames):
     return cmdlist
 
 
-def test_zpaq(archive, compression, cmd, verbosity):
+def test_zpaq(archive, compression, cmd, verbosity, interactive):
     """Test a ZPAQ archive."""
     return [cmd, 'x', archive, '-test']

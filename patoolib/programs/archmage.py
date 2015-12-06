@@ -18,7 +18,7 @@ import os
 from .. import util
 
 
-def extract_chm (archive, compression, cmd, verbosity, outdir):
+def extract_chm (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CHM archive."""
     # archmage can only extract in non-existing directories
     # so a nice dirname is created
@@ -27,6 +27,6 @@ def extract_chm (archive, compression, cmd, verbosity, outdir):
     return [cmd, '-x', os.path.abspath(archive), outfile]
 
 
-def test_chm (archive, compression, cmd, verbosity):
+def test_chm (archive, compression, cmd, verbosity, interactive):
     """Test a CHM archive."""
     return [cmd, '-d', os.path.abspath(archive)]

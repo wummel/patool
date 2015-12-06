@@ -22,7 +22,7 @@ import os
 READ_SIZE_BYTES = 1024*1024
 
 
-def list_zip(archive, compression, cmd, verbosity):
+def list_zip(archive, compression, cmd, verbosity, interactive):
     """List member of a ZIP archive with the zipfile Python module."""
     try:
         with zipfile.ZipFile(archive, "r") as zfile:
@@ -36,7 +36,7 @@ def list_zip(archive, compression, cmd, verbosity):
 
 test_zip = list_zip
 
-def extract_zip(archive, compression, cmd, verbosity, outdir):
+def extract_zip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a ZIP archive with the zipfile Python module."""
     try:
         with zipfile.ZipFile(archive) as zfile:
@@ -47,7 +47,7 @@ def extract_zip(archive, compression, cmd, verbosity, outdir):
     return None
 
 
-def create_zip(archive, compression, cmd, verbosity, filenames):
+def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a ZIP archive with the zipfile Python module."""
     try:
         with zipfile.ZipFile(archive, 'w') as zfile:

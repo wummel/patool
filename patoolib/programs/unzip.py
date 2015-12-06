@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unzip program."""
 
-def extract_zip (archive, compression, cmd, verbosity, outdir):
+def extract_zip (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a ZIP archive."""
     cmdlist = [cmd]
     if verbosity > 1:
@@ -23,7 +23,7 @@ def extract_zip (archive, compression, cmd, verbosity, outdir):
     cmdlist.extend(['--', archive, '-d', outdir])
     return cmdlist
 
-def list_zip (archive, compression, cmd, verbosity):
+def list_zip (archive, compression, cmd, verbosity, interactive):
     """List a ZIP archive."""
     cmdlist = [cmd, '-l']
     if verbosity > 1:
@@ -31,7 +31,7 @@ def list_zip (archive, compression, cmd, verbosity):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_zip (archive, compression, cmd, verbosity):
+def test_zip (archive, compression, cmd, verbosity, interactive):
     """Test a ZIP archive."""
     cmdlist = [cmd, '-t']
     if verbosity > 1:

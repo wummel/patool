@@ -15,29 +15,42 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the arj program."""
 
-def extract_arj (archive, compression, cmd, verbosity, outdir):
+def extract_arj (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an ARJ archive."""
-    return [cmd, 'x', '-r', '-y', archive, outdir]
+    cmdlist = [cmd, 'x', '-r']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend([archive, outdir])
+    return cmdlist
 
 
-def list_arj (archive, compression, cmd, verbosity):
+def list_arj (archive, compression, cmd, verbosity, interactive):
     """List an ARJ archive."""
     cmdlist = [cmd]
     if verbosity > 1:
         cmdlist.append('v')
     else:
         cmdlist.append('l')
-    cmdlist.extend(['-r', '-y', archive])
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-r', archive])
     return cmdlist
 
 
-def test_arj (archive, compression, cmd, verbosity):
+def test_arj (archive, compression, cmd, verbosity, interactive):
     """Test an ARJ archive."""
-    return [cmd, 't', '-r', '-y', archive]
+    cmdlist = [cmd, 't', '-r']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.append(archive)
+    return cmdlist
 
 
-def create_arj (archive, compression, cmd, verbosity, filenames):
+def create_arj (archive, compression, cmd, verbosity, interactive, filenames):
     """Create an ARJ archive."""
-    cmdlist = [cmd, 'a', '-r', '-y', archive]
+    cmdlist = [cmd, 'a', '-r']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.append(archive)
     cmdlist.extend(filenames)
     return cmdlist

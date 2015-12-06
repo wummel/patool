@@ -21,7 +21,7 @@ from .. import util
 extract_lzip = extract_singlefile_standard
 test_lzip = test_singlefile_standard
 
-def create_lzip(archive, compression, cmd, verbosity, filenames):
+def create_lzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an LZIP archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:

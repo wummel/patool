@@ -21,7 +21,7 @@ from .. import util
 extract_xz = extract_singlefile_standard
 test_xz = test_singlefile_standard
 
-def list_xz (archive, compression, cmd, verbosity):
+def list_xz (archive, compression, cmd, verbosity, interactive):
     """List a XZ archive."""
     cmdlist = [cmd]
     cmdlist.append('-l')
@@ -31,7 +31,7 @@ def list_xz (archive, compression, cmd, verbosity):
     return cmdlist
 
 
-def create_xz(archive, compression, cmd, verbosity, filenames):
+def create_xz(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an XZ archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
@@ -42,7 +42,7 @@ def create_xz(archive, compression, cmd, verbosity, filenames):
     return (cmdlist, {'shell': True})
 
 
-def extract_lzma(archive, compression, cmd, verbosity, outdir):
+def extract_lzma(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an LZMA archive."""
     cmdlist = [util.shell_quote(cmd), '--format=lzma']
     if verbosity > 1:
@@ -53,7 +53,7 @@ def extract_lzma(archive, compression, cmd, verbosity, outdir):
     return (cmdlist, {'shell': True})
 
 
-def test_lzma(archive, compression, cmd, verbosity):
+def test_lzma(archive, compression, cmd, verbosity, interactive):
     """Test an LZMA archive."""
     cmdlist = [cmd, '--format=lzma']
     if verbosity > 1:
@@ -62,7 +62,7 @@ def test_lzma(archive, compression, cmd, verbosity):
     return cmdlist
 
 
-def create_lzma(archive, compression, cmd, verbosity, filenames):
+def create_lzma(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an LZMA archive."""
     cmdlist = [util.shell_quote(cmd), '--format=lzma']
     if verbosity > 1:

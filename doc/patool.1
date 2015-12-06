@@ -52,6 +52,15 @@ installed.
 Display more info about what patool does, and display the output
 of helper applications. Can be given multiple times to increase
 the output even more.
+.TP
+\fB\-\-non\-interactive\fP
+Try to prevent any interactive user input (ie. prompting for passwords
+or for overwriting duplicate files). Use this option with care since
+overwriting files or ignoring password prompts could lead to unintended
+consequences.
+.br
+This only works for programs that allow preventing user prompts. Currently
+those are \fBarj\fP, \fB7z\fP and \fBrar\fP.
 .SH COMMANDS
 The following rules apply to all commands:
 .IP "\(bu" 4

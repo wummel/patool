@@ -17,7 +17,7 @@
 from .. import util
 
 
-def extract_dms (archive, compression, cmd, verbosity, outdir):
+def extract_dms (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a DMS archive."""
     check_archive_ext(archive)
     cmdlist = [cmd, '-d', outdir]
@@ -27,13 +27,13 @@ def extract_dms (archive, compression, cmd, verbosity, outdir):
     return cmdlist
 
 
-def list_dms (archive, compression, cmd, verbosity):
+def list_dms (archive, compression, cmd, verbosity, interactive):
     """List a DMS archive."""
     check_archive_ext(archive)
     return [cmd, 'v', archive]
 
 
-def test_dms (archive, compression, cmd, verbosity):
+def test_dms (archive, compression, cmd, verbosity, interactive):
     """Test a DMS archive."""
     check_archive_ext(archive)
     return [cmd, 't', archive]

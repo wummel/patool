@@ -16,7 +16,7 @@
 """Archive commands for the shar program."""
 from .. import util
 
-def create_shar (archive, compression, cmd, verbosity, filenames):
+def create_shar (archive, compression, cmd, verbosity, interactive, filenames):
     """Create a SHAR archive."""
     cmdlist = [util.shell_quote(cmd)]
     cmdlist.extend([util.shell_quote(x) for x in filenames])

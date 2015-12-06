@@ -17,7 +17,7 @@
 from .. import util
 
 
-def extract_compress (archive, compression, cmd, verbosity, outdir):
+def extract_compress (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:

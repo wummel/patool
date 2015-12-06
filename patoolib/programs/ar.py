@@ -16,7 +16,7 @@
 """Archive commands for the ar program."""
 import os
 
-def extract_ar (archive, compression, cmd, verbosity, outdir):
+def extract_ar (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a AR archive."""
     opts = 'x'
     if verbosity > 1:
@@ -24,7 +24,7 @@ def extract_ar (archive, compression, cmd, verbosity, outdir):
     cmdlist = [cmd, opts, os.path.abspath(archive)]
     return (cmdlist, {'cwd': outdir})
 
-def list_ar (archive, compression, cmd, verbosity):
+def list_ar (archive, compression, cmd, verbosity, interactive):
     """List a AR archive."""
     opts = 't'
     if verbosity > 1:
@@ -33,7 +33,7 @@ def list_ar (archive, compression, cmd, verbosity):
 
 test_ar = list_ar
 
-def create_ar (archive, compression, cmd, verbosity, filenames):
+def create_ar (archive, compression, cmd, verbosity, interactive, filenames):
     """Create a AR archive."""
     opts = 'rc'
     if verbosity > 1:

@@ -30,7 +30,7 @@ def run_extract(args):
     res = 0
     for archive in args.archive:
         try:
-            patoolib.extract_archive(archive, verbosity=args.verbosity, outdir=args.outdir)
+            patoolib.extract_archive(archive, verbosity=args.verbosity, interactive=args.interactive, outdir=args.outdir)
         except PatoolError as msg:
             log_error("error extracting %s: %s" % (archive, msg))
             res += 1
@@ -43,7 +43,8 @@ def run_list(args):
     for archive in args.archive:
         try:
             # increase default verbosity since the listing output should be visible
-            patoolib.list_archive(archive, verbosity=args.verbosity + 1)
+            verbosity = args.verbosity + 1
+            patoolib.list_archive(archive, verbosity=verbosity, interactive=args.interactive)
         except PatoolError as msg:
             log_error("error listing %s: %s" % (archive, msg))
             res += 1
@@ -55,7 +56,7 @@ def run_test(args):
     res = 0
     for archive in args.archive:
         try:
-            patoolib.test_archive(archive, verbosity=args.verbosity)
+            patoolib.test_archive(archive, verbosity=args.verbosity, interactive=args.interactive)
         except PatoolError as msg:
             log_error("error testing %s: %s" % (archive, msg))
             res += 1
@@ -66,7 +67,7 @@ def run_create(args):
     """Create an archive from given files."""
     res = 0
     try:
-        patoolib.create_archive(args.archive, args.filename, verbosity=args.verbosity)
+        patoolib.create_archive(args.archive, args.filename, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
         log_error("error creating %s: %s" % (args.archive, msg))
         res = 1
@@ -76,7 +77,7 @@ def run_create(args):
 def run_diff(args):
     """Show differences between two archives."""
     try:
-        res = patoolib.diff_archives(args.archive1, args.archive2, verbosity=args.verbosity)
+        res = patoolib.diff_archives(args.archive1, args.archive2, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
         log_error("error showing differences between %s and %s: %s" % (args.archive1, args.archive2, msg))
         res = 2
@@ -86,7 +87,7 @@ def run_diff(args):
 def run_search(args):
     """Search for pattern in given archive."""
     try:
-        res = patoolib.search_archive(args.pattern, args.archive, verbosity=args.verbosity)
+        res = patoolib.search_archive(args.pattern, args.archive, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
         log_error("error searching %s: %s" % (args.archive, msg))
         res = 2
@@ -97,7 +98,7 @@ def run_repack(args):
     """Repackage one archive in another format."""
     res = 0
     try:
-        patoolib.repack_archive(args.archive_src, args.archive_dst, verbosity=args.verbosity)
+        patoolib.repack_archive(args.archive_src, args.archive_dst, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
         log_error("error repacking %s: %s" % (args.archive_src, msg))
         res = 1
@@ -108,7 +109,7 @@ def run_recompress(args):
     """Recompress an archive to smaller size."""
     res = 0
     try:
-        patoolib.recompress_archive(args.archive, verbosity=args.verbosity)
+        patoolib.recompress_archive(args.archive, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
         log_error("error recompressing %s: %s" % (args.archive, msg))
         res = 1
@@ -157,6 +158,8 @@ def create_argparser():
     parser = ArgumentParser(description="An archive file manager.",
         epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
+    parser.add_argument('--non-interactive', dest='interactive', default=True, action='store_false',
+        help="don't query for user input (ie. passwords or when overwriting duplicate files); use with care since overwriting files or ignoring passwords could be unintended")
     subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
     # extract
     parser_extract = subparsers.add_parser('extract', help='extract one or more archives')

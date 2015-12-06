@@ -21,7 +21,7 @@ extract_gzip = extract_compress = extract_singlefile_standard
 test_gzip = test_compress = test_singlefile_standard
 
 
-def create_gzip(archive, compression, cmd, verbosity, filenames):
+def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a GZIP archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
@@ -32,7 +32,7 @@ def create_gzip(archive, compression, cmd, verbosity, filenames):
     return (cmdlist, {'shell': True})
 
 
-def list_gzip (archive, compression, cmd, verbosity):
+def list_gzip (archive, compression, cmd, verbosity, interactive):
     """List a GZIP archive."""
     cmdlist = [cmd]
     if verbosity > 0:

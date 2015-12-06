@@ -15,15 +15,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the 7z program."""
 
-def extract_7z(archive, compression, cmd, verbosity, outdir):
+def extract_7z(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a 7z archive."""
-    return [cmd, 'x', '-o%s' % outdir, '--', archive]
+    cmdlist = [cmd, 'x']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-o%s' % outdir, '--', archive])
+    return cmdlist
 
-def extract_7z_singlefile(archive, compression, cmd, verbosity, outdir):
+def extract_7z_singlefile(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a singlefile archive (eg. gzip or bzip2) with '7z e'.
     This makes sure a single file and no subdirectories are created,
     which would cause errors with patool repack."""
-    return [cmd, 'e', '-o%s' % outdir, '--', archive]
+    cmdlist = [cmd, 'e']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-o%s' % outdir, '--', archive])
+    return cmdlist
 
 extract_bzip2 = \
   extract_gzip = \
@@ -42,9 +50,13 @@ extract_zip = \
   extract_iso = \
   extract_7z
 
-def list_7z (archive, compression, cmd, verbosity):
+def list_7z (archive, compression, cmd, verbosity, interactive):
     """List a 7z archive."""
-    return [cmd, 'l', '--', archive]
+    cmdlist = [cmd, 'l']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['--', archive])
+    return cmdlist
 
 list_bzip2 = \
   list_gzip = \
@@ -62,9 +74,13 @@ list_bzip2 = \
   list_7z
 
 
-def test_7z (archive, compression, cmd, verbosity):
+def test_7z (archive, compression, cmd, verbosity, interactive):
     """Test a 7z archive."""
-    return [cmd, 't', '--', archive]
+    cmdlist = [cmd, 't']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['--', archive])
+    return cmdlist
 
 test_bzip2 = \
   test_gzip = \
@@ -82,36 +98,51 @@ test_bzip2 = \
   test_7z
 
 
-def create_7z(archive, compression, cmd, verbosity, filenames):
+def create_7z(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a 7z archive."""
-    cmdlist = [cmd, 'a', '-t7z', '-mx=9', '--', archive]
+    cmdlist = [cmd, 'a']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-t7z', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
 
-def create_zip(archive, compression, cmd, verbosity, filenames):
+def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a ZIP archive."""
-    cmdlist = [cmd, 'a', '-tzip', '-mx=9', '--', archive]
+    cmdlist = [cmd, 'a']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-tzip', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
 
-def create_xz(archive, compression, cmd, verbosity, filenames):
+def create_xz(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an XZ archive."""
-    cmdlist = [cmd, 'a', '-txz', '-mx=9', '--', archive]
+    cmdlist = [cmd, 'a']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-txz', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
 
-def create_gzip(archive, compression, cmd, verbosity, filenames):
+def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a GZIP archive."""
-    cmdlist = [cmd, 'a', '-tgzip', '-mx=9', '--', archive]
+    cmdlist = [cmd, 'a']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-tgzip', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
 
-def create_bzip2(archive, compression, cmd, verbosity, filenames):
+def create_bzip2(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a BZIP2 archive."""
-    cmdlist = [cmd, 'a', '-tbzip2', '-mx=9', '--', archive]
+    cmdlist = [cmd, 'a']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-tbzip2', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist

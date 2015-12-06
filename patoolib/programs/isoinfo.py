@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the isoinfo program."""
 
-def list_iso (archive, compression, cmd, verbosity):
+def list_iso (archive, compression, cmd, verbosity, interactive):
     """List an ISO archive."""
     # Use Joliet (-J) and Rock-Ridge (-R) options.
     return [cmd, '-l', '-R', '-J', '-i', archive]

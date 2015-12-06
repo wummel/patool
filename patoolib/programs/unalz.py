@@ -15,12 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unalz program."""
 
-def extract_alzip (archive, compression, cmd, verbosity, outdir):
+def extract_alzip (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a ALZIP archive."""
     return [cmd, '-d', outdir, archive]
 
 
-def list_alzip (archive, compression, cmd, verbosity):
+def list_alzip (archive, compression, cmd, verbosity, interactive):
     """List a ALZIP archive."""
     return [cmd, '-l', archive]
 
