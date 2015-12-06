@@ -32,4 +32,4 @@ class ArchiveSearchTest (unittest.TestCase):
         self.search(pattern, archive)
 
     def search(self, pattern, archive):
-        run_checked([sys.executable, patool_cmd, "-vv", "search", pattern, archive])
+        run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "search", pattern, archive])

@@ -27,6 +27,6 @@ class ArchiveExtractTest (unittest.TestCase):
         tmpdir = util.tmpdir(dir=basedir)
         try:
             archive = os.path.join(datadir, "t .7z")
-            util.run_checked([sys.executable, patool_cmd, "-vv", "extract", "--outdir", tmpdir, archive])
+            util.run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "extract", "--outdir", tmpdir, archive])
         finally:
             shutil.rmtree(tmpdir)

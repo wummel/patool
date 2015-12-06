@@ -24,4 +24,4 @@ class ArchiveTestTest (unittest.TestCase):
     @needs_program('7z')
     def test_test(self):
         archive = os.path.join(datadir, "t .7z")
-        run_checked([sys.executable, patool_cmd, "test", archive])
+        run_checked([sys.executable, patool_cmd, "--non-interactive", "test", archive])

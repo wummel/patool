@@ -75,7 +75,7 @@ class ArchiveTest (unittest.TestCase):
         try:
             olddir = patoolib.util.chdir(tmpdir)
             try:
-                output = patoolib.extract_archive(archive, program=self.program, verbosity=verbosity)
+                output = patoolib.extract_archive(archive, program=self.program, verbosity=verbosity, interactive=False)
                 if check:
                     self.check_extracted_archive(archive, output, check)
             finally:
@@ -117,13 +117,13 @@ class ArchiveTest (unittest.TestCase):
         """Test archive listing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
-            patoolib.list_archive(archive, program=self.program, verbosity=verbosity)
+            patoolib.list_archive(archive, program=self.program, verbosity=verbosity, interactive=False)
 
     def archive_test (self, filename):
         """Test archive testing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
-            patoolib.test_archive(archive, program=self.program, verbosity=verbosity)
+            patoolib.test_archive(archive, program=self.program, verbosity=verbosity, interactive=False)
 
     def archive_create (self, archive, srcfiles=None, check=Content.Recursive):
         """Test archive creation."""
@@ -156,7 +156,7 @@ class ArchiveTest (unittest.TestCase):
         try:
             archive = os.path.join(tmpdir, archive)
             self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
-            patoolib.create_archive(archive, srcfiles, verbosity=verbosity, program=program)
+            patoolib.create_archive(archive, srcfiles, verbosity=verbosity, interactive=False, program=program)
             self.assertTrue(os.path.isfile(archive))
             self.check_created_archive_with_test(archive)
             self.check_created_archive_with_diff(archive, srcfiles)
@@ -208,7 +208,7 @@ class ArchiveTest (unittest.TestCase):
         try:
             olddir = patoolib.util.chdir(tmpdir)
             try:
-                output = patoolib.extract_archive(archive, program=program)
+                output = patoolib.extract_archive(archive, program=program, interactive=False)
                 if len(srcfiles) == 1:
                     source = os.path.join(datadir, srcfiles[0])
                     patoolib.util.run_checked([diff, "-urN", source, output])

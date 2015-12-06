@@ -28,7 +28,7 @@ class ArchiveCreateTest (unittest.TestCase):
         try:
             files = [os.path.join(datadir, "t"), os.path.join(datadir, "t.txt")]
             archive = os.path.join(tmpdir, "t.7z")
-            cmd = [sys.executable, patool_cmd, "-vv", "create", archive]
+            cmd = [sys.executable, patool_cmd, "-vv", "--non-interactive", "create", archive]
             cmd.extend(files)
             util.run_checked(cmd)
         finally:

@@ -28,8 +28,8 @@ class ArchiveRepackTest (unittest.TestCase):
         tmpdir = util.tmpdir()
         try:
             archive2 = os.path.join(tmpdir, name2)
-            util.run_checked([sys.executable, patool_cmd, "-vv", "repack", archive1, archive2])
-            util.run_checked([sys.executable, patool_cmd, "diff", archive1, archive2])
+            util.run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "repack", archive1, archive2])
+            util.run_checked([sys.executable, patool_cmd, "--non-interactive", "diff", archive1, archive2])
         finally:
             shutil.rmtree(tmpdir)
 

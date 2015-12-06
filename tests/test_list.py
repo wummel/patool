@@ -24,4 +24,4 @@ class ArchiveListTest (unittest.TestCase):
     @needs_program('tar')
     def test_list(self):
         archive = os.path.join(datadir, "t.tar")
-        run_checked([sys.executable, patool_cmd, "-vv", "list", archive])
+        run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "list", archive])

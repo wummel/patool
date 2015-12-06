@@ -29,7 +29,7 @@ class ArchiveRecompressTest (unittest.TestCase):
         tmpfile = util.tmpfile(suffix=ext)
         try:
             shutil.copy(archive, tmpfile)
-            util.run_checked([sys.executable, patool_cmd, "-vv", "recompress", tmpfile])
+            util.run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "recompress", tmpfile])
         finally:
             if os.path.exists(tmpfile):
                 os.remove(tmpfile)

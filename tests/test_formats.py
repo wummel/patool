@@ -21,4 +21,4 @@ from . import patool_cmd
 class TestFormats (unittest.TestCase):
 
     def test_list_formats (self):
-        run_checked([sys.executable, patool_cmd, "-vv", 'formats'])
+        run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", 'formats'])
