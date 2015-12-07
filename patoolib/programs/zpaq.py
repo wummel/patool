@@ -34,7 +34,6 @@ def create_zpaq(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist.extend(['-method', '4'])
     return cmdlist
 
+# zpaq has no separate test mode, so use listing instead
+test_zpaq = list_zpaq
 
-def test_zpaq(archive, compression, cmd, verbosity, interactive):
-    """Test a ZPAQ archive."""
-    return [cmd, 'x', archive, '-test']

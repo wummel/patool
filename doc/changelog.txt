@@ -2,6 +2,7 @@
 
 * Fix ZPAQ archive creation.
   Patch by vitlav
+* Fix ZPAQ archive testing.
 * Add more search paths for rar libraries.
   Patch by vitlav
   Closes: GH bug #30
