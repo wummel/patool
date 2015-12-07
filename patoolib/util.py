@@ -667,7 +667,7 @@ def link_or_copy(src, dst, verbosity=0):
         log_info("Copying %s -> %s" % (src, dst))
     try:
         os.link(src, dst)
-    except OSError:
+    except (AttributeError, OSError):
         try:
             shutil.copy(src, dst)
         except OSError as msg:
