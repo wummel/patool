@@ -76,6 +76,11 @@ releasecheck: test check
 	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
 	  echo "Could not release: edit doc/changelog.txt release date"; false; \
 	fi
+	@if ! head -n1 doc/changelog.txt | egrep "^$(VERSION)" >/dev/null; then \
+	  echo "Could not release: different versions in doc/changelog.txt and setup.py"; \
+	  echo "Version in doc/changelog.txt:"; head -n1 doc/changelog.txt; \
+	  echo "Version in setup.py: $(VERSION)"; false; \
+	fi
 #	@if [ ! -f ../$(ARCHIVE_WIN32) ]; then \
 #	  echo "Missing WIN32 distribution archive at ../$(ARCHIVE_WIN32)"; \
 #	  false; \
