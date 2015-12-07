@@ -66,7 +66,7 @@ tag:
 # Each step is a separate target so that it's easy to do this manually if
 # anything screwed up.
 release: distclean releasecheck
-	$(MAKE) dist sign upload homepage tag register changelog deb
+	$(MAKE) dist sign upload homepage tag register changelog
 
 register:
 	@echo "Register at Python Package Index..."
