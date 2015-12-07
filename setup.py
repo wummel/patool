@@ -26,24 +26,8 @@ import re
 import shutil
 import glob
 import subprocess
-try:
-    from cx_Freeze import setup, Executable
-except ImportError:
-    from distutils.core import setup
-try:
-    # py2exe monkey-patches the distutils.core.Distribution class
-    # So we need to import it before importing the Distribution class
-    import py2exe
-    has_py2exe = True
-except ImportError:
-    # py2exe is not installed
-    has_py2exe = False
-try:
-    from cx_Freeze.dist import Distribution
-    executables = [Executable("patool")]
-except ImportError:
-    from distutils.core import Distribution
-    executables = None
+from setuptools import setup
+from distutils.core import Distribution
 from distutils.command.install_lib import install_lib
 from distutils import util
 from distutils.file_util import write_file
@@ -52,28 +36,6 @@ AppName = "patool"
 AppVersion = "1.9"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
-
-py_excludes = ['doctest', 'unittest', 'Tkinter', '_ssl', 'pdb',
-  'email', 'calendar', 'ftplib', 'httplib', 'pickle', 'optparse','rfc822'
-]
-# py2exe options for Windows packaging
-py2exe_options = dict(
-    packages=["encodings", 'patoolib.programs'],
-    excludes=py_excludes,
-    # silence py2exe error about not finding msvcp90.dll
-    dll_excludes=['MSVCP90.dll'],
-    compressed=1,
-    optimize=2,
-)
-# cx_Freeze for Linux RPM packaging
-cxfreeze_options = dict(
-    packages=["encodings", 'patoolib.programs'],
-    excludes=py_excludes,
-)
-
-# Microsoft Visual C++ runtime version (tested with Python 2.7.2)
-MSVCP90Version = '9.0.21022.8'
-MSVCP90Token = '1fc8b3b9a1e18e3b'
 
 
 def normpath (path):
@@ -128,31 +90,6 @@ def get_nt_platform_vars ():
     return os.path.expandvars(progvar), architecture
 
 
-def add_msvc_files (files):
-    """Add needed MSVC++ runtime files. Only Version 9.0.21022.8 is tested
-    and can be downloaded here:
-    http://www.microsoft.com/en-us/download/details.aspx?id=29
-    """
-    prog_dir, architecture = get_nt_platform_vars()
-    dirname = "Microsoft.VC90.CRT"
-    version = "%s_%s_x-ww_d08d0375" % (MSVCP90Token, MSVCP90Version)
-    args = (architecture, dirname, version)
-    path = r'C:\Windows\WinSxS\%s_%s_%s\*.*' % args
-    files.append((dirname, glob.glob(path)))
-    # Copy the manifest file into the build directory and rename it
-    # because it must have the same name as the directory.
-    path = r'C:\Windows\WinSxS\Manifests\%s_%s_%s.manifest' % args
-    target = os.path.join(os.getcwd(), 'build', '%s.manifest' % dirname)
-    shutil.copy(path, target)
-    files.append((dirname, [target]))
-
-
-if 'py2exe' in sys.argv[1:]:
-    if not has_py2exe:
-        raise SystemExit("py2exe module could not be imported")
-    add_msvc_files(data_files)
-
-
 class MyInstallLib (install_lib, object):
     """Custom library installation."""
 
@@ -185,7 +122,7 @@ class MyInstallLib (install_lib, object):
             else:
                 val = getattr(cmd_obj, attr)
             if attr == 'install_data':
-                cdir = os.path.join(val, "share", "dosage")
+                cdir = os.path.join(val, "share", AppName)
                 data.append('config_dir = %r' % cnormpath(cdir))
             elif attr == 'install_lib':
                 if cmd_obj.root:
@@ -259,161 +196,6 @@ class MyDistribution (Distribution, object):
                      "creating %s" % filename, self.verbose >= 1, self.dry_run)
 
 
-class InnoScript:
-    """Class to generate INNO script."""
-
-    def __init__(self, lib_dir, dist_dir, windows_exe_files=[],
-                 console_exe_files=[], service_exe_files=[],
-                 comserver_files=[], lib_files=[]):
-        """Store INNO script infos."""
-        self.lib_dir = lib_dir
-        self.dist_dir = dist_dir
-        if not self.dist_dir[-1] in "\\/":
-            self.dist_dir += "\\"
-        self.name = AppName
-        self.version = AppVersion
-        self.windows_exe_files = [self.chop(p) for p in windows_exe_files]
-        self.console_exe_files = [self.chop(p) for p in console_exe_files]
-        self.service_exe_files = [self.chop(p) for p in service_exe_files]
-        self.comserver_files = [self.chop(p) for p in comserver_files]
-        self.lib_files = [self.chop(p) for p in lib_files]
-        self.icon = os.path.abspath(r'doc\icon\favicon.ico')
-
-    def chop(self, pathname):
-        """Remove distribution directory from path name."""
-        assert pathname.startswith(self.dist_dir)
-        return pathname[len(self.dist_dir):]
-
-    def create(self, pathname=r"dist\omt.iss"):
-        """Create Inno script."""
-        self.pathname = pathname
-        self.distfilebase = "%s-%s" % (self.name, self.version)
-        self.distfile = self.distfilebase + ".exe"
-        with open(self.pathname, "w") as fd:
-            self.write_inno_script(fd)
-
-    def write_inno_script (self, fd):
-        """Write Inno script contents."""
-        print("; WARNING: This script has been created by py2exe. Changes to this script", file=fd)
-        print("; will be overwritten the next time py2exe is run!", file=fd)
-        print("[Setup]", file=fd)
-        print("AppName=%s" % self.name, file=fd)
-        print("AppVerName=%s %s" % (self.name, self.version), file=fd)
-        print("ChangesEnvironment=true", file=fd)
-        print(r"DefaultDirName={pf}\%s" % self.name, file=fd)
-        print("DefaultGroupName=%s" % self.name, file=fd)
-        print("OutputBaseFilename=%s" % self.distfilebase, file=fd)
-        print("OutputDir=..", file=fd)
-        print("SetupIconFile=%s" % self.icon, file=fd)
-        print(file=fd)
-        print("[Tasks]", file=fd)
-        print("Name: modifypath; Description: Add application directory to %PATH%;", file=fd)
-        print(file=fd)
-        # List of source files
-        files = self.windows_exe_files + \
-                self.console_exe_files + \
-                self.service_exe_files + \
-                self.comserver_files + \
-                self.lib_files
-        print('[Files]', file=fd)
-        for path in files:
-            print(r'Source: "%s"; DestDir: "{app}\%s"; Flags: ignoreversion' % (path, os.path.dirname(path)), file=fd)
-        # Set icon filename
-        print('[Icons]', file=fd)
-        for path in self.windows_exe_files:
-            print(r'Name: "{group}\%s"; Filename: "{app}\%s"' %
-                  (self.name, path), file=fd)
-        for path in self.console_exe_files:
-            name = os.path.basename(path).capitalize()
-            print(r'Name: "{group}\%s help"; Filename: "cmd.exe"; Parameters: "/K %s --help";' % (name, path), file=fd)
-        print(r'Name: "{group}\Uninstall %s"; Filename: "{uninstallexe}"' % self.name, file=fd)
-        print(file=fd)
-        # Uninstall optional log files
-        print('[UninstallDelete]', file=fd)
-        for path in (self.windows_exe_files + self.console_exe_files):
-            exename = os.path.basename(path)
-            print(r'Type: files; Name: "{pf}\%s\%s.log"' % (self.name, exename), file=fd)
-        print(file=fd)
-        # Add app dir to PATH
-        print("[Code]", file=fd)
-        print("""\
-const
-    ModPathName = 'modifypath';
-    ModPathType = 'user';
-
-function ModPathDir(): TArrayOfString;
-begin
-    setArrayLength(Result, 1)
-    Result[0] := ExpandConstant('{app}');
-end;
-#include "modpath.iss"
-""", file=fd)
-        shutil.copy(r"scripts\modpath.iss", "dist")
-
-
-    def compile (self):
-        """Compile Inno script with iscc.exe."""
-        progpath = get_nt_platform_vars()[0]
-        cmd = r'%s\Inno Setup 5\iscc.exe' % progpath
-        subprocess.check_call([cmd, self.pathname])
-
-    def sign (self):
-        """Sign InnoSetup installer with local self-signed certificate."""
-        print("*** signing the inno setup installer ***")
-        pfxfile = r'scripts\%s.pfx' % self.name
-        if os.path.isfile(pfxfile):
-            path = get_windows_sdk_path()
-            signtool = os.path.join(path, "bin", "signtool.exe")
-            if os.path.isfile(signtool):
-                cmd = [signtool, 'sign', '/f', pfxfile, self.distfile]
-                subprocess.check_call(cmd)
-            else:
-                print("No signed installer: signtool.exe not found.")
-        else:
-            print("No signed installer: certificate %s not found." % pfxfile)
-
-def get_windows_sdk_path():
-    """Return path of Microsoft Windows SDK installation, or None if
-    not found."""
-    try:
-        import _winreg as winreg
-    except ImportError:
-        import winreg
-    sub_key = r"Software\Microsoft\Microsoft SDKs\Windows"
-    with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, sub_key) as key:
-        name = "CurrentInstallFolder"
-        return winreg.QueryValueEx(key, name)[0]
-    return None
-
-try:
-    from py2exe.build_exe import py2exe as py2exe_build
-
-    class MyPy2exe (py2exe_build):
-        """First builds the exe file(s), then creates a Windows installer.
-        Needs InnoSetup to be installed."""
-
-        def run (self):
-            """Generate py2exe installer."""
-            # First, let py2exe do it's work.
-            py2exe_build.run(self)
-            print("*** preparing the inno setup script ***")
-            lib_dir = self.lib_dir
-            dist_dir = self.dist_dir
-            # create the Installer, using the files py2exe has created.
-            script = InnoScript(lib_dir, dist_dir, self.windows_exe_files,
-                self.console_exe_files, self.service_exe_files,
-                self.comserver_files, self.lib_files)
-            print("*** creating the inno setup script ***")
-            script.create()
-            print("*** compiling the inno setup script ***")
-            script.compile()
-            script.sign()
-except ImportError:
-    class MyPy2exe:
-        """Dummy py2exe class."""
-        pass
-
-
 args = dict(
     name = AppName,
     version = AppVersion,
@@ -462,13 +244,6 @@ installed.
     distclass = MyDistribution,
     cmdclass = {
         'install_lib': MyInstallLib,
-        'py2exe': MyPy2exe,
-    },
-    options = {
-        "py2exe": py2exe_options,
-        "build_exe": cxfreeze_options,
     },
 )
-if executables:
-    args["executables"] = executables
 setup(**args)

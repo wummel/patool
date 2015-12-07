@@ -10,3 +10,4 @@ Changelog.patool*
 /testresults.txt
 /tests/__pycache__
 /_patool_configdata.py
+/patool.egg-info/
