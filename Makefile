@@ -31,14 +31,9 @@ sign:
 	[ -f dist/$(ARCHIVE_SOURCE).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_SOURCE)
 	[ -f dist/$(ARCHIVE_WHEEL).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WHEEL)
 
-upload:	upload_source upload_binary
-
-upload_source:
-	twine upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_SOURCE).asc
-
-upload_binary:
-	cp dist/$(ARCHIVE_WHEEL) dist/$(ARCHIVE_WHEEL).asc \
-	  $(HOMEPAGE)/dist
+upload:
+	twine upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_SOURCE).asc \
+	             dist/$(ARCHIVE_WHEEL) dist/$(ARCHIVE_WHEEL).asc
 
 update_webmeta:
 # update metadata
