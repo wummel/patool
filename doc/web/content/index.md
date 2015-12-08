@@ -1,5 +1,6 @@
 title: portable archive file manager
 description: patool is a portable archive file manager
+slug: index
 ---
 Introduction
 -------------
@@ -42,7 +43,20 @@ The easy way with pip:
 sudo pip install patool
 ```
 
-After that there should exist a ```/usr/bin/patool``` binary.
+And on Windows:
+
+```bash
+c:\python2.7\scripts\pip install patool
+```
+
+Or after downloading the patool .whl file:
+
+```bash
+c:\python2.7\scripts\pip install patool-1.9-py2.py3-none-any.whl
+```
+
+After that there should exist a ```/usr/bin/patool``` or
+```c:\python2.7\scripts\patool``` binary.
 
 For Python 2.x you'll need at least Python 2.7, for Python 3.x at least Python 3.3.
 
