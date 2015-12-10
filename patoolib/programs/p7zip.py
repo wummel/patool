@@ -48,6 +48,7 @@ extract_zip = \
   extract_rpm = \
   extract_deb = \
   extract_iso = \
+  extract_vhd = \
   extract_7z
 
 def list_7z (archive, compression, cmd, verbosity, interactive):
@@ -71,6 +72,7 @@ list_bzip2 = \
   list_iso = \
   list_xz = \
   list_lzma = \
+  list_vhd = \
   list_7z
 
 
@@ -95,6 +97,7 @@ test_bzip2 = \
   test_iso = \
   test_xz = \
   test_lzma = \
+  test_vhd = \
   test_7z
 
 

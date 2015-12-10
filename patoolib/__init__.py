@@ -36,7 +36,7 @@ ArchiveFormats = (
     '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
     'bzip2', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
     'flac', 'gzip', 'iso', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
-    'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'xz',
+    'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'vhd', 'xz',
     'zip', 'zoo', 'zpaq')
 
 # Supported compressions (used with tar for example)
@@ -77,6 +77,7 @@ ArchiveMimetypes = {
     'application/x-rzip': 'rzip',
     'application/x-shar': 'shar',
     'application/x-tar': 'tar',
+    'application/x-vhd': 'vhd',
     'application/x-xz': 'xz',
     'application/x-zip-compressed': 'zip',
     'application/x-zoo': 'zoo',
@@ -225,6 +226,11 @@ ArchivePrograms = {
         'list': ('dpkg-deb', '7z'),
         'test': ('dpkg-deb', '7z'),
     },
+    'dms': {
+        'extract': ('xdms',),
+        'list': ('xdms',),
+        'test': ('xdms',),
+    },
     'lzop': {
         None: ('lzop',),
     },
@@ -248,6 +254,11 @@ ArchivePrograms = {
         'list': ('py_echo',),
         'create': ('shorten',),
     },
+    'vhd': {
+        'extract': ('7z',),
+        'list': ('7z',),
+        'test': ('7z',),
+    },
     'xz': {
         None: ('xz', '7z'),
         'extract': py_lzma,
@@ -258,11 +269,6 @@ ArchivePrograms = {
     },
     'zpaq': {
         None: ('zpaq',),
-    },
-    'dms': {
-        'extract': ('xdms',),
-        'list': ('xdms',),
-        'test': ('xdms',),
     },
 }
 

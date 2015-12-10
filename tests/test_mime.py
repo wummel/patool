@@ -205,4 +205,5 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.iso", "application/x-iso9660-image")
         self.mime_test_mimedb("t.epub", "application/zip")
         self.mime_test_mimedb("t.apk", "application/zip")
+        self.mime_test_mimedb("t.vhd", "application/x-vhd")
         self.mime_test_mimedb("t.zpaq", "application/zpaq")
