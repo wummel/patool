@@ -1,4 +1,4 @@
-1.10 (released xx.xx.2015)
+1.10 (released 10.12.2015)
 
 * Added support for VHD (Virtual Hard Disk) archives with 7z.
 
