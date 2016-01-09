@@ -196,7 +196,7 @@ ArchivePrograms = {
         'create': ('compress',),
     },
     '7z': {
-        None: ('7z', '7za'),
+        None: ('7z', '7za', '7zr'),
     },
     'rar': {
         None: ('rar',),
@@ -277,6 +277,7 @@ ArchivePrograms = {
 ProgramModules = {
     '7z': 'p7zip',
     '7za': 'p7azip',
+    '7zr': 'p7rzip',
     'uncompress.real': 'uncompress',
     'dpkg-deb': 'dpkg',
     'extract_chmlib': 'chmlib',

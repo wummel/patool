@@ -23,9 +23,6 @@ if not hasattr(sys, "version_info") or sys.version_info < (2, 7, 0, "final", 0):
     raise SystemExit("This program requires Python 2.7 or later.")
 import os
 import re
-import shutil
-import glob
-import subprocess
 from setuptools import setup
 from distutils.core import Distribution
 from distutils.command.install_lib import install_lib
@@ -33,7 +30,7 @@ from distutils import util
 from distutils.file_util import write_file
 
 AppName = "patool"
-AppVersion = "1.10"
+AppVersion = "1.11"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 

@@ -1,3 +1,8 @@
+1.11 (released xx.xx.216)
+
+* Fix 7z unpacking when only p7zip with /usr/bin/7zr is installed.
+
+
 1.10 (released 10.12.2015)
 
 * Added support for VHD (Virtual Hard Disk) archives with 7z.
