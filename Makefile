@@ -77,7 +77,7 @@ releasecheck: test check
 check:
 # The check programs used here are mostly local scripts on my private system.
 # So for other developers there is no need to execute this target.
-	check-copyright
+	check-copyright setup.py patool patoolib tests
 	check-pofiles -v
 	py-tabdaddy
 	py-unittest2-compat tests/
