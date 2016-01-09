@@ -165,7 +165,7 @@ AUTHOR
        Bastian Kleineidam <bastian.kleineidam@web.de>
 
 COPYRIGHT
-       Copyright © 2010-2015 Bastian Kleineidam
+       Copyright © 2010-2016 Bastian Kleineidam
 
 
 
