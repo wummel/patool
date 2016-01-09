@@ -23,6 +23,7 @@ class TestTar (ArchiveTest):
     @needs_program(program)
     def test_tar (self):
         self.archive_commands('t.tar')
+        self.archive_commands('t.cbt')
 
     @needs_codec(program, 'gzip')
     def test_tar_gz (self):
@@ -59,6 +60,7 @@ class TestTar (ArchiveTest):
     @needs_program(program)
     def test_tar_file (self):
         self.archive_commands('t.tar.foo', skip_create=True)
+        self.archive_commands('t.cbt.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec(program, 'gzip')
@@ -96,4 +98,3 @@ class TestTar (ArchiveTest):
     @needs_codec(program, 'xz')
     def test_tar_xz_file (self):
         self.archive_commands('t.tar.xz.foo', skip_create=True)
-

@@ -22,6 +22,7 @@ class TestPytarfile (ArchiveTest):
 
     def test_py_tarfile (self):
         self.archive_commands('t.tar')
+        self.archive_commands('t.cbt')
 
     def test_py_tarfile_gz (self):
         self.archive_commands('t.tar.gz')
@@ -34,6 +35,7 @@ class TestPytarfile (ArchiveTest):
     @needs_program('file')
     def test_py_tarfile_file (self):
         self.archive_commands('t.tar.foo', skip_create=True)
+        self.archive_commands('t.cbt.foo', skip_create=True)
 
     @needs_program('file')
     def test_py_tarfile_gz_file (self):
@@ -44,4 +46,3 @@ class TestPytarfile (ArchiveTest):
     def test_py_tarfile_bz2_file (self):
         self.archive_commands('t.tar.bz2.foo', skip_create=True)
         self.archive_commands('t.tbz2.foo', skip_create=True)
-

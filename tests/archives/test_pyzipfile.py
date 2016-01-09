@@ -22,8 +22,10 @@ class TestPyzipfile (ArchiveTest):
 
     def test_py_zipfile(self):
         self.archive_commands('t.zip')
+        self.archive_commands('t.cbz')
 
     @needs_program('file')
     def test_py_zipfile_file(self):
         self.archive_commands('t.zip.foo', skip_create=True)
+        self.archive_commands('t.cbz.foo', skip_create=True)
 

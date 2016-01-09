@@ -25,6 +25,9 @@ class TestUnace (ArchiveTest):
         self.archive_list('t.ace')
         self.archive_test('t.ace')
         self.archive_extract('t.ace')
+        self.archive_list('t.cba')
+        self.archive_test('t.cba')
+        self.archive_extract('t.cba')
 
     @needs_program('file')
     @needs_program(program)
@@ -32,4 +35,6 @@ class TestUnace (ArchiveTest):
         self.archive_list('t.ace.foo')
         self.archive_test('t.ace.foo')
         self.archive_extract('t.ace.foo')
-
+        self.archive_list('t.cba.foo')
+        self.archive_test('t.cba.foo')
+        self.archive_extract('t.cba.foo')

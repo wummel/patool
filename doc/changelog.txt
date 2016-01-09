@@ -1,6 +1,8 @@
 1.11 (released xx.xx.216)
 
 * Fix 7z unpacking when only p7zip with /usr/bin/7zr is installed.
+* Support comic book archives: .cb7 for 7z, .cba for ACE, .cbr for RAR,
+  .cbt for TAR and .cbz for ZIP archives.
 
 
 1.10 (released 10.12.2015)

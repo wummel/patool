@@ -23,7 +23,9 @@ class Test7z (ArchiveTest):
     @needs_program(program)
     def test_7z (self):
         self.archive_commands('t .7z')
+        self.archive_commands('t .cb7')
         self.archive_commands('t.zip')
+        self.archive_commands('t.cbz')
         self.archive_commands('t.txt.xz', check=Content.Singlefile)
         self.archive_list('t.txt.gz')
         self.archive_list('t.txt.bz2')
@@ -75,7 +77,9 @@ class Test7z (ArchiveTest):
     @needs_program(program)
     def test_7z_file (self):
         self.archive_commands('t.7z.foo', skip_create=True)
+        self.archive_commands('t.cb7.foo', skip_create=True)
         self.archive_commands('t.zip.foo', skip_create=True)
+        self.archive_commands('t.cbz.foo', skip_create=True)
         self.archive_commands('t.txt.xz.foo', skip_create=True, check=Content.Singlefile)
         self.archive_list('t.txt.gz.foo')
         self.archive_list('t.txt.bz2.foo')

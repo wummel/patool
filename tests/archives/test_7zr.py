@@ -23,8 +23,10 @@ class Test7zr (ArchiveTest):
     @needs_program(program)
     def test_7zr (self):
         self.archive_commands('t .7z')
+        self.archive_commands('t .cb7')
 
     @needs_program('file')
     @needs_program(program)
     def test_7z_file (self):
         self.archive_commands('t.7z.foo', skip_create=True)
+        self.archive_commands('t.cb7.foo', skip_create=True)

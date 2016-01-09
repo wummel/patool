@@ -23,6 +23,7 @@ class TestBsdtar (ArchiveTest):
     @needs_program(program)
     def test_bsdtar (self):
         self.archive_commands('t.tar')
+        self.archive_commands('t.cbt')
 
     @needs_codec(program, 'gzip')
     def test_bsdtar_gz (self):
@@ -58,6 +59,7 @@ class TestBsdtar (ArchiveTest):
     @needs_program(program)
     def test_bsdtar_file (self):
         self.archive_commands('t.tar.foo', skip_create=True)
+        self.archive_commands('t.cbt.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec(program, 'gzip')

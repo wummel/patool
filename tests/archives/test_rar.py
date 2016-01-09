@@ -23,9 +23,11 @@ class TestRar (ArchiveTest):
     @needs_program(program)
     def test_rar(self):
         self.archive_commands('t.rar')
+        self.archive_commands('t.cbr')
 
     @needs_program('file')
     @needs_program(program)
     def test_rar_file(self):
         self.archive_commands('t.rar.foo', skip_create=True)
+        self.archive_commands('t.cbr.foo', skip_create=True)
 
