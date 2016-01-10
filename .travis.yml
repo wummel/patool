@@ -20,7 +20,8 @@ before_install:
 #E: Unable to locate package unace-nonfree
 #E: Unable to locate package zopfli
 
-# Note: pigz gives test errors (but not on my system). Investigate later.
+# Note: pigz gives test errors on Travis CI since option "--" is not
+# supported, but pigz 2.3.1 supports it. Must be an older version.
 
 # command to install dependencies
 install:
