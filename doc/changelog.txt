@@ -1,3 +1,10 @@
+1.12 (released xx.xx.2016)
+
+* Add winrar to default search path on Windows.
+* Improve usage documentation on Windows.
+  Closes: GH bug #19
+
+
 1.11 (released 9.1.2016)
 
 * Fix 7z unpacking when only p7zip with /usr/bin/7zr is installed.
