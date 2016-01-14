@@ -81,6 +81,14 @@ except ImportError:
         return None
 
 
+def system_search_path():
+    """Get the list of directories on a system to search for executable programs.
+    It is either the PATH environment variable or if PATH is undefined the value
+    of os.defpath.
+    """
+    return os.environ.get("PATH", os.defpath)
+
+
 # internal MIME database
 mimedb = None
 
@@ -592,9 +600,11 @@ def p7zip_supports_rar():
 def find_program (program):
     """Look for program in environment PATH variable."""
     if os.name == 'nt':
+        # Add some well-known archiver programs to the search path
         path = os.environ['PATH']
         path = append_to_path(path, get_nt_7z_dir())
         path = append_to_path(path, get_nt_mac_dir())
+        path = append_to_path(path, get_nt_winrar_dir())
     else:
         # use default path
         path = None
@@ -635,8 +645,13 @@ def get_nt_program_dir ():
 
 
 def get_nt_mac_dir ():
-    """Return Monkey Audio Compressor (MAC) directory, or an empty string."""
+    """Return Monkey Audio Compressor (MAC) directory."""
     return os.path.join(get_nt_program_dir(), "Monkey's Audio")
+
+
+def get_nt_winrar_dir():
+    """Return WinRAR directory."""
+    return os.path.join(get_nt_program_dir(), "WinRAR")
 
 
 def strlist_with_or (alist):
