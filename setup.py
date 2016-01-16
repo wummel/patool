@@ -72,21 +72,6 @@ else:
     data_files.append(('share/man/man1', ['doc/patool.1']))
 
 
-def get_nt_platform_vars ():
-    """Return program file path and architecture for NT systems."""
-    platform = util.get_platform()
-    if platform == "win-amd64":
-        # the Visual C++ runtime files are installed in the x86 directory
-        progvar = "%ProgramFiles(x86)%"
-        architecture = "amd64"
-    elif platform == "win32":
-        progvar = "%ProgramFiles%"
-        architecture = "x86"
-    else:
-        raise ValueError("Unsupported platform %r" % platform)
-    return os.path.expandvars(progvar), architecture
-
-
 class MyInstallLib (install_lib, object):
     """Custom library installation."""
 
