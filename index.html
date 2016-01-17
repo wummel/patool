@@ -27,12 +27,12 @@
 </header>
 
 <section id="downloads" class="clearfix">
-<a href="https://pypi.python.org/packages/source/p/patool/patool-1.11.tar.gz"
+<a href="https://pypi.python.org/packages/source/p/patool/patool-1.12.tar.gz"
     title="Source .tar.gz package"
-    id="download-tar-gz" class="button"><span>patool-1.11.tar.gz</span></a>
-  <a href="https://pypi.python.org/packages/py2.py3/p/patool/patool-1.11-py2.py3-none-any.whl"
+    id="download-tar-gz" class="button"><span>patool-1.12.tar.gz</span></a>
+  <a href="https://pypi.python.org/packages/py2.py3/p/patool/patool-1.12-py2.py3-none-any.whl"
     title="Wheel .whl package"
-    id="download-exe" class="button"><span>patool-1.11.whl</span></a>
+    id="download-exe" class="button"><span>patool-1.12.whl</span></a>
   <a href="https://github.com/wummel/patool" id="view-on-github" class="button"><span>View on GitHub</span></a>
 <!--    <p>
     <a href="https://github.com/wummel/patool/blob/master/doc/changelog.txt">Changelog</a>
@@ -56,14 +56,14 @@ programs and options.</p>
 <p>The  archive format is determined by the file(1) program and as
 a fallback by the archive file extension.</p>
 <p>patool supports 7z (.7z, .cb7), ACE (.ace, .cba), ADF (.adf), ALZIP (.alz),
-APE  (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), CAB
-(.cab), COMPRESS (.Z), CPIO (.cpio), DEB  (.deb),  DMS  (.dms),
-FLAC  (.flac), GZIP (.gz), LRZIP (.lrz), LZH (.lha, .lzh), LZIP
-(.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar, .cbr),  RZIP
-(.rz),  SHN  (.shn), TAR (.tar, .cbt), XZ (.xz), ZIP (.zip, .jar, .cbz),
-ZOO (.zoo) and ZPAQ (.zpaq) formats.
-It relies on helper applications to handle
-those archive formats (for example bzip2 for BZIP2 archives).</p>
+APE  (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2),
+CAB (.cab), COMPRESS (.Z), CPIO (.cpio), DEB  (.deb),  DMS  (.dms),
+FLAC  (.flac), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha, .lzh),
+LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar, .cbr),
+RZIP (.rz),  SHN  (.shn), TAR (.tar, .cbt), XZ (.xz),
+ZIP (.zip, .jar, .cbz) and ZOO (.zoo) archive formats.
+It relies on helper applications to handle those archive formats
+(for example bzip2 for BZIP2 archives).</p>
 <p>The  archive  formats  TAR, ZIP, BZIP2 and
 GZIP are supported natively and  do  not  require  helper
 applications to be installed.</p>
@@ -83,11 +83,15 @@ applications to be installed.</p>
 </pre></div>
 
 
-<p>After that there should exist a <code>/usr/bin/patool</code> or
-<code>c:\python2.7\scripts\patool</code> binary.</p>
 <p>For Python 2.x you'll need at least Python 2.7, for Python 3.x at least Python 3.3.</p>
 <p>If you install from source read the
 <a href="https://github.com/wummel/patool/blob/master/doc/install.txt">installation instructions</a>.</p>
+<h2>Running</h2>
+<p>After installation there should be a <code>/usr/bin/patool</code> binary under Unix
+systems, under Windows should exist a file <code>c:\python2.7\scripts\patool</code>.</p>
+<p>Use <code>patool</code> to run for Linux or OSX systems,  on Windows use
+<code>c:\python2.7\python2.7.exe c:\python2.7\scripts\patool</code>.</p>
+<p>See the following chapter for usage examples.</p>
 <h2>Examples</h2>
 <div class="codehilite"><pre><span class="c"># extract two archives</span>
 patool extract archive.zip otherarchive.rar
