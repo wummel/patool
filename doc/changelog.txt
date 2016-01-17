@@ -1,4 +1,4 @@
-1.12 (released xx.xx.2016)
+1.12 (released 17.1.2016)
 
 * Add winrar to default search path on Windows.
 * Improve usage documentation on Windows.
