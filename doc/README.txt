@@ -72,6 +72,17 @@ patoolib.search_archive("def urlopen", "python3.3.tar.gz")
 patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
 ```
 
+Bash completion
+----------------
+To enable bash completion
+- install python `argcomplete` package,
+- run `activate-global-python-argcomplete` to create `/etc/bash_completion.d/python-argcomplete.sh`,
+- add `eval "$(register-python-argcomplete patool)"` to your `~/.bashrc`.
+
+Open new bash session.
+
+More information about `argcomplete` installation and usage can be found [here](https://github.com/kislyuk/argcomplete).
+
 Test suite status
 ------------------
 Patool has extensive unit tests to ensure the code quality.
