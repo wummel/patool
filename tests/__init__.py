@@ -53,7 +53,7 @@ def needs_program(name):
 
 def needs_one_program(programs):
     """Decorator skipping test if not one of given programs are available."""
-    return _need_func(lambda x: all(map(patoolib.util.find_program, x)), programs, 'programs')
+    return _need_func(lambda x: any(map(patoolib.util.find_program, x)), programs, 'programs')
 
 
 def needs_module(name):
