@@ -138,6 +138,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.zpaq", "application/zpaq")
         self.mime_test_file("t.zpaq.foo", "application/zpaq")
 
+
     @needs_program('file')
     @needs_program('lzip')
     def test_mime_file_lzip (self):
@@ -148,6 +149,12 @@ class TestMime (unittest.TestCase):
     def test_mime_file_bzip (self):
         self.mime_test_file("t.tar.bz2.foo", "application/x-tar", "bzip2")
         self.mime_test_file("t.tbz2.foo", "application/x-tar", "bzip2")
+
+    @needs_program('file')
+    def test_nested_gzip (self):
+        # Ensure that a file that doesn't natively support encoding does not see the encoding
+        self.mime_test_file("t.rar.gz", "application/gzip")
+        self.mime_test_file("t.rar.gz.foo", "application/gzip")
 
     @needs_program('file')
     @needs_program('gzip')

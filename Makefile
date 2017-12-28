@@ -128,6 +128,12 @@ changelog:
 # closes issues mentioned in the changelog entries.
 	github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) doc/changelog.txt
 
+docker-build: distclean
+	docker build -t patool-test .
+
+docker-test:
+	docker run --rm -it patool-test
+
 .PHONY: changelog update-copyright test clean count pyflakes check
 .PHONY: releasecheck release upload sign dist all tag register homepage
 .PHONY: localbuild doccheck
