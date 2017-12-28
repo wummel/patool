@@ -25,7 +25,7 @@ import importlib
 from .configuration import App, Version as __version__
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
     'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
-    'recompress_archive']
+    'recompress_archive', 'program_supports_compression']
 
 
 # Supported archive commands
@@ -284,6 +284,18 @@ ProgramModules = {
 }
 
 
+def program_supports_compression (program, compression):
+    """Decide if the given program supports the compression natively.
+    @return: True iff the program supports the given compression format
+      natively, else False.
+    """
+    if program in ('tar', ):
+        return compression in ('gzip', 'bzip2', 'xz', 'lzip', 'compress', 'lzma') + py_lzma
+    elif program in ('star', 'bsdtar', 'py_tarfile'):
+        return compression in ('gzip', 'bzip2') + py_lzma
+    return False
+
+
 from . import util
 
 def get_archive_format (filename):
@@ -334,16 +346,6 @@ def find_archive_program (format, command, program=None):
             return exe
     # no programs found
     raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (command, format, ",".join(programs)))
-
-
-def program_supports_compression (program, compression):
-    """Decide if the given program supports the compression natively.
-    @return: True iff the program supports the given compression format
-      natively, else False.
-    """
-    if program in ('tar', 'star', 'bsdtar', 'py_tarfile'):
-        return compression in ('gzip', 'bzip2') + py_lzma
-    return False
 
 
 def list_formats ():

@@ -138,6 +138,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.zpaq", "application/zpaq")
         self.mime_test_file("t.zpaq.foo", "application/zpaq")
 
+
     @needs_program('file')
     @needs_program('lzip')
     def test_mime_file_lzip (self):
