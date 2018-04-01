@@ -18,11 +18,11 @@ import os
 
 def extract_rar (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a RAR archive."""
-    cmdlist = [cmd, 'x']
+    cmdlist = [cmd, '-kb', 'x']
     if not interactive:
         cmdlist.extend(['-p-', '-y'])
     cmdlist.extend(['--', os.path.abspath(archive)])
-    return (cmdlist, {'cwd': outdir})
+    return (cmdlist, {'cwd': outdir, 'ret_ok': (0, 3)})
 
 def list_rar (archive, compression, cmd, verbosity, interactive):
     """List a RAR archive."""
@@ -38,11 +38,11 @@ def list_rar (archive, compression, cmd, verbosity, interactive):
 
 def test_rar (archive, compression, cmd, verbosity, interactive):
     """Test a RAR archive."""
-    cmdlist = [cmd, 't']
+    cmdlist = [cmd, '-kb', 't']
     if not interactive:
         cmdlist.extend(['-p-', '-y'])
     cmdlist.extend(['--', archive])
-    return cmdlist
+    return cmdlist, {'ret_ok': (0, 3)}
 
 def create_rar (archive, compression, cmd, verbosity, interactive, filenames):
     """Create a RAR archive."""
