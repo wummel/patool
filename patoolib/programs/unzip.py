@@ -20,6 +20,9 @@ def extract_zip (archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist = [cmd]
     if verbosity > 1:
         cmdlist.append('-v')
+    if not interactive:
+        cmdlist.append('-o')
+
     cmdlist.extend(['--', archive, '-d', outdir])
     return cmdlist
 
@@ -28,6 +31,10 @@ def list_zip (archive, compression, cmd, verbosity, interactive):
     cmdlist = [cmd, '-l']
     if verbosity > 1:
         cmdlist.append('-v')
+
+    if not interactive:
+        cmdlist.append('-o')
+
     cmdlist.extend(['--', archive])
     return cmdlist
 
@@ -36,5 +43,9 @@ def test_zip (archive, compression, cmd, verbosity, interactive):
     cmdlist = [cmd, '-t']
     if verbosity > 1:
         cmdlist.append('-v')
+
+    if not interactive:
+        cmdlist.append('-o')
+
     cmdlist.extend(['--', archive])
     return cmdlist
