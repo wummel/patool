@@ -46,6 +46,7 @@ ArchiveCompressions = ('bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz')
 # Map MIME types to archive format
 ArchiveMimetypes = {
     'application/gzip': 'gzip',
+    'application/jar': 'zip',  # reported on older systems such as ubuntu 14.04
     'application/java-archive': 'zip',
     'application/rar': 'rar',
     'application/vnd.ms-cab-compressed': 'cab',
