@@ -30,7 +30,12 @@ before_install:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install -q codecov
+
 # command to run tests
-script: make test PYTESTOPTS=-s
+script:
+  - make localbuild
+  - coverage run -- `which pytest` -s -v tests/
+
 #notifications:
 #  email: false
