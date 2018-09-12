@@ -45,5 +45,8 @@ script:
     fi
   - $COVERAGE $PYTEST -v tests/
 
+after_success:
+  - if [ ! -z "$COVERAGE" ]; then codecov; fi
+
 #notifications:
 #  email: false
