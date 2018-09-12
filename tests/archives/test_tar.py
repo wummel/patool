@@ -69,6 +69,7 @@ class TestTar (ArchiveTest):
         self.archive_commands('t.tgz.foo', skip_create=True)
 
     @needs_program('file')
+    @needs_program('compress')
     @needs_codec(program, 'compress')
     def test_tar_z_file (self):
         self.archive_commands('t.tar.Z.foo', skip_create=True)

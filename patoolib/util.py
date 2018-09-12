@@ -24,7 +24,7 @@ import tempfile
 import time
 import traceback
 import locale
-from . import configuration, ArchiveMimetypes, ArchiveCompressions
+from . import configuration, ArchiveMimetypes, ArchiveCompressions, program_supports_compression
 try:
     from shutil import which
 except ImportError:
@@ -314,7 +314,12 @@ def guess_mime_file (filename):
         elif mime2 in ArchiveMimetypes:
             mime = mime2
             encoding = get_file_mime_encoding(outparts)
-    return mime, encoding
+    # Only return mime and encoding if the given mime can natively support the encoding.
+    if program_supports_compression(ArchiveMimetypes.get(mime), encoding):
+        return mime, encoding
+    else:
+        # If encoding is None, default back to `mime`.
+        return Encoding2Mime.get(encoding, mime), None
 
 
 def guess_mime_file_mime (file_prog, filename):

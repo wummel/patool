@@ -34,7 +34,7 @@ def _need_func(testfunc, name, description):
     def check_func(func):
         def newfunc(*args, **kwargs):
             if not testfunc(name):
-                raise pytest.skip("%s %r is not available" % (description, name))
+                pytest.skip("%s %r is not available" % (description, name))
             return func(*args, **kwargs)
         setattr(newfunc, fnameattr, getattr(func, fnameattr))
         return newfunc
@@ -53,7 +53,7 @@ def needs_program(name):
 
 def needs_one_program(programs):
     """Decorator skipping test if not one of given programs are available."""
-    return _need_func(lambda x: all(map(patoolib.util.find_program, x)), programs, 'programs')
+    return _need_func(lambda x: any(map(patoolib.util.find_program, x)), programs, 'programs')
 
 
 def needs_module(name):
@@ -72,9 +72,9 @@ def needs_codec (program, codec):
     def check_prog (f):
         def newfunc (*args, **kwargs):
             if not patoolib.util.find_program(program):
-                raise pytest.skip("program `%s' not available" % program)
+                pytest.skip("program `%s' not available" % program)
             if not has_codec(program, codec):
-                raise pytest.skip("codec `%s' for program `%s' not available" % (codec, program))
+                pytest.skip("codec `%s' for program `%s' not available" % (codec, program))
             return f(*args, **kwargs)
         setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc
@@ -95,7 +95,7 @@ def skip_on_travis():
     def check_func(func):
         def newfunc(*args, **kwargs):
             if "TRAVIS" in os.environ:
-                raise pytest.skip("Skip on TRAVIS CI build.")
+                pytest.skip("Skip on TRAVIS CI build.")
             return func(*args, **kwargs)
         setattr(newfunc, fnameattr, getattr(func, fnameattr))
         return newfunc
