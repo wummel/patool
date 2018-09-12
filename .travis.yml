@@ -4,6 +4,7 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
 # whitelist
 branches:
   only:
@@ -30,7 +31,22 @@ before_install:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install -q codecov
+
 # command to run tests
-script: make test PYTESTOPTS=-s
+script:
+  - make localbuild
+  - if [ $TRAVIS_PYTHON_VERSION = 3.3 ]; then 
+       COVERAGE= ;
+       PYTEST="python -m pytest";
+    else 
+       COVERAGE="coverage run" ;
+       PYTEST=`which pytest`;
+    fi
+  - $COVERAGE $PYTEST -v tests/
+
+after_success:
+  - if [ ! -z "$COVERAGE" ]; then codecov; fi
+
 #notifications:
 #  email: false
