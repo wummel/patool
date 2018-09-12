@@ -60,3 +60,5 @@ def add_tar_opts (cmdlist, compression, verbosity):
         cmdlist.extend(['--use-compress-program', program])
     if verbosity > 1:
         cmdlist.append('--verbose')
+    if progname == 'tar':
+        cmdlist.append('--force-local')
