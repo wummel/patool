@@ -36,8 +36,14 @@ install:
 # command to run tests
 script:
   - make localbuild
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.3 ]]; then COVERAGE=; else COVERAGE="coverage run"; fi
-  - $COVERAGE `which pytest` -s -v tests/
+  - if [ $TRAVIS_PYTHON_VERSION = 3.3 ]; then 
+       COVERAGE= ;
+       PYTEST="python -m pytest";
+    else 
+       COVERAGE="coverage run" ;
+       PYTEST=`which pytest`;
+    fi
+  - $COVERAGE $PYTEST -s -v tests/
 
 #notifications:
 #  email: false
