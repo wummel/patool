@@ -43,7 +43,7 @@ script:
        COVERAGE="coverage run" ;
        PYTEST=`which pytest`;
     fi
-  - $COVERAGE $PYTEST -s -v tests/
+  - $COVERAGE $PYTEST -v tests/
 
 #notifications:
 #  email: false
