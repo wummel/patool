@@ -19,14 +19,14 @@ import os
 
 def extract_tar (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive."""
-    cmdlist = [cmd, '--force-local', '--extract']
+    cmdlist = [cmd, '--extract']
     add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive, '--directory', outdir])
     return cmdlist
 
 def list_tar (archive, compression, cmd, verbosity, interactive):
     """List a TAR archive."""
-    cmdlist = [cmd, '--force-local', '--list']
+    cmdlist = [cmd, '--list']
     add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive])
     return cmdlist
@@ -35,7 +35,7 @@ test_tar = list_tar
 
 def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive."""
-    cmdlist = [cmd, '--force-local', '--create']
+    cmdlist = [cmd, '--create']
     add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive, '--'])
     cmdlist.extend(filenames)
@@ -60,3 +60,5 @@ def add_tar_opts (cmdlist, compression, verbosity):
         cmdlist.extend(['--use-compress-program', program])
     if verbosity > 1:
         cmdlist.append('--verbose')
+    if progname == 'tar':
+        cmdlist.append('--force-local')
