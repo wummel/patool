@@ -341,6 +341,14 @@ def program_supports_compression (program, compression):
 
 from . import util # noqa: E402
 
+def is_archive (filename):
+    """Detect if the file is a known archive."""
+    mime, compression = util.guess_mime(filename)
+    if mime in ArchiveMimetypes:
+            return True
+    return False
+
+
 def get_archive_format (filename):
     """Detect filename archive format and optional compression."""
     mime, compression = util.guess_mime(filename)
