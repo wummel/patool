@@ -76,6 +76,7 @@ patoolib.create_archive("/path/to/myfiles.zip", ("file1.txt", "dir/"))
 patoolib.diff_archives("release1.0.tar.gz", "release2.0.zip")
 patoolib.search_archive("def urlopen", "python3.3.tar.gz")
 patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
+patoolib.is_archive("package.deb")
 ```
 
 Test suite status
