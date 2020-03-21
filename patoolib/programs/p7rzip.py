@@ -18,8 +18,28 @@
 7zr is a light executable supporting only the 7z archive format.
 """
 
-from .p7zip import \
-  extract_7z, \
-  list_7z, \
-  test_7z, \
-  create_7z
+from .p7zip import create_7z
+
+def extract_7z(archive, compression, cmd, verbosity, interactive, outdir):
+    """Extract a 7z archive."""
+    cmdlist = [cmd, 'x']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['-o%s' % outdir, '--', archive])
+    return cmdlist
+
+def list_7z(archive, compression, cmd, verbosity, interactive):
+    """List a 7z archive."""
+    cmdlist = [cmd, 'l']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['--', archive])
+    return cmdlist
+
+def test_7z(archive, compression, cmd, verbosity, interactive):
+    """Test a 7z archive."""
+    cmdlist = [cmd, 't']
+    if not interactive:
+        cmdlist.append('-y')
+    cmdlist.extend(['--', archive])
+    return cmdlist

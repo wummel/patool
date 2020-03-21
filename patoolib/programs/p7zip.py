@@ -29,7 +29,7 @@ def extract_7z_singlefile(archive, compression, cmd, verbosity, interactive, out
     which would cause errors with patool repack."""
     cmdlist = [cmd, 'e']
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.extend(['-p-', '-y'])
     cmdlist.extend(['-o%s' % outdir, '--', archive])
     return cmdlist
 
@@ -55,7 +55,7 @@ def list_7z (archive, compression, cmd, verbosity, interactive):
     """List a 7z archive."""
     cmdlist = [cmd, 'l']
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.extend(['-p-', '-y'])
     cmdlist.extend(['--', archive])
     return cmdlist
 
@@ -80,7 +80,7 @@ def test_7z (archive, compression, cmd, verbosity, interactive):
     """Test a 7z archive."""
     cmdlist = [cmd, 't']
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.extend(['-p-', '-y'])
     cmdlist.extend(['--', archive])
     return cmdlist
 
