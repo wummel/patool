@@ -398,6 +398,10 @@ def find_archive_program (format, command, program=None, password=None, compress
             if program == '7z' and format == 'rar' and not util.p7zip_supports_rar():
                 continue
             return exe
+
+    if compression is not None and compression in util.Encoding2Mime:
+        return find_archive_program(util.Encoding2Mime[compression], command, program)
+
     # no programs found
     raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (command, format, ",".join(programs)))
 
