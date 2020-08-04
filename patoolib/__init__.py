@@ -333,7 +333,7 @@ def program_supports_compression (program, compression):
       natively, else False.
     """
     if program in ('tar', ):
-        return compression in ('gzip', 'bzip2', 'xz', 'lzip', 'compress', 'lzma') + py_lzma
+        return compression in ('gzip', 'bzip2', 'compress') + py_lzma
     elif program in ('star', 'bsdtar', 'py_tarfile'):
         return compression in ('gzip', 'bzip2') + py_lzma
     return False
