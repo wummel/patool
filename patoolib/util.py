@@ -294,16 +294,15 @@ def guess_mime_file (filename):
         cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]
         try:
             outparts = backtick(cmd).strip().split(";")
+            mime2 = outparts[0].split(" ", 1)[0]
         except OSError:
-            # ignore errors, as file(1) is only a fallback
-            return mime, encoding
-        mime2 = outparts[0].split(" ", 1)[0]
+            mime2 = None
         # Some file(1) implementations return an empty or unknown mime type
         # when the uncompressor program is not installed, other
         # implementation return the original file type.
         # The following detects both cases.
         if (mime2 in ('application/x-empty', 'application/octet-stream') or
-            mime2 in Mime2Encoding):
+            mime2 in Mime2Encoding or not mime2):
             # The uncompressor program file(1) uses is not installed
             # or is not able to uncompress.
             # Try to get mime information from the file extension.
