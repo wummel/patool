@@ -152,9 +152,10 @@ class TestMime (unittest.TestCase):
 
     @needs_program('file')
     def test_nested_gzip (self):
-        # Ensure that a file that doesn't natively support encoding does not see the encoding
-        self.mime_test_file("t.rar.gz", "application/gzip")
-        self.mime_test_file("t.rar.gz.foo", "application/gzip")
+        # We won't extract this with rar, as it doesn't support archives wrapped in gzip
+        # compression, but we will recognize the archive as a gzip-wrapped rar-file
+        self.mime_test_file("t.rar.gz", "application/x-rar", "gzip")
+        self.mime_test_file("t.rar.gz.foo", "application/x-rar", "gzip")
 
     @needs_program('file')
     @needs_program('gzip')
