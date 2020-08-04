@@ -95,8 +95,10 @@ try:
     # use Python 3 lzma module if available
     import lzma
     py_lzma = ('py_lzma',)
+    py_lzma_formats = ('lzma', 'xz')
 except ImportError:
     py_lzma = ()
+    py_lzma_formats = ()
 
 # List of programs supporting the given archive format and command.
 # If command is None, the program supports all commands (list, extract, ...)
@@ -333,9 +335,13 @@ def program_supports_compression (program, compression):
       natively, else False.
     """
     if program in ('tar', ):
-        return compression in ('gzip', 'bzip2', 'compress') + py_lzma
-    elif program in ('star', 'bsdtar', 'py_tarfile'):
-        return compression in ('gzip', 'bzip2') + py_lzma
+        return compression in ('gzip', 'bzip2', 'compress')
+    elif program == 'star':
+        return compression in ('gzip', 'bzip2')
+    elif program == 'bsdtar':
+        return compression in ('gzip', 'bzip2', 'lzma', 'xz')
+    elif program == 'py_tarfile':
+        return compression in ('gzip', 'bzip2') + py_lzma_formats
     return False
 
 
@@ -381,7 +387,7 @@ def find_archive_program (format, command, program=None, password=None, compress
         raise util.PatoolError("%s archive format `%s' is not supported" % (command, format))
     # return the first existing program
     for program in programs:
-        if compression is not None and not check_program_compression(command, program, compression):
+        if compression is not None and not check_program_compression(program, compression):
             continue
 
         if program.startswith('py_'):
@@ -449,17 +455,16 @@ def list_formats ():
                       (command, util.strlist_with_or(handlers)))
 
 
-def check_program_compression(command, program, compression):
+def check_program_compression(program, compression):
     """Check if a program supports the given compression."""
     program = os.path.basename(program)
     if compression:
-        # check if compression is supported
+        # check if compression is supported natively
         if not program_supports_compression(program, compression):
-            if command == 'create':
-                comp_command = command
-            else:
-                comp_command = 'extract'
-            comp_prog = find_archive_program(compression, comp_command)
+            # Check if compression is supported via an external program
+            # Note that we expect the program name to be identical to the
+            # compression type
+            comp_prog = util.find_program(compression)
             if not comp_prog:
                 return False
 
