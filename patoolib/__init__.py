@@ -468,9 +468,11 @@ def check_program_compression(program, compression):
             # Check if compression is supported via an external program
             # Note that we expect the program name to be identical to the
             # compression type
-            comp_prog = util.find_program(compression)
-            if not comp_prog:
-                return False
+            if program in ('tar', 'star', 'bsdtar'):
+                comp_prog = util.find_program(compression)
+                if comp_prog:
+                    return True
+            return False
 
     return True
 
