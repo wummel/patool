@@ -387,7 +387,7 @@ def find_archive_program (format, command, program=None, password=None, compress
         raise util.PatoolError("%s archive format `%s' is not supported" % (command, format))
     # return the first existing program
     for program in programs:
-        if compression is not None and not check_program_compression(program, compression):
+        if compression is not None and not _is_compression_supported(program, compression):
             continue
 
         if program.startswith('py_'):
@@ -459,22 +459,28 @@ def list_formats ():
                       (command, util.strlist_with_or(handlers)))
 
 
-def check_program_compression(program, compression):
-    """Check if a program supports the given compression."""
+def _is_compression_supported(program, compression):
+    """Returns True if and only if the program supports the given compression"""
     program = os.path.basename(program)
-    if compression:
-        # check if compression is supported natively
-        if not program_supports_compression(program, compression):
-            # Check if compression is supported via an external program
-            # Note that we expect the program name to be identical to the
-            # compression type
-            if program in ('tar', 'star', 'bsdtar'):
-                comp_prog = util.find_program(compression)
-                if comp_prog:
-                    return True
-            return False
+    # check if compression is supported natively
+    if not program_supports_compression(program, compression):
+        # Check if compression is supported via an external program
+        # Note that we expect the program name to be identical to the
+        # compression type
+        if program in ('tar', 'star', 'bsdtar'):
+            comp_prog = util.find_program(compression)
+            if comp_prog:
+                return True
+        return False
 
     return True
+
+
+def check_program_compression(archive, command, program, compression):
+    """Check if a program supports the given compression."""
+    if compression and not _is_compression_supported(program, compression):
+        msg = "cannot %s archive `%s': compression `%s' not supported"
+        raise util.PatoolError(msg % (command, archive, compression))
 
 
 def move_outdir_orphan (outdir):
