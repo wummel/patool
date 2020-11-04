@@ -17,26 +17,36 @@
 from .. import util
 
 
-def extract_dms (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_dms (archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a DMS archive."""
     check_archive_ext(archive)
     cmdlist = [cmd, '-d', outdir]
     if verbosity > 1:
         cmdlist.append('-v')
+    if password:
+        cmdlist.extend(['-p', password])
     cmdlist.extend(['u', archive])
     return cmdlist
 
 
-def list_dms (archive, compression, cmd, verbosity, interactive):
+def list_dms (archive, compression, cmd, verbosity, interactive, password=None):
     """List a DMS archive."""
     check_archive_ext(archive)
-    return [cmd, 'v', archive]
+    cmdlist = [cmd, 'v']
+    if password:
+        cmdlist.extend(['-p', password])
+    cmdlist.append(archive)
+    return cmdlist
 
 
-def test_dms (archive, compression, cmd, verbosity, interactive):
+def test_dms (archive, compression, cmd, verbosity, interactive, password=None):
     """Test a DMS archive."""
     check_archive_ext(archive)
-    return [cmd, 't', archive]
+    cmdlist = [cmd, 't']
+    if password:
+        cmdlist.extend(['-p', password])
+    cmdlist.append(archive)
+    return cmdlist
 
 
 def check_archive_ext (archive):

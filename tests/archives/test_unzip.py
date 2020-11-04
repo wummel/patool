@@ -56,3 +56,28 @@ class TestUnzip (ArchiveTest):
         self.archive_extract('t.apk.foo', check=None)
         self.archive_list('t.apk.foo')
         self.archive_test('t.apk.foo')
+
+
+class TestUnzipPassword (ArchiveTest):
+
+    program = 'unzip'
+    password = 'thereisnotry'
+
+    @needs_program(program)
+    def test_unzip (self):
+        self.archive_extract('p.zip', check=None)
+        self.archive_list('p.zip')
+        self.archive_test('p.zip')
+        self.archive_extract('p.cbz', check=None)
+        self.archive_list('p.cbz')
+        self.archive_test('p.cbz')
+
+    @needs_program('file')
+    @needs_program(program)
+    def test_unzip_file (self):
+        self.archive_extract('p.zip.foo', check=None)
+        self.archive_list('p.zip.foo')
+        self.archive_test('p.zip.foo')
+        self.archive_extract('p.cbz.foo', check=None)
+        self.archive_list('p.cbz.foo')
+        self.archive_test('p.cbz.foo')

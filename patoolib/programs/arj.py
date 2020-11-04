@@ -14,19 +14,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the arj program."""
+from ..util import PatoolError
 
-def extract_arj (archive, compression, cmd, verbosity, interactive, outdir):
+def _get_password_switch(password):
+    """Check password and return password switch for ARJ."""
+    if ' ' in password:
+        raise PatoolError("Password for ARJ can't contain spaces.")
+    return '-g%s' % password
+
+def extract_arj (archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract an ARJ archive."""
     cmdlist = [cmd, 'x', '-r']
+    if password:
+        cmdlist.append(_get_password_switch(password))
     if not interactive:
         cmdlist.append('-y')
     cmdlist.extend([archive, outdir])
     return cmdlist
 
 
-def list_arj (archive, compression, cmd, verbosity, interactive):
+def list_arj (archive, compression, cmd, verbosity, interactive, password=None):
     """List an ARJ archive."""
     cmdlist = [cmd]
+    if password:
+        cmdlist.append(_get_password_switch(password))
     if verbosity > 1:
         cmdlist.append('v')
     else:
@@ -37,18 +48,22 @@ def list_arj (archive, compression, cmd, verbosity, interactive):
     return cmdlist
 
 
-def test_arj (archive, compression, cmd, verbosity, interactive):
+def test_arj (archive, compression, cmd, verbosity, interactive, password=None):
     """Test an ARJ archive."""
     cmdlist = [cmd, 't', '-r']
+    if password:
+        cmdlist.append(_get_password_switch(password))
     if not interactive:
         cmdlist.append('-y')
     cmdlist.append(archive)
     return cmdlist
 
 
-def create_arj (archive, compression, cmd, verbosity, interactive, filenames):
+def create_arj (archive, compression, cmd, verbosity, interactive, filenames, password=None):
     """Create an ARJ archive."""
     cmdlist = [cmd, 'a', '-r']
+    if password:
+        cmdlist.append(_get_password_switch(password))
     if not interactive:
         cmdlist.append('-y')
     cmdlist.append(archive)

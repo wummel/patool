@@ -30,7 +30,7 @@ def run_extract(args):
     res = 0
     for archive in args.archive:
         try:
-            patoolib.extract_archive(archive, verbosity=args.verbosity, interactive=args.interactive, outdir=args.outdir)
+            patoolib.extract_archive(archive, verbosity=args.verbosity, interactive=args.interactive, outdir=args.outdir, password=args.password)
         except PatoolError as msg:
             log_error("error extracting %s: %s" % (archive, msg))
             res += 1
@@ -44,7 +44,7 @@ def run_list(args):
         try:
             # increase default verbosity since the listing output should be visible
             verbosity = args.verbosity + 1
-            patoolib.list_archive(archive, verbosity=verbosity, interactive=args.interactive)
+            patoolib.list_archive(archive, verbosity=verbosity, interactive=args.interactive, password=args.password)
         except PatoolError as msg:
             log_error("error listing %s: %s" % (archive, msg))
             res += 1
@@ -56,7 +56,7 @@ def run_test(args):
     res = 0
     for archive in args.archive:
         try:
-            patoolib.test_archive(archive, verbosity=args.verbosity, interactive=args.interactive)
+            patoolib.test_archive(archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
         except PatoolError as msg:
             log_error("error testing %s: %s" % (archive, msg))
             res += 1
@@ -67,7 +67,7 @@ def run_create(args):
     """Create an archive from given files."""
     res = 0
     try:
-        patoolib.create_archive(args.archive, args.filename, verbosity=args.verbosity, interactive=args.interactive)
+        patoolib.create_archive(args.archive, args.filename, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
         log_error("error creating %s: %s" % (args.archive, msg))
         res = 1
@@ -87,7 +87,7 @@ def run_diff(args):
 def run_search(args):
     """Search for pattern in given archive."""
     try:
-        res = patoolib.search_archive(args.pattern, args.archive, verbosity=args.verbosity, interactive=args.interactive)
+        res = patoolib.search_archive(args.pattern, args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
         log_error("error searching %s: %s" % (args.archive, msg))
         res = 2
@@ -109,7 +109,7 @@ def run_recompress(args):
     """Recompress an archive to smaller size."""
     res = 0
     try:
-        patoolib.recompress_archive(args.archive, verbosity=args.verbosity, interactive=args.interactive)
+        patoolib.recompress_archive(args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
         log_error("error recompressing %s: %s" % (args.archive, msg))
         res = 1
@@ -164,16 +164,20 @@ def create_argparser():
     # extract
     parser_extract = subparsers.add_parser('extract', help='extract one or more archives')
     parser_extract.add_argument('--outdir', help="output directory to extract to")
+    parser_extract.add_argument('--password', help="password for encrypted files")
     parser_extract.add_argument('archive', nargs='+', help="an archive file")
     # list
     parser_list = subparsers.add_parser('list', help='list members or one or more archives')
+    parser_list.add_argument('--password', help="password for encrypted files")
     parser_list.add_argument('archive', nargs='+', help="an archive file")
     # create
     parser_create = subparsers.add_parser('create', help='create an archive')
+    parser_create.add_argument('--password', help="password to encrypt files")
     parser_create.add_argument('archive', help="the archive file; the file extension determines the archive program")
     parser_create.add_argument('filename', nargs='+', help="a file or directory to add to the archive; note that some archive programs do not support directories")
     # test
     parser_test = subparsers.add_parser('test', help='test an archive')
+    parser_test.add_argument('--password', help="password for encrypted files")
     parser_test.add_argument('archive', nargs='+', help='an archive file')
     # repack
     parser_repack = subparsers.add_parser('repack', help='repack an archive to a different format')
@@ -181,6 +185,7 @@ def create_argparser():
     parser_repack.add_argument('archive_dst', help='target archive file')
     # recompress
     parser_recompress = subparsers.add_parser('recompress', help='recompress an archive to smaller size')
+    parser_recompress.add_argument('--password', help="password for encrypted files")
     parser_recompress.add_argument('archive', help='an archive file')
     # diff
     parser_diff = subparsers.add_parser('diff', help='show differences between two archives')
@@ -188,6 +193,7 @@ def create_argparser():
     parser_diff.add_argument('archive2', help='the second archive file')
     # search
     parser_search = subparsers.add_parser('search', help="search contents of archive members")
+    parser_search.add_argument('--password', help="password for encrypted files")
     parser_search.add_argument('pattern', help='the grep(1) compatible search pattern')
     parser_search.add_argument('archive', help='the archive file')
     # formats

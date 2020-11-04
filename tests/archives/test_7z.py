@@ -116,6 +116,47 @@ class Test7z (ArchiveTest):
     @needs_codec(program, 'rar')
     def test_7z_rar_file (self):
         # only succeeds with the rar module for 7z installed
-        self.archive_list('t.rar.foo')
-        self.archive_extract('t.rar.foo')
-        self.archive_test('t.rar.foo')
+        self.archive_list(self.filename + '.rar.foo')
+        self.archive_extract(self.filename + '.rar.foo')
+        self.archive_test(self.filename + '.rar.foo')
+
+
+class Test7zPassword(ArchiveTest):
+
+    program = '7z'
+    password = 'thereisnotry'
+
+    @needs_program(program)
+    def test_7z (self):
+        self.archive_commands('p .7z')
+        self.archive_commands('p.zip')
+        self.archive_commands('p.cbz')
+        self.archive_list('p.arj')
+        self.archive_extract('p.arj')
+        self.archive_test('p.arj')
+
+    @needs_codec(program, 'rar')
+    def test_7z_rar (self):
+        # only succeeds with the rar module for 7z installed
+        self.archive_list('p.rar')
+        self.archive_extract('p.rar')
+        self.archive_test('p.rar')
+
+    @needs_program('file')
+    @needs_program(program)
+    def test_7z_file (self):
+        self.archive_commands('p.7z.foo', skip_create=True)
+        self.archive_commands('p.zip.foo', skip_create=True)
+        self.archive_commands('p.cbz.foo', skip_create=True)
+        self.archive_list('p.arj.foo')
+        self.archive_extract('p.arj.foo')
+        self.archive_test('p.arj.foo')
+
+    @needs_program('file')
+    @needs_codec(program, 'rar')
+    def test_7z_rar_file (self):
+        # only succeeds with the rar module for 7z installed
+        self.archive_list('p.rar.foo')
+        self.archive_extract('p.rar.foo')
+        self.archive_test('p.rar.foo')
+

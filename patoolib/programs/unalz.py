@@ -15,13 +15,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unalz program."""
 
-def extract_alzip (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_alzip (archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a ALZIP archive."""
-    return [cmd, '-d', outdir, archive]
+    cmdlist = [cmd, '-d', outdir]
+    if password:
+        cmdlist.extend(['-pwd', password])
+    cmdlist.append(archive)
+    return cmdlist
 
 
-def list_alzip (archive, compression, cmd, verbosity, interactive):
+def list_alzip (archive, compression, cmd, verbosity, interactive, password=None):
     """List a ALZIP archive."""
-    return [cmd, '-l', archive]
+    cmdlist = [cmd, '-l']
+    if password:
+        cmdlist.extend(['-pwd', password])
+    cmdlist.append(archive)
+    return cmdlist
 
 test_alzip = list_alzip
