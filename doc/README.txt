@@ -30,6 +30,9 @@ Examples
 # Extract several archives with different formats
 patool extract archive.zip otherarchive.rar
 
+# Extract archive with password
+patool extract --password somepassword archive.rar
+
 # Test archive integrity
 patool test --verbose dist.tar.gz
 
@@ -38,6 +41,9 @@ patool list package.deb
 
 # Create a new archive
 patool create --verbose /path/to/myfiles.zip file1.txt dir/
+
+# Create a new archive with password
+patool create --verbose --password somepassword /path/to/myfiles.zip file1.txt dir/
 
 # Show differences between two archives
 patool diff release1.0.tar.gz release2.0.zip
