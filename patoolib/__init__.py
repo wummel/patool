@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import print_function
+
+import inspect
 import sys
 if not hasattr(sys, "version_info") or sys.version_info < (2, 7, 0, "final", 0):
     raise SystemExit("This program requires Python 2.7 or later.")
@@ -633,11 +635,9 @@ def get_archive_cmdlist_func (program, command, format):
             if 'password' not in kwargs:
                 return archive_cmdlist_func(*args, **kwargs)
             else:
-                try:
+                if 'password' in inspect.signature(archive_cmdlist_func).parameters:
                     return archive_cmdlist_func(*args, **kwargs)
-                except TypeError as msg:
-                    if "unexpected keyword argument 'password'" in str(msg):
-                        raise util.PatoolError('There is no support for password in %s' % program)
+                raise util.PatoolError('There is no support for password in %s' % program)
         return check_for_password_before_cmdlist_func_call
     except AttributeError as msg:
         raise util.PatoolError(msg)
