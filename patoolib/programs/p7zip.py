@@ -15,13 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the 7z program."""
 
+def _maybe_add_password(cmdlist, password):
+    if password:
+        cmdlist.append('-p%s' % password)
+
 def extract_7z(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a 7z archive."""
     cmdlist = [cmd, 'x']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-o%s' % outdir, '--', archive])
     return cmdlist
 
@@ -32,8 +35,7 @@ def extract_7z_singlefile(archive, compression, cmd, verbosity, interactive, out
     cmdlist = [cmd, 'e']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-o%s' % outdir, '--', archive])
     return cmdlist
 
@@ -60,8 +62,7 @@ def list_7z (archive, compression, cmd, verbosity, interactive, password=None):
     cmdlist = [cmd, 'l']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive])
     return cmdlist
 
@@ -87,8 +88,7 @@ def test_7z (archive, compression, cmd, verbosity, interactive, password=None):
     cmdlist = [cmd, 't']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive])
     return cmdlist
 
@@ -114,8 +114,7 @@ def create_7z(archive, compression, cmd, verbosity, interactive, filenames, pass
     cmdlist = [cmd, 'a']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-t7z', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
@@ -126,8 +125,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames, pas
     cmdlist = [cmd, 'a']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-tzip', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
@@ -138,8 +136,7 @@ def create_xz(archive, compression, cmd, verbosity, interactive, filenames, pass
     cmdlist = [cmd, 'a']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-txz', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
@@ -150,8 +147,7 @@ def create_gzip(archive, compression, cmd, verbosity, interactive, filenames, pa
     cmdlist = [cmd, 'a']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-tgzip', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
@@ -162,8 +158,7 @@ def create_bzip2(archive, compression, cmd, verbosity, interactive, filenames, p
     cmdlist = [cmd, 'a']
     if not interactive:
         cmdlist.append('-y')
-    if password:
-        cmdlist.append('-p%s' % password)
+    _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-tbzip2', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist

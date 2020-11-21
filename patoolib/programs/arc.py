@@ -17,6 +17,7 @@
 import os
 from ..util import PatoolError
 
+
 def _add_password_to_options(options, password):
     """Check password and add it to ARC options."""
     if password is None:
@@ -26,6 +27,7 @@ def _add_password_to_options(options, password):
     options += 'g%s' % password
     return options
 
+
 def extract_arc (archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a ARC archive."""
     # Since extracted files will be placed in the current directory,
@@ -33,6 +35,7 @@ def extract_arc (archive, compression, cmd, verbosity, interactive, outdir, pass
     options = _add_password_to_options('x', password)
     cmdlist = [cmd, options, os.path.abspath(archive)]
     return (cmdlist, {'cwd': outdir})
+
 
 def list_arc (archive, compression, cmd, verbosity, interactive, password=None):
     """List a ARC archive."""
@@ -44,9 +47,11 @@ def list_arc (archive, compression, cmd, verbosity, interactive, password=None):
     cmdlist.append(archive)
     return cmdlist
 
+
 def test_arc (archive, compression, cmd, verbosity, interactive, password=None):
     """Test a ARC archive."""
     return [cmd, _add_password_to_options('t', password), archive]
+
 
 def create_arc (archive, compression, cmd, verbosity, interactive, filenames, password=None):
     """Create a ARC archive."""
