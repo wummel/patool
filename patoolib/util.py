@@ -108,8 +108,10 @@ def add_mimedb_data(mimedb):
     mimedb.encodings_map['.bz2'] = 'bzip2'
     mimedb.encodings_map['.lzma'] = 'lzma'
     mimedb.encodings_map['.xz'] = 'xz'
+    mimedb.encodings_map['.zst'] = 'zstd'
     mimedb.encodings_map['.lz'] = 'lzip'
     mimedb.suffix_map['.tbz2'] = '.tar.bz2'
+    mimedb.suffix_map['.tzst'] = '.tar.zst'
     add_mimetype(mimedb, 'application/x-lzop', '.lzo')
     add_mimetype(mimedb, 'application/x-adf', '.adf')
     add_mimetype(mimedb, 'application/x-arj', '.arj')
@@ -250,11 +252,13 @@ Encoding2Mime = {
     'lzma': "application/x-lzma",
     'lzip': "application/x-lzip",
     'xz': "application/x-xz",
+    'zstd': "application/zstd",
 }
 Mime2Encoding = dict([(_val, _key) for _key, _val in Encoding2Mime.items()])
 # libmagic before version 5.14 identified .gz files as application/x-gzip
 Mime2Encoding['application/x-gzip'] = 'gzip'
-
+# file --mime returns ZStandard incorrect MIME type application/x-zstd (https://bugs.astron.com/view.php?id=103)
+Mime2Encoding['application/x-zstd'] = 'zstd'
 
 def guess_mime_mimedb (filename):
     """Guess MIME type from given filename.
@@ -380,6 +384,7 @@ FileText2Mime = {
     "FLAC audio bitstream data": "audio/flac",
     "MS Windows HtmlHelp Data": "application/x-chm",
     "ZPAQ stream": "application/zpaq",
+    "ZStandard compressed data": "application/zstd",
 }
 
 def guess_mime_file_text (file_prog, filename):

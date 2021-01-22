@@ -99,3 +99,9 @@ class TestTar (ArchiveTest):
     @needs_codec(program, 'xz')
     def test_tar_xz_file (self):
         self.archive_commands('t.tar.xz.foo', skip_create=True)
+
+    @needs_program('file')
+    @needs_codec(program, 'zstd')
+    def test_tar_zstd_file (self):
+        self.archive_commands('t.tar.zst.foo', skip_create=True)
+        self.archive_commands('t.tzst.foo', skip_create=True)

@@ -37,11 +37,11 @@ ArchiveFormats = (
     'bzip2', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
     'flac', 'gzip', 'iso', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
     'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'vhd', 'xz',
-    'zip', 'zoo', 'zpaq')
+    'zip', 'zoo', 'zpaq', 'zstd')
 
 # Supported compressions (used with tar for example)
 # Note that all compressions must also be archive formats
-ArchiveCompressions = ('bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz')
+ArchiveCompressions = ('bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz', 'zstd')
 
 # Map MIME types to archive format
 ArchiveMimetypes = {
@@ -81,6 +81,7 @@ ArchiveMimetypes = {
     'application/x-vhd': 'vhd',
     'application/x-xz': 'xz',
     'application/x-zip-compressed': 'zip',
+    'application/zstd': 'zstd',
     'application/x-zoo': 'zoo',
     'application/zip': 'zip',
     'application/zpaq': 'zpaq',
@@ -271,6 +272,9 @@ ArchivePrograms = {
     'zpaq': {
         None: ('zpaq',),
     },
+    'zstd': {
+        None: ('zstd',),
+    },
 }
 
 # List those programs that have different python module names because of
@@ -291,7 +295,7 @@ def program_supports_compression (program, compression):
       natively, else False.
     """
     if program in ('tar', ):
-        return compression in ('gzip', 'bzip2', 'xz', 'lzip', 'compress', 'lzma') + py_lzma
+        return compression in ('gzip', 'bzip2', 'xz', 'zstd', 'lzip', 'compress', 'lzma') + py_lzma
     elif program in ('star', 'bsdtar', 'py_tarfile'):
         return compression in ('gzip', 'bzip2') + py_lzma
     return False
