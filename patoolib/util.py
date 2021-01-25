@@ -493,7 +493,10 @@ def shell_quote_nt (value):
 
 def stripext (filename):
     """Return the basename without extension of given filename."""
-    return os.path.splitext(os.path.basename(filename))[0]
+    basename, _ = os.path.splitext(os.path.basename(filename))
+    if basename.endswith(".tar"):
+        basename, _ = os.path.splitext(basename)
+    return basename
 
 
 def get_single_outfile (directory, archive, extension=""):
