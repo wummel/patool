@@ -1,11 +1,11 @@
 language: python
 dist: bionic
 python:
-  - "2.7"
   - "3.5"
   - "3.6"
   - "3.7"
   - "3.8"
+  - "3.9"
 # whitelist
 branches:
   only:
@@ -26,8 +26,6 @@ before_install:
 # Note: pigz gives test errors on Travis CI since option "--" is not
 # supported, but pigz 2.3.1 supports it. Must be an older version.
 
-  # lzma is shipped with python 3 but requires 3rd party bindings on python2
-  - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then pip install pyliblzma; fi
 
 # command to install dependencies
 install:
@@ -37,13 +35,8 @@ install:
 # command to run tests
 script:
   - make localbuild
-  - if [ $TRAVIS_PYTHON_VERSION = 3.3 ]; then 
-       COVERAGE= ;
-       PYTEST="python -m pytest";
-    else 
-       COVERAGE="coverage run" ;
-       PYTEST=`which pytest`;
-    fi
+  - COVERAGE="coverage run"
+  - PYTEST=`which pytest`;
   - $COVERAGE $PYTEST -v tests/
 
 after_success:

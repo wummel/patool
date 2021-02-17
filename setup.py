@@ -19,8 +19,8 @@ Setup file for the distuils module.
 """
 from __future__ import print_function
 import sys
-if not hasattr(sys, "version_info") or sys.version_info < (2, 7, 0, "final", 0):
-    raise SystemExit("This program requires Python 2.7 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (3, 5):
+    raise SystemExit("This program requires Python 3.5 or later.")
 import os
 import re
 from setuptools import setup
@@ -219,12 +219,12 @@ installed.
         'Topic :: System :: Archiving',
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU General Public License (GPL)',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Operating System :: OS Independent',
     ],
     distclass = MyDistribution,
