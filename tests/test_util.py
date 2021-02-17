@@ -37,3 +37,10 @@ class UtilTest (unittest.TestCase):
         filename2 = os.path.join(parentdir, '.')
         self.assertFalse(util.is_same_file(filename1, filename2))
         self.assertFalse(util.is_same_filename(filename1, filename2))
+
+    def test_stripext(self):
+        self.assertTrue(util.stripext("bar.gz") == "bar")
+        self.assertTrue(util.stripext("foo/bar.tar.gz") == "bar")
+        self.assertTrue(util.stripext("foo/bartar.gz") == "bartar")
+        self.assertTrue(util.stripext("foo/bar.7z") == "bar")
+        self.assertTrue(util.stripext("foo/bar") == "bar")
