@@ -36,7 +36,8 @@ install:
 script:
   - make localbuild
   - COVERAGE="coverage run"
-  - $COVERAGE python -m pytest -v tests/
+  - PYTEST=`which pytest`;
+  - $COVERAGE $PYTEST -v tests/
 
 after_success:
   - if [ ! -z "$COVERAGE" ]; then codecov; fi
