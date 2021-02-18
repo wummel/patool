@@ -22,10 +22,15 @@ class TestArc(ArchiveTest):
 
     @needs_program(program)
     def test_arc(self):
-        self.archive_commands('t.arc', check=Content.Multifile)
+        self.archive_commands(self.filename + '.arc', check=Content.Multifile)
 
     @needs_program('file')
     @needs_program(program)
     def test_arc_file(self):
-        self.archive_commands('t.arc.foo', check=Content.Multifile, skip_create=True)
+        self.archive_commands(self.filename + '.arc.foo', check=Content.Multifile, skip_create=True)
 
+
+class TestArcPassword(TestArc):
+
+    password = 'thereisnotry'
+    filename = 'p'

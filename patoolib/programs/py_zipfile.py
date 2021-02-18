@@ -22,10 +22,12 @@ import os
 READ_SIZE_BYTES = 1024*1024
 
 
-def list_zip(archive, compression, cmd, verbosity, interactive):
+def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
     """List member of a ZIP archive with the zipfile Python module."""
     try:
         with zipfile.ZipFile(archive, "r") as zfile:
+            if password:
+                zfile.setpassword(pwd=password.encode())
             for name in zfile.namelist():
                 if verbosity >= 0:
                     print(name)
@@ -36,11 +38,13 @@ def list_zip(archive, compression, cmd, verbosity, interactive):
 
 test_zip = list_zip
 
-def extract_zip(archive, compression, cmd, verbosity, interactive, outdir):
+def extract_zip(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a ZIP archive with the zipfile Python module."""
     try:
+        if password:
+            password = password.encode()
         with zipfile.ZipFile(archive) as zfile:
-            zfile.extractall(outdir)
+            zfile.extractall(outdir, pwd=password)
     except Exception as err:
         msg = "error extracting %s: %s" % (archive, err)
         raise util.PatoolError(msg)

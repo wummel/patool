@@ -22,10 +22,15 @@ class TestArj (ArchiveTest):
 
     @needs_program(program)
     def test_arj(self):
-        self.archive_commands('t.arj')
+        self.archive_commands(self.filename + '.arj')
 
     @needs_program('file')
     @needs_program(program)
     def test_arj_file(self):
-        self.archive_commands('t.arj.foo', skip_create=True)
+        self.archive_commands(self.filename + '.arj.foo', skip_create=True)
 
+
+class TestArjPassword(TestArj):
+
+    password = 'thereisnotry'
+    filename = 'p'
