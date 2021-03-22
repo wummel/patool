@@ -19,11 +19,16 @@ def _maybe_add_password(cmdlist, password):
     if password:
         cmdlist.append('-p%s' % password)
 
+def _maybe_disable_interactivity(cmdlist, interactive, password):
+    if not interactive:
+        cmdlist.append('-y')
+        if not password:
+            cmdlist.append('-p-')
+
 def extract_7z(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a 7z archive."""
     cmdlist = [cmd, 'x']
-    if not interactive:
-        cmdlist.append('-y')
+    _maybe_disable_interactivity(cmdlist, interactive, password)
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-o%s' % outdir, '--', archive])
     return cmdlist
@@ -33,8 +38,7 @@ def extract_7z_singlefile(archive, compression, cmd, verbosity, interactive, out
     This makes sure a single file and no subdirectories are created,
     which would cause errors with patool repack."""
     cmdlist = [cmd, 'e']
-    if not interactive:
-        cmdlist.append('-y')
+    _maybe_disable_interactivity(cmdlist, interactive, password)
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-o%s' % outdir, '--', archive])
     return cmdlist
@@ -60,8 +64,7 @@ extract_zip = \
 def list_7z (archive, compression, cmd, verbosity, interactive, password=None):
     """List a 7z archive."""
     cmdlist = [cmd, 'l']
-    if not interactive:
-        cmdlist.append('-y')
+    _maybe_disable_interactivity(cmdlist, interactive, password)
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive])
     return cmdlist
@@ -86,8 +89,7 @@ list_bzip2 = \
 def test_7z (archive, compression, cmd, verbosity, interactive, password=None):
     """Test a 7z archive."""
     cmdlist = [cmd, 't']
-    if not interactive:
-        cmdlist.append('-y')
+    _maybe_disable_interactivity(cmdlist, interactive, password)
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive])
     return cmdlist
