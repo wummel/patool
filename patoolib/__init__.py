@@ -327,7 +327,7 @@ ProgramModules = {
 }
 
 
-def program_supports_compression (program, compression):
+def program_supports_compression(program, compression):
     """Decide if the given program supports the compression natively.
     @return: True iff the program supports the given compression format
       natively, else False.
@@ -341,7 +341,7 @@ def program_supports_compression (program, compression):
 
 from . import util
 
-def get_archive_format (filename):
+def get_archive_format(filename):
     """Detect filename archive format and optional compression."""
     mime, compression = util.guess_mime(filename)
     if not (mime or compression):
@@ -356,7 +356,7 @@ def get_archive_format (filename):
     return format, compression
 
 
-def check_archive_format (format, compression):
+def check_archive_format(format, compression):
     """Make sure format and compression is known."""
     if format not in ArchiveFormats:
         raise util.PatoolError("unknown archive format `%s'" % format)
@@ -364,7 +364,7 @@ def check_archive_format (format, compression):
         raise util.PatoolError("unkonwn archive compression `%s'" % compression)
 
 
-def find_archive_program (format, command, program=None, password=None):
+def find_archive_program(format, command, program=None, password=None):
     """Find suitable archive program for given format and mode."""
     commands = ArchivePrograms[format]
     programs = []
@@ -413,7 +413,7 @@ def _remove_command_without_password_support(programs, format, command):
     return programs_with_support
 
 
-def list_formats ():
+def list_formats():
     """Print information about available archive formats to stdout."""
     print("Archive programs of", App)
     print("Archive programs are searched in the following directories:")
@@ -462,7 +462,7 @@ def check_program_compression(archive, command, program, compression):
                 raise util.PatoolError(msg % (command, archive, compression))
 
 
-def move_outdir_orphan (outdir):
+def move_outdir_orphan(outdir):
     """Move a single file or directory inside outdir a level up.
     Never overwrite files.
     Return (True, outfile) if successful, (False, reason) if not."""
@@ -478,7 +478,7 @@ def move_outdir_orphan (outdir):
     return (False, "multiple files in root")
 
 
-def run_archive_cmdlist (archive_cmdlist, verbosity=0):
+def run_archive_cmdlist(archive_cmdlist, verbosity=0):
     """Run archive command."""
     # archive_cmdlist is a command list with optional keyword arguments
     if isinstance(archive_cmdlist, tuple):
@@ -488,18 +488,18 @@ def run_archive_cmdlist (archive_cmdlist, verbosity=0):
     return util.run_checked(cmdlist, verbosity=verbosity, **runkwargs)
 
 
-def make_file_readable (filename):
+def make_file_readable(filename):
     """Make file user readable if it is not a link."""
     if not os.path.islink(filename):
         util.set_mode(filename, stat.S_IRUSR)
 
 
-def make_dir_readable (filename):
+def make_dir_readable(filename):
     """Make directory user readable and executable."""
     util.set_mode(filename, stat.S_IRUSR|stat.S_IXUSR)
 
 
-def make_user_readable (directory):
+def make_user_readable(directory):
     """Make all files in given directory user readable. Also recurse into
     subdirectories."""
     for root, dirs, files in os.walk(directory, onerror=util.log_error):
@@ -509,7 +509,7 @@ def make_user_readable (directory):
             make_dir_readable(os.path.join(root, dirname))
 
 
-def cleanup_outdir (outdir, archive):
+def cleanup_outdir(outdir, archive):
     """Cleanup outdir after extraction and return target file name and
     result string."""
     make_user_readable(outdir)
@@ -610,7 +610,7 @@ def _handle_archive(archive, command, verbosity=0, interactive=True,
         run_archive_cmdlist(cmdlist, verbosity=verbosity)
 
 
-def get_archive_cmdlist_func (program, command, format):
+def get_archive_cmdlist_func(program, command, format):
     """Get the Python function that executes the given program."""
     # get python module for given archive program
     key = util.stripext(os.path.basename(program).lower())
@@ -643,13 +643,13 @@ def get_archive_cmdlist_func (program, command, format):
         raise util.PatoolError(msg)
 
 
-def rmtree_log_error (func, path, exc):
+def rmtree_log_error(func, path, exc):
     """Error function for shutil.rmtree(). Raises a PatoolError."""
     msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
     util.log_error(msg)
 
 
-def _diff_archives (archive1, archive2, verbosity=0, interactive=True):
+def _diff_archives(archive1, archive2, verbosity=0, interactive=True):
     """Show differences between two archives.
     @return 0 if archives are the same, else 1
     @raises: PatoolError on errors
@@ -687,7 +687,7 @@ def _search_archive(pattern, archive, verbosity=0, interactive=True, password=No
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
 
 
-def _repack_archive (archive1, archive2, verbosity=0, interactive=True, password=None):
+def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=None):
     """Repackage an archive to a different format."""
     format1, compression1 = get_archive_format(archive1)
     format2, compression2 = get_archive_format(archive2)
@@ -825,7 +825,7 @@ def search_archive(pattern, archive, verbosity=0, interactive=True, password=Non
     return res
 
 
-def repack_archive (archive, archive_new, verbosity=0, interactive=True, password=None):
+def repack_archive(archive, archive_new, verbosity=0, interactive=True, password=None):
     """Repack archive to different file and/or format."""
     util.check_existing_filename(archive)
     util.check_new_filename(archive_new)

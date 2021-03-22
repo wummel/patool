@@ -20,7 +20,7 @@ import tarfile
 READ_SIZE_BYTES = 1024*1024
 
 
-def list_tar (archive, compression, cmd, verbosity, interactive):
+def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive with the tarfile Python module."""
     try:
         with tarfile.open(archive) as tfile:
@@ -32,7 +32,7 @@ def list_tar (archive, compression, cmd, verbosity, interactive):
 
 test_tar = list_tar
 
-def extract_tar (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive with the tarfile Python module."""
     try:
         with tarfile.open(archive) as tfile:
@@ -43,7 +43,7 @@ def extract_tar (archive, compression, cmd, verbosity, interactive, outdir):
     return None
 
 
-def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
+def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive with the tarfile Python module."""
     mode = get_tar_mode(compression)
     try:
@@ -56,7 +56,7 @@ def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
     return None
 
 
-def get_tar_mode (compression):
+def get_tar_mode(compression):
     """Determine tarfile open mode according to the given compression."""
     if compression == 'gzip':
         return 'w:gz'

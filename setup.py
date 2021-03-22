@@ -35,12 +35,12 @@ MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
 
-def normpath (path):
+def normpath(path):
     """Norm a path name to platform specific notation."""
     return os.path.normpath(path)
 
 
-def cnormpath (path):
+def cnormpath(path):
     """Norm a path name to platform specific notation and make it absolute."""
     path = normpath(path)
     if os.name == 'nt':
@@ -52,7 +52,7 @@ def cnormpath (path):
 
 
 release_ro = re.compile(r"\(released (.+)\)")
-def get_release_date ():
+def get_release_date():
     """Parse and return relase date as string from doc/changelog.txt."""
     fname = os.path.join("doc", "changelog.txt")
     release_date = "unknown"
@@ -75,7 +75,7 @@ else:
 class MyInstallLib (install_lib, object):
     """Custom library installation."""
 
-    def install (self):
+    def install(self):
         """Install the generated config file."""
         outs = super(MyInstallLib, self).install()
         infile = self.create_conf_file()
@@ -84,7 +84,7 @@ class MyInstallLib (install_lib, object):
         outs.append(outfile)
         return outs
 
-    def create_conf_file (self):
+    def create_conf_file(self):
         """Create configuration file."""
         cmd_obj = self.distribution.get_command_obj("install")
         cmd_obj.ensure_finalized()
@@ -118,11 +118,11 @@ class MyInstallLib (install_lib, object):
         self.distribution.create_conf_file(data, directory=self.install_lib)
         return self.get_conf_output()
 
-    def get_conf_output (self):
+    def get_conf_output(self):
         """Get filename for distribution configuration file."""
         return self.distribution.get_conf_filename(self.install_lib)
 
-    def get_outputs (self):
+    def get_outputs(self):
         """Add the generated config file to the list of outputs."""
         outs = super(MyInstallLib, self).get_outputs()
         conf_output = self.get_conf_output()
@@ -135,12 +135,12 @@ class MyInstallLib (install_lib, object):
 class MyDistribution (Distribution, object):
     """Custom distribution class generating config file."""
 
-    def __init__ (self, attrs):
+    def __init__(self, attrs):
         """Set console and windows scripts."""
         super(MyDistribution, self).__init__(attrs)
         self.console = ['patool']
 
-    def run_commands (self):
+    def run_commands(self):
         """Generate config file and run commands."""
         cwd = os.getcwd()
         data = []
@@ -150,11 +150,11 @@ class MyDistribution (Distribution, object):
         self.create_conf_file(data)
         super(MyDistribution, self).run_commands()
 
-    def get_conf_filename (self, directory):
+    def get_conf_filename(self, directory):
         """Get name for config file."""
         return os.path.join(directory, "_%s_configdata.py" % self.get_name())
 
-    def create_conf_file (self, data, directory=None):
+    def create_conf_file(self, data, directory=None):
         """Create local config file from given data (list of lines) in
         the directory (or current directory if not given)."""
         data.insert(0, "# this file is automatically created by setup.py")

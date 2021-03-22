@@ -17,7 +17,7 @@
 from .. import util
 
 
-def create_compress (archive, compression, cmd, verbosity, interactive, filenames):
+def create_compress(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a compressed archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:

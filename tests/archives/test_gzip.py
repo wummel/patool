@@ -21,7 +21,7 @@ class TestGzip (ArchiveTest):
     program = 'gzip'
 
     @needs_program(program)
-    def test_gzip (self):
+    def test_gzip(self):
         self.archive_commands('t.txt.gz', check=Content.Singlefile)
         self.archive_extract('t.txt.Z', check=Content.Singlefile)
 

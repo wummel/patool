@@ -18,12 +18,12 @@ import patoolib
 
 class TestConfiguration (unittest.TestCase):
 
-    def test_archive_mimetypes (self):
+    def test_archive_mimetypes(self):
         # test that each format has a MIME type
         self.assertEqual(set(patoolib.ArchiveFormats),
                          set(patoolib.ArchiveMimetypes.values()))
 
-    def test_archive_programs (self):
+    def test_archive_programs(self):
         # test that the key is an archive format
         self.assertEqual(set(patoolib.ArchiveFormats),
                          set(patoolib.ArchivePrograms.keys()))
@@ -32,16 +32,16 @@ class TestConfiguration (unittest.TestCase):
                 if command is not None:
                     self.assertTrue(command in patoolib.ArchiveCommands)
 
-    def test_compression_programs (self):
+    def test_compression_programs(self):
         self.assertTrue(set(patoolib.ArchiveCompressions).issubset(
                          set(patoolib.ArchiveFormats)))
 
-    def test_encoding_mimes (self):
+    def test_encoding_mimes(self):
         self.assertEqual(set(patoolib.ArchiveCompressions),
                          set(patoolib.util.Encoding2Mime.keys()))
         for mime in patoolib.util.Encoding2Mime.values():
             self.assertTrue(mime in patoolib.ArchiveMimetypes)
 
-    def test_filetext_mime (self):
+    def test_filetext_mime(self):
         for mime in patoolib.util.FileText2Mime.values():
             self.assertTrue(mime in patoolib.ArchiveMimetypes)

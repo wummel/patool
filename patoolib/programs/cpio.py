@@ -18,7 +18,7 @@ import os
 import sys
 from .. import util
 
-def extract_cpio (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_cpio(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CPIO archive."""
     cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
         '--preserve-modification-time']
@@ -31,7 +31,7 @@ def extract_cpio (archive, compression, cmd, verbosity, interactive, outdir):
     return (cmdlist, {'cwd': outdir, 'shell': True})
 
 
-def list_cpio (archive, compression, cmd, verbosity, interactive):
+def list_cpio(archive, compression, cmd, verbosity, interactive):
     """List a CPIO archive."""
     cmdlist = [cmd, '-i', '-t']
     if verbosity > 1:

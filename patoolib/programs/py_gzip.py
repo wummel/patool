@@ -21,7 +21,7 @@ from .. import util
 
 READ_SIZE_BYTES = 1024*1024
 
-def extract_gzip (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_gzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a GZIP archive with the gzip Python module."""
     targetname = util.get_single_outfile(outdir, archive)
     try:
@@ -37,7 +37,7 @@ def extract_gzip (archive, compression, cmd, verbosity, interactive, outdir):
     return None
 
 
-def create_gzip (archive, compression, cmd, verbosity, interactive, filenames):
+def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a GZIP archive with the gzip Python module."""
     if len(filenames) > 1:
         raise util.PatoolError('multi-file compression not supported in Python gzip')

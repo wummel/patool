@@ -17,14 +17,14 @@
 import os
 
 
-def extract_tar (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive."""
     cmdlist = [cmd, '--extract']
     add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive, '--directory', outdir])
     return cmdlist
 
-def list_tar (archive, compression, cmd, verbosity, interactive):
+def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive."""
     cmdlist = [cmd, '--list']
     add_tar_opts(cmdlist, compression, verbosity)
@@ -33,7 +33,7 @@ def list_tar (archive, compression, cmd, verbosity, interactive):
 
 test_tar = list_tar
 
-def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
+def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive."""
     cmdlist = [cmd, '--create']
     add_tar_opts(cmdlist, compression, verbosity)
@@ -41,7 +41,7 @@ def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist.extend(filenames)
     return cmdlist
 
-def add_tar_opts (cmdlist, compression, verbosity):
+def add_tar_opts(cmdlist, compression, verbosity):
     """Add tar options to cmdlist."""
     progname = os.path.basename(cmdlist[0])
     if compression == 'gzip':

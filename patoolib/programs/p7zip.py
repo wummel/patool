@@ -57,7 +57,7 @@ extract_zip = \
   extract_vhd = \
   extract_7z
 
-def list_7z (archive, compression, cmd, verbosity, interactive, password=None):
+def list_7z(archive, compression, cmd, verbosity, interactive, password=None):
     """List a 7z archive."""
     cmdlist = [cmd, 'l']
     if not interactive:
@@ -83,7 +83,7 @@ list_bzip2 = \
   list_7z
 
 
-def test_7z (archive, compression, cmd, verbosity, interactive, password=None):
+def test_7z(archive, compression, cmd, verbosity, interactive, password=None):
     """Test a 7z archive."""
     cmdlist = [cmd, 't']
     if not interactive:

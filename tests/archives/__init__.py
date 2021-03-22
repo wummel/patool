@@ -54,7 +54,7 @@ class ArchiveTest (unittest.TestCase):
     # default archive basename to check
     filename = 't'
 
-    def archive_commands (self, filename, **kwargs):
+    def archive_commands(self, filename, **kwargs):
         """Run archive commands list, test, extract and create.
         All keyword arguments are delegated to the create test function."""
         self.archive_list(filename)
@@ -64,7 +64,7 @@ class ArchiveTest (unittest.TestCase):
         if not kwargs.get('skip_create'):
             self.archive_create(filename, **kwargs)
 
-    def archive_extract (self, filename, check=Content.Recursive):
+    def archive_extract(self, filename, check=Content.Recursive):
         """Test archive extraction."""
         archive = os.path.join(datadir, filename)
         self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
@@ -73,7 +73,7 @@ class ArchiveTest (unittest.TestCase):
         relarchive = os.path.join("..", archive[len(basedir)+1:])
         self._archive_extract(relarchive, check, verbosity=1)
 
-    def _archive_extract (self, archive, check, verbosity=0):
+    def _archive_extract(self, archive, check, verbosity=0):
         # create a temporary directory for extraction
         tmpdir = patoolib.util.tmpdir(dir=basedir)
         try:
@@ -88,7 +88,7 @@ class ArchiveTest (unittest.TestCase):
         finally:
             shutil.rmtree(tmpdir)
 
-    def check_extracted_archive (self, archive, output, check):
+    def check_extracted_archive(self, archive, output, check):
         if check == Content.Recursive:
             # outdir is the 't' directory of the archive
             self.assertEqual(output, 't')
@@ -106,30 +106,30 @@ class ArchiveTest (unittest.TestCase):
             txtfile2 = os.path.join(output, 't2.txt')
             self.check_textfile(txtfile2, 't2.txt')
 
-    def check_directory (self, dirname, expectedname):
+    def check_directory(self, dirname, expectedname):
         """Check that directory exists."""
         self.assertTrue(os.path.isdir(dirname), dirname)
         self.assertEqual(os.path.basename(dirname), expectedname)
 
-    def check_textfile (self, filename, expectedname):
+    def check_textfile(self, filename, expectedname):
         """Check that filename exists and has the default content."""
         self.assertTrue(os.path.isfile(filename), repr(filename))
         self.assertEqual(os.path.basename(filename), expectedname)
         self.assertEqual(get_filecontent(filename), TextFileContent)
 
-    def archive_list (self, filename):
+    def archive_list(self, filename):
         """Test archive listing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
             patoolib.list_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
 
-    def archive_test (self, filename):
+    def archive_test(self, filename):
         """Test archive testing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
             patoolib.test_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
 
-    def archive_create (self, archive, srcfiles=None, check=Content.Recursive):
+    def archive_create(self, archive, srcfiles=None, check=Content.Recursive):
         """Test archive creation."""
         if srcfiles is None:
             if check == Content.Recursive:
@@ -150,7 +150,7 @@ class ArchiveTest (unittest.TestCase):
             if olddir:
                 os.chdir(olddir)
 
-    def _archive_create (self, archive, srcfiles, program=None, verbosity=0):
+    def _archive_create(self, archive, srcfiles, program=None, verbosity=0):
         """Create archive from filename."""
         for srcfile in srcfiles:
             self.assertFalse(os.path.isabs(srcfile))

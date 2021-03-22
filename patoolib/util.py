@@ -189,13 +189,13 @@ class memoized (object):
         return self.func.__doc__
 
 
-def backtick (cmd, encoding='utf-8'):
+def backtick(cmd, encoding='utf-8'):
     """Return decoded output from command."""
     data = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
     return data.decode(encoding)
 
 
-def run (cmd, verbosity=0, **kwargs):
+def run(cmd, verbosity=0, **kwargs):
     """Run command without error checking.
     @return: command return code"""
     # Note that shell_quote_nt() result is not suitable for copy-paste
@@ -219,7 +219,7 @@ def run (cmd, verbosity=0, **kwargs):
     return res
 
 
-def run_checked (cmd, ret_ok=(0,), **kwargs):
+def run_checked(cmd, ret_ok=(0,), **kwargs):
     """Run command and raise PatoolError on error."""
     retcode = run(cmd, **kwargs)
     if retcode not in ret_ok:
@@ -229,7 +229,7 @@ def run_checked (cmd, ret_ok=(0,), **kwargs):
 
 
 @memoized
-def guess_mime (filename):
+def guess_mime(filename):
     """Guess the MIME type of given filename using file(1) and if that
     fails by looking at the filename extension with the Python mimetypes
     module.
@@ -256,7 +256,7 @@ Mime2Encoding = dict([(_val, _key) for _key, _val in Encoding2Mime.items()])
 Mime2Encoding['application/x-gzip'] = 'gzip'
 
 
-def guess_mime_mimedb (filename):
+def guess_mime_mimedb(filename):
     """Guess MIME type from given filename.
     @return: tuple (mime, encoding)
     """
@@ -271,7 +271,7 @@ def guess_mime_mimedb (filename):
     return mime, encoding
 
 
-def guess_mime_file (filename):
+def guess_mime_file(filename):
     """Determine MIME type of filename with file(1):
      (a) using `file --mime`
      (b) using `file` and look the result string
@@ -321,7 +321,7 @@ def guess_mime_file (filename):
         return Encoding2Mime.get(encoding, mime), None
 
 
-def guess_mime_file_mime (file_prog, filename):
+def guess_mime_file_mime(file_prog, filename):
     """Determine MIME type of filename with file(1) and --mime option.
     @return: tuple (mime, encoding)
     """
@@ -337,7 +337,7 @@ def guess_mime_file_mime (file_prog, filename):
     return mime, encoding
 
 
-def get_file_mime_encoding (parts):
+def get_file_mime_encoding(parts):
     """Get encoding value from splitted output of file --mime --uncompress."""
     for part in parts:
         for subpart in part.split(" "):
@@ -381,7 +381,7 @@ FileText2Mime = {
     "ZPAQ stream": "application/zpaq",
 }
 
-def guess_mime_file_text (file_prog, filename):
+def guess_mime_file_text(file_prog, filename):
     """Determine MIME type of filename with file(1)."""
     cmd = [file_prog, "--brief", filename]
     try:
@@ -396,7 +396,7 @@ def guess_mime_file_text (file_prog, filename):
     return None
 
 
-def check_existing_filename (filename, onlyfiles=True):
+def check_existing_filename(filename, onlyfiles=True):
     """Ensure that given filename is a valid, existing file."""
     if not os.path.exists(filename):
         raise PatoolError("file `%s' was not found" % filename)
@@ -412,13 +412,13 @@ def check_writable_filename(filename):
         raise PatoolError("file `%s' is not writable" % filename)
 
 
-def check_new_filename (filename):
+def check_new_filename(filename):
     """Check that filename does not already exist."""
     if os.path.exists(filename):
         raise PatoolError("cannot overwrite existing file `%s'" % filename)
 
 
-def check_archive_filelist (filenames):
+def check_archive_filelist(filenames):
     """Check that file list is not empty and contains only existing files."""
     if not filenames:
         raise PatoolError("cannot create archive with empty filelist")
@@ -426,7 +426,7 @@ def check_archive_filelist (filenames):
         check_existing_filename(filename, onlyfiles=False)
 
 
-def set_mode (filename, flags):
+def set_mode(filename, flags):
     """Set mode flags for given filename if not already set."""
     try:
         mode = os.lstat(filename).st_mode
@@ -465,17 +465,17 @@ def strsize(b, grouping=True):
     return u"%sGB" % locale.format("%.1f", (float(b) / (1024*1024*1024)), grouping)
 
 
-def tmpdir (dir=None):
+def tmpdir(dir=None):
     """Return a temporary directory for extraction."""
     return tempfile.mkdtemp(suffix='', prefix='Unpack_', dir=dir)
 
 
-def tmpfile (dir=None, prefix="temp", suffix=None):
+def tmpfile(dir=None, prefix="temp", suffix=None):
     """Return a temporary file."""
     return tempfile.mkstemp(suffix=suffix, prefix=prefix, dir=dir)[1]
 
 
-def shell_quote (value):
+def shell_quote(value):
     """Quote all shell metacharacters in given string value with strong
     (ie. single) quotes, handling the single quote especially."""
     if os.name == 'nt':
@@ -483,7 +483,7 @@ def shell_quote (value):
     return "'%s'" % value.replace("'", r"'\''")
 
 
-def shell_quote_nt (value):
+def shell_quote_nt(value):
     """Quote argument for Windows system. Modeled after distutils
     _nt_quote_args() function."""
     if " " in value:
@@ -491,7 +491,7 @@ def shell_quote_nt (value):
     return value
 
 
-def stripext (filename):
+def stripext(filename):
     """Return the basename without extension of given filename."""
     basename, _ = os.path.splitext(os.path.basename(filename))
     if basename.endswith(".tar"):
@@ -499,7 +499,7 @@ def stripext (filename):
     return basename
 
 
-def get_single_outfile (directory, archive, extension=""):
+def get_single_outfile(directory, archive, extension=""):
     """Get output filename if archive is in a single file format like gzip."""
     outfile = os.path.join(directory, stripext(archive))
     if os.path.exists(outfile + extension):
@@ -513,12 +513,12 @@ def get_single_outfile (directory, archive, extension=""):
     return outfile + extension
 
 
-def log_error (msg, out=sys.stderr):
+def log_error(msg, out=sys.stderr):
     """Print error message to stderr (or any other given output)."""
     print("patool error:", msg, file=out)
 
 
-def log_info (msg, out=sys.stdout):
+def log_info(msg, out=sys.stdout):
     """Print info message to stdout (or any other given output)."""
     print("patool:", msg, file=out)
 
@@ -604,7 +604,7 @@ def p7zip_supports_rar():
 
 
 @memoized
-def find_program (program):
+def find_program(program):
     """Look for program in environment PATH variable."""
     if os.name == 'nt':
         # Add some well-known archiver programs to the search path
@@ -618,7 +618,7 @@ def find_program (program):
     return which(program, path=path)
 
 
-def append_to_path (path, directory):
+def append_to_path(path, directory):
     """Add a directory to the PATH environment variable, if it is a valid
     directory."""
     if not os.path.isdir(directory) or directory in path:
@@ -628,7 +628,7 @@ def append_to_path (path, directory):
     return path + directory
 
 
-def get_nt_7z_dir ():
+def get_nt_7z_dir():
     """Return 7-Zip directory from registry, or an empty string."""
     # Python 3.x renamed the _winreg module to winreg
     try:
@@ -645,13 +645,13 @@ def get_nt_7z_dir ():
         return ""
 
 
-def get_nt_program_dir ():
+def get_nt_program_dir():
     """Return the Windows program files directory."""
     progvar = "%ProgramFiles%"
     return os.path.expandvars(progvar)
 
 
-def get_nt_mac_dir ():
+def get_nt_mac_dir():
     """Return Monkey Audio Compressor (MAC) directory."""
     return os.path.join(get_nt_program_dir(), "Monkey's Audio")
 
@@ -661,14 +661,14 @@ def get_nt_winrar_dir():
     return os.path.join(get_nt_program_dir(), "WinRAR")
 
 
-def strlist_with_or (alist):
+def strlist_with_or(alist):
     """Return comma separated string, and last entry appended with ' or '."""
     if len(alist) > 1:
         return "%s or %s" % (", ".join(alist[:-1]), alist[-1])
     return ", ".join(alist)
 
 
-def is_same_file (filename1, filename2):
+def is_same_file(filename1, filename2):
     """Check if filename1 and filename2 point to the same file object.
     There can be false negatives, ie. the result is False, but it is
     the same file anyway. Reason is that network filesystems can create
@@ -681,7 +681,7 @@ def is_same_file (filename1, filename2):
     return is_same_filename(filename1, filename2)
 
 
-def is_same_filename (filename1, filename2):
+def is_same_filename(filename1, filename2):
     """Check if filename1 and filename2 are the same filename."""
     return os.path.realpath(filename1) == os.path.realpath(filename2)
 

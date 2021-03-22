@@ -17,7 +17,7 @@
 import os
 from .. import util
 
-def extract_lrzip (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_lrzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a LRZIP archive."""
     cmdlist = [cmd, '-d']
     if verbosity > 1:
@@ -26,7 +26,7 @@ def extract_lrzip (archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
     return cmdlist
 
-def test_lrzip (archive, compression, cmd, verbosity, interactive):
+def test_lrzip(archive, compression, cmd, verbosity, interactive):
     """Test a LRZIP archive."""
     cmdlist = [cmd, '-t']
     if verbosity > 1:
@@ -34,7 +34,7 @@ def test_lrzip (archive, compression, cmd, verbosity, interactive):
     cmdlist.append(archive)
     return cmdlist
 
-def create_lrzip (archive, compression, cmd, verbosity, interactive, filenames):
+def create_lrzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a LRZIP archive."""
     cmdlist = [cmd, '-o', archive]
     if verbosity > 1:

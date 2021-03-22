@@ -116,7 +116,7 @@ def run_recompress(args):
     return res
 
 
-def run_formats (args):
+def run_formats(args):
     """List supported and available archive formats."""
     patoolib.list_formats()
     return 0

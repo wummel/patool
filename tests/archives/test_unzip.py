@@ -21,7 +21,7 @@ class TestUnzip (ArchiveTest):
     program = 'unzip'
 
     @needs_program(program)
-    def test_unzip (self):
+    def test_unzip(self):
         self.archive_extract('t.zip', check=None)
         self.archive_list('t.zip')
         self.archive_test('t.zip')
@@ -40,7 +40,7 @@ class TestUnzip (ArchiveTest):
 
     @needs_program('file')
     @needs_program(program)
-    def test_unzip_file (self):
+    def test_unzip_file(self):
         self.archive_extract('t.zip.foo', check=None)
         self.archive_list('t.zip.foo')
         self.archive_test('t.zip.foo')
@@ -64,7 +64,7 @@ class TestUnzipPassword (ArchiveTest):
     password = 'thereisnotry'
 
     @needs_program(program)
-    def test_unzip (self):
+    def test_unzip(self):
         self.archive_extract('p.zip', check=None)
         self.archive_list('p.zip')
         self.archive_test('p.zip')
@@ -74,7 +74,7 @@ class TestUnzipPassword (ArchiveTest):
 
     @needs_program('file')
     @needs_program(program)
-    def test_unzip_file (self):
+    def test_unzip_file(self):
         self.archive_extract('p.zip.foo', check=None)
         self.archive_list('p.zip.foo')
         self.archive_test('p.zip.foo')

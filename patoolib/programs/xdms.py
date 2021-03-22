@@ -22,7 +22,7 @@ def _maybe_add_password(cmdlist, password):
         cmdlist.extend(['-p', password])
 
 
-def extract_dms (archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_dms(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a DMS archive."""
     check_archive_ext(archive)
     cmdlist = [cmd, '-d', outdir]
@@ -33,7 +33,7 @@ def extract_dms (archive, compression, cmd, verbosity, interactive, outdir, pass
     return cmdlist
 
 
-def list_dms (archive, compression, cmd, verbosity, interactive, password=None):
+def list_dms(archive, compression, cmd, verbosity, interactive, password=None):
     """List a DMS archive."""
     check_archive_ext(archive)
     cmdlist = [cmd, 'v']
@@ -42,7 +42,7 @@ def list_dms (archive, compression, cmd, verbosity, interactive, password=None):
     return cmdlist
 
 
-def test_dms (archive, compression, cmd, verbosity, interactive, password=None):
+def test_dms(archive, compression, cmd, verbosity, interactive, password=None):
     """Test a DMS archive."""
     check_archive_ext(archive)
     cmdlist = [cmd, 't']
@@ -51,7 +51,7 @@ def test_dms (archive, compression, cmd, verbosity, interactive, password=None):
     return cmdlist
 
 
-def check_archive_ext (archive):
+def check_archive_ext(archive):
     """xdms(1) cannot handle files with extensions other than '.dms'."""
     if not archive.lower().endswith(".dms"):
         rest = archive[-4:]

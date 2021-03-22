@@ -21,14 +21,14 @@ class TestBzip2 (ArchiveTest):
     program = 'bzip2'
 
     @needs_program(program)
-    def test_bzip2 (self):
+    def test_bzip2(self):
         self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         self.archive_test('t.txt.bz2')
         self.archive_create('t.txt.bz2', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)
-    def test_bzip2_file (self):
+    def test_bzip2_file(self):
         self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
         self.archive_test('t.txt.bz2.foo')
 

@@ -21,11 +21,11 @@ class TestUncompressReal (ArchiveTest):
     program = 'uncompress.real'
 
     @needs_program(program)
-    def test_uncompress (self):
+    def test_uncompress(self):
         self.archive_extract('t.txt.Z', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)
-    def test_uncompress_file (self):
+    def test_uncompress_file(self):
         self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
 

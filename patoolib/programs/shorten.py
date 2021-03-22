@@ -16,7 +16,7 @@
 """Archive commands for the shorten program."""
 from .. import util
 
-def extract_shn (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_shn(archive, compression, cmd, verbosity, interactive, outdir):
     """Decompress a SHN archive to a WAV file."""
     cmdlist = [util.shell_quote(cmd)]
     outfile = util.get_single_outfile(outdir, archive, extension=".wav")
@@ -25,7 +25,7 @@ def extract_shn (archive, compression, cmd, verbosity, interactive, outdir):
     return (cmdlist, {'shell': True})
 
 
-def create_shn (archive, compression, cmd, verbosity, interactive, filenames):
+def create_shn(archive, compression, cmd, verbosity, interactive, filenames):
     """Compress a WAV file to a SHN archive."""
     if len(filenames) > 1:
         raise util.PatoolError("multiple filenames for shorten not supported")

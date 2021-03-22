@@ -17,7 +17,7 @@
 import os
 from .. import util
 
-def extract_rpm (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_rpm(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a RPM archive."""
     # also check cpio
     cpio = util.find_program("cpio")

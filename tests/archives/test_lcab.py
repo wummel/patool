@@ -22,6 +22,6 @@ class TestLcab (ArchiveTest):
 
     @needs_program(program)
     @needs_program('cabextract')
-    def test_lcab (self):
+    def test_lcab(self):
         self.archive_create('t.cab')
 

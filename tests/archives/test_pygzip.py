@@ -21,12 +21,12 @@ class TestPygzip (ArchiveTest):
     program = 'py_gzip'
 
     @needs_program('gzip')
-    def test_py_gzip (self):
+    def test_py_gzip(self):
         self.archive_extract('t.txt.gz', check=Content.Singlefile)
         # gzip is used to test the created archive
         self.archive_create('t.txt.gz', check=Content.Singlefile)
 
     @needs_program('file')
-    def test_py_gzip_file (self):
+    def test_py_gzip_file(self):
         self.archive_extract('t.txt.gz.foo', check=Content.Singlefile)
 

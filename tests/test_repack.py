@@ -36,16 +36,16 @@ class ArchiveRepackTest (unittest.TestCase):
     @needs_program('diff')
     @needs_one_program(('tar', 'star', '7z'))
     @needs_one_program(('zip', '7z'))
-    def test_repack (self):
+    def test_repack(self):
         self.repack('t.tar', 't.zip')
 
     @needs_program('diff')
     @needs_one_program(('gzip', '7z'))
     @needs_one_program(('bzip2', '7z'))
-    def test_repack_same_format_different_compression (self):
+    def test_repack_same_format_different_compression(self):
         self.repack('t.tar.gz', 't.tar.bz2')
 
     @needs_program('diff')
-    def test_repack_same_format (self):
+    def test_repack_same_format(self):
         self.repack('t.tar.gz', 't1.tar.gz')
         self.repack('t.zip', 't1.zip')

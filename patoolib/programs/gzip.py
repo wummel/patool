@@ -32,7 +32,7 @@ def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):
     return (cmdlist, {'shell': True})
 
 
-def list_gzip (archive, compression, cmd, verbosity, interactive):
+def list_gzip(archive, compression, cmd, verbosity, interactive):
     """List a GZIP archive."""
     cmdlist = [cmd]
     if verbosity > 0:

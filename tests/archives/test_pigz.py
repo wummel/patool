@@ -21,11 +21,11 @@ class TestPigz (ArchiveTest):
     program = 'pigz'
 
     @needs_program(program)
-    def test_pigz (self):
+    def test_pigz(self):
         self.archive_commands('t.txt.gz', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)
-    def test_pigz_file (self):
+    def test_pigz_file(self):
         self.archive_commands('t.txt.gz.foo', check=Content.Singlefile,
           skip_create=True, skip_test=True)

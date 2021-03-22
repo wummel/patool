@@ -21,10 +21,10 @@ class TestChmlib (ArchiveTest):
     program = 'extract_chmLib'
 
     @needs_program(program)
-    def test_archmage (self):
+    def test_archmage(self):
         self.archive_extract('t.chm', check=None)
 
     @needs_program('file')
     @needs_program(program)
-    def test_archmage_file (self):
+    def test_archmage_file(self):
         self.archive_extract('t.chm.foo', check=None)

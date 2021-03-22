@@ -21,7 +21,7 @@ from .. import util
 extract_xz = extract_singlefile_standard
 test_xz = test_singlefile_standard
 
-def list_xz (archive, compression, cmd, verbosity, interactive):
+def list_xz(archive, compression, cmd, verbosity, interactive):
     """List a XZ archive."""
     cmdlist = [cmd]
     cmdlist.append('-l')

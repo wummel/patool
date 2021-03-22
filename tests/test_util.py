@@ -19,19 +19,19 @@ from patoolib import util
 
 class UtilTest (unittest.TestCase):
 
-    def test_samefile1 (self):
+    def test_samefile1(self):
         filename1 = filename2 = __file__
         self.assertTrue(util.is_same_filename(filename1, filename2))
         self.assertTrue(util.is_same_file(filename1, filename2))
 
-    def test_samefile2 (self):
+    def test_samefile2(self):
         parentdir = os.path.dirname(__file__)
         filename1 = os.path.dirname(parentdir)
         filename2 = os.path.join(parentdir, '..')
         self.assertTrue(util.is_same_filename(filename1, filename2))
         self.assertTrue(util.is_same_file(filename1, filename2))
 
-    def test_samefile3 (self):
+    def test_samefile3(self):
         parentdir = os.path.dirname(__file__)
         filename1 = os.path.dirname(parentdir)
         filename2 = os.path.join(parentdir, '.')

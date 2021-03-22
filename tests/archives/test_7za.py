@@ -21,7 +21,7 @@ class Test7za (ArchiveTest):
     program = '7za'
 
     @needs_program(program)
-    def test_p7azip (self):
+    def test_p7azip(self):
         self.archive_commands('t .7z')
         self.archive_commands('t .cb7')
         self.archive_commands('t.zip')
@@ -47,7 +47,7 @@ class Test7za (ArchiveTest):
 
     @needs_program('file')
     @needs_program(program)
-    def test_7za_file (self):
+    def test_7za_file(self):
         self.archive_commands('t.7z.foo', skip_create=True)
         self.archive_commands('t.cb7.foo', skip_create=True)
         self.archive_commands('t.zip.foo', skip_create=True)

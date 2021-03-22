@@ -67,10 +67,10 @@ def needs_module(name):
     return _need_func(has_module, name, 'Python module')
 
 
-def needs_codec (program, codec):
+def needs_codec(program, codec):
     """Decorator skipping test if given program codec is not available."""
-    def check_prog (f):
-        def newfunc (*args, **kwargs):
+    def check_prog(f):
+        def newfunc(*args, **kwargs):
             if not patoolib.util.find_program(program):
                 pytest.skip("program `%s' not available" % program)
             if not has_codec(program, codec):
@@ -81,7 +81,7 @@ def needs_codec (program, codec):
     return check_prog
 
 
-def has_codec (program, codec):
+def has_codec(program, codec):
     """Test if program supports given codec."""
     if program == '7z' and codec == 'rar':
         return patoolib.util.p7zip_supports_rar()

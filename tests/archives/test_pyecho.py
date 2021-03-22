@@ -20,7 +20,7 @@ class TestPyecho (ArchiveTest):
 
     program = 'py_echo'
 
-    def test_py_echo (self):
+    def test_py_echo(self):
         self.archive_list('t.txt.bz2')
         self.archive_list('t.txt.Z')
         self.archive_list('t.txt.lzma')
@@ -32,7 +32,7 @@ class TestPyecho (ArchiveTest):
         self.archive_list('t.flac')
 
     @needs_program('file')
-    def test_py_echo_file (self):
+    def test_py_echo_file(self):
         self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.txt.Z.foo')
         # file(1) does not recognize .lzma files

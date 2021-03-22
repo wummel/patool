@@ -21,12 +21,12 @@ class TestArchmage (ArchiveTest):
     program = 'archmage'
 
     @needs_program(program)
-    def test_archmage (self):
+    def test_archmage(self):
         self.archive_extract('t.chm', check=None)
         self.archive_test('t.chm')
 
     @needs_program('file')
     @needs_program(program)
-    def test_archmage_file (self):
+    def test_archmage_file(self):
         self.archive_extract('t.chm.foo', check=None)
         self.archive_test('t.chm.foo')

@@ -22,7 +22,7 @@ class TestPylzma (ArchiveTest):
 
     @needs_program('xz')
     @needs_module('lzma')
-    def test_py_lzma (self):
+    def test_py_lzma(self):
         self.archive_extract('t.txt.lzma', check=Content.Singlefile)
         self.archive_extract('t.txt.xz', check=Content.Singlefile)
         # xz is used to test the created archive
@@ -31,7 +31,7 @@ class TestPylzma (ArchiveTest):
 
     @needs_program('file')
     @needs_module('lzma')
-    def test_py_lzma_file (self):
+    def test_py_lzma_file(self):
         self.archive_extract('t.txt.lzma.foo', check=Content.Singlefile)
         self.archive_extract('t.txt.xz.foo', check=Content.Singlefile)
 

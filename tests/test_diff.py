@@ -24,7 +24,7 @@ class ArchiveDiffTest (unittest.TestCase):
     @needs_program('diff')
     @needs_program('tar')
     @needs_program('unzip')
-    def test_diff (self):
+    def test_diff(self):
         archive1 = os.path.join(datadir, "t.tar")
         archive2 = os.path.join(datadir, "t.zip")
         run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "diff", archive1, archive2])

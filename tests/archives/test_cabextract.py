@@ -21,7 +21,7 @@ class TestCabextract (ArchiveTest):
     program = 'cabextract'
 
     @needs_program(program)
-    def test_cabextract (self):
+    def test_cabextract(self):
         self.archive_list('t.cab')
         self.archive_extract('t.cab', check=None)
 

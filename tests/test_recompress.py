@@ -35,6 +35,6 @@ class ArchiveRecompressTest (unittest.TestCase):
                 os.remove(tmpfile)
 
     @needs_one_program(('zip', '7z'))
-    def test_repack (self):
+    def test_repack(self):
         self.recompress('t.zip')
 

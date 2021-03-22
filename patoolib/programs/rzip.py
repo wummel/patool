@@ -16,7 +16,7 @@
 """Archive commands for the rzip program."""
 from .. import util
 
-def extract_rzip (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_rzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an RZIP archive."""
     cmdlist = [cmd, '-d', '-k']
     if verbosity > 1:
@@ -25,7 +25,7 @@ def extract_rzip (archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend(["-o", outfile, archive])
     return cmdlist
 
-def create_rzip (archive, compression, cmd, verbosity, interactive, filenames):
+def create_rzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an RZIP archive."""
     cmdlist = [cmd, '-k', '-9', '-o', archive]
     if verbosity > 1:

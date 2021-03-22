@@ -17,6 +17,6 @@
 import os
 
 
-def extract_chm (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_chm(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CHM archive."""
     return [cmd, os.path.abspath(archive), outdir]

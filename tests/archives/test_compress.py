@@ -21,5 +21,5 @@ class TestCompress (ArchiveTest):
     program = 'compress'
 
     @needs_program(program)
-    def test_compress (self):
+    def test_compress(self):
         self.archive_create('t.txt.Z', check=Content.Singlefile)
