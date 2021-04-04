@@ -11,3 +11,4 @@ Changelog.patool*
 /tests/__pycache__
 /_patool_configdata.py
 /patool.egg-info/
+.venv/
