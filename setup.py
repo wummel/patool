@@ -64,7 +64,7 @@ installed.
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        'importlib-metadata ~= 1.0 ; python_version < "3.8"',
+        'importlib-metadata ~= 3.0 ; python_version < "3.8"',
     ],
     #packages = ['patoolib', 'patoolib.programs'],
     packages = setuptools.find_packages(),
