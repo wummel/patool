@@ -15,9 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the 7z program."""
 
-def _maybe_add_password(cmdlist, password):
+def _maybe_add_password(cmdlist, password, is_creating_7z=False):
     if password:
-        cmdlist.append('-p%s' % password)
+        if is_creating_7z:
+            cmdlist.extend(['-p%s' % password, '-mhe=on'])
+        else:
+            cmdlist.append('-p%s' % password)
 
 def extract_7z(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a 7z archive."""
@@ -114,7 +117,7 @@ def create_7z(archive, compression, cmd, verbosity, interactive, filenames, pass
     cmdlist = [cmd, 'a']
     if not interactive:
         cmdlist.append('-y')
-    _maybe_add_password(cmdlist, password)
+    _maybe_add_password(cmdlist, password, is_creating_7z=True)
     cmdlist.extend(['-t7z', '-mx=9', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
