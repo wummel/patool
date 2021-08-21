@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 # Copyright (C) 2010-2016 Bastian Kleineidam
 #
