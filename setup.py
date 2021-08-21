@@ -209,7 +209,7 @@ installed.
     maintainer = MyName,
     maintainer_email = MyEmail,
     license = "GPL",
-    url = "http://wummel.github.io/patool/",
+    url = "https://wummel.github.io/patool/",
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],

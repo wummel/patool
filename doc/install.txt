@@ -3,7 +3,7 @@ Installation
 
 First, install the required software.
 
-1. Python >= 2.7 from http://www.python.org/
+1. Python >= 2.7 from https://www.python.org/
    
 
 Now install the application.

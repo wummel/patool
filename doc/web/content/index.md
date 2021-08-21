@@ -4,7 +4,7 @@ slug: index
 ---
 Introduction
 -------------
-[![XKCD Tar comic](http://imgs.xkcd.com/comics/tar.png)](http://xkcd.com/1168/)
+[![XKCD Tar comic](https://imgs.xkcd.com/comics/tar.png)](https://xkcd.com/1168/)
 
 I could never remember the correct options for all those different compression
 programs. Tar, unzip, gzip - you name it and I forgot it.
