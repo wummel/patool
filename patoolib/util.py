@@ -477,7 +477,7 @@ def tmpfile (dir=None, prefix="temp", suffix=None):
 
 def shell_quote (value):
     """Quote all shell metacharacters in given string value with strong
-    (ie. single) quotes, handling the single quote especially."""
+    (i.e. single) quotes, handling the single quote especially."""
     if os.name == 'nt':
         return shell_quote_nt(value)
     return "'%s'" % value.replace("'", r"'\''")
@@ -670,7 +670,7 @@ def strlist_with_or (alist):
 
 def is_same_file (filename1, filename2):
     """Check if filename1 and filename2 point to the same file object.
-    There can be false negatives, ie. the result is False, but it is
+    There can be false negatives, i.e. the result is False, but it is
     the same file anyway. Reason is that network filesystems can create
     different paths to the same physical file.
     """

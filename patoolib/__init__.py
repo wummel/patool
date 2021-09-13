@@ -361,7 +361,7 @@ def check_archive_format (format, compression):
     if format not in ArchiveFormats:
         raise util.PatoolError("unknown archive format `%s'" % format)
     if compression is not None and compression not in ArchiveCompressions:
-        raise util.PatoolError("unkonwn archive compression `%s'" % compression)
+        raise util.PatoolError("unknown archive compression `%s'" % compression)
 
 
 def find_archive_program (format, command, program=None, password=None):
@@ -546,7 +546,7 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
         cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, outdir, password=password)
         if cmdlist:
             # an empty command list means the get_archive_cmdlist() function
-            # already handled the command (eg. when it's a builtin Python
+            # already handled the command (e.g. when it's a builtin Python
             # function)
             run_archive_cmdlist(cmdlist, verbosity=verbosity)
         if do_cleanup_outdir:
@@ -583,7 +583,7 @@ def _create_archive(archive, filenames, verbosity=0, interactive=True,
     cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, filenames, password=password)
     if cmdlist:
         # an empty command list means the get_archive_cmdlist() function
-        # already handled the command (eg. when it's a builtin Python
+        # already handled the command (e.g. when it's a builtin Python
         # function)
         run_archive_cmdlist(cmdlist, verbosity=verbosity)
     if origarchive:
@@ -605,7 +605,7 @@ def _handle_archive(archive, command, verbosity=0, interactive=True,
     cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, password=password)
     if cmdlist:
         # an empty command list means the get_archive_cmdlist() function
-        # already handled the command (eg. when it's a builtin Python
+        # already handled the command (e.g. when it's a builtin Python
         # function)
         run_archive_cmdlist(cmdlist, verbosity=verbosity)
 
@@ -620,7 +620,7 @@ def get_archive_cmdlist_func (program, command, format):
         module = importlib.import_module(modulename, __name__)
     except ImportError as msg:
         raise util.PatoolError(msg)
-    # get archive handler function (eg. patoolib.programs.star.extract_tar)
+    # get archive handler function (e.g. patoolib.programs.star.extract_tar)
     try:
         archive_cmdlist_func = getattr(module, '%s_%s' % (command, format))
         def check_for_password_before_cmdlist_func_call(*args, **kwargs):
@@ -723,7 +723,7 @@ def _recompress_archive(archive, verbosity=0, interactive=True, password=None):
     """Try to recompress an archive to smaller size."""
     format, compression = get_archive_format(archive)
     if compression:
-        # only recompress the compression itself (eg. for .tar.xz)
+        # only recompress the compression itself (e.g. for .tar.xz)
         format = compression
     tmpdir = util.tmpdir()
     tmpdir2 = util.tmpdir()

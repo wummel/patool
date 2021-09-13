@@ -45,7 +45,7 @@ update_webmeta:
 	git cm "Updated web meta data."
 
 homepage: update_webmeta
-# relase website
+# release website
 	$(MAKE) -C doc/web release
 
 tag:
