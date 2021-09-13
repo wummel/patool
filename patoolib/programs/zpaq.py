@@ -36,4 +36,3 @@ def create_zpaq(archive, compression, cmd, verbosity, interactive, filenames):
 
 # zpaq has no separate test mode, so use listing instead
 test_zpaq = list_zpaq
-
