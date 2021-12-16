@@ -36,6 +36,8 @@ def run_extract(args):
             res += 1
     return res
 
+def run_x(args):
+    return run_extract(args)
 
 def run_list(args):
     """List files in archive(s)."""
@@ -73,6 +75,8 @@ def run_create(args):
         res = 1
     return res
 
+def run_c(args):
+    return run_create(args)
 
 def run_diff(args):
     """Show differences between two archives."""
@@ -162,7 +166,7 @@ def create_argparser():
         help="don't query for user input (ie. passwords or when overwriting duplicate files); use with care since overwriting files or ignoring passwords could be unintended")
     subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
     # extract
-    parser_extract = subparsers.add_parser('extract', help='extract one or more archives')
+    parser_extract = subparsers.add_parser('extract',aliases=['x'], help='extract one or more archives')
     parser_extract.add_argument('--outdir', help="output directory to extract to")
     parser_extract.add_argument('--password', help="password for encrypted files")
     parser_extract.add_argument('archive', nargs='+', help="an archive file")
@@ -171,7 +175,7 @@ def create_argparser():
     parser_list.add_argument('--password', help="password for encrypted files")
     parser_list.add_argument('archive', nargs='+', help="an archive file")
     # create
-    parser_create = subparsers.add_parser('create', help='create an archive')
+    parser_create = subparsers.add_parser('create',aliases=['c'], help='create an archive')
     parser_create.add_argument('--password', help="password to encrypt files")
     parser_create.add_argument('archive', help="the archive file; the file extension determines the archive program")
     parser_create.add_argument('filename', nargs='+', help="a file or directory to add to the archive; note that some archive programs do not support directories")
