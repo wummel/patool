@@ -335,7 +335,11 @@ def program_supports_compression (program, compression):
       natively, else False.
     """
     if program in ('tar', ):
-        return compression in ('gzip', 'bzip2', 'compress')
+        if sys.platform == "win32":
+            # bzip2 is not supported natively in windows tar
+            return compression in ('gzip', 'compress')
+        else:
+            return compression in ('gzip', 'bzip2', 'compress')
     elif program == 'star':
         return compression in ('gzip', 'bzip2')
     elif program == 'bsdtar':
