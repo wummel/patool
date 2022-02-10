@@ -33,23 +33,23 @@ General rules for all convenience functions:
 The convenience functions are:
 
 * ``def extract_archive(archive, verbosity=0, outdir=None, program=None)``
-  
+
   Extracts the given archive filename to the current working directory
   or if specified to the given directory name in outdir.
   Checks that the archive exists and is readable before extracting it.
 
 * ``def list_archive(archive, verbosity=1, program=None)``
-  
+
   Lists the contents of the given archive filename on stdout.
   Checks that the archive exists and is readable before listing it.
 
 * ``def test_archive(archive, verbosity=0, program=None)``
-  
+
   Tests the given archive filename.
   Checks that the archive exists and is readable before testing it.
 
 * ``def create_archive(archive, filenames, verbosity=0, program=None)``
-  
+
   Creates a new archive. The type of archive is determined
   by the archive filename extension.
   Checks that the archive is not already existing to avoid overwriting it.
@@ -57,7 +57,7 @@ The convenience functions are:
   and are readable.
 
 * ``diff_archives(archive1, archive2, verbosity=0)``
-  
+
   This function lists differences in the content of the two archives.
   Both archives are extracted and the contents are compared
   recursively with the diff(1) program.
@@ -70,7 +70,7 @@ The convenience functions are:
   Checks that archive exists and is readable.
 
 * ``repack_archive (archive, archive_new, verbosity=0)``
-  
+
   This function extracts the contents of the archive and packs them
   into archive_new.
   Checks that archive exists and is readable. Also checks that

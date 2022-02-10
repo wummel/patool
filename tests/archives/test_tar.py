@@ -46,7 +46,7 @@ class TestTar (ArchiveTest):
         self.archive_commands('t.tar.lzma')
 
     # even though clzip would support extracting .lz files, the
-    # file(1) --uncompress command does not use it for achive detection
+    # file(1) --uncompress command does not use it for archive detection
     @needs_program(program)
     @needs_program('lzip')
     def test_tar_lzip (self):
@@ -88,7 +88,7 @@ class TestTar (ArchiveTest):
     #    self.archive_commands('t.tar.lzma.foo', format="tar", compression="lzma")
 
     # even though clzip would support extracting .lz files, the
-    # file(1) --uncompress command does not use it for achive detection
+    # file(1) --uncompress command does not use it for archive detection
     @needs_program('lzip')
     @needs_program('file')
     @needs_codec(program, 'lzip')

@@ -159,7 +159,7 @@ def create_argparser():
         epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
     parser.add_argument('--non-interactive', dest='interactive', default=True, action='store_false',
-        help="don't query for user input (ie. passwords or when overwriting duplicate files); use with care since overwriting files or ignoring passwords could be unintended")
+        help="don't query for user input (i.e. passwords or when overwriting duplicate files); use with care since overwriting files or ignoring passwords could be unintended")
     subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
     # extract
     parser_extract = subparsers.add_parser('extract', help='extract one or more archives')

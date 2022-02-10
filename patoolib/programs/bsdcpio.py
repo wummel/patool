@@ -15,4 +15,3 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the bsdcpio program."""
 from .cpio import extract_cpio, list_cpio, test_cpio, create_cpio
-

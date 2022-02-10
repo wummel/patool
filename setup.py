@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 # Copyright (C) 2010-2016 Bastian Kleineidam
 #
@@ -53,7 +53,7 @@ def cnormpath (path):
 
 release_ro = re.compile(r"\(released (.+)\)")
 def get_release_date ():
-    """Parse and return relase date as string from doc/changelog.txt."""
+    """Parse and return release date as string from doc/changelog.txt."""
     fname = os.path.join("doc", "changelog.txt")
     release_date = "unknown"
     with open(fname) as fd:
@@ -209,7 +209,7 @@ installed.
     maintainer = MyName,
     maintainer_email = MyEmail,
     license = "GPL",
-    url = "http://wummel.github.io/patool/",
+    url = "https://wummel.github.io/patool/",
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],
