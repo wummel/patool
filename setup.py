@@ -210,6 +210,9 @@ installed.
     maintainer_email = MyEmail,
     license = "GPL",
     url = "https://wummel.github.io/patool/",
+    project_urls = {
+        "Source": "https://github.com/wummel/patool",
+    },
     packages = ['patoolib', 'patoolib.programs'],
     data_files = data_files,
     scripts = ['patool'],
