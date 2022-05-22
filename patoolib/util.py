@@ -16,6 +16,7 @@
 """Utility functions."""
 from __future__ import print_function
 import os
+import re
 import sys
 import shutil
 import subprocess
@@ -387,7 +388,7 @@ def guess_mime_file_text (file_prog, filename):
         return None
     # match output against known strings
     for matcher, mime in FileText2Mime.items():
-        if output.startswith(matcher) and mime in ArchiveMimetypes:
+        if re.match(matcher, output) and mime in ArchiveMimetypes:
             return mime
     return None
 
