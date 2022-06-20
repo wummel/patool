@@ -30,7 +30,7 @@ from distutils import util
 from distutils.file_util import write_file
 
 AppName = "patool"
-AppVersion = "1.13.3"
+AppVersion = "1.13.4"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
