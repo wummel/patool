@@ -21,6 +21,9 @@ import os
 import shutil
 import stat
 import importlib
+import py7zlib
+import rarfile
+import zipfile
 # PEP 396
 from .configuration import App, Version as __version__
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
@@ -770,3 +773,39 @@ def recompress_archive(archive, verbosity=0, interactive=True):
     if res and verbosity >= 0:
         util.log_info(res)
     return 0
+
+
+def get_inner_file_names_zip(file_path):
+    try:
+        zip_file = zipfile.ZipFile(file_path)
+        return [file_name for file_name in zip_file.namelist()]
+    except Exception:
+        return []
+
+
+def get_inner_file_names_7zip(file_path):
+    try:
+        archive = py7zlib.Archive7z(open(file_path, "rb"))
+        return [file_name for file_name in archive.filenames]
+    except Exception:
+        return []
+
+
+def get_inner_file_names_rar(file_path):
+    try:
+        rar_file = rarfile.RarFile(file_path)
+        return [file_name for file_name in rar_file.namelist()]
+    except Exception:
+        return []
+
+
+InnerFileNamesExtractors = {
+    'application/x-zip-compressed': get_inner_file_names_zip,
+    'application/java-archive': get_inner_file_names_zip,
+    'application/zip': get_inner_file_names_zip,
+    'application/x-7z-compressed': get_inner_file_names_7zip,
+    'application/rar': get_inner_file_names_rar,
+    'application/x-rar': get_inner_file_names_rar,
+    'application/vnd.rar': get_inner_file_names_rar,
+    'application/x-rar-compressed': get_inner_file_names_rar
+}
