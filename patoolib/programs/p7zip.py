@@ -48,6 +48,7 @@ extract_zip = \
   extract_rpm = \
   extract_deb = \
   extract_iso = \
+  extract_udf = \
   extract_vhd = \
   extract_7z
 
@@ -70,6 +71,7 @@ list_bzip2 = \
   list_rpm = \
   list_deb = \
   list_iso = \
+  list_udf = \
   list_xz = \
   list_lzma = \
   list_vhd = \
@@ -95,6 +97,7 @@ test_bzip2 = \
   test_rpm = \
   test_deb = \
   test_iso = \
+  test_udf = \
   test_xz = \
   test_lzma = \
   test_vhd = \
