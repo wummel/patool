@@ -38,7 +38,7 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 ArchiveFormats = (
     '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
     'bzip2', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
-    'flac', 'gzip', 'iso', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
+    'flac', 'gzip', 'iso', 'udf', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
     'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'vhd', 'xz',
     'zip', 'zoo', 'zpaq')
 
@@ -68,6 +68,7 @@ ArchiveMimetypes = {
     'application/x-dms': 'dms',
     'application/x-gzip': 'gzip',
     'application/x-iso9660-image': 'iso',
+    'application/x-iso13346-image': 'udf',
     'application/x-lzop': 'lzop',
     'application/x-lzma': 'lzma',
     'application/x-lzip': 'lzip',
@@ -180,6 +181,11 @@ ArchivePrograms = {
         'list': ('7z', 'isoinfo'),
         'test': ('7z',),
         'create': ('genisoimage',),
+    },
+    'udf': {
+        'extract': ('7z',),
+        'list': ('7z',),
+        'test': ('7z',),
     },
     'lzh': {
         None: ('lha',),

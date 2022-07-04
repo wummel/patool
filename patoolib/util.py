@@ -144,6 +144,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, 'audio/flac', '.flac')
     add_mimetype(mimedb, 'application/x-chm', '.chm')
     add_mimetype(mimedb, 'application/x-iso9660-image', '.iso')
+    add_mimetype(mimedb, 'application/x-iso13346-image', '.udf')
     add_mimetype(mimedb, 'application/zip', '.cbz')
     add_mimetype(mimedb, 'application/zip', '.epub')
     add_mimetype(mimedb, 'application/zip', '.apk')
