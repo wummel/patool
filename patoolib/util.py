@@ -398,6 +398,11 @@ def guess_mime_file_text (file_prog, filename):
 
 def check_existing_filename (filename, onlyfiles=True):
     """Ensure that given filename is a valid, existing file."""
+    if filename.endswith("/*"):
+        if os.path.exists(os.path.dirname(filename)):
+            return None
+        else:
+            raise PatoolError("directory `%s' was not found" % filename)
     if not os.path.exists(filename):
         raise PatoolError("file `%s' was not found" % filename)
     if not os.access(filename, os.R_OK):
