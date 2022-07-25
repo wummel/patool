@@ -397,7 +397,7 @@ def guess_mime_file_text (file_prog, filename):
 
 
 def check_existing_filename (filename, onlyfiles=True):
-    """Ensure that given filename is a valid, existing file."""
+    """Ensure that given path is valid."""
     if filename.endswith("/*"):
         if os.path.exists(os.path.dirname(filename)):
             return None
