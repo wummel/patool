@@ -815,3 +815,30 @@ InnerFileNamesExtractors = {
     'application/vnd.rar': get_inner_file_names_rar,
     'application/x-rar-compressed': get_inner_file_names_rar
 }
+
+def get_inner_file_info(file_path):
+    files_list = []
+    if zipfile.is_zipfile(file_path):
+        return get_inner_file_info_zip(file_path, files_list)
+
+    if rarfile.is_rarfile(file_path):
+        return get_inner_file_info_rar(file_path, files_list)
+    # TODO: Add support to 7z archives using py7zr (python3)
+
+def get_inner_file_info_zip(file_path, files_list):
+    try:
+        with zipfile.ZipFile(file_path) as zf:
+            for info in zf.infolist():
+                files_list.append({"filename": info.filename,"file_size": info.file_size,"compress_size": info.compress_size})
+        return files_list
+    except Exception:
+        return []
+
+def get_inner_file_info_rar(file_path, files_list):
+    try:
+        rf = rarfile.RarFile(file_path)
+        for info in rf.infolist():
+            files_list.append({"filename": info.filename, "file_size": info.file_size, "compress_size": info.compress_size})
+        return files_list
+    except Exception:
+        return []
