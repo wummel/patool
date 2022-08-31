@@ -20,6 +20,7 @@ if not hasattr(sys, "version_info") or sys.version_info < (2, 7, 0, "final", 0):
 import os
 import shutil
 import stat
+import struct
 import importlib
 import py7zlib
 import rarfile
@@ -815,3 +816,40 @@ InnerFileNamesExtractors = {
     'application/vnd.rar': get_inner_file_names_rar,
     'application/x-rar-compressed': get_inner_file_names_rar
 }
+
+def get_inner_file_info(file_path):
+    if zipfile.is_zipfile(file_path):
+        return get_inner_file_info_zip(file_path)
+    elif rarfile.is_rarfile(file_path):
+        return get_inner_file_info_rar(file_path)
+    # TODO: Add support to 7z archives using py7zr (python3).
+
+def get_inner_file_info_zip(file_path):
+    files_list = []
+    try:
+        with zipfile.ZipFile(file_path) as zf:
+            for info in zf.infolist():
+                files_list.append({"filename": info.filename,"file_size": info.file_size,"compress_size": info.compress_size})
+        return files_list
+    except Exception:
+        return files_list
+
+def get_inner_file_info_rar(file_path):
+    files_list = []
+    try:
+        rf = rarfile.RarFile(file_path)
+        for info in rf.infolist():
+            files_list.append({"filename": info.filename, "file_size": info.file_size, "compress_size": info.compress_size})
+        return files_list
+    except Exception:
+        return files_list
+
+def get_uncompressed_size_gz(file_path):
+    # Uncompressed size is stored in the last 4 bytes of the gzip file
+    try:
+        with open(file_path, 'rb') as f:
+            f.seek(-4, 2)
+            return struct.unpack('I', f.read(4))[0]
+    except Exception:
+        return None
+
