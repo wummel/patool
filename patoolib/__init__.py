@@ -822,6 +822,7 @@ def get_inner_file_info(file_path):
         return get_inner_file_info_zip(file_path)
     elif rarfile.is_rarfile(file_path):
         return get_inner_file_info_rar(file_path)
+    return []
     # TODO: Add support to 7z archives using py7zr (python3).
 
 def get_inner_file_info_zip(file_path):
