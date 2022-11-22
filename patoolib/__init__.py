@@ -76,6 +76,7 @@ ArchiveMimetypes = {
     'application/x-lha': 'lzh',
     'application/x-lrzip': 'lrzip',
     'application/x-lzh': 'lzh',
+    'application/x-lzh-compressed': 'lzh',
     'application/x-rar': 'rar',
     'application/x-redhat-package-manager': 'rpm',
     'application/x-rpm': 'rpm',

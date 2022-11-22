@@ -132,6 +132,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, 'application/x-lrzip', '.lrz')
     add_mimetype(mimedb, 'application/x-lha', '.lha')
     add_mimetype(mimedb, 'application/x-lzh', '.lzh')
+    add_mimetype(mimedb, 'application/x-lzh-compressed', '.lzh')
     add_mimetype(mimedb, 'application/x-rzip', '.rz')
     add_mimetype(mimedb, 'application/x-zoo', '.zoo')
     add_mimetype(mimedb, 'application/x-dms', '.dms')
