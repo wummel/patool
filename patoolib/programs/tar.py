@@ -44,6 +44,8 @@ def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
 def add_tar_opts (cmdlist, compression, verbosity):
     """Add tar options to cmdlist."""
     progname = os.path.basename(cmdlist[0])
+    if progname[-4:].lower() == '.exe':
+        progname = progname[:-4]
     if compression == 'gzip':
         cmdlist.append('-z')
     elif compression == 'compress':
