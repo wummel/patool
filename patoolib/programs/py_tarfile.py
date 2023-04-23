@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the tarfile Python module."""
-from .. import util, py_lzma
+from .. import util
 import tarfile
 
 READ_SIZE_BYTES = 1024*1024
@@ -62,7 +62,7 @@ def get_tar_mode (compression):
         return 'w:gz'
     if compression == 'bzip2':
         return 'w:bz2'
-    if compression == 'lzma' and py_lzma:
+    if compression == 'lzma':
         return 'w:xz'
     if compression:
         msg = 'pytarfile does not support %s for tar compression'

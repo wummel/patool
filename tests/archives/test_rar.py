@@ -32,7 +32,17 @@ class TestRar (ArchiveTest):
         self.archive_commands(self.filename + '.cbr.foo', skip_create=True)
 
 
-class TestRarPassword (TestRar):
+class TestRarPassword (ArchiveTest):
 
     filename = 'p'
     password = 'thereisnotry'
+    program = 'rar'
+
+    @needs_program(program)
+    def test_rar(self):
+        self.archive_commands(self.filename + '.rar')
+
+    @needs_program('file')
+    @needs_program(program)
+    def test_rar_file(self):
+        self.archive_commands(self.filename + '.rar.foo', skip_create=True)

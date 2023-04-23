@@ -15,8 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lzma Python module."""
 
-from __future__ import absolute_import
-
 from .. import util
 import lzma
 

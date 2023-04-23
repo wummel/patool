@@ -1,4 +1,4 @@
-# Copyright (C) 2013-2015 Bastian Kleineidam
+# Copyright (C) 2013-2023 Bastian Kleineidam
 """
 Define basic configuration data like version or application name.
 """
@@ -10,7 +10,7 @@ AppName = configdata.name
 App = AppName+u" "+Version
 Author = configdata.author
 Maintainer = configdata.maintainer
-Copyright = u"Copyright (C) 2004-2015 " + Author
+Copyright = u"Copyright (C) 2004-2023 " + Author
 Url = configdata.url
 SupportUrl = u"https://github.com/wummel/patool/issues/"
 Email = configdata.author_email

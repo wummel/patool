@@ -1,5 +1,5 @@
 # This Makefile is only used by developers.
-PYTHON:=python
+PYTHON:=python3
 VERSION:=$(shell $(PYTHON) setup.py --version)
 MAINTAINER:=$(shell $(PYTHON) setup.py --maintainer)
 AUTHOR:=$(shell $(PYTHON) setup.py --author)

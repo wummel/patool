@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands echoing data, implemented by the Python print
 statement."""
-from __future__ import print_function
 from .. import util
 
 

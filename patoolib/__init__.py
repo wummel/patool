@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2016 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,12 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import print_function
-
 import inspect
 import sys
-if not hasattr(sys, "version_info") or sys.version_info < (2, 7, 0, "final", 0):
-    raise SystemExit("This program requires Python 2.7 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (3, 9, 0, "final", 0):
+    raise SystemExit("This program requires Python 3.9 or later.")
 import os
 import shutil
 import stat
@@ -90,13 +88,6 @@ ArchiveMimetypes = {
     'audio/x-shn': 'shn',
     'audio/flac': 'flac',
 }
-
-try:
-    # use Python 3 lzma module if available
-    import lzma
-    py_lzma = ('py_lzma',)
-except ImportError:
-    py_lzma = ()
 
 # List of programs supporting the given archive format and command.
 # If command is None, the program supports all commands (list, extract, ...)
@@ -238,10 +229,10 @@ ArchivePrograms = {
         None: ('lzop',),
     },
     'lzma': {
-        'extract': ('7z', 'lzma', 'xz') + py_lzma,
+        'extract': ('7z', 'lzma', 'xz', 'py_lzma'),
         'list': ('7z', 'py_echo'),
         'test': ('7z', 'lzma', 'xz'),
-        'create': ('lzma', 'xz') + py_lzma,
+        'create': ('lzma', 'xz', 'py_lzma'),
     },
     'rzip': {
         'extract': ('rzip',),
@@ -264,8 +255,8 @@ ArchivePrograms = {
     },
     'xz': {
         None: ('xz', '7z'),
-        'extract': py_lzma,
-        'create': py_lzma,
+        'extract': ('py_lzma',),
+        'create': ('py_lzma',),
     },
     'zoo': {
         None: ('zoo',),
@@ -333,9 +324,9 @@ def program_supports_compression (program, compression):
       natively, else False.
     """
     if program in ('tar', ):
-        return compression in ('gzip', 'bzip2', 'xz', 'lzip', 'compress', 'lzma') + py_lzma
+        return compression in ('gzip', 'bzip2', 'xz', 'lzip', 'compress', 'lzma', 'py_lzma')
     elif program in ('star', 'bsdtar', 'py_tarfile'):
-        return compression in ('gzip', 'bzip2') + py_lzma
+        return compression in ('gzip', 'bzip2', 'py_lzma')
     return False
 
 
