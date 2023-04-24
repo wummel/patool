@@ -1,0 +1,4 @@
+# only needed for development
+pytest
+pytest-reportlog
+ruff

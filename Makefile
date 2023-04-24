@@ -89,8 +89,8 @@ doccheck:
 	  patool \
 	  *.py
 
-pyflakes:
-	pyflakes setup.py patool patoolib tests
+lint-py:
+	ruff setup.py patool patoolib tests
 
 count:
 # print some code statistics
@@ -128,6 +128,6 @@ changelog:
 # closes issues mentioned in the changelog entries.
 	github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) doc/changelog.txt
 
-.PHONY: changelog update-copyright test clean count pyflakes check
+.PHONY: changelog update-copyright test clean count lint-py check
 .PHONY: releasecheck release upload sign dist all tag register homepage
 .PHONY: localbuild doccheck
