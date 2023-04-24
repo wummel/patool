@@ -25,7 +25,7 @@ import importlib
 from .configuration import App, Version as __version__ # noqa: F401
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
     'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
-    'recompress_archive', 'program_supports_compression']
+    'is_archive', 'recompress_archive', 'program_supports_compression']
 
 
 # Supported archive commands
@@ -340,6 +340,12 @@ def program_supports_compression (program, compression):
 
 
 from . import util # noqa: E402
+
+def is_archive(filename):
+    """Detect if the file is a known archive."""
+    mime, compression = util.guess_mime(filename)
+    return mime in ArchiveMimetypes
+
 
 def get_archive_format (filename):
     """Detect filename archive format and optional compression."""
