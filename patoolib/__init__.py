@@ -819,6 +819,7 @@ def diff_archives(archive1, archive2, verbosity=0, interactive=True):
     res = _diff_archives(archive1, archive2, verbosity=verbosity, interactive=interactive)
     if res == 0 and verbosity >= 0:
         util.log_info("... no differences found.")
+    return res
 
 
 def search_archive(pattern, archive, verbosity=0, interactive=True, password=None):
