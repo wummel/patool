@@ -17,7 +17,7 @@ CAB (.cab), COMPRESS (.Z), CPIO (.cpio), DEB (.deb), DMS (.dms),
 FLAC (.flac), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha, .lzh),
 LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar, .cbr),
 RZIP (.rz), SHN (.shn), TAR (.tar, .cbt), XZ (.xz),
-ZIP (.zip, .jar, .cbz) and ZOO (.zoo) archive formats.
+ZIP (.zip, .jar, .cbz), ZOO (.zoo) and ZSTANDARD (.zst) archive formats.
 It relies on helper applications to handle those archive formats
 (for example bzip2 for BZIP2 archives).
 

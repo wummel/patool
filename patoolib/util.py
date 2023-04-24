@@ -55,6 +55,7 @@ def add_mimedb_data(mimedb):
     mimedb.encodings_map['.lzma'] = 'lzma'
     mimedb.encodings_map['.xz'] = 'xz'
     mimedb.encodings_map['.lz'] = 'lzip'
+    mimedb.encodings_map[".zst"] = "zstd"
     mimedb.suffix_map['.tbz2'] = '.tar.bz2'
     add_mimetype(mimedb, 'application/x-lzop', '.lzo')
     add_mimetype(mimedb, 'application/x-adf', '.adf')
@@ -93,6 +94,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, 'application/zip', '.epub')
     add_mimetype(mimedb, 'application/zip', '.apk')
     add_mimetype(mimedb, 'application/zpaq', '.zpaq')
+    add_mimetype(mimedb, "application/zstd", ".zst")
 
 
 def add_mimetype(mimedb, mimetype, extension):
@@ -196,6 +198,7 @@ Encoding2Mime = {
     'lzma': "application/x-lzma",
     'lzip': "application/x-lzip",
     'xz': "application/x-xz",
+    "zstd": "application/zstd",
 }
 Mime2Encoding = dict([(_val, _key) for _key, _val in Encoding2Mime.items()])
 # libmagic before version 5.14 identified .gz files as application/x-gzip

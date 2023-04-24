@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2016 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -87,12 +87,15 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.tar.xz", "application/x-tar", "xz")
         self.mime_test_file("t.tar.Z", "application/x-tar", "compress")
         self.mime_test_file("t.tar.lzma", "application/x-tar", "lzma")
+        self.mime_test_file("t.tar.zst", "application/x-tar", "zstd")
         # file(1) cannot uncompress .lzma files
         #self.mime_test_file("t.tar.lzma.foo", "application/x-tar", "lzma")
         self.mime_test_file("t.txt.xz", "application/x-xz")
         self.mime_test_file("t.txt.xz.foo", "application/x-xz")
         self.mime_test_file("t.txt.Z", "application/x-compress")
         self.mime_test_file("t.txt.Z.foo", "application/x-compress")
+        self.mime_test_file("t.txt.zst", "application/zstd")
+        self.mime_test_file("t.txt.zst.foo", "application/zstd")
         self.mime_test_file("t.jar", "application/zip")
         self.mime_test_file("t.jar.foo", "application/zip")
         self.mime_test_file("t.zip", "application/zip")
@@ -168,6 +171,11 @@ class TestMime (unittest.TestCase):
     def test_mime_file_xzip (self):
         self.mime_test_file("t.tar.xz.foo", "application/x-tar", "xz")
 
+    @needs_program("file")
+    @needs_program("zstd")
+    def test_mime_file_zstd(self):
+        self.mime_test_file("t.tar.zst.foo", "application/x-tar", "zstd")
+
     @needs_program('file')
     @needs_program('uncompress')
     def test_mime_file_compress (self):
@@ -197,11 +205,13 @@ class TestMime (unittest.TestCase):
         self.mime_test_mimedb("t.tar.xz", "application/x-tar", "xz")
         self.mime_test_mimedb("t.tar.lz", "application/x-tar", "lzip")
         self.mime_test_mimedb("t.tar.Z", "application/x-tar", "compress")
+        self.mime_test_mimedb("t.tar.zst", "application/x-tar", "zstd")
         self.mime_test_mimedb("t.taz", "application/x-tar", "gzip")
         self.mime_test_mimedb("t.tbz2", "application/x-tar", "bzip2")
         self.mime_test_mimedb("t.tgz", "application/x-tar", "gzip")
         self.mime_test_mimedb("t.txt.gz", "application/gzip")
         self.mime_test_mimedb("t.txt.bz2", "application/x-bzip2")
+        self.mime_test_mimedb("t.txt.zst", "application/zstd")
         self.mime_test_mimedb("t .xz", "application/x-xz")
         self.mime_test_mimedb("t.Z", "application/x-compress")
         self.mime_test_mimedb("t.zip", ("application/zip", "application/x-zip-compressed"))
