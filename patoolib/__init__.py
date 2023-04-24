@@ -339,7 +339,7 @@ def program_supports_compression (program, compression):
     return False
 
 
-from . import util # noqa: F402
+from . import util # noqa: E402
 
 def get_archive_format (filename):
     """Detect filename archive format and optional compression."""

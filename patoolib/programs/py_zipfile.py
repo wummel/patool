@@ -67,7 +67,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
 
 def write_directory (zfile, directory):
     """Write recursively all directories and filenames to zipfile instance."""
-    for dirpath, dirnames, filenames in os.walk(directory):
+    for dirpath, dirnames, filenames in os.walk(directory): # noqa: B007
         zfile.write(dirpath)
         for filename in filenames:
             zfile.write(os.path.join(dirpath, filename))
