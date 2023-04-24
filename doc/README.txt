@@ -81,7 +81,3 @@ patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
 Test suite status
 ------------------
 Patool has extensive unit tests to ensure the code quality.
-[Travis CI](https://travis-ci.org/) is used for continuous build
-and test integration.
-
-[![Build Status](https://travis-ci.org/wummel/patool.png)](https://travis-ci.org/wummel/patool)
