@@ -11,9 +11,9 @@ GITREPO:=$(APPNAME)
 HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/app.yaml
 # Pytest options:
-# --resultlog: write test results in file
+# --report-log: write test results in file
 # -s: do not capture stdout/stderr (some tests fail otherwise)
-PYTESTOPTS?=--resultlog=testresults.txt -s
+PYTESTOPTS?=--report-log=testresults.txt -s
 # which test modules to run
 TESTS ?= tests/
 # set test options
