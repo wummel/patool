@@ -1,13 +1,19 @@
+# generated python files
 *.pyc
 *.pyo
+__pycache__
+
+# build and dist dirs
 /build
 /dist
 /.achievements
 /MANIFEST
-/todo
-Changelog.patool*
-/doc/README.md
-/testresults.txt
-/tests/__pycache__
+
+# local files
 /_patool_configdata.py
 /patool.egg-info/
+
+# local development files
+/todo
+/testresults.txt
+/.python-version
