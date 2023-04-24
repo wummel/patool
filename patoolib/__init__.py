@@ -632,8 +632,6 @@ def get_archive_cmdlist_func (program, command, format):
         If password is set, but can't be accepted raise appropriate
         message.
         """
-        util.log_info("... cmdlist_func = %s %s" % (archive_cmdlist_func, ''))
-        util.log_info("... kwargs=%s args=%s" % (kwargs, args))
         if 'password' in kwargs and kwargs['password'] is None:
             kwargs.pop('password')
         if 'password' not in kwargs:
