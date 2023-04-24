@@ -159,7 +159,7 @@ def create_argparser():
     parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
     parser.add_argument('--non-interactive', dest='interactive', default=True, action='store_false',
         help="don't query for user input (i.e. passwords or when overwriting duplicate files); use with care since overwriting files or ignoring passwords could be unintended")
-    subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command')
+    subparsers = parser.add_subparsers(help='the archive command; type "patool COMMAND -h" for command-specific help', dest='command', required=True)
     # extract
     parser_extract = subparsers.add_parser('extract', help='extract one or more archives')
     parser_extract.add_argument('--outdir', help="output directory to extract to")
@@ -211,9 +211,6 @@ def main():
     try:
         argparser = create_argparser()
         args = argparser.parse_args()
-        if args.command is None:
-            # Python 3.3.1 under linux allows an empty command somehow
-            argparser.error("too few arguments")
         # run subcommand function
         res = globals()["run_%s" % args.command](args)
     except KeyboardInterrupt:
