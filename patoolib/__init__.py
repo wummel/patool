@@ -22,7 +22,7 @@ import shutil
 import stat
 import importlib
 # PEP 396
-from .configuration import App, Version as __version__
+from .configuration import App, Version as __version__ # noqa: F401
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
     'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
     'recompress_archive', 'program_supports_compression']
@@ -339,7 +339,7 @@ def program_supports_compression (program, compression):
     return False
 
 
-from . import util
+from . import util # noqa: F402
 
 def get_archive_format (filename):
     """Detect filename archive format and optional compression."""
@@ -618,29 +618,31 @@ def get_archive_cmdlist_func (program, command, format):
     # import the module
     try:
         module = importlib.import_module(modulename, __name__)
-    except ImportError as msg:
-        raise util.PatoolError(msg)
+    except ImportError as err:
+        msg = "cannot import module %s in %s" % (modulename, __name__)
+        raise util.PatoolError(msg) from err
     # get archive handler function (e.g. patoolib.programs.star.extract_tar)
     try:
         archive_cmdlist_func = getattr(module, '%s_%s' % (command, format))
-        def check_for_password_before_cmdlist_func_call(*args, **kwargs):
-            """ If password is None, or not set, run command as usual.
-            If password is set, but can't be accepted raise appropriate
-            message.
-            """
-            util.log_info("... cmdlist_func = %s %s" % (archive_cmdlist_func, ''))
-            util.log_info("... kwargs=%s args=%s" % (kwargs, args))
-            if 'password' in kwargs and kwargs['password'] is None:
-                kwargs.pop('password')
-            if 'password' not in kwargs:
+    except AttributeError as err:
+        msg = "could not find %s_%s in %s" % (command, format, module)
+        raise util.PatoolError(msg) from err
+    def check_for_password_before_cmdlist_func_call(*args, **kwargs):
+        """ If password is None, or not set, run command as usual.
+        If password is set, but can't be accepted raise appropriate
+        message.
+        """
+        util.log_info("... cmdlist_func = %s %s" % (archive_cmdlist_func, ''))
+        util.log_info("... kwargs=%s args=%s" % (kwargs, args))
+        if 'password' in kwargs and kwargs['password'] is None:
+            kwargs.pop('password')
+        if 'password' not in kwargs:
+            return archive_cmdlist_func(*args, **kwargs)
+        else:
+            if 'password' in inspect.signature(archive_cmdlist_func).parameters:
                 return archive_cmdlist_func(*args, **kwargs)
-            else:
-                if 'password' in inspect.signature(archive_cmdlist_func).parameters:
-                    return archive_cmdlist_func(*args, **kwargs)
-                raise util.PatoolError('There is no support for password in %s' % program)
-        return check_for_password_before_cmdlist_func_call
-    except AttributeError as msg:
-        raise util.PatoolError(msg)
+            raise util.PatoolError('There is no support for password in %s' % program)
+    return check_for_password_before_cmdlist_func_call
 
 
 def rmtree_log_error (func, path, exc):

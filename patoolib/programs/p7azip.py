@@ -20,6 +20,7 @@ From the man page:
 but does not need any others.
 """
 
+# ruff: noqa: F401
 from .p7zip import \
   extract_bzip2, \
   extract_gzip, \

@@ -647,8 +647,9 @@ def link_or_copy(src, dst, verbosity=0):
     except (AttributeError, OSError):
         try:
             shutil.copy(src, dst)
-        except OSError as msg:
-            raise PatoolError(msg)
+        except OSError as err:
+            msg = "error copying %s -> %s" % (src, dst)
+            raise PatoolError(msg) from err
 
 
 def chdir(directory):

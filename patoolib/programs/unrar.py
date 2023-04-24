@@ -14,5 +14,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unrar program."""
-
+# ruff: noqa: F401
 from .rar import extract_rar, list_rar, test_rar

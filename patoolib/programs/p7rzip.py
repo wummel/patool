@@ -18,6 +18,7 @@
 7zr is a light executable supporting only the 7z archive format.
 """
 
+# ruff: noqa: F401
 from .p7zip import \
   extract_7z, \
   list_7z, \

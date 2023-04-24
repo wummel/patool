@@ -14,4 +14,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the pigz program."""
+# ruff: noqa: F401
 from .gzip import extract_gzip, test_gzip, create_gzip, list_gzip

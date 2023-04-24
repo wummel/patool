@@ -26,8 +26,8 @@ def list_tar (archive, compression, cmd, verbosity, interactive):
         with tarfile.open(archive) as tfile:
             tfile.list(verbose=verbosity>1)
     except Exception as err:
-        msg = "error listing %s: %s" % (archive, err)
-        raise util.PatoolError(msg)
+        msg = "error listing %s" % (archive, )
+        raise util.PatoolError(msg) from err
     return None
 
 test_tar = list_tar
@@ -38,8 +38,8 @@ def extract_tar (archive, compression, cmd, verbosity, interactive, outdir):
         with tarfile.open(archive) as tfile:
             tfile.extractall(path=outdir)
     except Exception as err:
-        msg = "error extracting %s: %s" % (archive, err)
-        raise util.PatoolError(msg)
+        msg = "error extracting %s" % (archive, )
+        raise util.PatoolError(msg) from err
     return None
 
 
@@ -51,8 +51,8 @@ def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
             for filename in filenames:
                 tfile.add(filename)
     except Exception as err:
-        msg = "error creating %s: %s" % (archive, err)
-        raise util.PatoolError(msg)
+        msg = "error creating %s" % (archive, )
+        raise util.PatoolError(msg) from err
     return None
 
 

@@ -31,8 +31,8 @@ def extract_gzip (archive, compression, cmd, verbosity, interactive, outdir):
                     targetfile.write(data)
                     data = gzipfile.read(READ_SIZE_BYTES)
     except Exception as err:
-        msg = "error extracting %s to %s: %s" % (archive, targetname, err)
-        raise util.PatoolError(msg)
+        msg = "error extracting %s to %s" % (archive, targetname)
+        raise util.PatoolError(msg) from err
     return None
 
 
@@ -49,6 +49,6 @@ def create_gzip (archive, compression, cmd, verbosity, interactive, filenames):
                     gzipfile.write(data)
                     data = srcfile.read(READ_SIZE_BYTES)
     except Exception as err:
-        msg = "error creating %s: %s" % (archive, err)
-        raise util.PatoolError(msg)
+        msg = "error creating %s" % (archive, )
+        raise util.PatoolError(msg) from err
     return None

@@ -1,0 +1,12 @@
+# Enable flake8-bugbear (B) rules.
+select = ["E", "F", "B"]
+
+# Never enforce E501 (line length violations).
+ignore = ["E501"]
+
+# Avoid trying to fix flake8-bugbear (`B`) violations.
+unfixable = ["B"]
+
+# Ignore F401 (unused import)
+[per-file-ignores]
+"patoolib/programs/*.py" = ["E402"]
