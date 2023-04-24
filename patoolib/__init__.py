@@ -663,10 +663,19 @@ def _diff_archives (archive1, archive2, verbosity=0, interactive=True):
     tmpdir1 = util.tmpdir()
     try:
         path1 = _extract_archive(archive1, outdir=tmpdir1, verbosity=-1)
+        entries1 = os.listdir(tmpdir1)
         tmpdir2 = util.tmpdir()
         try:
             path2 = _extract_archive(archive2, outdir=tmpdir2, verbosity=-1)
-            return util.run_checked([diff, "-urN", path1, path2], verbosity=1, ret_ok=(0, 1))
+            entries2 = os.listdir(tmpdir2)
+            if len(entries1) == 1 and len(entries2) == 1:
+                # when both archives only have one single entry, compare those
+                diffpath1 = os.path.join(path1, entries1[0])
+                diffpath2 = os.path.join(path2, entries2[0])
+            else:
+                diffpath1 = path1
+                diffpath2 = path2
+            return util.run_checked([diff, "-urN", diffpath1, diffpath2], verbosity=1, ret_ok=(0, 1))
         finally:
             shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
     finally:
