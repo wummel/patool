@@ -137,7 +137,7 @@ class TestMime (unittest.TestCase):
         self.mime_test_file("t.chm.foo", "application/x-chm")
         self.mime_test_file("t.iso", "application/x-iso9660-image")
         self.mime_test_file("t.epub", "application/zip")
-        self.mime_test_file("t.apk", ("application/zip", "application/java-archive", "application/jar"))
+        self.mime_test_file("t.apk", ("application/zip", "application/java-archive", "application/jar", "application/vnd.android.package-archive"))
         self.mime_test_file("t.zpaq", "application/zpaq")
         self.mime_test_file("t.zpaq.foo", "application/zpaq")
 

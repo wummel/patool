@@ -84,6 +84,7 @@ ArchiveMimetypes = {
     'application/x-xz': 'xz',
     'application/x-zip-compressed': 'zip',
     'application/x-zoo': 'zoo',
+    'application/vnd.android.package-archive': 'zip',
     'application/zip': 'zip',
     'application/zpaq': 'zpaq',
     "application/zstd": "zstd",
