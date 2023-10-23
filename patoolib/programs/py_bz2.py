@@ -15,11 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the bz2 Python module."""
 from .. import util
-try:
-    # try external bz2file module with multi-stream support
-    import bz2file as bz2
-except ImportError:
-    import bz2
+import bz2
 
 # read in 1MB chunks
 READ_SIZE_BYTES = 1024*1024
