@@ -27,7 +27,7 @@ DESCRIPTION
        TAR (.tar, .cbt), XZ (.xz), ZIP (.zip, .jar, .cbz), ZOO (.zoo),
        ZPAQ (.zpaq) and ZSTANDARD (.zst) archive formats.
        It  relies  on helper applications to handle those archive for‐
-       mats (for example bzip2 for BZIP2 archives).
+       mats (for example xz for XZ (.xz) archives).
 
        The archive formats TAR, ZIP, BZIP2 and GZIP are supported  na‐
        tively and do not require helper applications to be installed.
