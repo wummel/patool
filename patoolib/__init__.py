@@ -50,6 +50,7 @@ ArchiveMimetypes = {
     'application/gzip': 'gzip',
     'application/jar': 'zip',  # reported on older systems such as ubuntu 14.04
     'application/java-archive': 'zip',
+    'application/vnd.android.package-archive': 'zip',
     'application/rar': 'rar',
     'application/vnd.ms-cab-compressed': 'cab',
     'application/x-7z-compressed': '7z',
