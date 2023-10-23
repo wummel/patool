@@ -15,18 +15,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
 import shutil
-from patoolib import util
-from . import basedir, datadir, needs_program, patool_cmd
+from patoolib import util, cli
+from . import basedir, datadir, needs_program
 
-class ArchiveExtractTest (unittest.TestCase):
+
+class ArchiveExtractTest(unittest.TestCase):
 
     @needs_program('7z')
     def test_extract(self):
         tmpdir = util.tmpdir(dir=basedir)
         try:
             archive = os.path.join(datadir, "t .7z")
-            util.run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "extract", "--outdir", tmpdir, archive])
+            args = ["-vv", "--non-interactive", "extract", "--outdir", tmpdir, archive]
+            cli.main(args=args)
         finally:
             shutil.rmtree(tmpdir)

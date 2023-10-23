@@ -15,11 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
-from patoolib.util import run_checked
-from . import datadir, needs_program, patool_cmd
+from patoolib import cli
+from . import datadir, needs_program
 
-class ArchiveSearchTest (unittest.TestCase):
+
+class ArchiveSearchTest(unittest.TestCase):
 
     @needs_program('grep')
     @needs_program('unzip')
@@ -32,4 +32,5 @@ class ArchiveSearchTest (unittest.TestCase):
         self.search(pattern, archive)
 
     def search(self, pattern, archive):
-        run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "search", pattern, archive])
+        args = ["-vv", "--non-interactive", "search", pattern, archive]
+        cli.main(args=args)

@@ -15,12 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
 import shutil
-from patoolib import util
-from . import datadir, needs_one_program, patool_cmd
+from patoolib import util, cli
+from . import datadir, needs_one_program
 
-class ArchiveRecompressTest (unittest.TestCase):
+
+class ArchiveRecompressTest(unittest.TestCase):
 
     def recompress(self, name):
         """Recompress archive with given name."""
@@ -29,12 +29,12 @@ class ArchiveRecompressTest (unittest.TestCase):
         tmpfile = util.tmpfile(suffix=ext)
         try:
             shutil.copy(archive, tmpfile)
-            util.run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "recompress", tmpfile])
+            args = ["-vv", "--non-interactive", "recompress", tmpfile]
+            cli.main(args=args)
         finally:
             if os.path.exists(tmpfile):
                 os.remove(tmpfile)
 
     @needs_one_program(('zip', '7z'))
-    def test_repack (self):
+    def test_repack(self):
         self.recompress('t.zip')
-

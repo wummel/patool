@@ -15,13 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
-from patoolib.util import run_checked
-from . import datadir, needs_program, patool_cmd
+from patoolib import cli
+from . import datadir, needs_program
 
-class ArchiveTestTest (unittest.TestCase):
+class ArchiveTestTest(unittest.TestCase):
 
     @needs_program('7z')
     def test_test(self):
         archive = os.path.join(datadir, "t .7z")
-        run_checked([sys.executable, patool_cmd, "--non-interactive", "test", archive])
+        args = ["--non-interactive", "test", archive]
+        cli.main(args=args)

@@ -15,13 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
-from patoolib.util import run_checked
-from . import datadir, needs_program, patool_cmd
+from patoolib import cli
+from . import datadir, needs_program
 
-class ArchiveListTest (unittest.TestCase):
+
+class ArchiveListTest(unittest.TestCase):
 
     @needs_program('tar')
     def test_list(self):
         archive = os.path.join(datadir, "t.tar")
-        run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "list", archive])
+        args = ["-vv", "--non-interactive", "list", archive]
+        cli.main(args=args)

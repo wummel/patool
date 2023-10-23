@@ -20,16 +20,26 @@ patool [global-options] {extract|list|create|diff|search|formats} [sub-command-o
 import sys
 import argparse
 import pydoc
-import patoolib
-from patoolib.util import log_error, log_internal_error, PatoolError
-from patoolib.configuration import App
+from . import (
+    extract_archive,
+    list_archive,
+    test_archive,
+    create_archive,
+    diff_archives,
+    search_archive,
+    repack_archive,
+    recompress_archive,
+    list_formats,
+)
+from .util import log_error, log_internal_error, PatoolError
+from .configuration import App
 
 def run_extract(args):
     """Extract files from archive(s)."""
     res = 0
     for archive in args.archive:
         try:
-            patoolib.extract_archive(archive, verbosity=args.verbosity, interactive=args.interactive, outdir=args.outdir, password=args.password)
+            extract_archive(archive, verbosity=args.verbosity, interactive=args.interactive, outdir=args.outdir, password=args.password)
         except PatoolError as msg:
             log_error("error extracting %s: %s" % (archive, msg))
             res += 1
@@ -43,7 +53,7 @@ def run_list(args):
         try:
             # increase default verbosity since the listing output should be visible
             verbosity = args.verbosity + 1
-            patoolib.list_archive(archive, verbosity=verbosity, interactive=args.interactive, password=args.password)
+            list_archive(archive, verbosity=verbosity, interactive=args.interactive, password=args.password)
         except PatoolError as msg:
             log_error("error listing %s: %s" % (archive, msg))
             res += 1
@@ -55,7 +65,7 @@ def run_test(args):
     res = 0
     for archive in args.archive:
         try:
-            patoolib.test_archive(archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
+            test_archive(archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
         except PatoolError as msg:
             log_error("error testing %s: %s" % (archive, msg))
             res += 1
@@ -66,7 +76,7 @@ def run_create(args):
     """Create an archive from given files."""
     res = 0
     try:
-        patoolib.create_archive(args.archive, args.filename, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
+        create_archive(args.archive, args.filename, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
         log_error("error creating %s: %s" % (args.archive, msg))
         res = 1
@@ -76,7 +86,7 @@ def run_create(args):
 def run_diff(args):
     """Show differences between two archives."""
     try:
-        res = patoolib.diff_archives(args.archive1, args.archive2, verbosity=args.verbosity, interactive=args.interactive)
+        res = diff_archives(args.archive1, args.archive2, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
         log_error("error showing differences between %s and %s: %s" % (args.archive1, args.archive2, msg))
         res = 2
@@ -86,7 +96,7 @@ def run_diff(args):
 def run_search(args):
     """Search for pattern in given archive."""
     try:
-        res = patoolib.search_archive(args.pattern, args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
+        res = search_archive(args.pattern, args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
         log_error("error searching %s: %s" % (args.archive, msg))
         res = 2
@@ -97,7 +107,7 @@ def run_repack(args):
     """Repackage one archive in another format."""
     res = 0
     try:
-        patoolib.repack_archive(args.archive_src, args.archive_dst, verbosity=args.verbosity, interactive=args.interactive)
+        repack_archive(args.archive_src, args.archive_dst, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
         log_error("error repacking %s: %s" % (args.archive_src, msg))
         res = 1
@@ -108,7 +118,7 @@ def run_recompress(args):
     """Recompress an archive to smaller size."""
     res = 0
     try:
-        patoolib.recompress_archive(args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
+        recompress_archive(args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
         log_error("error recompressing %s: %s" % (args.archive, msg))
         res = 1
@@ -117,7 +127,7 @@ def run_recompress(args):
 
 def run_formats (args):
     """List supported and available archive formats."""
-    patoolib.list_formats()
+    list_formats()
     return 0
 
 
@@ -206,13 +216,14 @@ def create_argparser():
     return parser
 
 
-def main():
+def main(args=None):
     """Parse options and execute commands."""
+    res = 0
     try:
         argparser = create_argparser()
-        args = argparser.parse_args()
+        pargs = argparser.parse_args(args=args)
         # run subcommand function
-        res = globals()["run_%s" % args.command](args)
+        res = globals()["run_%s" % pargs.command](pargs)
     except KeyboardInterrupt:
         log_error("aborted")
         res = 1
@@ -222,5 +233,6 @@ def main():
     return res
 
 
-if __name__ == '__main__':
+def main_cli():
     sys.exit(main())
+

@@ -2,15 +2,17 @@
 """
 Define basic configuration data like version or application name.
 """
-import _patool_configdata as configdata
+AppName = "patool"
+Version = "1.13"
+MyName = "Bastian Kleineidam"
+MyEmail = "bastian.kleineidam@web.de"
 
-Version = configdata.version
-ReleaseDate = configdata.release_date
-AppName = configdata.name
-App = AppName+u" "+Version
-Author = configdata.author
-Maintainer = configdata.maintainer
-Copyright = u"Copyright (C) 2004-2023 " + Author
-Url = configdata.url
-SupportUrl = u"https://github.com/wummel/patool/issues/"
-Email = configdata.author_email
+#ReleaseDate = configdata.release_date
+App = AppName+" "+Version
+Author = MyName
+AuthorEmail = MyEmail
+Copyright = "Copyright (C) 2004-2023 " + Author
+Url = "https://github.com/wummel/patool"
+SupportUrl = "https://github.com/wummel/patool/issues/"
+License = "GPL-3"
+Description = "portable archive file manager"

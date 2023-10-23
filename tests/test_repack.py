@@ -15,12 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
 import shutil
-from patoolib import util
-from . import datadir, needs_program, needs_one_program, patool_cmd
+from patoolib import util, cli
+from . import datadir, needs_program, needs_one_program
 
-class ArchiveRepackTest (unittest.TestCase):
+
+class ArchiveRepackTest(unittest.TestCase):
 
     def repack(self, name1, name2):
         """Repack archive with name1 to archive with name2."""
@@ -28,24 +28,26 @@ class ArchiveRepackTest (unittest.TestCase):
         tmpdir = util.tmpdir()
         try:
             archive2 = os.path.join(tmpdir, name2)
-            util.run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "repack", archive1, archive2])
-            util.run_checked([sys.executable, patool_cmd, "--non-interactive", "diff", archive1, archive2])
+            args = ["-vv", "--non-interactive", "repack", archive1, archive2]
+            cli.main(args=args)
+            args = ["--non-interactive", "diff", archive1, archive2]
+            cli.main(args=args)
         finally:
             shutil.rmtree(tmpdir)
 
     @needs_program('diff')
     @needs_one_program(('tar', 'star', '7z'))
     @needs_one_program(('zip', '7z'))
-    def test_repack (self):
+    def test_repack(self):
         self.repack('t.tar', 't.zip')
 
     @needs_program('diff')
     @needs_one_program(('gzip', '7z'))
     @needs_one_program(('bzip2', '7z'))
-    def test_repack_same_format_different_compression (self):
+    def test_repack_same_format_different_compression(self):
         self.repack('t.tar.gz', 't.tar.bz2')
 
     @needs_program('diff')
-    def test_repack_same_format (self):
+    def test_repack_same_format(self):
         self.repack('t.tar.gz', 't1.tar.gz')
         self.repack('t.zip', 't1.zip')

@@ -1,9 +1,11 @@
 1.13 (released xx.xx.2023)
 
-* Support ZSTANDARD archives with the zstd tool.
+* Added support for ZSTANDARD archives with the zstd tool.
 * Improved patool diff output: when two archives each have
   only one entry, compare those entries directly instead of
   the parent directory.
+* Replace deprecated distutils with setuptools to fix build errors
+  with modern Python environments.
 
 
 1.12 (released 17.1.2016)

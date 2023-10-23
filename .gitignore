@@ -1,6 +1,4 @@
 # generated python files
-*.pyc
-*.pyo
 __pycache__
 
 # build and dist dirs
@@ -10,7 +8,6 @@ __pycache__
 /MANIFEST
 
 # local files
-/_patool_configdata.py
 /patool.egg-info/
 
 # local development files

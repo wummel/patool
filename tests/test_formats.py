@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
-import sys
-from patoolib.util import run_checked
-from . import patool_cmd
+from patoolib import cli
 
-class TestFormats (unittest.TestCase):
 
-    def test_list_formats (self):
-        run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", 'formats'])
+class TestFormats(unittest.TestCase):
+
+    def test_list_formats(self):
+        args = ["-vv", "--non-interactive", 'formats']
+        cli.main(args=args)

@@ -15,16 +15,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
-from patoolib.util import run_checked
-from . import datadir, needs_program, patool_cmd
+from patoolib import cli
+from . import datadir, needs_program
 
-class ArchiveDiffTest (unittest.TestCase):
+
+class ArchiveDiffTest(unittest.TestCase):
 
     @needs_program('diff')
     @needs_program('tar')
     @needs_program('unzip')
-    def test_diff (self):
+    def test_diff(self):
         archive1 = os.path.join(datadir, "t.tar")
         archive2 = os.path.join(datadir, "t.zip")
-        run_checked([sys.executable, patool_cmd, "-vv", "--non-interactive", "diff", archive1, archive2])
+        args = ["-vv", "--non-interactive", "diff", archive1, archive2]
+        cli.main(args=args)

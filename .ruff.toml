@@ -1,12 +1,23 @@
-# Enable flake8-bugbear (B) rules.
-select = ["E", "F", "B"]
+select = [
+    "E", # pycodestyle
+    "F", # pyflakes
+    "B", # flake8-bugbear
+    "I", # isort
+]
 
 # Never enforce E501 (line length violations).
-ignore = ["E501"]
+ignore = ["E501", "I001"]
 
 # Avoid trying to fix flake8-bugbear (`B`) violations.
 unfixable = ["B"]
 
-# Ignore F401 (unused import)
+target-version = "py39"
+
+# Ignore E402 (unused import)
 [per-file-ignores]
 "patoolib/programs/*.py" = ["E402"]
+
+[isort]
+known-first-party = ["patoolib"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+force-sort-within-sections = false

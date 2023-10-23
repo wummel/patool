@@ -15,12 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import sys
 import shutil
-from patoolib import util
-from . import basedir, datadir, needs_program, patool_cmd
+from patoolib import cli, util
+from . import basedir, datadir, needs_program
 
-class ArchiveCreateTest (unittest.TestCase):
+class ArchiveCreateTest(unittest.TestCase):
 
     @needs_program('7z')
     def test_create(self):
@@ -28,8 +27,8 @@ class ArchiveCreateTest (unittest.TestCase):
         try:
             files = [os.path.join(datadir, "t"), os.path.join(datadir, "t.txt")]
             archive = os.path.join(tmpdir, "t.7z")
-            cmd = [sys.executable, patool_cmd, "-vv", "--non-interactive", "create", archive]
-            cmd.extend(files)
-            util.run_checked(cmd)
+            args = ["-vv", "--non-interactive", "create", archive]
+            args.extend(files)
+            cli.main(args=args)
         finally:
             shutil.rmtree(tmpdir)
