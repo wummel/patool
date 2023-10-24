@@ -6,7 +6,7 @@
   the parent directory.
 * Replace deprecated distutils with setuptools to fix build errors
   with modern Python environments.
-  Closes: GH bug #114
+  Closes: GH bug #114, #103
 * Disable password prompting with 7z in non-interactive mode with
   the option "-p-".
   Thanks to Pascua Theus for the patch.
