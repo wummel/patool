@@ -25,7 +25,7 @@ ARCHIVE_WHEEL:=$(APPNAME)-$(VERSION)-py2.py3-none-any.whl
 GITUSER:=wummel
 GITREPO:=$(APPNAME)
 HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
-WEBMETA:=doc/web/app.yaml
+WEBMETA:=doc/web/source/conf.py
 PIP_VERSION:=23.3.1
 # Pytest options:
 # --report-log: write test results in file
@@ -46,20 +46,24 @@ help:	## display this help section
 
 ############ Installation and provisioning  ############
 
+.PHONY: init
 init:	requirements-dev.txt
 	pip install --upgrade pip==$(PIP_VERSION)
 	pip install -r $<
 
+.PHONY: localbuild
 localbuild:
 	pip install --editable .
 
 
 ############ Build and release targets ############
 
+.PHONY: clean
 clean:
 	python setup.py clean --all
 	pip uninstall --yes patool
 
+.PHONY: distclean
 distclean:	clean
 	rm -rf build dist $(APPNAME).egg-info
 	rm -f MANIFEST
@@ -68,31 +72,23 @@ distclean:	clean
 	rm -rf $(APPNAME)-$(VERSION)
 	rm -f *-stamp*
 
+.PHONY: dist
 dist:
 	[ -d dist ] || mkdir dist
 	python setup.py sdist --formats=tar bdist_wheel
 	gzip --best dist/$(APPNAME)-$(VERSION).tar
 
+.PHONY: sign
 sign:
 	[ -f dist/$(ARCHIVE_SOURCE).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_SOURCE)
 	[ -f dist/$(ARCHIVE_WHEEL).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WHEEL)
 
+.PHONY: upload
 upload:
 	twine upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_SOURCE).asc \
 	             dist/$(ARCHIVE_WHEEL) dist/$(ARCHIVE_WHEEL).asc
 
-update_webmeta:
-# update metadata
-	@echo "version: \"$(VERSION)\"" > $(WEBMETA)
-	@echo "name: \"$(APPNAME)\"" >> $(WEBMETA)
-	@echo "author: \"$(AUTHOR)\"" >> $(WEBMETA)
-	git add $(WEBMETA)
-	git cm "Updated web meta data."
-
-homepage: update_webmeta
-# release website
-	$(MAKE) -C doc/web release
-
+.PHONY: tag
 tag:
 # add and push the version tag
 	git tag upstream/$(VERSION)
@@ -101,14 +97,17 @@ tag:
 # Make a new release by calling all the distinct steps in the correct order.
 # Each step is a separate target so that it's easy to do this manually if
 # anything screwed up.
+.PHONY: release
 release: distclean releasecheck
 	$(MAKE) dist sign upload homepage tag register changelog
 
+.PHONY: register
 register:
 	@echo "Register at Python Package Index..."
 	python setup.py register
 
-releasecheck: test
+.PHONY: releasecheck
+releasecheck: lint test
 	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
 	  echo "Could not release: edit doc/changelog.txt release date"; false; \
 	fi
@@ -122,15 +121,18 @@ releasecheck: test
 
 ############ Linting and syntax checks ############
 
-lint-py:
+.PHONY: lint
+lint:
 	ruff setup.py patoolib tests
 
+.PHONY: reformat
 reformat:
 	ruff --fix setup.py patoolib tests
 
 
 ############ Testing ############
 
+.PHONY: test
 test:
 	python -m pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
 
@@ -141,6 +143,20 @@ doc/$(APPNAME).txt: doc/$(APPNAME).1
 # make text file from man page for wheel builds
 	cols=`stty size | cut -d" " -f2`; stty cols 72; man -l $< | sed -e 's/.\cH//g' > $@; stty cols $$cols
 
+.PHONY: count
 count:
 # print some code statistics
 	@sloccount patoolib
+
+.PHONY: update_webmeta
+update_webmeta:
+# update metadata
+	sed -i -e 's/project =.*/project = "$(APPNAME)"/g' $(WEBMETA)
+	sed -i -e 's/version =.*/version = "$(VERSION)"/g' $(WEBMETA)
+	sed -i -e 's/author =.*/author = "$(AUTHOR)"/g' $(WEBMETA)
+
+.PHONY: homepage
+homepage: update_webmeta
+# release website
+	$(MAKE) -C doc/web release
+

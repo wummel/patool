@@ -1,7 +1,6 @@
-title: portable archive file manager
-description: patool is a portable archive file manager
-slug: index
----
+Patool
+=======
+
 Introduction
 -------------
 [![XKCD Tar comic](https://imgs.xkcd.com/comics/tar.png)](https://xkcd.com/1168/)
@@ -46,16 +45,16 @@ sudo pip install patool
 And on Windows:
 
 ```bash
-c:\python2.7\scripts\pip install patool
+c:\python3\scripts\pip install patool
 ```
 
 Or after downloading the patool .whl file:
 
 ```bash
-c:\python2.7\scripts\pip install patool-1.9-py2.py3-none-any.whl
+c:\python3\scripts\pip install patool-1.9-py2.py3-none-any.whl
 ```
 
-For Python 2.x you'll need at least Python 2.7, for Python 3.x at least Python 3.3.
+You will need at least Python 3.9.
 
 If you install from source read the
 [installation instructions](https://github.com/wummel/patool/blob/master/doc/install.txt).
@@ -63,10 +62,10 @@ If you install from source read the
 Running
 --------
 After installation there should be a ```/usr/bin/patool``` binary under Unix
-systems, under Windows should exist a file ```c:\python2.7\scripts\patool```.
+systems, under Windows should exist a file ```c:\python3\scripts\patool```.
 
 Use ```patool``` to run for Linux or OSX systems,  on Windows use
-```c:\python2.7\python2.7.exe c:\python2.7\scripts\patool```.
+```c:\python3\python3.exe c:\python3\scripts\patool```.
 
 See the following chapter for usage examples.
 
@@ -100,11 +99,7 @@ Donate
 -------
 If you like patool, consider a donation to support it. Thanks!
 
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="Q6MN5AS8PMCVY">
-<input type="image" src="./images/paypal-donate-button.png" border="0" name="submit" alt="PayPal donation">
+<form action="https://www.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="C5UB3PQF9T33J" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
 </form>
-
-<a href="http://flattr.com/thing/1208862/a-portable-archive-file-manager" target="_blank">
-<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>

@@ -4,3 +4,5 @@ pytest-reportlog
 ruff
 wheel
 twine
+sphinx
+myst-parser
