@@ -24,7 +24,6 @@ of "magic" patterns. The contents of the magic pattern library can vary
 between distributions so the tests might not run on all Linux systems.
 """
 import os
-import sys
 import patoolib
 import pytest
 import importlib
