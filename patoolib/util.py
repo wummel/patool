@@ -240,7 +240,7 @@ def guess_mime_file (filename):
                 encoding = None
     if mime in Mime2Encoding:
         # try to look inside compressed archives
-        cmd = [file_prog, "--brief", "--mime", "--uncompress", filename]
+        cmd = [file_prog, "--brief", "--mime", "--uncompress", "--no-sandbox", filename]
         try:
             outparts = backtick(cmd).strip().split(";")
             mime2 = outparts[0].split(" ", 1)[0]
