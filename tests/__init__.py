@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,6 +13,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+A lot of these tests need an external compression program.
+See https://github.com/wummel/patool/blob/debian/debian/control
+at the "Suggests:" for a list of packages with supported compression
+programs.
+
+The file type detection uses the file(1) program which uses a library
+of "magic" patterns. The contents of the magic pattern library can vary
+between distributions so the tests might not run on all Linux systems.
+"""
 import os
 import sys
 import patoolib
@@ -22,11 +32,8 @@ import importlib
 basedir = os.path.dirname(__file__)
 datadir = os.path.join(basedir, 'data')
 
-# Python 3.x renamed the function name attribute
-if sys.version_info[0] > 2:
-    fnameattr = '__name__'
-else:
-    fnameattr = 'func_name'
+# Python 3.x function name attribute
+fnameattr = '__name__'
 
 def _need_func(testfunc, name, description):
     """Decorator skipping test if given testfunc returns False."""
