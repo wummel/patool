@@ -1,4 +1,4 @@
-1.13 (released xx.xx.2023)
+1.13 (released 24.10.2023)
 
 * Added support for ZSTANDARD archives with the zstd tool.
 * Improved patool diff output: when two archives each have
