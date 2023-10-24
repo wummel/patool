@@ -6,6 +6,15 @@
   the parent directory.
 * Replace deprecated distutils with setuptools to fix build errors
   with modern Python environments.
+  Closes: GH bug #114
+* Disable password prompting with 7z in non-interactive mode with
+  the option "-p-".
+  Thanks to Pascua Theus for the patch.
+* Disable sandbox mode for file(1) to fix detection of compressed tar
+  archives on systems with libseccomp.
+  Thanks to Alfred Wingate for the patch.
+* Remove read-only directories after a diff comparison of two archives.
+  Thanks to c01o for the patch.
 
 
 1.12 (released 17.1.2016)
