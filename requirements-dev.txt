@@ -1,8 +1,8 @@
 # only needed for development
-pytest
-pytest-reportlog
-ruff
-wheel
-twine
-sphinx
-myst-parser
+pytest==7.4.2
+pytest-reportlog==0.4.0
+ruff==0.1.2
+wheel==0.41.2
+twine==4.0.2
+Sphinx==7.2.6
+myst-parser==2.0.0
