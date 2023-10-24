@@ -50,6 +50,7 @@ setup(
     version = configdata["Version"],
     description = configdata["Description"],
     long_description = readme,
+    long_description_content_type="text/markdown",
     author = configdata["Author"],
     author_email = configdata["AuthorEmail"],
     license = configdata["License"],
