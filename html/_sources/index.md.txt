@@ -1,0 +1,105 @@
+Patool
+=======
+
+Introduction
+-------------
+[![XKCD Tar comic](https://imgs.xkcd.com/comics/tar.png)](https://xkcd.com/1168/)
+
+I could never remember the correct options for all those different compression
+programs. Tar, unzip, gzip - you name it and I forgot it.
+Patool remembers all those options for me now so I don't have to.
+
+Description
+------------
+Various archive types can be  created,  extracted,  tested, listed,
+compared, searched  and
+repacked with patool. The advantage of patool is its simplicity in
+handling archive files without having to remember a  myriad  of
+programs and options.
+
+The  archive format is determined by the file(1) program and as
+a fallback by the archive file extension.
+
+patool supports 7z (.7z, .cb7), ACE (.ace, .cba), ADF (.adf), ALZIP (.alz),
+APE  (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2),
+CAB (.cab), COMPRESS (.Z), CPIO (.cpio), DEB  (.deb),  DMS  (.dms),
+FLAC  (.flac), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha, .lzh),
+LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar, .cbr),
+RZIP (.rz),  SHN  (.shn), TAR (.tar, .cbt), XZ (.xz),
+ZIP (.zip, .jar, .cbz) and ZOO (.zoo) archive formats.
+It relies on helper applications to handle those archive formats
+(for example bzip2 for BZIP2 archives).
+
+The  archive  formats  TAR, ZIP, BZIP2 and
+GZIP are supported natively and  do  not  require  helper
+applications to be installed.
+
+Installation
+-------------
+The easy way with pip:
+
+```bash
+sudo pip install patool
+```
+
+And on Windows:
+
+```bash
+c:\python3\scripts\pip install patool
+```
+
+Or after downloading the patool .whl file:
+
+```bash
+c:\python3\scripts\pip install patool-1.9-py2.py3-none-any.whl
+```
+
+You will need at least Python 3.9.
+
+If you install from source read the
+[installation instructions](https://github.com/wummel/patool/blob/master/doc/install.txt).
+
+Running
+--------
+After installation there should be a ```/usr/bin/patool``` binary under Unix
+systems, under Windows should exist a file ```c:\python3\scripts\patool```.
+
+Use ```patool``` to run for Linux or OSX systems,  on Windows use
+```c:\python3\python3.exe c:\python3\scripts\patool```.
+
+See the following chapter for usage examples.
+
+Examples
+---------
+
+```bash
+# extract two archives
+patool extract archive.zip otherarchive.rar
+
+# test if archive is intact
+patool test --verbose dist.tar.gz
+
+# list files inside an archive
+patool list package.deb
+
+# create a new archive
+patool create --verbose myfiles.zip file1.txt dir/
+
+# list differences between two archive contents
+patool diff release1.0.tar.gz release2.0.zip
+
+# search archive contents
+patool search "def urlopen" python-3.3.tar.gz
+
+# compress the archive in a different format
+patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
+```
+
+Donate
+-------
+If you like patool, consider a donation to support it. Thanks!
+
+<form action="https://www.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="C5UB3PQF9T33J" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+</form>
