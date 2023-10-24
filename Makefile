@@ -107,7 +107,7 @@ register:
 	python setup.py register
 
 .PHONY: releasecheck
-releasecheck: lint test
+releasecheck: checkgit lint test
 	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
 	  echo "Could not release: edit doc/changelog.txt release date"; false; \
 	fi
@@ -116,7 +116,20 @@ releasecheck: lint test
 	  echo "Version in doc/changelog.txt:"; head -n1 doc/changelog.txt; \
 	  echo "Version in setup.py: $(VERSION)"; false; \
 	fi
-	python setup.py check --restructuredtext
+
+checkgit:
+# check that branch is master
+	@if [ "$(shell git rev-parse --abbrev-ref HEAD)" != "master" ]; then \
+	  echo "ERROR: current branch is not 'master'"; \
+	  git rev-parse --abbrev-ref HEAD; \
+	  false; \
+	fi
+# check for uncommitted versions
+	@if [ -n "$(shell git status --porcelain --untracked-files=all)" ]; then \
+	  echo "ERROR: uncommitted changes"; \
+	  git status --porcelain --untracked-files=all; \
+	  false; \
+	fi
 
 changelog:
 # github-changelog is a local tool which parses the changelog and automatically
