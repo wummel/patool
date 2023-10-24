@@ -2,4 +2,4 @@ include MANIFEST.in
 include COPYING doc/*.1 doc/*.txt doc/icon/*
 include Makefile *.bash-completion
 include scripts/*.bat
-recursive-include tests *.py
+graft tests
