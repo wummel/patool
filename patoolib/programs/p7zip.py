@@ -23,7 +23,7 @@ def extract_7z(archive, compression, cmd, verbosity, interactive, outdir, passwo
     """Extract a 7z archive."""
     cmdlist = [cmd, 'x']
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.extend(['-p-', '-y'])
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-o%s' % outdir, '--', archive])
     return cmdlist
@@ -34,7 +34,7 @@ def extract_7z_singlefile(archive, compression, cmd, verbosity, interactive, out
     which would cause errors with patool repack."""
     cmdlist = [cmd, 'e']
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.extend(['-p-', '-y'])
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['-o%s' % outdir, '--', archive])
     return cmdlist
@@ -61,7 +61,7 @@ def list_7z (archive, compression, cmd, verbosity, interactive, password=None):
     """List a 7z archive."""
     cmdlist = [cmd, 'l']
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.extend(['-p-', '-y'])
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive])
     return cmdlist
@@ -87,7 +87,7 @@ def test_7z (archive, compression, cmd, verbosity, interactive, password=None):
     """Test a 7z archive."""
     cmdlist = [cmd, 't']
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.extend(['-p-', '-y'])
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive])
     return cmdlist
