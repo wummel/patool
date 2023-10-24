@@ -684,8 +684,10 @@ def _diff_archives (archive1, archive2, verbosity=0, interactive=True):
                 diffpath2 = path2
             return util.run_checked([diff, "-urN", diffpath1, diffpath2], verbosity=1, ret_ok=(0, 1))
         finally:
+            make_user_readable(tmpdir2)
             shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
     finally:
+        make_user_readable(tmpdir1)
         shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
 
 
