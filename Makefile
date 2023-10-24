@@ -118,6 +118,11 @@ releasecheck: lint test
 	fi
 	python setup.py check --restructuredtext
 
+changelog:
+# github-changelog is a local tool which parses the changelog and automatically
+# closes issues mentioned in the changelog entries.
+	github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) doc/changelog.txt
+
 
 ############ Linting and syntax checks ############
 
