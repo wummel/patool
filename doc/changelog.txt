@@ -1,4 +1,4 @@
-1.14.0 (released xx.xx.xxxx)
+1.14.0 (released 25.10.2023)
 
 * Test if tar supports --force-local on macOS systems.
   Closes: GH bug #125
