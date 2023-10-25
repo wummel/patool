@@ -34,7 +34,7 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 # Supported archive formats
 ArchiveFormats = (
     '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
-    'bzip2', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
+    'bzip2', 'bzip3', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
     'flac', 'gzip', 'iso', 'lrzip', 'lzh', 'lzip', 'lzma', 'lzop',
     'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'vhd', 'xz',
     'zip', 'zoo', 'zpaq', 'zstd')
@@ -61,6 +61,7 @@ ArchiveMimetypes = {
     'application/x-arc': 'arc',
     'application/x-arj': 'arj',
     'application/x-bzip2': 'bzip2',
+    'application/x-bzip3': 'bzip3',
     'application/x-cab': 'cab',
     'application/x-chm': 'chm',
     'application/x-compress': 'compress',
@@ -132,6 +133,12 @@ ArchivePrograms = {
         'extract': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
         'test': ('pbzip2', 'lbzip2', 'bzip2'),
         'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
+        'list': ('py_echo'),
+    },
+    'bzip3': {
+        'extract': ('bzip3',),
+        'test': ('bzip3',),
+        'create': ('bzip3',),
         'list': ('py_echo'),
     },
     'cab': {

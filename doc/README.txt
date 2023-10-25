@@ -12,7 +12,7 @@ The archive format is determined by the file(1) program and as
 a fallback by the archive file extension.
 
 patool supports 7z (.7z, .cb7), ACE (.ace, .cba), ADF (.adf), ALZIP (.alz),
-APE (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2),
+APE (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), BZIP3 (.bz3),
 CAB (.cab), COMPRESS (.Z), CPIO (.cpio), DEB (.deb), DMS (.dms),
 FLAC (.flac), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha, .lzh),
 LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar, .cbr),

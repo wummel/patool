@@ -60,6 +60,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, 'application/x-lzop', '.lzo')
     add_mimetype(mimedb, 'application/x-adf', '.adf')
     add_mimetype(mimedb, 'application/x-arj', '.arj')
+    add_mimetype(mimedb, 'application/x-bzip3', '.bz3')
     add_mimetype(mimedb, 'application/x-lzma', '.lzma')
     add_mimetype(mimedb, 'application/x-xz', '.xz')
     add_mimetype(mimedb, 'application/java-archive', '.jar')
@@ -281,6 +282,17 @@ def guess_mime_file_mime (file_prog, filename):
     except OSError:
         # ignore errors, as file(1) is only a fallback
         pass
+    if mime == "application/octet-stream":
+        # bzip3 does not have an official mime type in file(1), but
+        # it gets recognized anyway
+        cmd = [file_prog, "--brief", filename]
+        try:
+            output = backtick(cmd).strip()
+            if output.startswith("bzip3 compressed data"):
+                mime = "application/x-bzip3"
+        except OSError:
+            # ignore errors, as file(1) is only a fallback
+            pass
     if mime not in ArchiveMimetypes:
         mime, encoding = None, None
     return mime, encoding

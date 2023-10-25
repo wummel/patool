@@ -5,6 +5,8 @@
 * Enable archive header encryption for 7z
   Thanks to Michael Serajnik for the initial patch.
   Closes: GH bug #102
+* Added support for BZIP3 archives with the bzip3 tool.
+  Closes: GH bug #129
 
 
 1.13 (released 24.10.2023)
