@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unace program."""
+import os
 
 def extract_ace (archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract an ACE archive."""
     cmdlist = [cmd, 'x']
-    if not outdir.endswith('/'):
-        outdir += '/'
+    if not outdir.endswith(os.sep):
+        outdir += os.sep
     if password:
         cmdlist.append('-p%s' % password)
     cmdlist.extend([archive, outdir])
