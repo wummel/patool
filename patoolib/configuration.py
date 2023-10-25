@@ -3,7 +3,7 @@
 Define basic configuration data like version or application name.
 """
 AppName = "patool"
-Version = "1.13"
+Version = "1.13.0"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
