@@ -81,8 +81,8 @@ dist:
 
 .PHONY: upload
 upload:
-	twine --config-file $(XDG_CONFIG_HOME)/pypirc \
-	  upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
+	twine upload --config-file $(XDG_CONFIG_HOME)/pypirc \
+	  dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
 
 .PHONY: tag
 tag:
