@@ -9,6 +9,8 @@
   Closes: GH bug #129
 * Fix Windows tar doesn't use --force-local
   Thanks to Jack Cherng for the patch.
+* Include tests data in the source distribution.
+  Thanks to Alfred Wingate for the patch.
 
 
 1.13 (released 24.10.2023)
