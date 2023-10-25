@@ -2,6 +2,9 @@
 
 * Test if tar supports --force-local on macOS systems.
   Closes: GH bug #125
+* Enable archive header encryption for 7z
+  Thanks to Michael Serajnik for the initial patch.
+  Closes: GH bug #102
 
 
 1.13 (released 24.10.2023)
