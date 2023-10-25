@@ -78,15 +78,9 @@ dist:
 	python setup.py sdist --formats=tar bdist_wheel
 	gzip --best dist/$(APPNAME)-$(VERSION).tar
 
-.PHONY: sign
-sign:
-	[ -f dist/$(ARCHIVE_SOURCE).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_SOURCE)
-	[ -f dist/$(ARCHIVE_WHEEL).asc ] || gpg --detach-sign --armor dist/$(ARCHIVE_WHEEL)
-
 .PHONY: upload
 upload:
-	twine upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_SOURCE).asc \
-	             dist/$(ARCHIVE_WHEEL) dist/$(ARCHIVE_WHEEL).asc
+	twine upload dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
 
 .PHONY: tag
 tag:
@@ -99,7 +93,7 @@ tag:
 # anything screwed up.
 .PHONY: release
 release: distclean releasecheck
-	$(MAKE) dist sign upload homepage tag register changelog
+	$(MAKE) dist upload homepage tag register changelog
 
 .PHONY: register
 register:
@@ -177,4 +171,3 @@ update_webmeta:
 homepage: update_webmeta
 # release website
 	$(MAKE) -C doc/web release
-
