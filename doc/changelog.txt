@@ -1,5 +1,8 @@
 1.14.0 (released xx.xx.xxxx)
-  *
+
+* Test if tar supports --force-local on macOS systems.
+  Closes: GH bug #125
+
 
 1.13 (released 24.10.2023)
 
