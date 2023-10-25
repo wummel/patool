@@ -26,6 +26,7 @@ GITUSER:=wummel
 GITREPO:=$(APPNAME)
 HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/source/conf.py
+CHANGELOG:=doc/changelog.txt
 PIP_VERSION:=23.3.1
 # Pytest options:
 # --report-log: write test results in file
@@ -93,23 +94,10 @@ tag:
 # anything screwed up.
 .PHONY: release
 release: distclean releasecheck
-	$(MAKE) dist upload homepage tag register changelog
-
-.PHONY: register
-register:
-	@echo "Register at Python Package Index..."
-	python setup.py register
+	$(MAKE) dist upload homepage tag github-issues
 
 .PHONY: releasecheck
-releasecheck: checkgit lint test
-	@if egrep -i "xx\.|xxxx|\.xx" doc/changelog.txt > /dev/null; then \
-	  echo "Could not release: edit doc/changelog.txt release date"; false; \
-	fi
-	@if ! head -n1 doc/changelog.txt | egrep "^$(VERSION)" >/dev/null; then \
-	  echo "Could not release: different versions in doc/changelog.txt and setup.py"; \
-	  echo "Version in doc/changelog.txt:"; head -n1 doc/changelog.txt; \
-	  echo "Version in setup.py: $(VERSION)"; false; \
-	fi
+releasecheck: checkgit checkchangelog lint test
 
 checkgit:
 # check that branch is master
@@ -125,10 +113,33 @@ checkgit:
 	  false; \
 	fi
 
-changelog:
+github-issues:
 # github-changelog is a local tool which parses the changelog and automatically
 # closes issues mentioned in the changelog entries.
 	github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) doc/changelog.txt
+
+
+############ Versioning ############
+
+# shortcut target for bumpversion: bumpversion-{major,minor,patch}
+bumpversion-%:
+	bumpversion $*
+	sed -i '1i$(VERSION) (released xx.xx.xxxx)\n  *\n' $(CHANGELOG)
+
+# check changelog before release
+checkchangelog:
+	@if egrep -i "xx\.|xxxx|\.xx" $(CHANGELOG) > /dev/null; then \
+	  echo "Could not release: edit $(CHANGELOG) release date"; false; \
+	fi
+	@if ! grep "^$(VERSION)" $(CHANGELOG) > /dev/null; then \
+	  echo "ERROR: Version $(VERSION) missing from $(CHANGELOG)"; \
+	  false; \
+	fi
+	@if ! head -n1 $(CHANGELOG) | egrep "^$(VERSION)" >/dev/null; then \
+	  echo "Could not release: different versions in $(CHANGELOG) and setup.py"; \
+	  echo "Version in $(CHANGELOG):"; head -n1 $(CHANGELOG); \
+	  echo "Version in setup.py: $(VERSION)"; false; \
+	fi
 
 
 ############ Linting and syntax checks ############

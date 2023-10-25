@@ -1,8 +1,21 @@
-# only needed for development
+# these modules are only needed for development
+
+# for testing
 pytest==7.4.2
 pytest-reportlog==0.4.0
+
+# for python code linting
 ruff==0.1.2
+
+# for generating a Python .whl file
 wheel==0.41.2
+
+# for uploading releases
 twine==4.0.2
+
+# for generating the web page
 Sphinx==7.2.6
 myst-parser==2.0.0
+
+# for upgrading the version number
+bump2version==1.0.1
