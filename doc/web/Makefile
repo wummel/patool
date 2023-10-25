@@ -20,7 +20,10 @@ MAKEFLAGS += --no-builtin-rules
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
-BUILDDIR      = $(HOME)/public_html/patool-webpage.git
+BUILDDIR      = build
+# Note: patool-webpage.git is just a checked out copy of patool.git
+# where the gh_pages branch is active.
+WEBDIR        = $(HOME)/public_html/patool-webpage.git
 
 
 ############ Default target ############
@@ -33,7 +36,9 @@ help:
 
 .PHONY: release
 release:	html
-	cd $(BUILDDIR) && git add . && git commit -m "Updated" && git push
+	cp -r $(BUILDDIR)/html/* $(WEBDIR)/
+	cd $(WEBDIR) && git add . && git commit -m "Updated" && git push
+
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
