@@ -7,6 +7,8 @@
   Closes: GH bug #102
 * Added support for BZIP3 archives with the bzip3 tool.
   Closes: GH bug #129
+* Fix Windows tar doesn't use --force-local
+  Thanks to Jack Cherng for the patch.
 
 
 1.13 (released 24.10.2023)
