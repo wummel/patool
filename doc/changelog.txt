@@ -9,6 +9,8 @@
   Closes: GH bug #122, #121
 * Don't open new console windows for subprocesses on Windows.
   Closes: GH bug #85
+* Use 7z to extract, list and test CHM (.chm) archives.
+  Closes: GH bug #78
 
 
 1.14.0 (released 25.10.2023)

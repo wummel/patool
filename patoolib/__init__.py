@@ -148,8 +148,9 @@ ArchivePrograms = {
         'test': ('cabextract', '7z'),
     },
     'chm': {
-        'extract': ('archmage', 'extract_chmLib'),
-        'test': ('archmage',),
+        'extract': ('7z', 'archmage', 'extract_chmLib'),
+        'test': ('7z', 'archmage',),
+        'list': ('7z',),
     },
     'flac': {
         'extract': ('flac',),
