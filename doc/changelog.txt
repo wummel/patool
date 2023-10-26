@@ -5,6 +5,8 @@
 * Create non-existing directories when using the --outdir option
   with patool extract.
   Closes: GH bug #117
+* Ensure log output does not have a UnicodeEncodeError
+  Closes: GH bug #122, #121
 
 
 1.14.0 (released 25.10.2023)

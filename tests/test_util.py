@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,3 +44,13 @@ class UtilTest (unittest.TestCase):
         self.assertTrue(util.stripext("foo/bartar.gz") == "bartar")
         self.assertTrue(util.stripext("foo/bar.7z") == "bar")
         self.assertTrue(util.stripext("foo/bar") == "bar")
+
+
+    def test_logging(self):
+        msg = "this is a test message 💜"
+        util.log_info(msg)
+        util.log_error(msg)
+        try:
+            raise Exception(msg)
+        except Exception:
+            util.log_internal_error()

@@ -474,20 +474,30 @@ def get_single_outfile (directory, archive, extension=""):
     return outfile + extension
 
 
-def log_error (msg, out=sys.stderr):
+def print_safe(*args, file=sys.stdout):
+    """Print arguments without encoding errors, replacing unknown
+    characters."""
+    msgs = [
+        str(arg).encode(file.encoding, errors="replace").decode()
+        for arg in args
+    ]
+    print(*msgs, file=file)
+
+
+def log_error(msg):
     """Print error message to stderr (or any other given output)."""
-    print("patool error:", msg, file=out)
+    print_safe("patool error:", msg, file=sys.stderr)
 
 
-def log_info (msg, out=sys.stdout):
+def log_info(msg):
     """Print info message to stdout (or any other given output)."""
-    print("patool:", msg, file=out)
+    print_safe("patool:", msg)
 
 
-def log_internal_error(out=sys.stderr, etype=None, evalue=None, tb=None):
+def log_internal_error(etype=None, evalue=None, tb=None):
     """Print internal error message (output defaults to stderr)."""
-    print(os.linesep, file=out)
-    print("""********** Oops, I did it again. *************
+    print_safe(os.linesep, file=sys.stderr)
+    print_safe("""********** Oops, I did it again. *************
 
 You have found an internal error in %(app)s. Please write a bug report
 at %(url)s and include at least the information below:
@@ -495,42 +505,31 @@ at %(url)s and include at least the information below:
 Not disclosing some of the information below due to privacy reasons is ok.
 I will try to help you nonetheless, but you have to give me something
 I can work with ;) .
-""" % dict(app=configuration.AppName, url=configuration.SupportUrl), file=out)
+""" % dict(app=configuration.AppName, url=configuration.SupportUrl), file=sys.stderr)
     if etype is None:
         etype = sys.exc_info()[0]
     if evalue is None:
         evalue = sys.exc_info()[1]
-    print(etype, evalue, file=out)
+    print_safe(etype, evalue, file=sys.stderr)
     if tb is None:
         tb = sys.exc_info()[2]
-    traceback.print_exception(etype, evalue, tb, None, out)
-    print_app_info(out=out)
-    print_locale_info(out=out)
-    print(os.linesep,
-      "******** %s internal error, over and out ********" % configuration.AppName, file=out)
-
-def print_env_info(key, out=sys.stderr):
-    """If given environment key is defined, print it out."""
-    value = os.getenv(key)
-    if value is not None:
-        print(key, "=", repr(value), file=out)
-
-
-def print_locale_info(out=sys.stderr):
-    """Print locale info."""
-    for key in ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG"):
-        print_env_info(key, out=out)
-
-
-def print_app_info(out=sys.stderr):
-    """Print system and application info (output defaults to stderr)."""
-    print("System info:", file=out)
-    print(configuration.App, file=out)
-    print("Python %(version)s on %(platform)s" %
-                    {"version": sys.version, "platform": sys.platform}, file=out)
+    traceback.print_exception(etype, evalue, tb, None, sys.stderr)
+    # print system and application info
+    print_safe("System info:", file=sys.stderr)
+    print_safe(configuration.App, file=sys.stderr)
+    print_safe("Python %(version)s on %(platform)s" %
+                    {"version": sys.version, "platform": sys.platform}, file=sys.stderr)
     stime = strtime(time.time())
-    print("Local time:", stime, file=out)
-    print("sys.argv", sys.argv, file=out)
+    print_safe("Local time:", stime, file=sys.stderr)
+    print_safe("sys.argv", sys.argv, file=sys.stderr)
+    # print locale info
+    for key in ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG"):
+        value = os.getenv(key)
+        if value is not None:
+            print_safe(key, "=", repr(value), file=sys.stderr)
+    print_safe(os.linesep,
+      "******** %s internal error, over and out ********" %
+      configuration.AppName, file=sys.stderr)
 
 
 def strtime(t):
