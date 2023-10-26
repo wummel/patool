@@ -16,10 +16,9 @@ MAKEFLAGS += --no-builtin-rules
 
 
 ############ Configuration ############
-
-VERSION:=$(shell python setup.py --version)
-AUTHOR:=$(shell python setup.py --author)
-APPNAME:=$(shell python setup.py --name)
+VERSION:=$(grep "Version =" patoolib/configuration.py | cut -d '"' -f2)
+AUTHOR:=$(grep "MyName =" patoolib/configuration.py | cut -d '"' -f2)
+APPNAME:=$(grep "AppName =" patoolib/configuration.py | cut -d '"' -f2)
 ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
 ARCHIVE_WHEEL:=$(APPNAME)-$(VERSION)-py2.py3-none-any.whl
 GITUSER:=wummel
@@ -125,6 +124,9 @@ github-issues:
 # shortcut target for bumpversion: bumpversion-{major,minor,patch}
 bumpversion-%:
 	bumpversion $*
+	$(MAKE) bumpchangelog
+
+bumpchangelog:
 	sed -i '1i$(VERSION) (released xx.xx.xxxx)\n  *\n' $(CHANGELOG)
 
 # check changelog before release
