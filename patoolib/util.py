@@ -144,13 +144,16 @@ def backtick (cmd, encoding='utf-8'):
     return data.decode(encoding)
 
 
-def run (cmd, verbosity=0, **kwargs):
+def run(cmd, verbosity=0, **kwargs):
     """Run command without error checking.
     @return: command return code"""
     # Note that shell_quote_nt() result is not suitable for copy-paste
     # (especially on Unix systems), but it looks nicer than shell_quote().
     if verbosity >= 0:
         log_info("running %s" % " ".join(map(shell_quote_nt, cmd)))
+    if os.name == "nt":
+        # prevent opening of additional consoles when running with pythonw.exe
+        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
     if kwargs:
         if verbosity >= 0:
             log_info("    with %s" % ", ".join("%s=%s" % (k, shell_quote(str(v)))\

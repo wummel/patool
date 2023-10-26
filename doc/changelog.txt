@@ -7,6 +7,8 @@
   Closes: GH bug #117, #132
 * Ensure log output does not have a UnicodeEncodeError
   Closes: GH bug #122, #121
+* Don't open new console windows for subprocesses on Windows.
+  Closes: GH bug #85
 
 
 1.14.0 (released 25.10.2023)
