@@ -556,6 +556,13 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
         do_cleanup_outdir = True
     else:
         do_cleanup_outdir = False
+        if os.path.exists(outdir):
+            if not os.path.isdir(outdir):
+                msg = "output path `%s' exists and is not a directory" % outdir
+                raise util.PatoolError(msg)
+        else:
+            util.log_info("... creating output directory `%s'." % outdir)
+            os.makedirs(outdir)
     try:
         cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, outdir, password=password)
         if cmdlist:

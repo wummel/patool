@@ -2,6 +2,9 @@
 
 * Fix wrong option in bzip3, and add tests.
   Closes: GH bug #134
+* Create non-existing directories when using the --outdir option
+  with patool extract.
+  Closes: GH bug #117
 
 
 1.14.0 (released 25.10.2023)
