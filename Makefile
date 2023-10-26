@@ -116,7 +116,7 @@ checkgit:
 github-issues:
 # github-changelog is a local tool which parses the changelog and automatically
 # closes issues mentioned in the changelog entries.
-	github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) doc/changelog.txt
+	cd .. && github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) patool.git/doc/changelog.txt
 
 
 ############ Versioning ############
