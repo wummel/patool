@@ -83,3 +83,10 @@ patoolib.is_archive("package.deb")
 Test suite status
 ------------------
 Patool has extensive unit tests to ensure the code quality.
+
+
+Bash completion
+----------------
+Install the argcomplete python package with
+`apt-get install python3-argcomplete`,
+run `eval "$(register-python-argcomplete patool)"`.

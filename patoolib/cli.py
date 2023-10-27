@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-patool [global-options] {extract|list|create|diff|search|formats} [sub-command-options] <command-args>
+patool [global-options] {extract|list|create|repack|recompress|diff|search|formats} [sub-command-options] <command-args>
 """
 import sys
 import argparse
@@ -235,4 +235,3 @@ def main(args=None):
 
 def main_cli():
     sys.exit(main())
-
