@@ -35,7 +35,7 @@ jobs:
     - name: Install archive programs
       run: >
         sudo apt-get update &&
-        sudo apt-get install arj bzip2 lbzip2 pbzip2 cabextract ncompress cpio lzop p7zip-full zip unzip rpm2cpio binutils lhasa unace unalz unar lrzip lhasa tar xdms lzip plzip clzip pdlzip sharutils flac libarchive-tools archmage genisoimage lz4 bzip3 zstd
+        sudo apt-get install arj bzip2 lbzip2 pbzip2 cabextract ncompress cpio lzop p7zip-full zip unzip rpm2cpio binutils lhasa unace unalz unar lrzip lhasa tar xdms lzip plzip clzip pdlzip sharutils flac libarchive-tools archmage genisoimage lz4 zstd
 
     - name: Test with pytest
       run: |
