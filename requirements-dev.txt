@@ -3,6 +3,7 @@
 # for testing
 pytest==7.4.2
 pytest-reportlog==0.4.0
+pytest-xdist[psutils]==3.3.1
 
 # for python code linting
 ruff==0.1.2

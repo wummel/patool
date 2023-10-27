@@ -30,7 +30,8 @@ PIP_VERSION:=23.3.1
 # Pytest options:
 # --report-log: write test results in file
 # -s: do not capture stdout/stderr (some tests fail otherwise)
-PYTESTOPTS?=--report-log=testresults.txt -s
+# -n auto: run tests in parallel with all detected CPUs
+PYTESTOPTS?=--report-log=testresults.txt -s -n auto
 # which test modules to run
 TESTS ?= tests/
 # set test options
