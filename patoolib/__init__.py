@@ -134,13 +134,13 @@ ArchivePrograms = {
         'extract': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
         'test': ('pbzip2', 'lbzip2', 'bzip2'),
         'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
-        'list': ('py_echo'),
+        'list': ('py_echo',),
     },
     'bzip3': {
         'extract': ('bzip3',),
         'test': ('bzip3',),
         'create': ('bzip3',),
-        'list': ('py_echo'),
+        'list': ('py_echo',),
     },
     'cab': {
         'extract': ('cabextract', '7z'),

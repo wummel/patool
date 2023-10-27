@@ -31,6 +31,8 @@ class TestConfiguration (unittest.TestCase):
             for command in commands:
                 if command is not None:
                     self.assertTrue(command in patoolib.ArchiveCommands)
+            for programs in commands.values():
+                self.assertTrue(isinstance(programs, tuple))
 
     def test_compression_programs (self):
         self.assertTrue(set(patoolib.ArchiveCompressions).issubset(

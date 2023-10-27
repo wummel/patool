@@ -5,6 +5,7 @@
 * Use correct registry key flag for 32-bit Python on 64-bit Windows
   when detecting 7z.
   Closes: GH bug #35
+* Fix configuration for listing .bz2 and .bz3 archives.
 
 
 1.14.1 (released 26.10.2023)
