@@ -286,17 +286,6 @@ def guess_mime_file_mime (file_prog, filename):
     except OSError:
         # ignore errors, as file(1) is only a fallback
         pass
-    if mime == "application/octet-stream":
-        # bzip3 does not have an official mime type in file(1), but
-        # it gets recognized anyway
-        cmd = [file_prog, "--brief", filename]
-        try:
-            output = backtick(cmd).strip()
-            if output.startswith("bzip3 compressed data"):
-                mime = "application/x-bzip3"
-        except OSError:
-            # ignore errors, as file(1) is only a fallback
-            pass
     if mime not in ArchiveMimetypes:
         mime, encoding = None, None
     return mime, encoding
@@ -319,6 +308,7 @@ FileText2Mime = {
     "Amiga DOS disk": "application/x-adf",
     "ARJ archive data": "application/x-arj",
     "bzip2 compressed data": "application/x-bzip2",
+    "bzip3 compressed data": "application/x-bzip3",
     "cpio archive": "application/x-cpio",
     "ASCII cpio archive": "application/x-cpio",
     "Debian binary package": "application/x-debian-package",
