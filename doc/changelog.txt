@@ -2,7 +2,8 @@
 
 * Added support for LZ4 archives with the lz4 tool.
   Closes: GH bug #46
-* Use correct registry key flag for 32-bit Python on 64-bit Windows.
+* Use correct registry key flag for 32-bit Python on 64-bit Windows
+  when detecting 7z.
   Closes: GH bug #35
 
 
@@ -14,7 +15,7 @@
   with patool extract.
   Closes: GH bug #117, #132
 * Ensure log output does not have a UnicodeEncodeError
-  Closes: GH bug #122, #121, #29
+  Closes: GH bug #122, #121, #52, #29
 * Don't open new console windows for subprocesses on Windows.
   Closes: GH bug #85
 * Use 7z to extract, list and test CHM (.chm) archives.
