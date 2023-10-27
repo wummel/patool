@@ -336,11 +336,10 @@ FileText2Mime = {
     "ZPAQ stream": "application/zpaq",
 }
 
-def guess_mime_file_text (file_prog, filename):
+def guess_mime_file_text(file_prog, filename):
     """Determine MIME type of filename with file(1)."""
-    cmd = [file_prog, "--brief", filename]
     try:
-        output = backtick(cmd).strip()
+        output = run_file_text(file_prog, filename)
     except OSError:
         # ignore errors, as file(1) is only a fallback
         return None
@@ -349,6 +348,12 @@ def guess_mime_file_text (file_prog, filename):
         if output.startswith(matcher) and mime in ArchiveMimetypes:
             return mime
     return None
+
+
+def run_file_text(file_prog, filename):
+    """Get stripped output of file --brief <filename>"""
+    cmd = [file_prog, "--brief", filename]
+    return backtick(cmd).strip()
 
 
 def check_existing_filename (filename, onlyfiles=True):
