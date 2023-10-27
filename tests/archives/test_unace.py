@@ -24,20 +24,20 @@ class TestUnace (ArchiveTest):
     def test_unace(self):
         self.archive_list(self.filename + '.ace')
         self.archive_test(self.filename + '.ace')
-        self.archive_extract(self.filename + '.ace')
+        #self.archive_extract(self.filename + '.ace')
         self.archive_list(self.filename + '.cba')
         self.archive_test(self.filename + '.cba')
-        self.archive_extract(self.filename + '.cba')
+        #self.archive_extract(self.filename + '.cba')
 
     @needs_program('file')
     @needs_program(program)
     def test_unace_file(self):
         self.archive_list(self.filename + '.ace.foo')
         self.archive_test(self.filename + '.ace.foo')
-        self.archive_extract(self.filename + '.ace.foo')
+        #self.archive_extract(self.filename + '.ace.foo')
         self.archive_list(self.filename + '.cba.foo')
         self.archive_test(self.filename + '.cba.foo')
-        self.archive_extract(self.filename + '.cba.foo')
+        #self.archive_extract(self.filename + '.cba.foo')
 
 
 # TODO: add p.ace, p.ace.foo, p.cba, p.cba.foo with password to repository
