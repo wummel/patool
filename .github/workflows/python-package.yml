@@ -19,15 +19,24 @@ jobs:
         python-version: ["3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install -r requirements-dev.txt
+
+    - name: Install archive programs
+      run: >
+        sudo apt-get update &&
+        sudo apt-get install arj bzip2 lbzip2 pbzip2 cabextract ncompress cpio lzop p7zip-full zip unzip rpm2cpio binutils lha unace unalz unar lrzip lhasa tar xdms lzip plzip clzip pdlzip sharutils flac libarchive-tools archmage genisoimage
+
     - name: Test with pytest
       run: |
         pytest -s tests/ -n auto
