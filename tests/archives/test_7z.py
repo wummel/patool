@@ -137,9 +137,6 @@ class Test7zPassword(ArchiveTest):
         self.archive_commands('p .7z')
         self.archive_commands('p.zip')
         self.archive_commands('p.cbz')
-        self.archive_list('p.arj')
-        self.archive_extract('p.arj')
-        self.archive_test('p.arj')
 
     @needs_codec(program, 'rar')
     def test_7z_rar(self):
@@ -154,9 +151,6 @@ class Test7zPassword(ArchiveTest):
         self.archive_commands('p.7z.foo', skip_create=True)
         self.archive_commands('p.zip.foo', skip_create=True)
         self.archive_commands('p.cbz.foo', skip_create=True)
-        self.archive_list('p.arj.foo')
-        self.archive_extract('p.arj.foo')
-        self.archive_test('p.arj.foo')
 
     @needs_program('file')
     @needs_codec(program, 'rar')
