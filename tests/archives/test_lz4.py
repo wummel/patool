@@ -13,19 +13,23 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the bzip3 program."""
-from .. import util
-from . import extract_singlefile_standard, test_singlefile_standard
+from . import ArchiveTest, Content
+from .. import needs_program
 
-extract_bzip3 = extract_singlefile_standard
-test_bzip3 = test_singlefile_standard
+class TestLz4(ArchiveTest):
 
-def create_bzip3(archive, compression, cmd, verbosity, interactive, filenames):
-    """Create a BZIP3 archive."""
-    cmdlist = [util.shell_quote(cmd)]
-    if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-c', '-z', '--'])
-    cmdlist.extend([util.shell_quote(x) for x in filenames])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    program = 'lz4'
+
+    @needs_program(program)
+    def test_lz4(self):
+        self.archive_extract('t.txt.lz4', check=Content.Singlefile)
+        self.archive_test('t.txt.lz4')
+        self.archive_list('t.txt.lz4')
+        self.archive_create('t.txt.lz4', check=Content.Singlefile)
+
+    @needs_program('file')
+    @needs_program(program)
+    def test_lz4_file(self):
+        self.archive_extract('t.txt.lz4.foo', check=Content.Singlefile)
+        self.archive_test('t.txt.lz4.foo')
+        self.archive_list('t.txt.lz4.foo')
