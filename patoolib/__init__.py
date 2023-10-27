@@ -99,8 +99,12 @@ ArchiveMimetypes = {
 # If command is None, the program supports all commands (list, extract, ...)
 # Programs starting with "py_" are Python modules.
 ArchivePrograms = {
+    '7z': {
+        None: ('7z', '7za', '7zr'),
+        'extract': ('unar',),
+    },
     'ace': {
-        'extract': ('unace',),
+        'extract': ('unace', 'unar'),
         'test': ('unace',),
         'list': ('unace',),
     },
@@ -129,9 +133,15 @@ ArchivePrograms = {
         'test': ('nomarch',),
         'list': ('nomarch',),
     },
+    'arj': {
+        None: ('arj',),
+        'extract': ('7z',),
+        'list': ('7z',),
+        'test': ('7z',),
+    },
     'bzip2': {
         None: ('7z', '7za'),
-        'extract': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
+        'extract': ('pbzip2', 'lbzip2', 'bzip2', 'unar', 'py_bz2'),
         'test': ('pbzip2', 'lbzip2', 'bzip2'),
         'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
         'list': ('py_echo',),
@@ -143,7 +153,7 @@ ArchivePrograms = {
         'list': ('py_echo',),
     },
     'cab': {
-        'extract': ('cabextract', '7z'),
+        'extract': ('cabextract', '7z', 'unar'),
         'create': ('lcab',),
         'list': ('cabextract', '7z'),
         'test': ('cabextract', '7z'),
@@ -153,29 +163,31 @@ ArchivePrograms = {
         'test': ('7z', 'archmage',),
         'list': ('7z',),
     },
+    'compress': {
+        'extract': ('gzip', '7z', '7za', 'unar', 'uncompress.real'),
+        'list': ('7z', '7za', 'py_echo',),
+        'test': ('gzip', '7z', '7za'),
+        'create': ('compress',),
+    },
+    'cpio': {
+        'extract': ('cpio', 'bsdcpio', '7z', 'unar'),
+        'list': ('cpio', 'bsdcpio', '7z'),
+        'test': ('cpio', 'bsdcpio', '7z',),
+        'create': ('cpio', 'bsdcpio'),
+    },
     'flac': {
         'extract': ('flac',),
         'test': ('flac',),
         'create': ('flac',),
         'list': ('py_echo',),
     },
-    'tar': {
-        None: ('tar', 'star', 'bsdtar', 'py_tarfile'),
-    },
-    'zip': {
-        None: ('7z', '7za', 'py_zipfile'),
-        'extract': ('unzip',),
-        'list': ('unzip',),
-        'test': ('zip', 'unzip',),
-        'create': ('zip',),
-    },
     'gzip': {
         None: ('7z', '7za', 'pigz', 'gzip'),
-        'extract': ('py_gzip',),
+        'extract': ('unar', 'py_gzip',),
         'create': ('zopfli', 'py_gzip'),
     },
     'iso': {
-        'extract': ('7z',),
+        'extract': ('7z', 'unar'),
         'list': ('7z', 'isoinfo'),
         'test': ('7z',),
         'create': ('genisoimage',),
@@ -185,7 +197,7 @@ ArchivePrograms = {
     },
     'lzh': {
         None: ('lha',),
-        'extract': ('lhasa',),
+        'extract': ('lhasa', 'unar'),
     },
     'lzip': {
         'extract': ('plzip', 'lzip', 'clzip', 'pdlzip'),
@@ -193,38 +205,23 @@ ArchivePrograms = {
         'test': ('plzip', 'lzip', 'clzip', 'pdlzip'),
         'create': ('plzip', 'lzip', 'clzip', 'pdlzip'),
     },
+    'lzma': {
+        'extract': ('7z', 'lzma', 'xz', 'unar', 'py_lzma'),
+        'list': ('7z', 'py_echo'),
+        'test': ('7z', 'lzma', 'xz'),
+        'create': ('lzma', 'xz', 'py_lzma'),
+    },
     'lrzip': {
         'extract': ('lrzip',),
         'list': ('py_echo',),
         'test': ('lrzip',),
         'create': ('lrzip',),
     },
-    'compress': {
-        'extract': ('gzip', '7z', '7za', 'uncompress.real'),
-        'list': ('7z', '7za', 'py_echo',),
-        'test': ('gzip', '7z', '7za'),
-        'create': ('compress',),
-    },
-    '7z': {
-        None: ('7z', '7za', '7zr'),
-    },
     'rar': {
         None: ('rar',),
-        'extract': ('unrar', '7z'),
+        'extract': ('unrar', '7z', 'unar'),
         'list': ('unrar', '7z'),
         'test': ('unrar', '7z'),
-    },
-    'arj': {
-        None: ('arj',),
-        'extract': ('7z',),
-        'list': ('7z',),
-        'test': ('7z',),
-    },
-    'cpio': {
-        'extract': ('cpio', 'bsdcpio', '7z'),
-        'list': ('cpio', 'bsdcpio', '7z'),
-        'test': ('cpio', 'bsdcpio', '7z',),
-        'create': ('cpio', 'bsdcpio'),
     },
     'rpm': {
         'extract': ('rpm2cpio', '7z'),
@@ -237,18 +234,12 @@ ArchivePrograms = {
         'test': ('dpkg-deb', '7z'),
     },
     'dms': {
-        'extract': ('xdms',),
+        'extract': ('xdms', 'unar'),
         'list': ('xdms',),
         'test': ('xdms',),
     },
     'lzop': {
         None: ('lzop',),
-    },
-    'lzma': {
-        'extract': ('7z', 'lzma', 'xz', 'py_lzma'),
-        'list': ('7z', 'py_echo'),
-        'test': ('7z', 'lzma', 'xz'),
-        'create': ('lzma', 'xz', 'py_lzma'),
     },
     'rzip': {
         'extract': ('rzip',),
@@ -264,6 +255,10 @@ ArchivePrograms = {
         'list': ('py_echo',),
         'create': ('shorten',),
     },
+    'tar': {
+        None: ('tar', 'star', 'bsdtar', 'py_tarfile'),
+        'extract': ('unar',),
+    },
     'vhd': {
         'extract': ('7z',),
         'list': ('7z',),
@@ -271,11 +266,19 @@ ArchivePrograms = {
     },
     'xz': {
         None: ('xz', '7z'),
-        'extract': ('py_lzma',),
+        'extract': ('unar', 'py_lzma',),
         'create': ('py_lzma',),
+    },
+    'zip': {
+        None: ('7z', '7za', 'py_zipfile'),
+        'extract': ('unzip', 'unar'),
+        'list': ('unzip',),
+        'test': ('zip', 'unzip',),
+        'create': ('zip',),
     },
     'zoo': {
         None: ('zoo',),
+        'extract': ('unar',),
     },
     'zpaq': {
         None: ('zpaq',),

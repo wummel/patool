@@ -12,6 +12,7 @@ __pycache__
 
 # local development files
 /todo.txt
+/todo.txt.bak
 /done.txt
 /report.txt
 /testresults.txt
