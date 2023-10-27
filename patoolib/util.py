@@ -593,15 +593,19 @@ def append_to_path (path, directory):
     return path + directory
 
 
-def get_nt_7z_dir ():
+def get_nt_7z_dir():
     """Return 7-Zip directory from registry, or an empty string."""
-    # Python 3.x renamed the _winreg module to winreg
+    import winreg
+    import platform
+    python_bits = platform.architecture()[0]
+    keyname = r"SOFTWARE\7-Zip"
     try:
-        import _winreg as winreg
-    except ImportError:
-        import winreg
-    try:
-        key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip")
+        if python_bits == '32bit' and platform.machine().endswith('64'):
+            # get 64-bit registry key from 32-bit Python
+            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyname,
+                  0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
+        else:
+            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyname)
         try:
             return winreg.QueryValueEx(key, "Path")[0]
         finally:

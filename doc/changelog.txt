@@ -2,6 +2,8 @@
 
 * Added support for LZ4 archives with the lz4 tool.
   Closes: GH bug #46
+* Use correct registry key flag for 32-bit Python on 64-bit Windows.
+  Closes: GH bug #35
 
 
 1.14.1 (released 26.10.2023)

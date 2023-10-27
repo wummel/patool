@@ -11,6 +11,8 @@ __pycache__
 /patool.egg-info/
 
 # local development files
-/todo
+/todo.txt
+/done.txt
+/report.txt
 /testresults.txt
 /.python-version
