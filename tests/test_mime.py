@@ -24,8 +24,7 @@ class TestMime(unittest.TestCase):
     def mime_test(self, func, filename, mime, encoding, info):
         """Test that file has given mime and encoding as determined by
         given function."""
-        archive = os.path.join(datadir, filename)
-        file_mime, file_encoding = func(archive)
+        file_mime, file_encoding = func(filename)
         fail_msg = "%s for archive `%s' should be %s, but was %s. Info: %s"
         if isinstance(mime, tuple):
             self.assertTrue(file_mime in mime, fail_msg % ("MIME type", filename, "in %s" % str(mime), file_mime, info))
@@ -36,14 +35,16 @@ class TestMime(unittest.TestCase):
     def mime_test_file(self, filename, mime, encoding=None):
         """Test that file has given mime and encoding as determined by
         file(1)."""
+        archive = os.path.join(datadir, filename)
         file_prog = patoolib.util.find_program("file")
-        info = patoolib.util.run_file_text(file_prog, filename)
-        self.mime_test(patoolib.util.guess_mime_file, filename, mime, encoding, info)
+        info = patoolib.util.run_file_text(file_prog, archive)
+        self.mime_test(patoolib.util.guess_mime_file, archive, mime, encoding, info)
 
     def mime_test_mimedb(self, filename, mime, encoding=None):
         """Test that file has given mime and encoding as determined by the
         mimetypes module."""
-        self.mime_test(patoolib.util.guess_mime_mimedb, filename, mime, encoding, "")
+        archive = os.path.join(datadir, filename)
+        self.mime_test(patoolib.util.guess_mime_mimedb, archive, mime, encoding, "")
 
     @needs_program('file')
     def test_mime_file(self):
