@@ -161,7 +161,7 @@ reformat:
 
 .PHONY: test
 test:
-	python -m pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
+	pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
 
 
 ############ Documentation ############
