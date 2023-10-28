@@ -89,4 +89,7 @@ Bash completion
 ----------------
 Install the argcomplete python package with
 `apt-get install python3-argcomplete`,
-run `eval "$(register-python-argcomplete patool)"`.
+then run
+`eval "$(register-python-argcomplete patool)"`.
+After that typing `patool`, a <SPACE> and then <TAB>
+lists available options and commands.

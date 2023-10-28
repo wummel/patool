@@ -9,6 +9,8 @@
 * Added support for the unar program which can extract a lot of
   archive formats, for example ZIP, RAR, 7Z, TAR, GZIP, BZIP2 etc.
   Closes: GH bug #39
+* Document how to enable bash completion.
+  Closes: GH bug #127
 
 
 1.14.1 (released 26.10.2023)
