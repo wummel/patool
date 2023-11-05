@@ -55,7 +55,7 @@ Or after downloading the patool .whl file:
 c:\python3\scripts\pip install patool-1.9-py2.py3-none-any.whl
 ```
 
-You will need at least Python 3.9.
+You will need at least Python 3.10.
 
 If you install from source read the
 [installation instructions](https://github.com/wummel/patool/blob/master/doc/install.txt).

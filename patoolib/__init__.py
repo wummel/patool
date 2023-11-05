@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import inspect
 import sys
-if not hasattr(sys, "version_info") or sys.version_info < (3, 9, 0, "final", 0):
-    raise SystemExit("This program requires Python 3.9 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
+    raise SystemExit("This program requires Python 3.10 or later.")
 import os
 import shutil
 import stat

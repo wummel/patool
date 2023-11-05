@@ -19,8 +19,8 @@ Setup file for building, packaging and distributing this software.
 """
 import sys
 
-if not hasattr(sys, "version_info") or sys.version_info < (3, 9, 0, "final", 0):
-    raise SystemExit("This program requires Python 3.9 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
+    raise SystemExit("This program requires Python 3.10 or later.")
 import os
 
 from setuptools import setup
@@ -55,7 +55,7 @@ setup(
     author_email = configdata["AuthorEmail"],
     license = configdata["License"],
     url = configdata["Url"],
-    python_requires=">=3.9",
+    python_requires=">=3.10",
     project_urls = {
         "Source": "https://github.com/wummel/patool",
     },
