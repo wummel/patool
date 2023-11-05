@@ -63,6 +63,7 @@ localbuild:
 clean:
 	python setup.py clean --all
 	pip uninstall --yes patool
+	$(MAKE) -C doc/web clean
 
 .PHONY: distclean
 distclean:	clean
