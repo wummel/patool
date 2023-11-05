@@ -1,3 +1,6 @@
+2.0.0 (released xx.xx.xxxx)
+  *
+
 1.15.0 (released 28.10.2023)
 
 * Added support for LZ4 archives with the lz4 tool.
