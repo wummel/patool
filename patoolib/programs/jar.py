@@ -19,17 +19,17 @@ import os
 
 def extract_zip(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a ZIP archive."""
-    cmdlist = [cmd, '--extract']
+    cmdlist = [cmd, '-x']
     if verbosity > 1:
-        cmdlist.append('--verbose')
-    cmdlist.extend(["--file", os.path.abspath(archive)])
+        cmdlist.append('-v')
+    cmdlist.extend(["-f", os.path.abspath(archive)])
     return (cmdlist, {'cwd': outdir})
 
 
 def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
     """List a ZIP archive."""
-    cmdlist = [cmd, '--list']
+    cmdlist = [cmd, '-t']
     if verbosity > 1:
-        cmdlist.append('--verbose')
-    cmdlist.append(archive)
+        cmdlist.append('-v')
+    cmdlist.extend(["-f", archive])
     return cmdlist
