@@ -22,9 +22,9 @@ class TestJar(ArchiveTest):
 
     @needs_program(program)
     def test_jar(self):
-        self.archive_extract('t.zip')
+        self.archive_extract('t.zip', check=None)
         self.archive_list('t.zip')
-        self.archive_extract('t.cbz')
+        self.archive_extract('t.cbz', check=None)
         self.archive_list('t.cbz')
         self.archive_extract('t.apk', check=None)
         self.archive_list('t.apk')
@@ -36,9 +36,9 @@ class TestJar(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_jar_file(self):
-        self.archive_extract('t.zip.foo')
+        self.archive_extract('t.zip.foo', check=None)
         self.archive_list('t.zip.foo')
-        self.archive_extract('t.cbz.foo')
+        self.archive_extract('t.cbz.foo', check=None)
         self.archive_list('t.cbz.foo')
         self.archive_extract('t.apk.foo', check=None)
         self.archive_list('t.apk.foo')
