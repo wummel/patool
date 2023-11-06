@@ -1,6 +1,10 @@
 2.0.0 (released xx.xx.xxxx)
 
 * Require Python >= 3.10
+* Use Python logging module instead of print() for diagnostic output.
+  Diagnostic output of patool will now be printed on stderr instead of
+  stdout.
+  Closes: GH bug #37
 
 
 1.15.0 (released 28.10.2023)

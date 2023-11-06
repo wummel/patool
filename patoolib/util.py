@@ -21,7 +21,7 @@ import subprocess
 import mimetypes
 import tempfile
 import time
-import traceback
+import logging
 import locale
 from . import configuration, ArchiveMimetypes, ArchiveCompressions, program_supports_compression
 from shutil import which
@@ -473,62 +473,73 @@ def get_single_outfile (directory, archive, extension=""):
     return outfile + extension
 
 
-def print_safe(*args, file=sys.stdout):
-    """Print arguments without encoding errors, replacing unknown
-    characters."""
-    msgs = [
-        str(arg).encode(file.encoding, errors="replace").decode()
+def encode_safe(*args, encoding=sys.stderr.encoding):
+    """Replacing unknown characters in args for the given encoding.
+    @return: a space-separated string that will not have encoding errors
+    with the given encoding"""
+    return " ".join([
+        str(arg).encode(encoding, errors="replace").decode()
         for arg in args
-    ]
-    print(*msgs, file=file)
+    ])
+
+
+# the global logging.Logger object, initialized by init_logging()
+logger = None
+
+
+def init_logging(stream=sys.stderr):
+    """Initialize the global logger. All log messages will be
+    sent to the given stream, default is sys.stderr.
+    """
+    global logger
+    logger = logging.getLogger(configuration.AppName)
+    handler = logging.StreamHandler(stream=stream)
+    format = f"%(levelname)s {configuration.AppName}: %(message)s"
+    handler.setFormatter(logging.Formatter(format))
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
 
 
 def log_error(msg):
-    """Print error message to stderr (or any other given output)."""
-    print_safe("patool error:", msg, file=sys.stderr)
+    """Log error message."""
+    logger.error(encode_safe(msg))
 
 
 def log_info(msg):
-    """Print info message to stdout (or any other given output)."""
-    print_safe("patool:", msg)
+    """Log info message."""
+    logger.info(encode_safe(msg))
 
 
-def log_internal_error(etype=None, evalue=None, tb=None):
-    """Print internal error message (output defaults to stderr)."""
-    print_safe(os.linesep, file=sys.stderr)
-    print_safe("""********** Oops, I did it again. *************
+# environment keys to print for internal error info
+EnvKeys = ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG")
 
-You have found an internal error in %(app)s. Please write a bug report
-at %(url)s and include at least the information below:
+
+def log_internal_error():
+    """Print internal error message."""
+    now = strtime(time.time())
+    env = os.linesep.join([f"{key}={os.getenv(key)!r}"
+                           for key in EnvKeys
+                           if os.getenv(key) is not None])
+    logger.exception(encode_safe(
+f"""********** Oops, I did it again. *************
+
+You have found an internal error in {configuration.AppName}.
+Please write a bug report at
+{configuration.SupportUrl}
+and include at least the information below:
 
 Not disclosing some of the information below due to privacy reasons is ok.
 I will try to help you nonetheless, but you have to give me something
 I can work with ;) .
-""" % dict(app=configuration.AppName, url=configuration.SupportUrl), file=sys.stderr)
-    if etype is None:
-        etype = sys.exc_info()[0]
-    if evalue is None:
-        evalue = sys.exc_info()[1]
-    print_safe(etype, evalue, file=sys.stderr)
-    if tb is None:
-        tb = sys.exc_info()[2]
-    traceback.print_exception(etype, evalue, tb, None, sys.stderr)
-    # print system and application info
-    print_safe("System info:", file=sys.stderr)
-    print_safe(configuration.App, file=sys.stderr)
-    print_safe("Python %(version)s on %(platform)s" %
-                    {"version": sys.version, "platform": sys.platform}, file=sys.stderr)
-    stime = strtime(time.time())
-    print_safe("Local time:", stime, file=sys.stderr)
-    print_safe("sys.argv", sys.argv, file=sys.stderr)
-    # print locale info
-    for key in ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG"):
-        value = os.getenv(key)
-        if value is not None:
-            print_safe(key, "=", repr(value), file=sys.stderr)
-    print_safe(os.linesep,
-      "******** %s internal error, over and out ********" %
-      configuration.AppName, file=sys.stderr)
+
+{configuration.App}
+Python {sys.version} on {sys.platform}
+Local time: {now}
+sys.orig_argv: {sys.orig_argv}
+Environment:
+{env}
+******** {configuration.AppName} internal error, over and out ********
+"""))
 
 
 def strtime(t):
@@ -680,3 +691,4 @@ def chdir(directory):
 
 
 init_mimedb()
+init_logging()

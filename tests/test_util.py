@@ -47,8 +47,9 @@ class UtilTest (unittest.TestCase):
 
 
     def test_logging(self):
-        msg = "this is a test message 💜"
+        msg = "this is a test info message 💜"
         util.log_info(msg)
+        msg = "this is a test error message 💜"
         util.log_error(msg)
         try:
             raise Exception(msg)
