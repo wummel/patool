@@ -16,6 +16,7 @@
 """Archive commands for the GNU tar program."""
 import os
 import sys
+import subprocess
 
 
 def extract_tar (archive, compression, cmd, verbosity, interactive, outdir):
@@ -69,7 +70,7 @@ def add_tar_opts (cmdlist, compression, verbosity):
             # but "brew install gnu-tar" could have been used, so test for it
             testcmdlist = [cmdlist[0], "--force-local", "--help"]
             from .. import util
-            if util.run(testcmdlist) == 0:
+            if util.run(testcmdlist, stderr=subprocess.DEVNULL) == 0:
                 cmdlist.append('--force-local')
         else:
             # assume "tar" is GNU tar and therefore supports --force-local
