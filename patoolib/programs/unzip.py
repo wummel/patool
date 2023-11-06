@@ -19,16 +19,14 @@ def _maybe_add_password(cmdlist, password):
     if password:
         cmdlist.extend(['-P', password])
 
-def extract_zip (archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_zip(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a ZIP archive."""
     cmdlist = [cmd]
-    if verbosity > 1:
-        cmdlist.append('-v')
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive, '-d', outdir])
     return cmdlist
 
-def list_zip (archive, compression, cmd, verbosity, interactive, password=None):
+def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
     """List a ZIP archive."""
     cmdlist = [cmd, '-l']
     if verbosity > 1:
@@ -37,11 +35,9 @@ def list_zip (archive, compression, cmd, verbosity, interactive, password=None):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def test_zip (archive, compression, cmd, verbosity, interactive, password=None):
+def test_zip(archive, compression, cmd, verbosity, interactive, password=None):
     """Test a ZIP archive."""
     cmdlist = [cmd, '-t']
-    if verbosity > 1:
-        cmdlist.append('-v')
     _maybe_add_password(cmdlist, password)
     cmdlist.extend(['--', archive])
     return cmdlist

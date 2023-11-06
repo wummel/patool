@@ -7,6 +7,9 @@
   This change is the reason for the major version number increase.
   Closes: GH bug #37
 * Support the jar program to list and extract ZIP archives.
+* Do not use the -v option when extracting or testing ZIP archives
+  with unzip, since -v lists files instead of printing verbose output.
+  Closes: GH bug #49
 
 
 1.15.0 (released 28.10.2023)
