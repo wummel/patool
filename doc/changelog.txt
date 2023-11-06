@@ -14,6 +14,7 @@
   Closes: GH bug #72
 * Add error message about temporary directory when extraction fails.
   Closes: GH bug #57
+* Removed the recompress command.
 
 
 1.15.0 (released 28.10.2023)

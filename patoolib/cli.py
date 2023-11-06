@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-patool [global-options] {extract|list|create|repack|recompress|diff|search|formats} [sub-command-options] <command-args>
+patool [global-options] {extract|list|create|repack|diff|search|formats} [sub-command-options] <command-args>
 """
 import sys
 import argparse
@@ -28,7 +28,6 @@ from . import (
     diff_archives,
     search_archive,
     repack_archive,
-    recompress_archive,
     list_formats,
 )
 from .util import log_error, log_internal_error, PatoolError
@@ -114,17 +113,6 @@ def run_repack(args):
     return res
 
 
-def run_recompress(args):
-    """Recompress an archive to smaller size."""
-    res = 0
-    try:
-        recompress_archive(args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
-    except PatoolError as msg:
-        log_error("error recompressing %s: %s" % (args.archive, msg))
-        res = 1
-    return res
-
-
 def run_formats (args):
     """List supported and available archive formats."""
     list_formats()
@@ -153,7 +141,6 @@ EXAMPLES
   patool diff release1.0.tar.xz release2.0.zip
   patool search "def urlopen" python-3.3.tar.gz
   patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
-  patool recompress images.zip
 """
 
 Version = """\
@@ -192,10 +179,6 @@ def create_argparser():
     parser_repack = subparsers.add_parser('repack', help='repack an archive to a different format')
     parser_repack.add_argument('archive_src', help='source archive file')
     parser_repack.add_argument('archive_dst', help='target archive file')
-    # recompress
-    parser_recompress = subparsers.add_parser('recompress', help='recompress an archive to smaller size')
-    parser_recompress.add_argument('--password', help="password for encrypted files")
-    parser_recompress.add_argument('archive', help='an archive file')
     # diff
     parser_diff = subparsers.add_parser('diff', help='show differences between two archives')
     parser_diff.add_argument('archive1', help='the first archive file')

@@ -25,7 +25,7 @@ import importlib
 from .configuration import App, Version as __version__ # noqa: F401
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
     'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
-    'is_archive', 'recompress_archive', 'program_supports_compression']
+    'is_archive', 'program_supports_compression']
 
 
 # Supported archive commands
@@ -766,44 +766,6 @@ def _repack_archive (archive1, archive2, verbosity=0, interactive=True, password
         shutil.rmtree(tmpdir, onerror=rmtree_log_error)
 
 
-def _recompress_archive(archive, verbosity=0, interactive=True, password=None):
-    """Try to recompress an archive to smaller size."""
-    format, compression = get_archive_format(archive)
-    if compression:
-        # only recompress the compression itself (e.g. for .tar.xz)
-        format = compression
-    tmpdir = util.tmpdir()
-    tmpdir2 = util.tmpdir()
-    base, ext = os.path.splitext(os.path.basename(archive))
-    archive2 = util.get_single_outfile(tmpdir2, base, extension=ext)
-    try:
-        # extract
-        kwargs = dict(verbosity=verbosity, format=format, outdir=tmpdir, password=password)
-        path = _extract_archive(archive, **kwargs)
-        # compress to new file
-        olddir = os.getcwd()
-        os.chdir(path)
-        try:
-            kwargs = dict(verbosity=verbosity, interactive=interactive, format=format, password=password)
-            files = tuple(os.listdir(path))
-            _create_archive(archive2, files, **kwargs)
-        finally:
-            os.chdir(olddir)
-        # check file sizes and replace if new file is smaller
-        filesize = util.get_filesize(archive)
-        filesize2 = util.get_filesize(archive2)
-        if filesize2 < filesize:
-            # replace file
-            os.remove(archive)
-            shutil.move(archive2, archive)
-            diffsize = filesize - filesize2
-            return "... recompressed file is now %s smaller." % util.strsize(diffsize)
-    finally:
-        shutil.rmtree(tmpdir, onerror=rmtree_log_error)
-        shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
-    return "... recompressed file is not smaller, leaving archive as is."
-
-
 # the patool library API
 
 def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive=True, password=None):
@@ -883,15 +845,3 @@ def repack_archive (archive, archive_new, verbosity=0, interactive=True, passwor
     if verbosity >= 0:
         util.log_info("... repacking successful.")
     return res
-
-
-def recompress_archive(archive, verbosity=0, interactive=True, password=None):
-    """Recompress an archive to hopefully smaller size."""
-    util.check_existing_filename(archive)
-    util.check_writable_filename(archive)
-    if verbosity >= 0:
-        util.log_info("Recompressing %s ..." % (archive,))
-    res = _recompress_archive(archive, verbosity=verbosity, interactive=interactive, password=password)
-    if res and verbosity >= 0:
-        util.log_info(res)
-    return 0
