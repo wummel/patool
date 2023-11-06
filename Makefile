@@ -28,10 +28,9 @@ WEBMETA:=doc/web/source/conf.py
 CHANGELOG:=doc/changelog.txt
 PIP_VERSION:=23.3.1
 # Pytest options:
-# --report-log: write test results in file
 # -s: do not capture stdout/stderr (some tests fail otherwise)
-# -n auto: run tests in parallel with all detected CPUs
-PYTESTOPTS?=--report-log=testresults.txt -s -n auto
+# --full-trace: print full stacktrace on keyboard interrupts
+PYTESTOPTS?=-s --full-trace
 # which test modules to run
 TESTS ?= tests/
 # set test options
