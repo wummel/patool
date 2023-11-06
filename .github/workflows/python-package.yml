@@ -12,12 +12,13 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        os: ["linux-latest"]
         python-version: ["3.10", "3.11", "3.12"]
 
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -32,7 +33,8 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements-dev.txt
 
-    - name: Install archive programs
+    - name: Install archive programs on ${{ runner.os }} running ${{ matrix.os }}
+      if: ${{ runner.os=='Linux' }}
       run: >
         sudo apt-get update &&
         sudo apt-get install arj bzip2 lbzip2 pbzip2 cabextract ncompress cpio lzop p7zip-full zip unzip rpm2cpio binutils lhasa unace unalz unar lrzip lhasa tar xdms lzip plzip clzip pdlzip sharutils flac libarchive-tools archmage genisoimage lz4 zstd
