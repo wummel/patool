@@ -4,7 +4,9 @@
 * Use Python logging module instead of print() for diagnostic output.
   Diagnostic output of patool will now be printed on stderr instead of
   stdout.
+  This change is the reason for the major version number increase.
   Closes: GH bug #37
+* Support the jar program to list and extract ZIP archives.
 
 
 1.15.0 (released 28.10.2023)

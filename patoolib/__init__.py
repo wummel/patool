@@ -271,8 +271,8 @@ ArchivePrograms = {
     },
     'zip': {
         None: ('7z', '7za', 'py_zipfile'),
-        'extract': ('unzip', 'unar'),
-        'list': ('unzip',),
+        'extract': ('unzip', 'unar', 'jar'),
+        'list': ('unzip', 'jar'),
         'test': ('zip', 'unzip',),
         'create': ('zip',),
     },
@@ -295,9 +295,6 @@ NoPasswordSupportArchivePrograms = {
     },
     'cab': {
         None: ('7z', )
-    },
-    'zip': {
-        'create': ('py_zipfile', ),
     },
     'arj': {
         None: ('7z',)
@@ -325,6 +322,11 @@ NoPasswordSupportArchivePrograms = {
     },
     'xz': {
         None: ('7z',)
+    },
+    'zip': {
+        'create': ('py_zipfile',),
+        'extract': ('jar',),
+        'list': ('jar',),
     },
 }
 
