@@ -43,7 +43,7 @@ def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist.extend(filenames)
     return cmdlist
 
-def add_tar_opts (cmdlist, compression, verbosity):
+def add_tar_opts(cmdlist, compression, verbosity):
     """Add tar options to cmdlist."""
     progname = os.path.basename(cmdlist[0]).lower()
     if progname.endswith('.exe'):
@@ -54,14 +54,10 @@ def add_tar_opts (cmdlist, compression, verbosity):
         cmdlist.append('-Z')
     elif compression == 'bzip2':
         cmdlist.append('-j')
-    elif compression in ('lzma', 'xz') and progname == 'bsdtar':
+    elif compression == 'xz':
+        cmdlist.append('-J')
+    elif compression in ('lzma', 'lzip'):
         cmdlist.append('--%s' % compression)
-    elif compression in ('lzma', 'xz', 'lzip'):
-        # use the compression name as program name since
-        # tar is picky which programs it can use
-        program = compression
-        # set compression program
-        cmdlist.extend(['--use-compress-program', program])
     if verbosity > 1:
         cmdlist.append('--verbose')
     if progname == 'tar':
