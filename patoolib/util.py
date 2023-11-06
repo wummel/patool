@@ -155,6 +155,8 @@ def run(cmd, verbosity=0, **kwargs):
     if os.name == "nt":
         # prevent opening of additional consoles when running with pythonw.exe
         kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+    # try to prevent hangs for programs requiring input
+    kwargs["input"] = ""
     if kwargs:
         if verbosity >= 0:
             log_info("    with %s" % ", ".join("%s=%s" % (k, shell_quote(str(v)))\
