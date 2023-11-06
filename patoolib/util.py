@@ -164,11 +164,8 @@ def run(cmd, verbosity=0, **kwargs):
             cmd = " ".join(cmd)
     if verbosity < 1:
         # hide command output on stdout
-        with open(os.devnull, 'wb') as devnull:
-            kwargs['stdout'] = devnull
-            res = subprocess.run(cmd, **kwargs)
-    else:
-        res = subprocess.run(cmd, **kwargs)
+        kwargs['stdout'] = subprocess.DEVNULL
+    res = subprocess.run(cmd, **kwargs)
     return res.returncode
 
 
