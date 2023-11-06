@@ -342,7 +342,7 @@ ProgramModules = {
 }
 
 
-def program_supports_compression (program, compression):
+def program_supports_compression(program, compression):
     """Decide if the given program supports the compression natively.
     @return: True iff the program supports the given compression format
       natively, else False.
@@ -589,11 +589,14 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
         return target
     finally:
         # try to remove an empty temporary output directory
-        if do_cleanup_outdir:
+        if do_cleanup_outdir and os.path.isdir(outdir):
             try:
                 os.rmdir(outdir)
-            except OSError:
-                pass
+            except OSError as err:
+                if sys.exc_info()[0] is not None:
+                    msg = "extraction error, could not remove temporary " \
+                          f"extraction directory {outdir}: {err}"
+                    util.log_error(msg)
 
 
 def _create_archive(archive, filenames, verbosity=0, interactive=True,

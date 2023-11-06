@@ -12,6 +12,8 @@
   Closes: GH bug #49
 * Use the -sae option for 7z to use the provided archive name.
   Closes: GH bug #72
+* Add error message about temporary directory when extraction fails.
+  Closes: GH bug #57
 
 
 1.15.0 (released 28.10.2023)
