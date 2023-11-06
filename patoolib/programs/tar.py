@@ -61,13 +61,9 @@ def add_tar_opts(cmdlist, compression, verbosity):
     if verbosity > 1:
         cmdlist.append('--verbose')
     if progname == 'tar':
-        if sys.platform == 'darwin':
-            # On MacOS, the default tar does not support --force-local
-            # but "brew install gnu-tar" could have been used, so test for it
-            testcmdlist = [cmdlist[0], "--force-local", "--help"]
-            from .. import util
-            if util.run(testcmdlist, stderr=subprocess.DEVNULL) == 0:
-                cmdlist.append('--force-local')
-        else:
-            # assume "tar" is GNU tar and therefore supports --force-local
+        # Some tar implementations (ie. Windows tar.exe, and macos)
+        # do not support --force-local
+        testcmdlist = [cmdlist[0], "--force-local", "--help"]
+        from .. import util
+        if util.run(testcmdlist, stderr=subprocess.DEVNULL) == 0:
             cmdlist.append('--force-local')
