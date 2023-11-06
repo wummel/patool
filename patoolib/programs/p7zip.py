@@ -130,7 +130,7 @@ def create_7z(archive, compression, cmd, verbosity, interactive, filenames, pass
         cmdlist.append('-p%s' % password)
         # encrypt the file list, ie. "patool list" will require a password
         cmdlist.append('-mhe=on')
-    cmdlist.extend(['-t7z', '-mx=9', '--', archive])
+    cmdlist.extend(['-t7z', '-mx=9', '-sae', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 

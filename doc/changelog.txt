@@ -10,6 +10,8 @@
 * Do not use the -v option when extracting or testing ZIP archives
   with unzip, since -v lists files instead of printing verbose output.
   Closes: GH bug #49
+* Use the -sae option for 7z to use the provided archive name.
+  Closes: GH bug #72
 
 
 1.15.0 (released 28.10.2023)
