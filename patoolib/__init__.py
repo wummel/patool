@@ -349,7 +349,7 @@ def program_supports_compression(program, compression):
     """
     if program in ('tar', ):
         if os.name == 'nt':
-            return compression in ('gzip', 'bzip2', 'xz', 'lzma')
+            return compression in ('gzip', 'bzip2')
         return compression in (
             'gzip', 'bzip2', 'xz', 'lzip',
             'compress', 'lzma', 'py_lzma', 'zstd',
