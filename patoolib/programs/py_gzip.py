@@ -16,13 +16,13 @@
 """Archive commands for the gzip Python module."""
 # now gzip refers to the Python standard module, not the local one
 import gzip
-from .. import util
+from .. import fileutil, util
 
 READ_SIZE_BYTES = 1024*1024
 
 def extract_gzip (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a GZIP archive with the gzip Python module."""
-    targetname = util.get_single_outfile(outdir, archive)
+    targetname = fileutil.get_single_outfile(outdir, archive)
     try:
         with gzip.GzipFile(archive) as gzipfile:
             with open(targetname, 'wb') as targetfile:

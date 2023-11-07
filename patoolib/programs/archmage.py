@@ -15,14 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the archmage program."""
 import os
-from .. import util
+from .. import fileutil
 
 
 def extract_chm (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CHM archive."""
     # archmage can only extract in non-existing directories
     # so a nice dirname is created
-    name = util.get_single_outfile("", archive)
+    name = fileutil.get_single_outfile("", archive)
     outfile = os.path.join(outdir, name)
     return [cmd, '-x', os.path.abspath(archive), outfile]
 

@@ -30,7 +30,8 @@ from . import (
     repack_archive,
     list_formats,
 )
-from .util import log_error, log_internal_error, PatoolError
+from .util import PatoolError
+from .log import log_error, log_internal_error
 from .configuration import App
 
 def run_extract(args):

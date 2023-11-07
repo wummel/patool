@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rzip program."""
-from .. import util
+from .. import fileutil
 
 def extract_rzip (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an RZIP archive."""
     cmdlist = [cmd, '-d', '-k']
     if verbosity > 1:
         cmdlist.append('-v')
-    outfile = util.get_single_outfile(outdir, archive)
+    outfile = fileutil.get_single_outfile(outdir, archive)
     cmdlist.extend(["-o", outfile, archive])
     return cmdlist
 

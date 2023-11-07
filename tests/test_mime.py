@@ -37,14 +37,14 @@ class TestMime(unittest.TestCase):
         file(1)."""
         archive = os.path.join(datadir, filename)
         file_prog = patoolib.util.find_program("file")
-        info = patoolib.util.run_file_text(file_prog, archive)
-        self.mime_test(patoolib.util.guess_mime_file, archive, mime, encoding, info)
+        info = patoolib.mime.run_file_text(file_prog, archive)
+        self.mime_test(patoolib.mime.guess_mime_file, archive, mime, encoding, info)
 
     def mime_test_mimedb(self, filename, mime, encoding=None):
         """Test that file has given mime and encoding as determined by the
         mimetypes module."""
         archive = os.path.join(datadir, filename)
-        self.mime_test(patoolib.util.guess_mime_mimedb, archive, mime, encoding, "")
+        self.mime_test(patoolib.mime.guess_mime_mimedb, archive, mime, encoding, "")
 
     @needs_program('file')
     def test_mime_file(self):

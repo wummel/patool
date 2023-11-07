@@ -19,10 +19,10 @@ if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0)
     raise SystemExit("This program requires Python 3.10 or later.")
 import os
 import shutil
-import stat
 import importlib
 # PEP 396
 from .configuration import App, Version as __version__ # noqa: F401
+from . import fileutil, log, util
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
     'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
     'is_archive', 'program_supports_compression']
@@ -359,19 +359,19 @@ def program_supports_compression(program, compression):
     return False
 
 
-from . import util # noqa: E402
+from .mime import guess_mime # noqa: E402
 
 def is_archive(filename):
     """Detect if the file is a known archive."""
-    mime, compression = util.guess_mime(filename)
+    mime, compression = guess_mime(filename)
     return mime in ArchiveMimetypes
 
 
-def get_archive_format (filename):
+def get_archive_format(filename):
     """Detect filename archive format and optional compression."""
-    mime, compression = util.guess_mime(filename)
+    mime, compression = guess_mime(filename)
     if not (mime or compression):
-        raise util.PatoolError("unknown archive format for file `%s'" % filename)
+        raise util.PatoolError(f"unknown archive format for file `{filename}'")
     if mime in ArchiveMimetypes:
         format = ArchiveMimetypes[mime]
     else:
@@ -382,12 +382,12 @@ def get_archive_format (filename):
     return format, compression
 
 
-def check_archive_format (format, compression):
+def check_archive_format(format, compression):
     """Make sure format and compression is known."""
     if format not in ArchiveFormats:
-        raise util.PatoolError("unknown archive format `%s'" % format)
+        raise util.PatoolError(f"unknown archive format `{format}'")
     if compression is not None and compression not in ArchiveCompressions:
-        raise util.PatoolError("unknown archive compression `%s'" % compression)
+        raise util.PatoolError(f"unknown archive compression `{compression}'")
 
 
 def find_archive_program (format, command, program=None, password=None):
@@ -404,7 +404,7 @@ def find_archive_program (format, command, program=None, password=None):
     if password is not None:
         programs = _remove_command_without_password_support(programs, format, command)
     if not programs:
-        raise util.PatoolError("%s archive format `%s' is not supported" % (command, format))
+        raise util.PatoolError(f"{command} archive format `{format}' is not supported")
     # return the first existing program
     for program in programs:
         if program.startswith('py_'):
@@ -435,7 +435,7 @@ def _remove_command_without_password_support(programs, format, command):
         if program not in no_password_support_programs:
             programs_with_support.append(program)
     if not programs_with_support and programs:
-        raise util.PatoolError("%s archive format `%s' with password is not supported" % (command, format))
+        raise util.PatoolError(f"{command} archive format `{format}' with password is not supported")
     return programs_with_support
 
 
@@ -514,31 +514,10 @@ def run_archive_cmdlist (archive_cmdlist, verbosity=0):
     return util.run_checked(cmdlist, verbosity=verbosity, **runkwargs)
 
 
-def make_file_readable (filename):
-    """Make file user readable if it is not a link."""
-    if not os.path.islink(filename):
-        util.set_mode(filename, stat.S_IRUSR)
-
-
-def make_dir_readable (filename):
-    """Make directory user readable and executable."""
-    util.set_mode(filename, stat.S_IRUSR|stat.S_IXUSR)
-
-
-def make_user_readable (directory):
-    """Make all files in given directory user readable. Also recurse into
-    subdirectories."""
-    for root, dirs, files in os.walk(directory, onerror=util.log_error):
-        for filename in files:
-            make_file_readable(os.path.join(root, filename))
-        for dirname in dirs:
-            make_dir_readable(os.path.join(root, dirname))
-
-
-def cleanup_outdir (outdir, archive):
+def cleanup_outdir(outdir, archive):
     """Cleanup outdir after extraction and return target file name and
     result string."""
-    make_user_readable(outdir)
+    fileutil.make_user_readable(outdir)
     # move single directory or file in outdir
     (success, msg) = move_outdir_orphan(outdir)
     if success:
@@ -547,7 +526,7 @@ def cleanup_outdir (outdir, archive):
     # outdir remains unchanged
     # rename it to something more user-friendly (basically the archive
     # name without extension)
-    outdir2 = util.get_single_outfile("", archive)
+    outdir2 = fileutil.get_single_outfile("", archive)
     os.rename(outdir, outdir2)
     return outdir2, "`%s' (%s)" % (outdir2, msg)
 
@@ -564,7 +543,7 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
     check_program_compression(archive, 'extract', program, compression)
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'extract', format)
     if outdir is None:
-        outdir = util.tmpdir(dir=".")
+        outdir = fileutil.tmpdir(dir=".")
         do_cleanup_outdir = True
     else:
         do_cleanup_outdir = False
@@ -573,7 +552,7 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
                 msg = "output path `%s' exists and is not a directory" % outdir
                 raise util.PatoolError(msg)
         else:
-            util.log_info("... creating output directory `%s'." % outdir)
+            log.log_info("... creating output directory `%s'." % outdir)
             os.makedirs(outdir)
     try:
         cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, outdir, password=password)
@@ -587,7 +566,7 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
         else:
             target, msg = outdir, "`%s'" % outdir
         if verbosity >= 0:
-            util.log_info("... %s extracted to %s." % (archive, msg))
+            log.log_info("... %s extracted to %s." % (archive, msg))
         return target
     finally:
         # try to remove an empty temporary output directory
@@ -598,7 +577,7 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
                 if sys.exc_info()[0] is not None:
                     msg = "extraction error, could not remove temporary " \
                           f"extraction directory {outdir}: {err}"
-                    util.log_error(msg)
+                    log.log_error(msg)
 
 
 def _create_archive(archive, filenames, verbosity=0, interactive=True,
@@ -615,7 +594,7 @@ def _create_archive(archive, filenames, verbosity=0, interactive=True,
        ".arc" in archive and not archive.endswith(".arc"):
         # the arc program mangles the archive name if it contains ".arc"
         origarchive = archive
-        archive = util.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
+        archive = fileutil.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
     cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, filenames, password=password)
     if cmdlist:
         # an empty command list means the get_archive_cmdlist() function
@@ -649,7 +628,7 @@ def _handle_archive(archive, command, verbosity=0, interactive=True,
 def get_archive_cmdlist_func (program, command, format):
     """Get the Python function that executes the given program."""
     # get python module for given archive program
-    key = util.stripext(os.path.basename(program).lower())
+    key = fileutil.stripext(os.path.basename(program).lower())
     modulename = ".programs." + ProgramModules.get(key, key)
     # import the module
     try:
@@ -679,28 +658,22 @@ def get_archive_cmdlist_func (program, command, format):
     return check_for_password_before_cmdlist_func_call
 
 
-def rmtree_log_error (func, path, exc):
-    """Error function for shutil.rmtree(). Raises a PatoolError."""
-    msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
-    util.log_error(msg)
-
-
-def _diff_archives (archive1, archive2, verbosity=0, interactive=True):
+def _diff_archives(archive1, archive2, verbosity=0, interactive=True):
     """Show differences between two archives.
     @return 0 if archives are the same, else 1
     @raises: PatoolError on errors
     """
-    if util.is_same_file(archive1, archive2):
+    if fileutil.is_same_file(archive1, archive2):
         return 0
     diff = util.find_program("diff")
     if not diff:
         msg = "The diff(1) program is required for showing archive differences, please install it."
         raise util.PatoolError(msg)
-    tmpdir1 = util.tmpdir()
+    tmpdir1 = fileutil.tmpdir()
     try:
         path1 = _extract_archive(archive1, outdir=tmpdir1, verbosity=-1)
         entries1 = os.listdir(tmpdir1)
-        tmpdir2 = util.tmpdir()
+        tmpdir2 = fileutil.tmpdir()
         try:
             path2 = _extract_archive(archive2, outdir=tmpdir2, verbosity=-1)
             entries2 = os.listdir(tmpdir2)
@@ -713,11 +686,11 @@ def _diff_archives (archive1, archive2, verbosity=0, interactive=True):
                 diffpath2 = path2
             return util.run_checked([diff, "-urN", diffpath1, diffpath2], verbosity=1, ret_ok=(0, 1))
         finally:
-            make_user_readable(tmpdir2)
-            shutil.rmtree(tmpdir2, onerror=rmtree_log_error)
+            fileutil.make_user_readable(tmpdir2)
+            fileutil.rmtree(tmpdir2)
     finally:
-        make_user_readable(tmpdir1)
-        shutil.rmtree(tmpdir1, onerror=rmtree_log_error)
+        fileutil.make_user_readable(tmpdir1)
+        fileutil.rmtree(tmpdir1)
 
 
 def _search_archive(pattern, archive, verbosity=0, interactive=True, password=None):
@@ -726,23 +699,23 @@ def _search_archive(pattern, archive, verbosity=0, interactive=True, password=No
     if not grep:
         msg = "The grep(1) program is required for searching archive contents, please install it."
         raise util.PatoolError(msg)
-    tmpdir = util.tmpdir()
+    tmpdir = fileutil.tmpdir()
     try:
         path = _extract_archive(archive, outdir=tmpdir, verbosity=-1, password=password)
         return util.run_checked([grep, "-r", "-e", pattern, "."], ret_ok=(0, 1), verbosity=1, cwd=path)
     finally:
-        shutil.rmtree(tmpdir, onerror=rmtree_log_error)
+        fileutil.rmtree(tmpdir)
 
 
-def _repack_archive (archive1, archive2, verbosity=0, interactive=True, password=None):
+def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=None):
     """Repackage an archive to a different format."""
     format1, compression1 = get_archive_format(archive1)
     format2, compression2 = get_archive_format(archive2)
     if format1 == format2 and compression1 == compression2:
         # same format and compression allows to copy the file
-        util.link_or_copy(archive1, archive2, verbosity=verbosity)
+        fileutil.link_or_copy(archive1, archive2, verbosity=verbosity)
         return
-    tmpdir = util.tmpdir()
+    tmpdir = fileutil.tmpdir()
     try:
         kwargs = dict(verbosity=verbosity, outdir=tmpdir, password=password)
         same_format = (format1 == format2 and compression1 and compression2)
@@ -763,62 +736,62 @@ def _repack_archive (archive1, archive2, verbosity=0, interactive=True, password
         finally:
             os.chdir(olddir)
     finally:
-        shutil.rmtree(tmpdir, onerror=rmtree_log_error)
+        fileutil.rmtree(tmpdir)
 
 
 # the patool library API
 
 def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive=True, password=None):
     """Extract given archive."""
-    util.check_existing_filename(archive)
+    fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        util.log_info("Extracting %s ..." % archive)
+        log.log_info("Extracting %s ..." % archive)
     return _extract_archive(archive, verbosity=verbosity, interactive=interactive, outdir=outdir, program=program, password=password)
 
 
 def list_archive(archive, verbosity=1, program=None, interactive=True, password=None):
     """List given archive."""
     # Set default verbosity to 1 since the listing output should be visible.
-    util.check_existing_filename(archive)
+    fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        util.log_info("Listing %s ..." % archive)
+        log.log_info("Listing %s ..." % archive)
     return _handle_archive(archive, 'list', verbosity=verbosity, interactive=interactive, program=program, password=password)
 
 
 def test_archive(archive, verbosity=0, program=None, interactive=True, password=None):
     """Test given archive."""
-    util.check_existing_filename(archive)
+    fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        util.log_info("Testing %s ..." % archive)
+        log.log_info("Testing %s ..." % archive)
     res = _handle_archive(archive, 'test', verbosity=verbosity,
         interactive=interactive, program=program, password=password)
     if verbosity >= 0:
-        util.log_info("... tested ok.")
+        log.log_info("... tested ok.")
     return res
 
 
 def create_archive(archive, filenames, verbosity=0, program=None, interactive=True, password=None):
     """Create given archive with given files."""
-    util.check_new_filename(archive)
-    util.check_archive_filelist(filenames)
+    fileutil.check_new_filename(archive)
+    fileutil.check_archive_filelist(filenames)
     if verbosity >= 0:
-        util.log_info("Creating %s ..." % archive)
+        log.log_info("Creating %s ..." % archive)
     res = _create_archive(archive, filenames, verbosity=verbosity,
                           interactive=interactive, program=program, password=password)
     if verbosity >= 0:
-        util.log_info("... %s created." % archive)
+        log.log_info("... %s created." % archive)
     return res
 
 
 def diff_archives(archive1, archive2, verbosity=0, interactive=True):
     """Print differences between two archives."""
-    util.check_existing_filename(archive1)
-    util.check_existing_filename(archive2)
+    fileutil.check_existing_filename(archive1)
+    fileutil.check_existing_filename(archive2)
     if verbosity >= 0:
-        util.log_info("Comparing %s with %s ..." % (archive1, archive2))
+        log.log_info("Comparing %s with %s ..." % (archive1, archive2))
     res = _diff_archives(archive1, archive2, verbosity=verbosity, interactive=interactive)
     if res == 0 and verbosity >= 0:
-        util.log_info("... no differences found.")
+        log.log_info("... no differences found.")
     return res
 
 
@@ -826,22 +799,22 @@ def search_archive(pattern, archive, verbosity=0, interactive=True, password=Non
     """Search pattern in archive members."""
     if not pattern:
         raise util.PatoolError("empty search pattern")
-    util.check_existing_filename(archive)
+    fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        util.log_info("Searching %r in %s ..." % (pattern, archive))
+        log.log_info("Searching %r in %s ..." % (pattern, archive))
     res = _search_archive(pattern, archive, verbosity=verbosity, interactive=interactive, password=password)
     if res == 1 and verbosity >= 0:
-        util.log_info("... %r not found" % pattern)
+        log.log_info("... %r not found" % pattern)
     return res
 
 
-def repack_archive (archive, archive_new, verbosity=0, interactive=True, password=None):
+def repack_archive(archive, archive_new, verbosity=0, interactive=True, password=None):
     """Repack archive to different file and/or format."""
-    util.check_existing_filename(archive)
-    util.check_new_filename(archive_new)
+    fileutil.check_existing_filename(archive)
+    fileutil.check_new_filename(archive_new)
     if verbosity >= 0:
-        util.log_info("Repacking %s to %s ..." % (archive, archive_new))
+        log.log_info("Repacking %s to %s ..." % (archive, archive_new))
     res = _repack_archive(archive, archive_new, verbosity=verbosity, interactive=interactive, password=password)
     if verbosity >= 0:
-        util.log_info("... repacking successful.")
+        log.log_info("... repacking successful.")
     return res

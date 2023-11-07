@@ -15,8 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import shutil
-from patoolib import util, cli
+from patoolib import fileutil, cli
 from . import datadir, needs_program, needs_one_program
 
 
@@ -25,7 +24,7 @@ class ArchiveRepackTest(unittest.TestCase):
     def repack(self, name1, name2):
         """Repack archive with name1 to archive with name2."""
         archive1 = os.path.join(datadir, name1)
-        tmpdir = util.tmpdir()
+        tmpdir = fileutil.tmpdir()
         try:
             archive2 = os.path.join(tmpdir, name2)
             args = ["-vv", "--non-interactive", "repack", archive1, archive2]
@@ -33,7 +32,7 @@ class ArchiveRepackTest(unittest.TestCase):
             args = ["--non-interactive", "diff", archive1, archive2]
             cli.main(args=args)
         finally:
-            shutil.rmtree(tmpdir)
+            fileutil.rmtree(tmpdir)
 
     @needs_program('diff')
     @needs_one_program(('tar', 'star', '7z'))

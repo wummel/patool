@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the GNU tar program."""
 import os
-import sys
 import subprocess
 
 

@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the xz program."""
 from . import extract_singlefile_standard, test_singlefile_standard
-from .. import util
+from .. import fileutil, util
 
 
 extract_xz = extract_singlefile_standard
@@ -47,7 +47,7 @@ def extract_lzma(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist = [util.shell_quote(cmd), '--format=lzma']
     if verbosity > 1:
         cmdlist.append('-v')
-    outfile = util.get_single_outfile(outdir, archive)
+    outfile = fileutil.get_single_outfile(outdir, archive)
     cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
         util.shell_quote(outfile)])
     return (cmdlist, {'shell': True})

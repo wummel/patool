@@ -15,15 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import shutil
-from patoolib import cli, util
+from patoolib import cli, fileutil
 from . import basedir, datadir, needs_program
 
 class ArchiveCreateTest(unittest.TestCase):
 
     @needs_program('7z')
     def test_create(self):
-        tmpdir = util.tmpdir(dir=basedir)
+        tmpdir = fileutil.tmpdir(dir=basedir)
         try:
             files = [os.path.join(datadir, "t"), os.path.join(datadir, "t.txt")]
             archive = os.path.join(tmpdir, "t.7z")
@@ -31,4 +30,4 @@ class ArchiveCreateTest(unittest.TestCase):
             args.extend(files)
             cli.main(args=args)
         finally:
-            shutil.rmtree(tmpdir)
+            fileutil.rmtree(tmpdir)

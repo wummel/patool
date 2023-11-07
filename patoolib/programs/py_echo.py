@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands echoing data, implemented by the Python print
 statement."""
-from .. import util
+from .. import fileutil
 
 
 def list_bzip2 (archive, compression, cmd, verbosity, interactive):
@@ -41,5 +41,5 @@ list_shn = \
 def stripext (cmd, archive, verbosity, extension=""):
     """Print the name without suffix."""
     if verbosity >= 0:
-        print(util.stripext(archive)+extension)
+        print(fileutil.stripext(archive)+extension)
     return None

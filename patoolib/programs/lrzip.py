@@ -15,14 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lrzip program."""
 import os
-from .. import util
+from .. import fileutil
 
 def extract_lrzip (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a LRZIP archive."""
     cmdlist = [cmd, '-d']
     if verbosity > 1:
         cmdlist.append('-v')
-    outfile = util.get_single_outfile(outdir, archive)
+    outfile = fileutil.get_single_outfile(outdir, archive)
     cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
     return cmdlist
 

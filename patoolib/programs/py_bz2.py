@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the bz2 Python module."""
-from .. import util
+from .. import fileutil, util
 import bz2
 
 # read in 1MB chunks
@@ -22,7 +22,7 @@ READ_SIZE_BYTES = 1024*1024
 
 def extract_bzip2 (archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a BZIP2 archive with the bz2 Python module."""
-    targetname = util.get_single_outfile(outdir, archive)
+    targetname = fileutil.get_single_outfile(outdir, archive)
     try:
         with bz2.BZ2File(archive) as bz2file:
             with open(targetname, 'wb') as targetfile:

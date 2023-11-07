@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lzma Python module."""
 
-from .. import util
+from .. import fileutil, util
 import lzma
 
 READ_SIZE_BYTES = 1024*1024
@@ -47,7 +47,7 @@ else:
 
 def _extract(archive, compression, cmd, format, verbosity, outdir):
     """Extract an LZMA or XZ archive with the lzma Python module."""
-    targetname = util.get_single_outfile(outdir, archive)
+    targetname = fileutil.get_single_outfile(outdir, archive)
     try:
         with lzma.LZMAFile(archive, **_get_lzma_options(format)) as lzmafile:
             with open(targetname, 'wb') as targetfile:

@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
-import shutil
 import patoolib
 from .. import basedir, datadir
 
@@ -75,9 +74,9 @@ class ArchiveTest (unittest.TestCase):
 
     def _archive_extract (self, archive, check, verbosity=0):
         # create a temporary directory for extraction
-        tmpdir = patoolib.util.tmpdir(dir=basedir)
+        tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
         try:
-            olddir = patoolib.util.chdir(tmpdir)
+            olddir = patoolib.fileutil.chdir(tmpdir)
             try:
                 output = patoolib.extract_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
                 if check:
@@ -86,7 +85,7 @@ class ArchiveTest (unittest.TestCase):
                 if olddir:
                     os.chdir(olddir)
         finally:
-            shutil.rmtree(tmpdir)
+            patoolib.fileutil.rmtree(tmpdir)
 
     def check_extracted_archive (self, archive, output, check):
         if check == Content.Recursive:
@@ -98,7 +97,7 @@ class ArchiveTest (unittest.TestCase):
         elif check == Content.Singlefile:
             # a non-existing directory to ensure files do not exist in it
             ned = get_nonexisting_directory(os.getcwd())
-            expected_output = os.path.basename(patoolib.util.get_single_outfile(ned, archive))
+            expected_output = os.path.basename(patoolib.fileutil.get_single_outfile(ned, archive))
             self.check_textfile(output, expected_output)
         elif check == Content.Multifile:
             txtfile = os.path.join(output, 't.txt')
@@ -140,7 +139,7 @@ class ArchiveTest (unittest.TestCase):
                 srcfiles = ('t.txt', 't2.txt',)
             else:
                 raise ValueError('invalid check value %r' % check)
-        olddir = patoolib.util.chdir(datadir)
+        olddir = patoolib.fileutil.chdir(datadir)
         try:
             # The format and compression arguments are needed for creating
             # archives with unusual file extensions.
@@ -156,7 +155,7 @@ class ArchiveTest (unittest.TestCase):
             self.assertFalse(os.path.isabs(srcfile))
             self.assertTrue(os.path.exists(srcfile))
         # create a temporary directory for creation
-        tmpdir = patoolib.util.tmpdir(dir=basedir)
+        tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
         try:
             archive = os.path.join(tmpdir, archive)
             self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
@@ -165,7 +164,7 @@ class ArchiveTest (unittest.TestCase):
             self.check_created_archive_with_test(archive)
             self.check_created_archive_with_diff(archive, srcfiles)
         finally:
-            shutil.rmtree(tmpdir)
+            patoolib.fileutil.rmtree(tmpdir)
 
     def check_created_archive_with_test(self, archive):
         command = patoolib.test_archive
@@ -208,9 +207,9 @@ class ArchiveTest (unittest.TestCase):
             program = 'unshar'
         elif self.program == 'genisoimage':
             program = '7z'
-        tmpdir = patoolib.util.tmpdir(dir=basedir)
+        tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
         try:
-            olddir = patoolib.util.chdir(tmpdir)
+            olddir = patoolib.fileutil.chdir(tmpdir)
             try:
                 output = patoolib.extract_archive(archive, program=program, interactive=False, password=self.password)
                 if len(srcfiles) == 1:
@@ -225,7 +224,7 @@ class ArchiveTest (unittest.TestCase):
                 if olddir:
                     os.chdir(olddir)
         finally:
-            shutil.rmtree(tmpdir)
+            patoolib.fileutil.rmtree(tmpdir)
 
 
 def get_filecontent(filename):
