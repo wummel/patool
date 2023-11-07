@@ -351,11 +351,10 @@ def program_supports_compression(program, compression):
         if os.name == 'nt':
             return compression in ('gzip', 'bzip2')
         return compression in (
-            'gzip', 'bzip2', 'xz', 'lzip',
-            'compress', 'lzma', 'py_lzma', 'zstd',
+            'bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz', 'zstd',
         )
     elif program in ('star', 'bsdtar', 'py_tarfile'):
-        return compression in ('gzip', 'bzip2', 'py_lzma')
+        return compression in ('gzip', 'bzip2', 'lzma')
     return False
 
 
