@@ -51,9 +51,9 @@ def test_dms (archive, compression, cmd, verbosity, interactive, password=None):
     return cmdlist
 
 
-def check_archive_ext (archive):
+def check_archive_ext(archive):
     """xdms(1) cannot handle files with extensions other than '.dms'."""
     if not archive.lower().endswith(".dms"):
         rest = archive[-4:]
-        msg = "xdms(1) archive file must end with `.dms', not `%s'" % rest
+        msg = f"xdms(1) archive file must end with `.dms', not `{rest}'"
         raise util.PatoolError(msg)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012-2015 Bastian Kleineidam
+# Copyright (C) 2012-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,8 +31,7 @@ def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
                 if verbosity >= 0:
                     print(name)
     except Exception as err:
-        msg = "error listing %s" % (archive, )
-        raise util.PatoolError(msg) from err
+        raise util.PatoolError(f"error listing {archive}") from err
     return None
 
 test_zip = list_zip
@@ -45,8 +44,7 @@ def extract_zip(archive, compression, cmd, verbosity, interactive, outdir, passw
         with zipfile.ZipFile(archive) as zfile:
             zfile.extractall(outdir, pwd=password)
     except Exception as err:
-        msg = "error extracting %s" % (archive, )
-        raise util.PatoolError(msg) from err
+        raise util.PatoolError(f"error extracting {archive}") from err
     return None
 
 
@@ -60,8 +58,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
                 else:
                     zfile.write(filename)
     except Exception as err:
-        msg = "error creating %s" % (archive, )
-        raise util.PatoolError(msg) from err
+        raise util.PatoolError(f"error creating {archive}") from err
     return None
 
 

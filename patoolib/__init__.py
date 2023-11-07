@@ -374,7 +374,7 @@ def get_archive_format(filename):
     if mime in ArchiveMimetypes:
         format = ArchiveMimetypes[mime]
     else:
-        raise util.PatoolError("unknown archive format for file `%s' (mime-type is `%s')" % (filename, mime))
+        raise util.PatoolError(f"unknown archive mime format {mime} for file `%s' (mime-type is `{filename}')")
     if format == compression:
         # file cannot be in same format compressed
         compression = None
@@ -483,8 +483,8 @@ def check_program_compression(archive, command, program, compression):
                 comp_command = 'extract'
             comp_prog = find_archive_program(compression, comp_command)
             if not comp_prog:
-                msg = "cannot %s archive `%s': compression `%s' not supported"
-                raise util.PatoolError(msg % (command, archive, compression))
+                msg = f"cannot {command} archive `{archive}': compression `{compression}' not supported"
+                raise util.PatoolError(msg)
 
 
 def move_outdir_orphan (outdir):
@@ -521,13 +521,13 @@ def cleanup_outdir(outdir, archive):
     (success, msg) = move_outdir_orphan(outdir)
     if success:
         # msg is a single directory or filename
-        return msg, "`%s'" % msg
+        return msg, f"`{msg}'"
     # outdir remains unchanged
     # rename it to something more user-friendly (basically the archive
     # name without extension)
     outdir2 = fileutil.get_single_outfile("", archive)
     os.rename(outdir, outdir2)
-    return outdir2, "`%s' (%s)" % (outdir2, msg)
+    return outdir2, f"`{outdir2}' ({msg})"
 
 
 def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
@@ -548,10 +548,10 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
         do_cleanup_outdir = False
         if os.path.exists(outdir):
             if not os.path.isdir(outdir):
-                msg = "output path `%s' exists and is not a directory" % outdir
+                msg = f"output path `{outdir}' exists and is not a directory"
                 raise util.PatoolError(msg)
         else:
-            log.log_info("... creating output directory `%s'." % outdir)
+            log.log_info(f"... creating output directory `{outdir}'.")
             os.makedirs(outdir)
     try:
         cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, outdir, password=password)
@@ -563,9 +563,9 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
         if do_cleanup_outdir:
             target, msg = cleanup_outdir(outdir, archive)
         else:
-            target, msg = outdir, "`%s'" % outdir
+            target, msg = outdir, f"`{outdir}'"
         if verbosity >= 0:
-            log.log_info("... %s extracted to %s." % (archive, msg))
+            log.log_info(f"... {archive} extracted to {msg}.")
         return target
     finally:
         # try to remove an empty temporary output directory
@@ -611,7 +611,7 @@ def _handle_archive(archive, command, verbosity=0, interactive=True,
         format, compression = get_archive_format(archive)
     check_archive_format(format, compression)
     if command not in ('list', 'test'):
-        raise util.PatoolError("invalid archive command `%s'" % command)
+        raise util.PatoolError(f"invalid archive command `{command}'")
     program = find_archive_program(format, command, program=program, password=password)
     check_program_compression(archive, command, program, compression)
     get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
@@ -624,7 +624,7 @@ def _handle_archive(archive, command, verbosity=0, interactive=True,
         run_archive_cmdlist(cmdlist, verbosity=verbosity)
 
 
-def get_archive_cmdlist_func (program, command, format):
+def get_archive_cmdlist_func(program, command, format):
     """Get the Python function that executes the given program."""
     # get python module for given archive program
     key = fileutil.stripext(os.path.basename(program).lower())
@@ -633,13 +633,13 @@ def get_archive_cmdlist_func (program, command, format):
     try:
         module = importlib.import_module(modulename, __name__)
     except ImportError as err:
-        msg = "cannot import module %s in %s" % (modulename, __name__)
+        msg = f"cannot import module {modulename} in {__name__}"
         raise util.PatoolError(msg) from err
     # get archive handler function (e.g. patoolib.programs.star.extract_tar)
     try:
-        archive_cmdlist_func = getattr(module, '%s_%s' % (command, format))
+        archive_cmdlist_func = getattr(module, f'{command}_{format}')
     except AttributeError as err:
-        msg = "could not find %s_%s in %s" % (command, format, module)
+        msg = f"could not find {command}_{format} in {module}"
         raise util.PatoolError(msg) from err
     def check_for_password_before_cmdlist_func_call(*args, **kwargs):
         """ If password is None, or not set, run command as usual.
@@ -653,7 +653,8 @@ def get_archive_cmdlist_func (program, command, format):
         else:
             if 'password' in inspect.signature(archive_cmdlist_func).parameters:
                 return archive_cmdlist_func(*args, **kwargs)
-            raise util.PatoolError('There is no support for password in %s' % program)
+            msg = f'There is no support for password in {program}'
+            raise util.PatoolError(msg)
     return check_for_password_before_cmdlist_func_call
 
 
@@ -744,7 +745,7 @@ def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive
     """Extract given archive."""
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        log.log_info("Extracting %s ..." % archive)
+        log.log_info(f"Extracting {archive} ...")
     return _extract_archive(archive, verbosity=verbosity, interactive=interactive, outdir=outdir, program=program, password=password)
 
 
@@ -753,7 +754,7 @@ def list_archive(archive, verbosity=1, program=None, interactive=True, password=
     # Set default verbosity to 1 since the listing output should be visible.
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        log.log_info("Listing %s ..." % archive)
+        log.log_info(f"Listing {archive} ...")
     return _handle_archive(archive, 'list', verbosity=verbosity, interactive=interactive, program=program, password=password)
 
 
@@ -761,7 +762,7 @@ def test_archive(archive, verbosity=0, program=None, interactive=True, password=
     """Test given archive."""
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        log.log_info("Testing %s ..." % archive)
+        log.log_info(f"Testing {archive} ...")
     res = _handle_archive(archive, 'test', verbosity=verbosity,
         interactive=interactive, program=program, password=password)
     if verbosity >= 0:
@@ -774,11 +775,11 @@ def create_archive(archive, filenames, verbosity=0, program=None, interactive=Tr
     fileutil.check_new_filename(archive)
     fileutil.check_archive_filelist(filenames)
     if verbosity >= 0:
-        log.log_info("Creating %s ..." % archive)
+        log.log_info(f"Creating {archive} ...")
     res = _create_archive(archive, filenames, verbosity=verbosity,
                           interactive=interactive, program=program, password=password)
     if verbosity >= 0:
-        log.log_info("... %s created." % archive)
+        log.log_info(f"... {archive} created.")
     return res
 
 
@@ -787,7 +788,7 @@ def diff_archives(archive1, archive2, verbosity=0, interactive=True):
     fileutil.check_existing_filename(archive1)
     fileutil.check_existing_filename(archive2)
     if verbosity >= 0:
-        log.log_info("Comparing %s with %s ..." % (archive1, archive2))
+        log.log_info(f"Comparing {archive1} with {archive2} ...")
     res = _diff_archives(archive1, archive2, verbosity=verbosity, interactive=interactive)
     if res == 0 and verbosity >= 0:
         log.log_info("... no differences found.")
@@ -800,10 +801,10 @@ def search_archive(pattern, archive, verbosity=0, interactive=True, password=Non
         raise util.PatoolError("empty search pattern")
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
-        log.log_info("Searching %r in %s ..." % (pattern, archive))
+        log.log_info(f"Searching {pattern!r} in {archive} ...")
     res = _search_archive(pattern, archive, verbosity=verbosity, interactive=interactive, password=password)
     if res == 1 and verbosity >= 0:
-        log.log_info("... %r not found" % pattern)
+        log.log_info(f"... {pattern!r} not found")
     return res
 
 
@@ -812,7 +813,7 @@ def repack_archive(archive, archive_new, verbosity=0, interactive=True, password
     fileutil.check_existing_filename(archive)
     fileutil.check_new_filename(archive_new)
     if verbosity >= 0:
-        log.log_info("Repacking %s to %s ..." % (archive, archive_new))
+        log.log_info(f"Repacking {archive} to {archive_new} ...")
     res = _repack_archive(archive, archive_new, verbosity=verbosity, interactive=interactive, password=password)
     if verbosity >= 0:
         log.log_info("... repacking successful.")

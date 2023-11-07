@@ -56,7 +56,7 @@ def add_tar_opts(cmdlist, compression, verbosity):
     elif compression == 'xz':
         cmdlist.append('-J')
     elif compression in ('lzma', 'lzip'):
-        cmdlist.append('--%s' % compression)
+        cmdlist.append(f'--{compression}')
     if verbosity > 1:
         cmdlist.append('--verbose')
     if progname == 'tar':

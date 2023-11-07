@@ -73,7 +73,8 @@ def run(cmd, verbosity=0, **kwargs):
     # Note that shell_quote_nt() result is not suitable for copy-paste
     # (especially on Unix systems), but it looks nicer than shell_quote().
     if verbosity >= 0:
-        log_info("running %s" % " ".join(map(shell_quote_nt, cmd)))
+        info = " ".join(map(shell_quote_nt, cmd))
+        log_info(f"running {info}")
     if os.name == "nt":
         # prevent opening of additional consoles when running with pythonw.exe
         kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
@@ -81,8 +82,8 @@ def run(cmd, verbosity=0, **kwargs):
     kwargs["input"] = ""
     if kwargs:
         if verbosity >= 0:
-            log_info("    with %s" % ", ".join("%s=%s" % (k, shell_quote(str(v)))\
-                                           for k, v in kwargs.items()))
+            info = ", ".join(f"{k}={shell_quote(str(v))}" for k, v in kwargs.items())
+            log_info(f"    with {info}")
         if kwargs.get("shell"):
             # for shell calls the command must be a string
             cmd = " ".join(cmd)
@@ -112,7 +113,8 @@ def shell_quote(value):
 
 def shell_quote_unix(value):
     """Quote argument for Unix system."""
-    return "'%s'" % value.replace("'", r"'\''")
+    value = value.replace("'", r"'\''")
+    return f"'{value}'"
 
 
 def shell_quote_nt(value):
@@ -201,8 +203,10 @@ def get_nt_winrar_dir():
     return os.path.join(get_nt_program_dir(), "WinRAR")
 
 
-def strlist_with_or (alist):
+def strlist_with_or(alist):
     """Return comma separated string, and last entry appended with ' or '."""
     if len(alist) > 1:
-        return "%s or %s" % (", ".join(alist[:-1]), alist[-1])
+        head = ", ".join(alist[:-1])
+        tail = alist[-1]
+        return f"{head} or {tail}"
     return ", ".join(alist)

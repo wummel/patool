@@ -64,7 +64,7 @@ def safe_extract(tfile, path):
     tfile.extractall(path, safe_members)
     if bad_members:
         filelist = ", ".join(member.name for member in bad_members)
-        raise Exception("Unsafe tarfile entries: %s." % filelist)
+        raise Exception(f"Unsafe tarfile entries: {filelist}.")
 
 
 def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
@@ -88,7 +88,7 @@ def get_tar_mode(compression):
     if compression == 'lzma':
         return 'w:xz'
     if compression:
-        msg = 'pytarfile does not support %s for tar compression'
-        raise util.PatoolError(msg % compression)
+        msg = f'pytarfile does not support {compression} for tar compression'
+        raise util.PatoolError(msg)
     # no compression
     return 'w'

@@ -41,7 +41,7 @@ def run_extract(args):
         try:
             extract_archive(archive, verbosity=args.verbosity, interactive=args.interactive, outdir=args.outdir, password=args.password)
         except PatoolError as msg:
-            log_error("error extracting %s: %s" % (archive, msg))
+            log_error(f"error extracting {archive}: {msg}")
             res += 1
     return res
 
@@ -55,7 +55,7 @@ def run_list(args):
             verbosity = args.verbosity + 1
             list_archive(archive, verbosity=verbosity, interactive=args.interactive, password=args.password)
         except PatoolError as msg:
-            log_error("error listing %s: %s" % (archive, msg))
+            log_error(f"error listing {archive}: {msg}")
             res += 1
     return res
 
@@ -67,7 +67,7 @@ def run_test(args):
         try:
             test_archive(archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
         except PatoolError as msg:
-            log_error("error testing %s: %s" % (archive, msg))
+            log_error(f"error testing {archive}: {msg}")
             res += 1
     return res
 
@@ -78,7 +78,7 @@ def run_create(args):
     try:
         create_archive(args.archive, args.filename, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
-        log_error("error creating %s: %s" % (args.archive, msg))
+        log_error(f"error creating {args.archive}: {msg}")
         res = 1
     return res
 
@@ -88,7 +88,7 @@ def run_diff(args):
     try:
         res = diff_archives(args.archive1, args.archive2, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
-        log_error("error showing differences between %s and %s: %s" % (args.archive1, args.archive2, msg))
+        log_error(f"error showing differences between {args.archive1} and {args.archive2}: {msg}")
         res = 2
     return res
 
@@ -98,7 +98,7 @@ def run_search(args):
     try:
         res = search_archive(args.pattern, args.archive, verbosity=args.verbosity, interactive=args.interactive, password=args.password)
     except PatoolError as msg:
-        log_error("error searching %s: %s" % (args.archive, msg))
+        log_error(f"error searching {args.archive}: {msg}")
         res = 2
     return res
 
@@ -109,7 +109,7 @@ def run_repack(args):
     try:
         repack_archive(args.archive_src, args.archive_dst, verbosity=args.verbosity, interactive=args.interactive)
     except PatoolError as msg:
-        log_error("error repacking %s: %s" % (args.archive_src, msg))
+        log_error(f"error repacking {args.archive_src}: {msg}")
         res = 1
     return res
 
@@ -144,10 +144,10 @@ EXAMPLES
   patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 """
 
-Version = """\
+Version = f"""\
 VERSION
-  %s
-""" % App
+  {App}
+"""
 
 def create_argparser():
     """Construct and return an argument parser."""
@@ -207,7 +207,7 @@ def main(args=None):
         argparser = create_argparser()
         pargs = argparser.parse_args(args=args)
         # run subcommand function
-        res = globals()["run_%s" % pargs.command](pargs)
+        res = globals()[f"run_{pargs.command}"](pargs)
     except KeyboardInterrupt:
         log_error("aborted")
         res = 1

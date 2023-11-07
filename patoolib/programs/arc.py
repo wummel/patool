@@ -24,7 +24,7 @@ def _add_password_to_options(options, password):
         return options
     if ' ' in password:
         raise PatoolError("Password for ARC can't contain spaces.")
-    options += 'g%s' % password
+    options += f'g{password}'
     return options
 
 

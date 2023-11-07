@@ -16,17 +16,17 @@
 """Archive commands for the unace program."""
 import os
 
-def extract_ace (archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_ace(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract an ACE archive."""
     cmdlist = [cmd, 'x']
     if not outdir.endswith(os.sep):
         outdir += os.sep
     if password:
-        cmdlist.append('-p%s' % password)
+        cmdlist.append(f'-p{password}')
     cmdlist.extend([archive, outdir])
     return cmdlist
 
-def list_ace (archive, compression, cmd, verbosity, interactive, password=None):
+def list_ace(archive, compression, cmd, verbosity, interactive, password=None):
     """List an ACE archive."""
     cmdlist = [cmd]
     if verbosity > 1:
@@ -34,14 +34,14 @@ def list_ace (archive, compression, cmd, verbosity, interactive, password=None):
     else:
         cmdlist.append('l')
     if password:
-        cmdlist.append('-p%s' % password)
+        cmdlist.append(f'-p{password}')
     cmdlist.append(archive)
     return cmdlist
 
-def test_ace (archive, compression, cmd, verbosity, interactive, password=None):
+def test_ace(archive, compression, cmd, verbosity, interactive, password=None):
     """Test an ACE archive."""
     cmdlist = [cmd, 't']
     if password:
-        cmdlist.append('-p%s' % password)
+        cmdlist.append(f'-p{password}')
     cmdlist.append(archive)
     return cmdlist

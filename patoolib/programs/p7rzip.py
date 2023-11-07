@@ -26,7 +26,7 @@ def extract_7z(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist = [cmd, 'x']
     if not interactive:
         cmdlist.append('-y')
-    cmdlist.extend(['-o%s' % outdir, '--', archive])
+    cmdlist.extend([f'-o{outdir}', '--', archive])
     return cmdlist
 
 def list_7z(archive, compression, cmd, verbosity, interactive):

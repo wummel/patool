@@ -15,12 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lha program."""
 
-def extract_lzh (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_lzh(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a LZH archive."""
     opts = 'x'
     if verbosity > 1:
         opts += 'v'
-    opts += "w=%s" % outdir
+    opts += f"w={outdir}"
     return [cmd, opts, archive]
 
 def list_lzh (archive, compression, cmd, verbosity, interactive):

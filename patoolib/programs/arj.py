@@ -20,7 +20,7 @@ def _get_password_switch(password):
     """Check password and return password switch for ARJ."""
     if ' ' in password:
         raise PatoolError("Password for ARJ can't contain spaces.")
-    return '-g%s' % password
+    return f'-g{password}'
 
 def _maybe_add_password(cmdlist, password):
     if password:

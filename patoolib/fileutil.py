@@ -152,14 +152,12 @@ def chdir(directory):
 
 def rmtree_log_error(func, path, exc):
     """Error log function for shutil.rmtree()."""
-    msg = "Error in %s(%s): %s" % (func.__name__, path, str(exc[1]))
-    log_error(msg)
+    log_error(f"Error in {func.__name__}({path}): {exc[1]}")
 
 
 def rmtree_log_exc(func, path, excinfo):
     """Error log function for shutil.rmtree()."""
-    msg = "Error in %s(%s): %s" % (func.__name__, path, str(excinfo))
-    log_error(msg)
+    log_error(f"Error in {func.__name__}({path}): {excinfo}")
 
 
 def rmtree(path):
