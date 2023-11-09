@@ -17,6 +17,7 @@
 * Removed the recompress command.
 * Use the new filter option when extracting TAR archives with the tarfile
   module in Python >= 3.12 to detect unsafe archive entries.
+* Added new command "patool version" to print version information.
 
 
 1.15.0 (released 28.10.2023)

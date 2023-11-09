@@ -120,6 +120,11 @@ def run_formats (args):
     return 0
 
 
+def run_version(args):
+    print(App)
+    return 0
+
+
 class ArgumentParser(argparse.ArgumentParser):
     """Custom argument parser."""
 
@@ -191,6 +196,8 @@ def create_argparser():
     parser_search.add_argument('archive', help='the archive file')
     # formats
     subparsers.add_parser('formats', help="show supported archive formats")
+    # version
+    subparsers.add_parser('version', help="print version information")
     # optional bash completion
     try:
         import argcomplete

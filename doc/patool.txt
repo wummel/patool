@@ -136,6 +136,11 @@ COMMANDS
        Show all supported archive formats (i.e. which helper  applica‐
        tions are available).
 
+   version
+       patool sion
+
+       Print version information.
+
 HELP OPTION
        Specifying  the help option displays help for patool itself, or
        a command.
