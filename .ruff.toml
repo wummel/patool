@@ -11,7 +11,7 @@ ignore = ["E501", "I001"]
 # Avoid trying to fix flake8-bugbear (`B`) violations.
 unfixable = ["B"]
 
-target-version = "py39"
+target-version = "py310"
 
 # Ignore E402 (unused import)
 [per-file-ignores]
