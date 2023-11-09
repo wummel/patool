@@ -19,7 +19,6 @@ patool [global-options] {extract|list|create|repack|diff|search|formats} [sub-co
 """
 import sys
 import argparse
-import pydoc
 from . import (
     extract_archive,
     list_archive,
@@ -125,19 +124,6 @@ def run_version(args):
     return 0
 
 
-class ArgumentParser(argparse.ArgumentParser):
-    """Custom argument parser."""
-
-    def print_help(self, file=None):
-        """Paginate help message on TTYs."""
-        msg = self.format_help()
-        if file is None:
-            file = sys.stdout
-        if hasattr(file, "isatty") and file.isatty():
-            pydoc.pager(msg)
-        else:
-            print(msg, file=file)
-
 Examples = """\
 EXAMPLES
   patool extract archive.zip otherarchive.rar
@@ -157,7 +143,7 @@ VERSION
 def create_argparser():
     """Construct and return an argument parser."""
     epilog = Examples + "\n" + Version
-    parser = ArgumentParser(description="An archive file manager.",
+    parser = argparse.ArgumentParser(description="An archive file manager.",
         epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--verbose', '-v', action='count', default=0, dest='verbosity', help="verbose operation; can be given multiple times")
     parser.add_argument('--non-interactive', dest='interactive', default=True, action='store_false',
