@@ -20,7 +20,7 @@ class TestRpm (ArchiveTest):
 
     program = 'rpm'
 
-    @needs_program('rpm')
+    @needs_program(program)
     def test_rpm(self):
         self.archive_list('t.rpm')
         # The rpm test fails on non-rpm system with missing dependencies.

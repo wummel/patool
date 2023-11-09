@@ -15,13 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 A lot of these tests need an external compression program.
-See https://github.com/wummel/patool/blob/debian/debian/control
+See https://salsa.debian.org/debian/patool/-/blob/master/debian/control
 at the "Suggests:" for a list of packages with supported compression
 programs.
 
 The file type detection uses the file(1) program which uses a library
 of "magic" patterns. The contents of the magic pattern library can vary
-between distributions so the tests might not run on all Linux systems.
+between distributions so the tests might not run on all systems.
 """
 import os
 import patoolib
@@ -39,7 +39,7 @@ def _need_func(testfunc, name, description):
     def check_func(func):
         def newfunc(*args, **kwargs):
             if not testfunc(name):
-                pytest.skip("%s %r is not available" % (description, name))
+                pytest.skip(f"{description} {name!r} is not available")
             return func(*args, **kwargs)
         setattr(newfunc, fnameattr, getattr(func, fnameattr))
         return newfunc
@@ -72,14 +72,14 @@ def needs_module(name):
     return _need_func(has_module, name, 'Python module')
 
 
-def needs_codec (program, codec):
+def needs_codec(program, codec):
     """Decorator skipping test if given program codec is not available."""
-    def check_prog (f):
-        def newfunc (*args, **kwargs):
+    def check_prog(f):
+        def newfunc(*args, **kwargs):
             if not patoolib.util.find_program(program):
-                pytest.skip("program `%s' not available" % program)
+                pytest.skip(f"program `{program}' not available")
             if not has_codec(program, codec):
-                pytest.skip("codec `%s' for program `%s' not available" % (codec, program))
+                pytest.skip(f"codec `{codec}' for program `{program}' not available")
             return f(*args, **kwargs)
         setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc

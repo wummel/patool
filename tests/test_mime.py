@@ -27,7 +27,7 @@ class TestMime(unittest.TestCase):
         file_mime, file_encoding = func(filename)
         fail_msg = "%s for archive `%s' should be %s, but was %s. Info: %s"
         if isinstance(mime, tuple):
-            self.assertTrue(file_mime in mime, fail_msg % ("MIME type", filename, "in %s" % str(mime), file_mime, info))
+            self.assertTrue(file_mime in mime, fail_msg % ("MIME type", filename, f"in {mime}", file_mime, info))
         else:
             self.assertEqual(file_mime, mime, fail_msg % ("MIME type", filename, mime, file_mime, info))
         self.assertEqual(file_encoding, encoding, fail_msg % ("Encoding", filename, encoding, file_encoding, info))

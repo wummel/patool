@@ -63,10 +63,10 @@ class ArchiveTest (unittest.TestCase):
         if not kwargs.get('skip_create'):
             self.archive_create(filename, **kwargs)
 
-    def archive_extract (self, filename, check=Content.Recursive):
+    def archive_extract(self, filename, check=Content.Recursive):
         """Test archive extraction."""
         archive = os.path.join(datadir, filename)
-        self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
+        self.assertTrue(os.path.isabs(archive), f"archive path is not absolute: {archive!r}")
         self._archive_extract(archive, check)
         # archive name relative to tmpdir
         relarchive = os.path.join("..", archive[len(basedir)+1:])
@@ -128,7 +128,7 @@ class ArchiveTest (unittest.TestCase):
         for verbosity in (-1, 0, 1, 2):
             patoolib.test_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
 
-    def archive_create (self, archive, srcfiles=None, check=Content.Recursive):
+    def archive_create(self, archive, srcfiles=None, check=Content.Recursive):
         """Test archive creation."""
         if srcfiles is None:
             if check == Content.Recursive:
@@ -138,7 +138,7 @@ class ArchiveTest (unittest.TestCase):
             elif check == Content.Multifile:
                 srcfiles = ('t.txt', 't2.txt',)
             else:
-                raise ValueError('invalid check value %r' % check)
+                raise ValueError('invalid check value {check!r}')
         olddir = patoolib.fileutil.chdir(datadir)
         try:
             # The format and compression arguments are needed for creating
@@ -158,7 +158,7 @@ class ArchiveTest (unittest.TestCase):
         tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
         try:
             archive = os.path.join(tmpdir, archive)
-            self.assertTrue(os.path.isabs(archive), "archive path is not absolute: %r" % archive)
+            self.assertTrue(os.path.isabs(archive), f"archive path is not absolute: {archive!r}")
             patoolib.create_archive(archive, srcfiles, verbosity=verbosity, interactive=False, program=program, password=self.password)
             self.assertTrue(os.path.isfile(archive))
             self.check_created_archive_with_test(archive)
@@ -235,10 +235,4 @@ def get_filecontent(filename):
 
 def get_nonexisting_directory(basedir):
     """Note: this is _not_ intended to be used to create a directory."""
-    d = os.path.join(basedir, "foo")
-    while os.path.exists(d):
-        d += 'a'
-        if len(d) > 100:
-            # wtf
-            raise ValueError('could not construct unique directory name at %r' % basedir)
-    return d
+    return patoolib.fileutil.get_single_outfile(basedir, "foo")
