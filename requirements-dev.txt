@@ -1,13 +1,13 @@
 # these modules are only needed for development
 
 # for testing
-pytest==7.4.2
+pytest==7.4.3
 
 # for python code linting
-ruff==0.1.2
+ruff==0.1.5
 
 # for generating a Python .whl file
-wheel==0.41.2
+wheel==0.41.3
 
 # for uploading releases
 twine==4.0.2
