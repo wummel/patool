@@ -156,6 +156,10 @@ lint:
 reformat:
 	ruff --fix setup.py patoolib tests
 
+.PHONY: checkoutdated
+checkoutdated:
+	pip list --format=columns --outdated
+
 
 ############ Testing ############
 
