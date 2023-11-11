@@ -137,7 +137,7 @@ COMMANDS
        tions are available).
 
    version
-       patool sion
+       patool version
 
        Print version information.
 
