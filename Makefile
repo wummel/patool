@@ -75,9 +75,7 @@ distclean:	clean
 
 .PHONY: dist
 dist:
-	[ -d dist ] || mkdir dist
-	python setup.py sdist --formats=tar bdist_wheel
-	gzip --best dist/$(APPNAME)-$(VERSION).tar
+	python setup.py sdist bdist_wheel
 
 .PHONY: upload
 upload:
