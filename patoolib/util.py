@@ -20,14 +20,6 @@ import subprocess
 from .log import log_info
 
 
-def system_search_path():
-    """Get the list of directories on a system to search for executable programs.
-    It is either the PATH environment variable or if PATH is undefined the value
-    of os.defpath.
-    """
-    return os.environ.get("PATH", os.defpath)
-
-
 class PatoolError (Exception):
     """Raised when errors occur."""
     pass
@@ -141,6 +133,17 @@ def p7zip_supports_rar():
     return False
 
 
+def system_search_path():
+    """Get the list of directories to search for executable programs."""
+    path = os.environ.get("PATH", os.defpath)
+    if os.name == 'nt':
+        # Add some well-known archiver programs to the search path
+        path = append_to_path(path, get_nt_7z_dir())
+        path = append_to_path(path, get_nt_mac_dir())
+        path = append_to_path(path, get_nt_winrar_dir())
+    return path
+
+
 def append_to_path(path, directory):
     """Add a directory to the PATH environment variable, if it is a valid
     directory."""
@@ -152,18 +155,9 @@ def append_to_path(path, directory):
 
 
 @memoized
-def find_program (program):
-    """Look for program in environment PATH variable."""
-    if os.name == 'nt':
-        # Add some well-known archiver programs to the search path
-        path = os.environ['PATH']
-        path = append_to_path(path, get_nt_7z_dir())
-        path = append_to_path(path, get_nt_mac_dir())
-        path = append_to_path(path, get_nt_winrar_dir())
-    else:
-        # use default path
-        path = None
-    return shutil.which(program, path=path)
+def find_program(program):
+    """Look for given program."""
+    return shutil.which(program, path=system_search_path())
 
 
 def get_nt_7z_dir():
