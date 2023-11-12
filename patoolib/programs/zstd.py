@@ -36,7 +36,7 @@ def create_zstd(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
         cmdlist.append("-v")
-    cmdlist.extend(["-z", "-9", "--stdout", "--"])
+    cmdlist.extend(["-z", "--stdout", "--"])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
     cmdlist.extend([">", util.shell_quote(archive)])
     return (cmdlist, {"shell": True})

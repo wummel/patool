@@ -20,12 +20,12 @@ from . import extract_singlefile_standard, test_singlefile_standard
 extract_bzip2 = extract_singlefile_standard
 test_bzip2 = test_singlefile_standard
 
-def create_bzip2 (archive, compression, cmd, verbosity, interactive, filenames):
+def create_bzip2(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a BZIP2 archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-z', '-9', '--'])
+    cmdlist.extend(['-c', '-z', '--'])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
     cmdlist.extend(['>', util.shell_quote(archive)])
     return (cmdlist, {'shell': True})

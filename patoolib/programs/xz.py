@@ -36,7 +36,7 @@ def create_xz(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-9', '--'])
+    cmdlist.extend(['-c', '--'])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
     cmdlist.extend(['>', util.shell_quote(archive)])
     return (cmdlist, {'shell': True})
@@ -67,7 +67,7 @@ def create_lzma(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist = [util.shell_quote(cmd), '--format=lzma']
     if verbosity > 1:
         cmdlist.append('-v')
-    cmdlist.extend(['-c', '-9', '--'])
+    cmdlist.extend(['-c', '--'])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
     cmdlist.extend(['>', util.shell_quote(archive)])
     return (cmdlist, {'shell': True})

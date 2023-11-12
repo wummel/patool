@@ -18,6 +18,8 @@
 * Use the new filter option when extracting TAR archives with the tarfile
   module in Python >= 3.12 to detect unsafe archive entries.
 * Added new command "patool version" to print version information.
+* Do not use maximum compression anymore, the default settings should
+  be good enough for a standard use case.
 
 
 1.15.0 (released 28.10.2023)

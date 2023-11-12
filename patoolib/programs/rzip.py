@@ -25,9 +25,9 @@ def extract_rzip (archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend(["-o", outfile, archive])
     return cmdlist
 
-def create_rzip (archive, compression, cmd, verbosity, interactive, filenames):
+def create_rzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an RZIP archive."""
-    cmdlist = [cmd, '-k', '-9', '-o', archive]
+    cmdlist = [cmd, '-k', '-o', archive]
     if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(filenames)
