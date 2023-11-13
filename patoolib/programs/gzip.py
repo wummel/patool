@@ -17,6 +17,7 @@
 from . import test_singlefile_standard
 from .. import util, fileutil, log
 import os
+import subprocess
 
 test_gzip = test_compress = test_singlefile_standard
 
@@ -46,7 +47,7 @@ def get_original_filename(cmd, outdir, archive):
             # avoid overwriting the original archive with the same name
             if os.path.normcase(basefilename) != os.path.normcase(basearchive):
                 outfile = os.path.join(outdir, basefilename)
-    except OSError as err:
+    except (OSError, subprocess.CalledProcessError) as err:
         log.log_error(f"could not run {cmd}: {err}")
     return outfile
 
