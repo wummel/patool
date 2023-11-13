@@ -19,7 +19,9 @@
   module in Python >= 3.12 to detect unsafe archive entries.
 * Added new command "patool version" to print version information.
 * Do not use maximum compression anymore, the default settings should
-  be good enough for a standard use case.
+  be good enough for our standard use case.
+* Restore original file name for GZIP (.gz) archives.
+  Closes: GH bug #67
 
 
 1.15.0 (released 28.10.2023)

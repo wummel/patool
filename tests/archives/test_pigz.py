@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,3 +29,7 @@ class TestPigz (ArchiveTest):
     def test_pigz_file (self):
         self.archive_commands('t.txt.gz.foo', check=Content.Singlefile,
           skip_create=True, skip_test=True)
+
+    def get_expected_singlefile_output(self, archive):
+        """pigz restores the original filename for .gz files"""
+        return "t.txt"

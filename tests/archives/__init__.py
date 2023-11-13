@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,9 +72,9 @@ class ArchiveTest (unittest.TestCase):
         relarchive = os.path.join("..", archive[len(basedir)+1:])
         self._archive_extract(relarchive, check, verbosity=1)
 
-    def _archive_extract (self, archive, check, verbosity=0):
+    def _archive_extract(self, archive, check, verbosity=0):
         # create a temporary directory for extraction
-        tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
+        tmpdir = patoolib.fileutil.tmpdir(dir=basedir, prefix="test_")
         try:
             olddir = patoolib.fileutil.chdir(tmpdir)
             try:
@@ -87,7 +87,7 @@ class ArchiveTest (unittest.TestCase):
         finally:
             patoolib.fileutil.rmtree(tmpdir)
 
-    def check_extracted_archive (self, archive, output, check):
+    def check_extracted_archive(self, archive, output, check):
         if check == Content.Recursive:
             # outdir is the 't' directory of the archive
             self.assertEqual(output, 't')
@@ -96,14 +96,19 @@ class ArchiveTest (unittest.TestCase):
             self.check_textfile(txtfile, 't.txt')
         elif check == Content.Singlefile:
             # a non-existing directory to ensure files do not exist in it
-            ned = get_nonexisting_directory(os.getcwd())
-            expected_output = os.path.basename(patoolib.fileutil.get_single_outfile(ned, archive))
+            expected_output = self.get_expected_singlefile_output(archive)
             self.check_textfile(output, expected_output)
         elif check == Content.Multifile:
             txtfile = os.path.join(output, 't.txt')
             self.check_textfile(txtfile, 't.txt')
             txtfile2 = os.path.join(output, 't2.txt')
             self.check_textfile(txtfile2, 't2.txt')
+
+    def get_expected_singlefile_output(self, archive):
+        """Return the expected output file name of a singlefile archive."""
+        if archive.endswith(".foo"):
+            return patoolib.fileutil.stripext(os.path.basename(archive))
+        return "t.txt"
 
     def check_directory (self, dirname, expectedname):
         """Check that directory exists."""

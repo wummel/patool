@@ -14,11 +14,41 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the gzip program."""
-from . import extract_singlefile_standard, test_singlefile_standard
-from .. import util
+from . import test_singlefile_standard
+from .. import util, fileutil, log
+import os
 
-extract_gzip = extract_compress = extract_singlefile_standard
 test_gzip = test_compress = test_singlefile_standard
+
+def extract_gzip(archive, compression, cmd, verbosity, interactive, outdir):
+    cmdlist = [util.shell_quote(cmd)]
+    if verbosity > 1:
+        cmdlist.append('-v')
+    outfile = get_original_filename(cmd, outdir, archive)
+    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
+        util.shell_quote(outfile)])
+    return (cmdlist, {'shell': True})
+
+extract_compress = extract_gzip
+
+
+def get_original_filename(cmd, outdir, archive):
+    outfile = fileutil.get_single_outfile(outdir, archive)
+    cmdlist = [cmd, "--name", "--list", archive]
+    try:
+        output = util.backtick(cmdlist).strip()
+        lines = output.splitlines()
+        values = lines[1].split()
+        baseoutfile = os.path.basename(outfile)
+        basefilename = os.path.basename(values[-1])
+        if os.path.normcase(baseoutfile) != os.path.normcase(basefilename):
+            basearchive = os.path.basename(archive)
+            # avoid overwriting the original archive with the same name
+            if os.path.normcase(basefilename) != os.path.normcase(basearchive):
+                outfile = os.path.join(outdir, basefilename)
+    except OSError as err:
+        log.log_error(f"could not run {cmd}: {err}")
+    return outfile
 
 
 def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):

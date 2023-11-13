@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,6 +28,11 @@ class TestGzip (ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_gzip_file(self):
-        self.archive_commands('t.txt.gz.foo', skip_create=True, check=None)
+        self.archive_commands('t.txt.gz.foo', skip_create=True, check=Content.Singlefile)
         self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
 
+    def get_expected_singlefile_output(self, archive):
+        """Gzip restores the original filename for .gz files"""
+        if archive.endswith(".Z.foo"):
+            return "t.txt.Z"
+        return "t.txt"
