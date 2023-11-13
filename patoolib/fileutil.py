@@ -72,9 +72,9 @@ def get_filesize(filename):
     return os.path.getsize(filename)
 
 
-def tmpdir(dir=None):
+def tmpdir(dir=None, prefix="Unpack_"):
     """Return a temporary directory for extraction."""
-    return tempfile.mkdtemp(suffix='', prefix='Unpack_', dir=dir)
+    return tempfile.mkdtemp(suffix="", prefix=prefix, dir=dir)
 
 
 def tmpfile(dir=None, prefix="temp", suffix=None):
