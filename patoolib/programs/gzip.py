@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the gzip program."""
-from . import test_singlefile_standard
+from . import extract_singlefile_standard, test_singlefile_standard
 from .. import util, fileutil, log
 import os
 import subprocess
@@ -30,7 +30,7 @@ def extract_gzip(archive, compression, cmd, verbosity, interactive, outdir):
         util.shell_quote(outfile)])
     return (cmdlist, {'shell': True})
 
-extract_compress = extract_gzip
+extract_compress = extract_singlefile_standard
 
 
 def get_original_filename(cmd, outdir, archive):
