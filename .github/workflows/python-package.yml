@@ -37,7 +37,7 @@ jobs:
       if: ${{ runner.os=='Linux' }}
       run: >
         sudo apt-get update &&
-        sudo apt-get install arj bzip2 lbzip2 pbzip2 cabextract ncompress cpio lzop p7zip-full zip unzip rpm2cpio binutils lhasa unace unalz unar lrzip lhasa tar xdms lzip plzip clzip pdlzip sharutils flac libarchive-tools archmage genisoimage lz4 zstd
+        sudo apt-get install arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress pbzip2 p7zip-full rpm2cpio unzip unace unalz unar sharutils tar xdms zip zstd
 
     - name: Test with pytest
       run: |
