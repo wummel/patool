@@ -588,20 +588,12 @@ def _create_archive(archive, filenames, verbosity=0, interactive=True,
     program = find_archive_program(format, 'create', program=program, password=password)
     check_program_compression(archive, 'create', program, compression)
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'create', format)
-    origarchive = None
-    if os.path.basename(program) == 'arc' and \
-       ".arc" in archive and not archive.endswith(".arc"):
-        # the arc program mangles the archive name if it contains ".arc"
-        origarchive = archive
-        archive = fileutil.tmpfile(dir=os.path.dirname(archive), suffix=".arc")
     cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, filenames, password=password)
     if cmdlist:
         # an empty command list means the get_archive_cmdlist() function
         # already handled the command (e.g. when it's a builtin Python
         # function)
         run_archive_cmdlist(cmdlist, verbosity=verbosity)
-    if origarchive:
-        shutil.move(archive, origarchive)
 
 
 def _handle_archive(archive, command, verbosity=0, interactive=True,

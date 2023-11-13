@@ -77,11 +77,6 @@ def tmpdir(dir=None, prefix="Unpack_"):
     return tempfile.mkdtemp(suffix="", prefix=prefix, dir=dir)
 
 
-def tmpfile(dir=None, prefix="temp", suffix=None):
-    """Return a temporary file."""
-    return tempfile.mkstemp(suffix=suffix, prefix=prefix, dir=dir)[1]
-
-
 def stripext(filename):
     """Return the basename without extension of given filename."""
     basename, _ = os.path.splitext(os.path.basename(filename))
