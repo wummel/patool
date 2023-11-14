@@ -91,6 +91,11 @@ COMMANDS
        All extracted files are ensured that they are readable  by  the
        current user.
 
+       If  extracting  an archive has an error in the middle of opera‐
+       tion, patool does not remove the temporary extraction directory
+       This  directory  whose name starts with "Unpack_" has all files
+       that have been extracted before the error.
+
    list
        patool list <archive>...
 
@@ -99,16 +104,16 @@ COMMANDS
    create
        patool create <archive> <file-or-directory>...
 
-       Create  an  archive from given files. All of the given files to
-       add to the archive must be readable by the current  user.   The
-       format  of  the  archive to create is determined by the archive
-       file extension. If the archive program has options to  maximize
+       Create an archive from given files. All of the given  files  to
+       add  to  the archive must be readable by the current user.  The
+       format of the archive to create is determined  by  the  archive
+       file  extension. If the archive program has options to maximize
        file compression, patool uses those options.
 
    test
        patool test <archive>...
 
-       Test  the  given  archives.  If the helper application does not
+       Test the given archives. If the  helper  application  does  not
        support testing, the archive contents are listed instead.
 
    diff
@@ -120,20 +125,20 @@ COMMANDS
    search
        patool search <pattern> <archive>
 
-       Search  in archive contents for given pattern using the grep(1)
-       program.  The grep options used are -r; additional options  can
+       Search in archive contents for given pattern using the  grep(1)
+       program.   The grep options used are -r; additional options can
        be supplied with the GREP_OPTIONS environment variable.
 
    repack
        patool repack <archive> <archive_new>
 
-       Repackage  archive  to  a  different format. The target archive
+       Repackage archive to a different  format.  The  target  archive
        format is determined by the file extension of archive_new.
 
    formats
        patool formats
 
-       Show all supported archive formats (i.e. which helper  applica‐
+       Show  all supported archive formats (i.e. which helper applica‐
        tions are available).
 
    version
@@ -142,14 +147,14 @@ COMMANDS
        Print version information.
 
 HELP OPTION
-       Specifying  the help option displays help for patool itself, or
+       Specifying the help option displays help for patool itself,  or
        a command.
        For example:
          patool --help - display help for patool
          patool extract --help - display help for the extract command
 
 SHELL ALIASES
-       When running under a Unix shell the following  aliases  can  be
+       When  running  under  a Unix shell the following aliases can be
        defined to save some typing:
          alias pl='patool list'
          alias px='patool extract'

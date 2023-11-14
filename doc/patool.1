@@ -97,6 +97,11 @@ of files from the extracted archive.
 .PP
 All extracted files are ensured that they are readable by the
 current user.
+.PP
+If extracting an archive has an error in the middle of operation, patool does
+not remove the temporary extraction directory
+This directory whose name starts with "Unpack_" has all files that have been
+extracted before the error.
 .SS list
 \fBpatool\fP \fBlist\fP <\fIarchive\fP>...
 .PP
