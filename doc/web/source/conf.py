@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "patool"
-version = "1.15.0"
+version = "2.0.0"
 author = "Bastian Kleineidam"
 copyright = '2023 ' + author
 
