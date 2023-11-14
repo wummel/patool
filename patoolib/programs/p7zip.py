@@ -130,7 +130,7 @@ def create_7z(archive, compression, cmd, verbosity, interactive, filenames, pass
         cmdlist.append(f'-p{password}')
         # encrypt the file list, ie. "patool list" will require a password
         cmdlist.append('-mhe=on')
-    cmdlist.extend(['-t7z', '-mx=9', '-sae', '--', archive])
+    cmdlist.extend(['-t7z', '-sae', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
@@ -142,7 +142,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames, pas
         cmdlist.append('-y')
     if password:
         cmdlist.append(f'-p{password}')
-    cmdlist.extend(['-tzip', '-mx=9', '--', archive])
+    cmdlist.extend(['-tzip', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
@@ -154,7 +154,7 @@ def create_xz(archive, compression, cmd, verbosity, interactive, filenames, pass
         cmdlist.append('-y')
     if password:
         cmdlist.append(f'-p{password}')
-    cmdlist.extend(['-txz', '-mx=9', '--', archive])
+    cmdlist.extend(['-txz', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
@@ -166,7 +166,7 @@ def create_gzip(archive, compression, cmd, verbosity, interactive, filenames, pa
         cmdlist.append('-y')
     if password:
         cmdlist.append(f'-p{password}')
-    cmdlist.extend(['-tgzip', '-mx=9', '--', archive])
+    cmdlist.extend(['-tgzip', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist
 
@@ -178,6 +178,6 @@ def create_bzip2(archive, compression, cmd, verbosity, interactive, filenames, p
         cmdlist.append('-y')
     if password:
         cmdlist.append(f'-p{password}')
-    cmdlist.extend(['-tbzip2', '-mx=9', '--', archive])
+    cmdlist.extend(['-tbzip2', '--', archive])
     cmdlist.extend(filenames)
     return cmdlist

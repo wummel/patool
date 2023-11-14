@@ -22,27 +22,22 @@ READ_SIZE_BYTES = 1024*1024
 
 # Adapters for different lzma bindings.
 if hasattr(lzma, 'FORMAT_ALONE'):
-    def _get_lzma_options(format, preset=None):
-        kwargs = {'format':
-                    {'alone': lzma.FORMAT_ALONE,
-                     'xz': lzma.FORMAT_XZ,
-                     }[format]
-                }
-        if preset:
-            kwargs['preset'] = preset
-        return kwargs
+    def _get_lzma_options(format):
+        return {
+            'format': {
+                'alone': lzma.FORMAT_ALONE,
+                'xz': lzma.FORMAT_XZ,
+                }[format]
+            }
 else:
     # might not be available e.g. in Debian's python-lzma 0.5.3
     # which is pyliblzma.
-    def _get_lzma_options(format, preset=None):
-        kwargs = {
+    def _get_lzma_options(format):
+        return {
             'options': {
                 'format': format
             }
         }
-        if preset:
-            kwargs['options']['level'] = preset
-        return kwargs
 
 
 def _extract(archive, compression, cmd, format, verbosity, outdir):
@@ -74,7 +69,7 @@ def _create(archive, compression, cmd, format, verbosity, filenames):
     if len(filenames) > 1:
         raise util.PatoolError('multi-file compression not supported in Python lzma')
     try:
-        with lzma.LZMAFile(archive, mode='wb', **_get_lzma_options(format, preset=9)) as lzmafile:
+        with lzma.LZMAFile(archive, mode='wb', **_get_lzma_options(format)) as lzmafile:
             filename = filenames[0]
             with open(filename, 'rb') as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)
