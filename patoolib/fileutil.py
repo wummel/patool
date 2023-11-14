@@ -158,6 +158,7 @@ def rmtree_log_exc(func, path, excinfo):
 def rmtree(path):
     """Remove given path recursively with shutil.rmtree().
     Errors will be logged."""
+    make_user_readable(path)
     if sys.version_info >= (3, 12, 0, "final", 0):
         shutil.rmtree(path, onexc=rmtree_log_exc)
     else:
