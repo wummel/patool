@@ -374,7 +374,7 @@ def get_archive_format(filename):
     if mime in ArchiveMimetypes:
         format = ArchiveMimetypes[mime]
     else:
-        raise util.PatoolError(f"unknown archive mime format {mime} for file `%s' (mime-type is `{filename}')")
+        raise util.PatoolError(f"unknown archive mime format {mime} for file `{filename}'")
     if format == compression:
         # file cannot be in same format compressed
         compression = None
@@ -415,7 +415,7 @@ def find_archive_program (format, command, program=None, password=None):
                 continue
             return exe
     # no programs found
-    raise util.PatoolError("could not find an executable program to %s format %s; candidates are (%s)," % (command, format, ",".join(programs)))
+    raise util.PatoolError(f"could not find an executable program to {command} format {format}; candidates are " + ",".join(programs))
 
 
 def _remove_command_without_password_support(programs, format, command):
@@ -449,11 +449,11 @@ def list_formats ():
         for command in ArchiveCommands:
             programs = ArchivePrograms[format]
             if command not in programs and None not in programs:
-                print("   %8s: - (not supported)" % command)
+                print("   {command:>8}: - (not supported)")
                 continue
             try:
                 program = find_archive_program(format, command)
-                print("   %8s: %s" % (command, program), end=' ')
+                print(f"   {command:>8}: {program}", end=' ')
                 if format == 'tar':
                     encs = [x for x in ArchiveCompressions if util.find_program(x)]
                     if encs:
@@ -467,8 +467,7 @@ def list_formats ():
             except util.PatoolError:
                 # display information what programs can handle this archive format
                 handlers = programs.get(None, programs.get(command))
-                print("   %8s: - (no program found; install %s)" %
-                      (command, util.strlist_with_or(handlers)))
+                print(f"   {command:>8}: - (no program found; install {util.strlist_with_or(handlers)})")
 
 
 def check_program_compression(archive, command, program, compression):
