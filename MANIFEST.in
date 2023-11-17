@@ -1,6 +1,5 @@
 include MANIFEST.in
 include COPYING doc/*.1 doc/*.txt doc/icon/*
 include Makefile
-include scripts/*.bat
 graft tests
 global-exclude *.py[cod]
