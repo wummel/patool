@@ -22,9 +22,4 @@ class TestZopfli(ArchiveTest):
 
     @needs_program(program)
     def test_zopfli(self):
-        self.archive_extract('t.txt.gz', check=Content.Singlefile)
-
-    @needs_program('file')
-    @needs_program(program)
-    def test_zopfli_file(self):
-        self.archive_extract('t.txt.gz.foo', check=Content.Singlefile)
+        self.archive_create('t.txt.gz', check=Content.Singlefile)

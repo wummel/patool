@@ -175,7 +175,7 @@ class ArchiveTest (unittest.TestCase):
         command = patoolib.test_archive
         program = self.program
         # special case for programs that cannot test what they create
-        if self.program in ('compress', 'py_gzip'):
+        if self.program in ('compress', 'py_gzip', 'zopfli'):
             program = 'gzip'
         elif self.program == 'py_bz2':
             program = 'bzip2'
@@ -202,7 +202,7 @@ class ArchiveTest (unittest.TestCase):
             return
         program = self.program
         # special case for programs that cannot extract what they create
-        if self.program == 'compress':
+        if self.program in ('compress', 'zopfli'):
             program = 'gzip'
         elif self.program == 'zip':
             program = 'unzip'
