@@ -707,6 +707,7 @@ def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=
     format2, compression2 = get_archive_format(archive2)
     if format1 == format2 and compression1 == compression2:
         # same format and compression allows to copy the file
+        log.log_info(f"copy `{archive1}' -> `{archive2}' in same format {format1} and compression {compression1}")
         fileutil.link_or_copy(archive1, archive2, verbosity=verbosity)
         return
     tmpdir = fileutil.tmpdir()
