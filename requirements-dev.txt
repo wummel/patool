@@ -7,7 +7,7 @@ pytest==7.4.3
 ruff==0.1.6
 
 # for generating a Python .whl file
-wheel==0.41.3
+wheel==0.42.0
 
 # for uploading releases
 twine==4.0.2
