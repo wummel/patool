@@ -19,7 +19,7 @@ import sys
 import shutil
 import stat
 import tempfile
-from .log import log_info, log_error
+from .log import log_info, log_warning, log_error
 from .util import PatoolError
 
 
@@ -57,14 +57,15 @@ def set_mode(filename, flags):
     """Set mode flags for given filename if not already set."""
     try:
         mode = os.lstat(filename).st_mode
-    except OSError:
+    except OSError as err:
+        log_warning(f"could not stat `{filename}': {err}")
         # ignore
         return
     if not (mode & flags):
         try:
             os.chmod(filename, flags | mode)
-        except OSError as msg:
-            log_error(f"could not set mode flags for `{filename}': {msg}")
+        except OSError as err:
+            log_warning(f"could not set mode flags for `{filename}': {err}")
 
 
 def get_filesize(filename):
@@ -139,7 +140,8 @@ def chdir(directory):
     """
     try:
         olddir = os.getcwd()
-    except OSError:
+    except OSError as err:
+        log_warning(f"could not get current working directory: {err}")
         olddir = None
     os.chdir(directory)
     return olddir

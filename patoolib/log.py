@@ -54,6 +54,11 @@ def log_error(msg):
     logger.error(encode_safe(msg))
 
 
+def log_warning(msg):
+    """Log warning message."""
+    logger.warning(encode_safe(msg))
+
+
 def log_info(msg):
     """Log info message."""
     logger.info(encode_safe(msg))

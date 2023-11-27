@@ -17,7 +17,7 @@
 import os
 import mimetypes
 from . import ArchiveMimetypes, ArchiveCompressions, program_supports_compression
-from .log import log_error
+from .log import log_error, log_warning
 from .util import memoized, find_program, backtick
 
 
@@ -162,7 +162,8 @@ def guess_mime_file(filename):
         try:
             outparts = backtick(cmd).strip().split(";")
             mime2 = outparts[0].split(" ", 1)[0]
-        except OSError:
+        except OSError as err:
+            log_warning(f"error executing {cmd}: {err}")
             mime2 = None
         # Some file(1) implementations return an empty or unknown mime type
         # when the uncompressor program is not installed, other
@@ -196,9 +197,9 @@ def guess_mime_file_mime(file_prog, filename):
     cmd = [file_prog, "--brief", "--mime-type", filename]
     try:
         mime = backtick(cmd).strip()
-    except OSError:
+    except OSError as err:
         # ignore errors, as file(1) is only a fallback
-        pass
+        log_warning(f"error executing {cmd}: {err}")
     if mime not in ArchiveMimetypes:
         mime, encoding = None, None
     return mime, encoding
@@ -252,21 +253,17 @@ FileText2Mime = {
 def guess_mime_file_text(file_prog, filename):
     """Determine MIME type of filename with file(1)."""
     try:
-        output = run_file_text(file_prog, filename)
-    except OSError:
+        cmd = [file_prog, "--brief", filename]
+        output = backtick(cmd).strip()
+    except OSError as err:
         # ignore errors, as file(1) is only a fallback
+        log_warning(f"error executing {cmd}: {err}")
         return None
     # match output against known strings
     for matcher, mime in FileText2Mime.items():
         if output.startswith(matcher) and mime in ArchiveMimetypes:
             return mime
     return None
-
-
-def run_file_text(file_prog, filename):
-    """Get stripped output of file --brief <filename>"""
-    cmd = [file_prog, "--brief", filename]
-    return backtick(cmd).strip()
 
 
 init_mimedb()

@@ -3,6 +3,8 @@
 * Document all functions and modules, and add linting rule for it.
 * Remove spaces between function and argument list
   Closes: GH bug #100
+* Log warnings when subprocesses in utility functions return errors
+  that are ignored.
 
 
 2.0.0 (released 14.11.2023)

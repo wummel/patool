@@ -41,7 +41,7 @@ class TestMime(unittest.TestCase):
         """
         archive = os.path.join(datadir, filename)
         file_prog = patoolib.util.find_program("file")
-        info = patoolib.mime.run_file_text(file_prog, archive)
+        info = patoolib.mime.guess_mime_file_text(file_prog, archive)
         self.mime_test(patoolib.mime.guess_mime_file, archive, mime, encoding, info)
 
     def mime_test_mimedb(self, filename, mime, encoding=None):
