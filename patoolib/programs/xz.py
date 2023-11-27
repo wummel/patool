@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ from .. import fileutil, util
 extract_xz = extract_singlefile_standard
 test_xz = test_singlefile_standard
 
-def list_xz (archive, compression, cmd, verbosity, interactive):
+def list_xz(archive, compression, cmd, verbosity, interactive):
     """List a XZ archive."""
     cmdlist = [cmd]
     cmdlist.append('-l')

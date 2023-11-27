@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2016 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the unzip program"""
 from . import ArchiveTest
 from .. import needs_program
 
 class TestUnzip(ArchiveTest):
+    """Test class for the unzip program"""
 
     program = 'unzip'
 
     @needs_program(program)
     def test_unzip(self):
+        """Run archive commands for ZIP archives with different extensions."""
         self.archive_extract('t.zip')
         self.archive_list('t.zip')
         self.archive_test('t.zip')
@@ -41,6 +44,9 @@ class TestUnzip(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_unzip_file(self):
+        """Run archive commands for renamed ZIP archives with different
+        extensions.
+        """
         self.archive_extract('t.zip.foo')
         self.archive_list('t.zip.foo')
         self.archive_test('t.zip.foo')
@@ -59,12 +65,14 @@ class TestUnzip(ArchiveTest):
 
 
 class TestUnzipPassword(ArchiveTest):
+    """Test class for the unzip program with password"""
 
     program = 'unzip'
     password = 'thereisnotry'
 
     @needs_program(program)
     def test_unzip(self):
+        """Extract and list ZIP archives with different extensions."""
         self.archive_extract('p.zip')
         self.archive_list('p.zip')
         self.archive_test('p.zip')
@@ -75,6 +83,7 @@ class TestUnzipPassword(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_unzip_file(self):
+        """Extract and list renamed ZIP archives with different extensions."""
         self.archive_extract('p.zip.foo')
         self.archive_list('p.zip.foo')
         self.archive_test('p.zip.foo')

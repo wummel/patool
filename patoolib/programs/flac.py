@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012-2015 Bastian Kleineidam
+# Copyright (C) 2012-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,19 +16,19 @@
 """Archive commands for the flac program."""
 from .. import fileutil
 
-def extract_flac (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_flac(archive, compression, cmd, verbosity, interactive, outdir):
     """Decompress a FLAC archive to a WAV file."""
     outfile = fileutil.get_single_outfile(outdir, archive, extension=".wav")
     cmdlist = [cmd, '--decode', archive, '--output-name', outfile]
     return cmdlist
 
 
-def create_flac (archive, compression, cmd, verbosity, interactive, filenames):
+def create_flac(archive, compression, cmd, verbosity, interactive, filenames):
     """Compress a WAV file to a FLAC archive."""
     cmdlist = [cmd, filenames[0], '--best', '--output-name', archive]
     return cmdlist
 
 
-def test_flac (archive, compression, cmd, verbosity, interactive):
+def test_flac(archive, compression, cmd, verbosity, interactive):
     """Test a FLAC file."""
     return [cmd, '--test', archive]

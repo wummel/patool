@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2016 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the 7za program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class Test7za (ArchiveTest):
+class Test7za(ArchiveTest):
+    """Test class for the 7za program"""
 
     program = '7za'
 
     @needs_program(program)
-    def test_p7azip (self):
+    def test_p7azip(self):
+        """Run archive commands with archives that 7za supports."""
         self.archive_commands('t .7z')
         self.archive_commands('t .cb7')
         self.archive_commands('t.zip')
@@ -47,7 +50,8 @@ class Test7za (ArchiveTest):
 
     @needs_program('file')
     @needs_program(program)
-    def test_7za_file (self):
+    def test_7za_file(self):
+        """Run archive commands with renamed archives that 7za supports."""
         self.archive_commands('t.7z.foo', skip_create=True)
         self.archive_commands('t.cb7.foo', skip_create=True)
         self.archive_commands('t.zip.foo', skip_create=True)

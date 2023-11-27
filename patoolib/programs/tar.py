@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,14 +18,14 @@ import os
 import subprocess
 
 
-def extract_tar (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive."""
     cmdlist = [cmd, '--extract']
     add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive, '--directory', outdir])
     return cmdlist
 
-def list_tar (archive, compression, cmd, verbosity, interactive):
+def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive."""
     cmdlist = [cmd, '--list']
     add_tar_opts(cmdlist, compression, verbosity)
@@ -34,7 +34,7 @@ def list_tar (archive, compression, cmd, verbosity, interactive):
 
 test_tar = list_tar
 
-def create_tar (archive, compression, cmd, verbosity, interactive, filenames):
+def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive."""
     cmdlist = [cmd, '--create']
     add_tar_opts(cmdlist, compression, verbosity)

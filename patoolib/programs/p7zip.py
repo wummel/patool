@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,8 @@ def extract_7z(archive, compression, cmd, verbosity, interactive, outdir, passwo
 def extract_7z_singlefile(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract a singlefile archive (e.g. gzip or bzip2) with '7z e'.
     This makes sure a single file and no subdirectories are created,
-    which would cause errors with patool repack."""
+    which would cause errors with patool repack.
+    """
     cmdlist = [cmd, 'e']
     if not interactive:
         cmdlist.append('-y')

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ def extract_lzh(archive, compression, cmd, verbosity, interactive, outdir):
     opts += f"w={outdir}"
     return [cmd, opts, archive]
 
-def list_lzh (archive, compression, cmd, verbosity, interactive):
+def list_lzh(archive, compression, cmd, verbosity, interactive):
     """List a LZH archive."""
     cmdlist = [cmd]
     if verbosity > 1:
@@ -33,14 +33,14 @@ def list_lzh (archive, compression, cmd, verbosity, interactive):
     cmdlist.append(archive)
     return cmdlist
 
-def test_lzh (archive, compression, cmd, verbosity, interactive):
+def test_lzh(archive, compression, cmd, verbosity, interactive):
     """Test a LZH archive."""
     opts = 't'
     if verbosity > 1:
         opts += 'v'
     return [cmd, opts, archive]
 
-def create_lzh (archive, compression, cmd, verbosity, interactive, filenames):
+def create_lzh(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a LZH archive."""
     opts = 'a'
     if verbosity > 1:

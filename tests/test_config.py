@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,18 +13,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test patool configuration values"""
 import unittest
 import patoolib
 
-class TestConfiguration (unittest.TestCase):
+class TestConfiguration(unittest.TestCase):
+    """Test class for patool configuration values"""
 
-    def test_archive_mimetypes (self):
-        # test that each format has a MIME type
+    def test_archive_mimetypes(self):
+        """Test that each format has a MIME type"""
         self.assertEqual(set(patoolib.ArchiveFormats),
                          set(patoolib.ArchiveMimetypes.values()))
 
-    def test_archive_programs (self):
-        # test that the key is an archive format
+    def test_archive_programs(self):
+        """Test that the archive program key is an archive format"""
         self.assertEqual(set(patoolib.ArchiveFormats),
                          set(patoolib.ArchivePrograms.keys()))
         for commands in patoolib.ArchivePrograms.values():
@@ -34,16 +36,22 @@ class TestConfiguration (unittest.TestCase):
             for programs in commands.values():
                 self.assertTrue(isinstance(programs, tuple))
 
-    def test_compression_programs (self):
+    def test_compression_programs(self):
+        """Test that compressions are archive formats"""
         self.assertTrue(set(patoolib.ArchiveCompressions).issubset(
                          set(patoolib.ArchiveFormats)))
 
-    def test_encoding_mimes (self):
+    def test_encoding_mimes_keys(self):
+        """Test that all compressions have a mime type"""
         self.assertEqual(set(patoolib.ArchiveCompressions),
                          set(patoolib.mime.Encoding2Mime.keys()))
+
+    def test_encoding_mimes_values(self):
+        """Test that all encoding mimes are known mime types"""
         for mime in patoolib.mime.Encoding2Mime.values():
             self.assertTrue(mime in patoolib.ArchiveMimetypes)
 
-    def test_filetext_mime (self):
+    def test_filetext_mime(self):
+        """Test that all text mime values are known mime types"""
         for mime in patoolib.mime.FileText2Mime.values():
             self.assertTrue(mime in patoolib.ArchiveMimetypes)

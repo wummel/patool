@@ -41,7 +41,8 @@ def init_logging(stream=sys.stderr):
 def encode_safe(*args, encoding=sys.stderr.encoding):
     """Replacing unknown characters in args for the given encoding.
     @return: a space-separated string that will not have encoding errors
-    with the given encoding"""
+    with the given encoding
+    """
     return " ".join([
         str(arg).encode(encoding, errors="replace").decode()
         for arg in args
@@ -97,8 +98,7 @@ def strtime(t):
 
 
 def strtimezone():
-    """Return timezone info, %z on some platforms, but not supported on all.
-    """
+    """Return timezone info, %z on some platforms, but not supported on all."""
     if time.daylight:
         zone = time.altzone
     else:

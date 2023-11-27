@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,19 +13,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the rzip program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class TestRzip (ArchiveTest):
+class TestRzip(ArchiveTest):
+    """Test class for the rzip program"""
 
     program = 'rzip'
 
     @needs_program(program)
     def test_rzip(self):
+        """Extract and create an RZIP archive."""
         self.archive_extract('t.txt.rz', check=Content.Singlefile)
         self.archive_create('t.txt.rz', check=Content.Singlefile)
 
     @needs_program(program)
     def test_rzip_file(self):
+        """Extract a renamed RZIP archive."""
         self.archive_extract('t.txt.rz.foo', check=Content.Singlefile)
-

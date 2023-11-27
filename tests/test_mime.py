@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test mime detection"""
 import unittest
 import os
 import patoolib
@@ -20,10 +21,12 @@ from . import needs_program, datadir
 
 
 class TestMime(unittest.TestCase):
+    """Test class for mime detection."""
 
     def mime_test(self, func, filename, mime, encoding, info):
         """Test that file has given mime and encoding as determined by
-        given function."""
+        given function.
+        """
         file_mime, file_encoding = func(filename)
         fail_msg = "%s for archive `%s' should be %s, but was %s. Info: %s"
         if isinstance(mime, tuple):
@@ -34,7 +37,8 @@ class TestMime(unittest.TestCase):
 
     def mime_test_file(self, filename, mime, encoding=None):
         """Test that file has given mime and encoding as determined by
-        file(1)."""
+        file(1).
+        """
         archive = os.path.join(datadir, filename)
         file_prog = patoolib.util.find_program("file")
         info = patoolib.mime.run_file_text(file_prog, archive)
@@ -42,12 +46,14 @@ class TestMime(unittest.TestCase):
 
     def mime_test_mimedb(self, filename, mime, encoding=None):
         """Test that file has given mime and encoding as determined by the
-        mimetypes module."""
+        mimetypes module.
+        """
         archive = os.path.join(datadir, filename)
         self.mime_test(patoolib.mime.guess_mime_mimedb, archive, mime, encoding, "")
 
     @needs_program('file')
     def test_mime_file(self):
+        """Test mime detection of different archives with file(1)"""
         self.mime_test_file("t .7z", "application/x-7z-compressed")
         self.mime_test_file("t .cb7", "application/x-7z-compressed")
         self.mime_test_file("t.cb7.foo", "application/x-7z-compressed")
@@ -155,17 +161,19 @@ class TestMime(unittest.TestCase):
     # fixme: broken tests
     #@needs_program('file')
     #@needs_program('lzip')
-    #def test_mime_file_lzip (self):
+    #def test_mime_file_lzip(self):
     #    self.mime_test_file("t.tar.lz.foo", "application/x-tar", "lzip")
 
     @needs_program('file')
     @needs_program('bzip2')
     def test_mime_file_bzip(self):
+        """Test mime detection of TAR BZIP2 archives"""
         self.mime_test_file("t.tar.bz2.foo", "application/x-tar", "bzip2")
         self.mime_test_file("t.tbz2.foo", "application/x-tar", "bzip2")
 
     @needs_program('file')
     def test_nested_gzip(self):
+        """Test mime detection of archives with double compression"""
         # Ensure that a file that doesn't natively support encoding does not see the encoding
         self.mime_test_file("t.rar.gz", "application/gzip")
         self.mime_test_file("t.rar.gz.foo", "application/gzip")
@@ -173,6 +181,7 @@ class TestMime(unittest.TestCase):
     @needs_program('file')
     @needs_program('gzip')
     def test_mime_file_gzip(self):
+        """Test mime detection of TAR GZIP archives"""
         self.mime_test_file("t.tar.gz.foo", "application/x-tar", "gzip")
         self.mime_test_file("t.taz.foo", "application/x-tar", "gzip")
         self.mime_test_file("t.tgz.foo", "application/x-tar", "gzip")
@@ -180,22 +189,26 @@ class TestMime(unittest.TestCase):
     # fixme: broken tests
     #@needs_program('file')
     #@needs_program('xz')
-    #def test_mime_file_xzip (self):
+    #def test_mime_file_xzip(self):
+    #    """Test mime detection of TAR XZ archives"""
     #    self.mime_test_file("t.tar.xz.foo", "application/x-tar", "xz")
 
     # fixme: broken tests
     #@needs_program("file")
     #@needs_program("zstd")
     #def test_mime_file_zstd(self):
+    #    """Test mime detection of TAR ZSTD archives"""
     #    self.mime_test_file("t.tar.zst.foo", "application/x-tar", "zstd")
 
     # fixme: broken tests
     #@needs_program('file')
     #@needs_program('uncompress')
-    #def test_mime_file_compress (self):
+    #def test_mime_file_compress(self):
+    #    """Test mime detection of TAR COMPRESS archives"""
     #    self.mime_test_file("t.tar.Z.foo", "application/x-tar", "compress")
 
     def test_mime_mimedb(self):
+        """Test mime detection of different archives with mime DB"""
         self.mime_test_mimedb("t .7z", "application/x-7z-compressed")
         self.mime_test_mimedb("t .cb7", "application/x-7z-compressed")
         self.mime_test_mimedb("t.arj", "application/x-arj")

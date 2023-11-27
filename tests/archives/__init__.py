@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Basic archive test utility functions."""
 import unittest
 import os
 import patoolib
@@ -43,7 +44,7 @@ class Content:
     Multifile = 'multifile'
 
 
-class ArchiveTest (unittest.TestCase):
+class ArchiveTest(unittest.TestCase):
     """Helper class for archive tests, handling one commandline program."""
 
     # set program to use for archive handling in subclass
@@ -53,9 +54,10 @@ class ArchiveTest (unittest.TestCase):
     # default archive basename to check
     filename = 't'
 
-    def archive_commands (self, filename, **kwargs):
+    def archive_commands(self, filename, **kwargs):
         """Run archive commands list, test, extract and create.
-        All keyword arguments are delegated to the create test function."""
+        All keyword arguments are delegated to the create test function.
+        """
         self.archive_list(filename)
         if not kwargs.get('skip_test'):
             self.archive_test(filename)
@@ -73,6 +75,9 @@ class ArchiveTest (unittest.TestCase):
         self._archive_extract(relarchive, check, verbosity=1)
 
     def _archive_extract(self, archive, check, verbosity=0):
+        """Extract an archive into a temporary directory and check its
+        contents.
+        """
         # create a temporary directory for extraction
         tmpdir = patoolib.fileutil.tmpdir(dir=basedir, prefix="test_")
         try:
@@ -88,6 +93,7 @@ class ArchiveTest (unittest.TestCase):
             patoolib.fileutil.rmtree(tmpdir)
 
     def check_extracted_archive(self, archive, output, check):
+        """Check contents of an extracted archive"""
         if check == Content.Recursive:
             # outdir is the 't' directory of the archive
             self.assertEqual(output, 't')
@@ -110,24 +116,24 @@ class ArchiveTest (unittest.TestCase):
             return patoolib.fileutil.stripext(os.path.basename(archive))
         return "t.txt"
 
-    def check_directory (self, dirname, expectedname):
+    def check_directory(self, dirname, expectedname):
         """Check that directory exists."""
         self.assertTrue(os.path.isdir(dirname), dirname)
         self.assertEqual(os.path.basename(dirname), expectedname)
 
-    def check_textfile (self, filename, expectedname):
+    def check_textfile(self, filename, expectedname):
         """Check that filename exists and has the default content."""
         self.assertTrue(os.path.isfile(filename), repr(filename))
         self.assertEqual(os.path.basename(filename), expectedname)
         self.assertEqual(get_filecontent(filename), TextFileContent)
 
-    def archive_list (self, filename):
+    def archive_list(self, filename):
         """Test archive listing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
             patoolib.list_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
 
-    def archive_test (self, filename):
+    def archive_test(self, filename):
         """Test archive testing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
@@ -154,7 +160,7 @@ class ArchiveTest (unittest.TestCase):
             if olddir:
                 os.chdir(olddir)
 
-    def _archive_create (self, archive, srcfiles, program=None, verbosity=0):
+    def _archive_create(self, archive, srcfiles, program=None, verbosity=0):
         """Create archive from filename."""
         for srcfile in srcfiles:
             self.assertFalse(os.path.isabs(srcfile))
@@ -172,6 +178,9 @@ class ArchiveTest (unittest.TestCase):
             patoolib.fileutil.rmtree(tmpdir)
 
     def check_created_archive_with_test(self, archive):
+        """Check given archive filename. Some archives need different
+        test programs than the programs who created the archives.
+        """
         command = patoolib.test_archive
         program = self.program
         # special case for programs that cannot test what they create

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,14 +13,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the python print function"""
 from . import ArchiveTest
 from .. import needs_program
 
-class TestPyecho (ArchiveTest):
+class TestPyecho(ArchiveTest):
+    """Test class for the python print function"""
 
     program = 'py_echo'
 
-    def test_py_echo (self):
+    def test_py_echo(self):
+        """List different single-file archives."""
         self.archive_list('t.txt.bz2')
         self.archive_list('t.txt.Z')
         self.archive_list('t.txt.lzma')
@@ -32,7 +35,8 @@ class TestPyecho (ArchiveTest):
         self.archive_list('t.flac')
 
     @needs_program('file')
-    def test_py_echo_file (self):
+    def test_py_echo_file(self):
+        """List different renamed single-file archives."""
         self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.txt.Z.foo')
         # file(1) does not recognize .lzma files
@@ -44,4 +48,3 @@ class TestPyecho (ArchiveTest):
         # file(1) does not recognize .shn files
         #self.archive_list('t.shn.foo')
         self.archive_list('t.flac.foo')
-

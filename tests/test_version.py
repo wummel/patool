@@ -13,12 +13,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test patool version command."""
 import unittest
 from patoolib import cli
 
 
 class TestVersion(unittest.TestCase):
+    """Test class for patool version command."""
 
     def test_version(self):
+        """Run cli function with version command."""
         args = ["version"]
         cli.main(args=args)

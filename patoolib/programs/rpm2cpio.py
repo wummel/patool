@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 import os
 from .. import util
 
-def extract_rpm (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_rpm(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a RPM archive."""
     # also check cpio
     cpio = util.find_program("cpio")

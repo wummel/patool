@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,22 +13,25 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the lbzip2 program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class TestLbzip2 (ArchiveTest):
+class TestLbzip2(ArchiveTest):
+    """Test class for the lbzip2 program"""
 
     program = 'lbzip2'
 
     @needs_program(program)
-    def test_lbzip2 (self):
+    def test_lbzip2(self):
+        """Extract, test and create a BZIP2 archive."""
         self.archive_extract('t.txt.bz2', check=Content.Singlefile)
         self.archive_test('t.txt.bz2')
         self.archive_create('t.txt.bz2', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)
-    def test_lbzip2_file (self):
+    def test_lbzip2_file(self):
+        """Extract and test a renamed BZIP2 archive."""
         self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
         self.archive_test('t.txt.bz2.foo')
-

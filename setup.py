@@ -14,9 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-Setup file for building, packaging and distributing this software.
-"""
+"""Setup file for building, packaging and distributing this software."""
 import sys
 
 if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
@@ -27,6 +25,7 @@ from setuptools import setup
 
 
 def read_configdata(basedir):
+    """Read package meta data from configuration module."""
     configdata = {}
     configdata_py = os.path.join(basedir, "patoolib", "configuration.py")
     with open(configdata_py, "r", encoding="utf-8") as f:
@@ -35,6 +34,7 @@ def read_configdata(basedir):
 
 
 def read_readme(basedir):
+    """Get contents of the README.md file."""
     readme_md = os.path.join(basedir,"README.md")
     with open(readme_md, "r", encoding="utf-8") as f:
         return f.read()

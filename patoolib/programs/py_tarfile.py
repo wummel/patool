@@ -46,6 +46,7 @@ def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
 
 
 def is_within_directory(directory, target):
+    """Check that given target path is a subdirectory inside the directory."""
     abs_directory = os.path.abspath(directory)
     abs_target = os.path.abspath(target)
     prefix = os.path.commonprefix([abs_directory, abs_target])
@@ -53,6 +54,10 @@ def is_within_directory(directory, target):
 
 
 def safe_extract(tfile, path):
+    """Helper function to ensure that TAR members will be extracted inside
+    the given path.
+    If a member will be extracted outside the path an Exception is raised.
+    """
     safe_members = []
     bad_members = []
     for member in tfile.getmembers():

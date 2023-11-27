@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,21 +13,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the ar program"""
 from . import ArchiveTest, Content
 from .. import needs_program, needs_os
 
-class TestAr (ArchiveTest):
+class TestAr(ArchiveTest):
+    """Test class for the ar program"""
 
     program = 'ar'
 
     @needs_os('posix')
     @needs_program(program)
     def test_ar(self):
+        """Run archive commands with AR archive."""
         self.archive_commands('t.txt.a', check=Content.Singlefile)
 
     @needs_os('posix')
     @needs_program('file')
     @needs_program(program)
     def test_ar_file(self):
+        """Run archive commands with renamed AR archive."""
         self.archive_commands('t.txt.a.foo', skip_create=True, check=None)
-

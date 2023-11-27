@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2013-2015 Bastian Kleineidam
+# Copyright (C) 2013-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the isoinfo program."""
 
-def list_iso (archive, compression, cmd, verbosity, interactive):
+def list_iso(archive, compression, cmd, verbosity, interactive):
     """List an ISO archive."""
     # Use Joliet (-J) and Rock-Ridge (-R) options.
     return [cmd, '-l', '-R', '-J', '-i', archive]

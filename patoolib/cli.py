@@ -14,8 +14,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-patool [global-options] {extract|list|create|repack|diff|search|formats} [sub-command-options] <command-args>
+"""Command line usage:
+patool
+   [global-options]
+   {extract|list|create|repack|diff|search|formats}
+   [sub-command-options]
+   <command-args>
 """
 import sys
 import argparse
@@ -113,13 +117,14 @@ def run_repack(args):
     return res
 
 
-def run_formats (args):
+def run_formats(args):
     """List supported and available archive formats."""
     list_formats()
     return 0
 
 
 def run_version(args):
+    """Print version number."""
     print(App)
     return 0
 
@@ -211,4 +216,5 @@ def main(args=None):
 
 
 def main_cli():
+    """Run main() function."""
     sys.exit(main())

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,18 +13,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the zoo program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class TestZoo (ArchiveTest):
+class TestZoo(ArchiveTest):
+    """Test class for the zoo program"""
 
     program = 'zoo'
 
     @needs_program(program)
     def test_zoo(self):
+        """Run archive commands with ZOO archive."""
         self.archive_commands('t.zoo', check=Content.Multifile)
 
     @needs_program('file')
     @needs_program(program)
     def test_zoo_file(self):
+        """Run archive commands with renamed ZOO archive."""
         self.archive_commands('t.zoo.foo', skip_create=True, check=Content.Multifile)

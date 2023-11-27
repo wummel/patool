@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Main package providing archive functions."""
 import inspect
 import sys
 if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
@@ -20,7 +21,7 @@ if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0)
 import os
 import shutil
 import importlib
-# PEP 396
+# PEP 396: supply __version__
 from .configuration import App, Version as __version__ # noqa: F401
 from . import fileutil, log, util
 __all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
@@ -344,6 +345,7 @@ ProgramModules = {
 
 def program_supports_compression(program, compression):
     """Decide if the given program supports the compression natively.
+
     @return: True iff the program supports the given compression format
       natively, else False.
     """
@@ -389,7 +391,7 @@ def check_archive_format(format, compression):
         raise util.PatoolError(f"unknown archive compression `{compression}'")
 
 
-def find_archive_program (format, command, program=None, password=None):
+def find_archive_program(format, command, program=None, password=None):
     """Find suitable archive program for given format and mode."""
     commands = ArchivePrograms[format]
     programs = []
@@ -420,7 +422,8 @@ def find_archive_program (format, command, program=None, password=None):
 
 def _remove_command_without_password_support(programs, format, command):
     """Remove programs if they don't support work with password for current
-    format and command."""
+    format and command.
+    """
     if format not in NoPasswordSupportArchivePrograms:
         return programs
     no_password_support_commands = NoPasswordSupportArchivePrograms[format]
@@ -438,7 +441,7 @@ def _remove_command_without_password_support(programs, format, command):
     return programs_with_support
 
 
-def list_formats ():
+def list_formats():
     """Print information about available archive formats to stdout."""
     print("Archive programs of", App)
     print("Archive programs are searched in the following directories:")
@@ -486,10 +489,11 @@ def check_program_compression(archive, command, program, compression):
                 raise util.PatoolError(msg)
 
 
-def move_outdir_orphan (outdir):
+def move_outdir_orphan(outdir):
     """Move a single file or directory inside outdir a level up.
     Never overwrite files.
-    Return (True, outfile) if successful, (False, reason) if not."""
+    Return (True, outfile) if successful, (False, reason) if not.
+    """
     entries = os.listdir(outdir)
     if len(entries) == 1:
         src = os.path.join(outdir, entries[0])
@@ -502,7 +506,7 @@ def move_outdir_orphan (outdir):
     return (False, "multiple files in root")
 
 
-def run_archive_cmdlist (archive_cmdlist, verbosity=0):
+def run_archive_cmdlist(archive_cmdlist, verbosity=0):
     """Run archive command."""
     # archive_cmdlist is a command list with optional keyword arguments
     if isinstance(archive_cmdlist, tuple):
@@ -514,7 +518,8 @@ def run_archive_cmdlist (archive_cmdlist, verbosity=0):
 
 def cleanup_outdir(outdir, archive):
     """Cleanup outdir after extraction and return target file name and
-    result string."""
+    result string.
+    """
     fileutil.make_user_readable(outdir)
     # move single directory or file in outdir
     (success, msg) = move_outdir_orphan(outdir)
@@ -633,7 +638,7 @@ def get_archive_cmdlist_func(program, command, format):
         msg = f"could not find {command}_{format} in {module}"
         raise util.PatoolError(msg) from err
     def check_for_password_before_cmdlist_func_call(*args, **kwargs):
-        """ If password is None, or not set, run command as usual.
+        """If password is None, or not set, run command as usual.
         If password is set, but can't be accepted raise appropriate
         message.
         """

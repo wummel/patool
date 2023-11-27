@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import subprocess
 test_gzip = test_compress = test_singlefile_standard
 
 def extract_gzip(archive, compression, cmd, verbosity, interactive, outdir):
+    """Extract given gzip archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
         cmdlist.append('-v')
@@ -34,6 +35,9 @@ extract_compress = extract_singlefile_standard
 
 
 def get_original_filename(cmd, outdir, archive):
+    """Get the original filename inside a gzip archive.
+    This parses the output of gzip --name --list.
+    """
     outfile = fileutil.get_single_outfile(outdir, archive)
     cmdlist = [cmd, "--name", "--list", archive]
     try:
@@ -63,7 +67,7 @@ def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):
     return (cmdlist, {'shell': True})
 
 
-def list_gzip (archive, compression, cmd, verbosity, interactive):
+def list_gzip(archive, compression, cmd, verbosity, interactive):
     """List a GZIP archive."""
     cmdlist = [cmd]
     if verbosity > 0:

@@ -13,26 +13,31 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Tests for utility functions"""
 import unittest
 import os
 from patoolib import fileutil
 
 
 class UtilTest(unittest.TestCase):
+    """Test class for utility functions"""
 
-    def test_samefile1 (self):
+    def test_samefile1(self):
+        """Test is_same_file* with absolute paths"""
         filename1 = filename2 = __file__
         self.assertTrue(fileutil.is_same_filename(filename1, filename2))
         self.assertTrue(fileutil.is_same_file(filename1, filename2))
 
-    def test_samefile2 (self):
+    def test_samefile2(self):
+        """Test is_same_file* with relative paths"""
         parentdir = os.path.dirname(__file__)
         filename1 = os.path.dirname(parentdir)
         filename2 = os.path.join(parentdir, '..')
         self.assertTrue(fileutil.is_same_filename(filename1, filename2))
         self.assertTrue(fileutil.is_same_file(filename1, filename2))
 
-    def test_samefile3 (self):
+    def test_samefile3(self):
+        """Test is_same_file* with different files"""
         parentdir = os.path.dirname(__file__)
         filename1 = os.path.dirname(parentdir)
         filename2 = os.path.join(parentdir, '.')
@@ -40,6 +45,7 @@ class UtilTest(unittest.TestCase):
         self.assertFalse(fileutil.is_same_filename(filename1, filename2))
 
     def test_stripext(self):
+        """Test stripext() with different filenames"""
         self.assertTrue(fileutil.stripext("bar.gz") == "bar")
         self.assertTrue(fileutil.stripext("foo/bar.tar.gz") == "bar")
         self.assertTrue(fileutil.stripext("foo/bartar.gz") == "bartar")
@@ -48,6 +54,7 @@ class UtilTest(unittest.TestCase):
 
 
     def test_rmtree(self):
+        """Test rmtree() with non-existing and temporary dirs"""
         parentdir = os.path.dirname(__file__)
         nonexisting_dir = os.path.join(parentdir, "imadoofus")
         fileutil.rmtree(nonexisting_dir)

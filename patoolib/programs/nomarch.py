@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
 """Archive commands for the nomarch program."""
 import os
 
-def extract_arc (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_arc(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an ARC archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
     cmdlist = [cmd, os.path.abspath(archive)]
     return (cmdlist, {'cwd': outdir})
 
-def list_arc (archive, compression, cmd, verbosity, interactive):
+def list_arc(archive, compression, cmd, verbosity, interactive):
     """List an ARC archive."""
     cmdlist = [cmd, '-l']
     if verbosity > 1:
@@ -31,6 +31,6 @@ def list_arc (archive, compression, cmd, verbosity, interactive):
     cmdlist.append(archive)
     return cmdlist
 
-def test_arc (archive, compression, cmd, verbosity, interactive):
+def test_arc(archive, compression, cmd, verbosity, interactive):
     """Test an ARC archive."""
     return [cmd, '-t', archive]

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the shar program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class TestShar (ArchiveTest):
+class TestShar(ArchiveTest):
+    """Test class for the shar program"""
 
     program = 'shar'
 
     @needs_program(program)
     @needs_program('unshar')
     def test_shar(self):
+        """Create a SHAR archive."""
         self.archive_create('t.shar', check=Content.Singlefile)
 

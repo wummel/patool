@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012 Bastian Kleineidam
+# Copyright (C) 2012-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,20 +13,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the archmage program"""
 from . import ArchiveTest
 from .. import needs_program
 
-class TestArchmage (ArchiveTest):
+class TestArchmage(ArchiveTest):
+    """Test class for the archmage program"""
 
     program = 'archmage'
 
     @needs_program(program)
-    def test_archmage (self):
+    def test_archmage(self):
+        """Extract and test a CHM archive."""
         self.archive_extract('t.chm', check=None)
         self.archive_test('t.chm')
 
     @needs_program('file')
     @needs_program(program)
-    def test_archmage_file (self):
+    def test_archmage_file(self):
+        """Extract and test a renamed CHM archive."""
         self.archive_extract('t.chm.foo', check=None)
         self.archive_test('t.chm.foo')

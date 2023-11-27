@@ -20,15 +20,16 @@ import subprocess
 from .log import log_info
 
 
-class PatoolError (Exception):
+class PatoolError(Exception):
     """Raised when errors occur."""
     pass
 
 
-class memoized (object):
+class memoized(object):
     """Decorator that caches a function's return value each time it is called.
     If called later with the same arguments, the cached value is returned, and
-    not re-evaluated."""
+    not re-evaluated.
+    """
 
     def __init__(self, func):
         """Set func and init cache."""
@@ -37,7 +38,8 @@ class memoized (object):
 
     def __call__(self, *args):
         """Try to find result for function arguments in local cache or
-        execute the function and fill the cache with the result."""
+        execute the function and fill the cache with the result.
+        """
         try:
             return self.cache[args]
         except KeyError:
@@ -61,7 +63,8 @@ def backtick(cmd, encoding='utf-8'):
 
 def run(cmd, verbosity=0, **kwargs):
     """Run command without error checking.
-    @return: command return code"""
+    @return: command return code
+    """
     # Note that shell_quote_nt() result is not suitable for copy-paste
     # (especially on Unix systems), but it looks nicer than shell_quote().
     if verbosity >= 0:
@@ -97,7 +100,8 @@ def run_checked(cmd, ret_ok=(0,), **kwargs):
 
 def shell_quote(value):
     """Quote all shell metacharacters in given string value with strong
-    (i.e. single) quotes, handling the single quote especially."""
+    (i.e. single) quotes, handling the single quote especially.
+    """
     if os.name == 'nt':
         return shell_quote_nt(value)
     return shell_quote_unix(value)
@@ -111,7 +115,8 @@ def shell_quote_unix(value):
 
 def shell_quote_nt(value):
     """Quote argument for Windows system. Modeled after distutils
-    _nt_quote_args() function."""
+    _nt_quote_args() function.
+    """
     if " " in value:
         return f'"{value}"'
     return value
@@ -146,7 +151,8 @@ def system_search_path():
 
 def append_to_path(path, directory):
     """Add a directory to the PATH environment variable, if it is a valid
-    directory."""
+    directory.
+    """
     if not os.path.isdir(directory) or directory in path:
         return path
     if not path.endswith(os.pathsep):
@@ -181,13 +187,13 @@ def get_nt_7z_dir():
         return ""
 
 
-def get_nt_program_dir ():
+def get_nt_program_dir():
     """Return the Windows program files directory."""
     progvar = "%ProgramFiles%"
     return os.path.expandvars(progvar)
 
 
-def get_nt_mac_dir ():
+def get_nt_mac_dir():
     """Return Monkey Audio Compressor (MAC) directory."""
     return os.path.join(get_nt_program_dir(), "Monkey's Audio")
 

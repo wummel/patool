@@ -1,5 +1,9 @@
-2.0.1 (released xx.xx.xxxx)
-  *
+2.1.0 (released xx.xx.xxxx)
+
+* Document all functions and modules, and add linting rule for it.
+* Remove spaces between function and argument list
+  Closes: GH bug #100
+
 
 2.0.0 (released 14.11.2023)
 

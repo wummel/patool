@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2013-2015 Bastian Kleineidam
+# Copyright (C) 2013-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,16 +13,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the python lzma module"""
 from . import ArchiveTest, Content
 from .. import needs_program, needs_module
 
-class TestPylzma (ArchiveTest):
+class TestPylzma(ArchiveTest):
+    """Test class for the python lzma module"""
 
     program = 'py_lzma'
 
     @needs_program('xz')
     @needs_module('lzma')
-    def test_py_lzma (self):
+    def test_py_lzma(self):
+        """Extract and create LZMA and XZ archives."""
         self.archive_extract('t.txt.lzma', check=Content.Singlefile)
         self.archive_extract('t.txt.xz', check=Content.Singlefile)
         # xz is used to test the created archive
@@ -31,7 +34,7 @@ class TestPylzma (ArchiveTest):
 
     @needs_program('file')
     @needs_module('lzma')
-    def test_py_lzma_file (self):
+    def test_py_lzma_file(self):
+        """Extract renamed LZMA and XZ archives."""
         self.archive_extract('t.txt.lzma.foo', check=Content.Singlefile)
         self.archive_extract('t.txt.xz.foo', check=Content.Singlefile)
-

@@ -13,13 +13,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test utility functions"""
 import unittest
 from patoolib import log, util
 
 
 class UtilTest(unittest.TestCase):
+    """Test class for utility functions"""
 
     def test_logging(self):
+        """Test log.log_*() functions"""
         msg = "this is a test info message 💜"
         log.log_info(msg)
         msg = "this is a test error message 💜"
@@ -30,9 +33,11 @@ class UtilTest(unittest.TestCase):
             log.log_internal_error()
 
     def test_quote(self):
+        """Test util.shell_quote_unix()"""
         self.assertEqual(util.shell_quote_unix("a b"), "'a b'")
 
     def test_strlist_with_or(self):
+        """Test util.strlist()"""
         alist = []
         self.assertEqual(util.strlist_with_or(alist), "")
         alist = ["test1"]

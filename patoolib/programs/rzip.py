@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 """Archive commands for the rzip program."""
 from .. import fileutil
 
-def extract_rzip (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_rzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an RZIP archive."""
     cmdlist = [cmd, '-d', '-k']
     if verbosity > 1:

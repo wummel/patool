@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,21 +13,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the cabextract program"""
 from . import ArchiveTest
 from .. import needs_program
 
-class TestCabextract (ArchiveTest):
+class TestCabextract(ArchiveTest):
+    """Test class for the cabextract program"""
 
     program = 'cabextract'
 
     @needs_program(program)
-    def test_cabextract (self):
+    def test_cabextract(self):
+        """List and extract a CAB archive."""
         self.archive_list('t.cab')
         self.archive_extract('t.cab', check=None)
 
     @needs_program('file')
     @needs_program(program)
     def test_cabextract_file(self):
+        """List and extract a renamed CAB archive."""
         self.archive_list('t.cab.foo')
         self.archive_extract('t.cab.foo', check=None)
-

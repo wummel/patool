@@ -157,7 +157,8 @@ def rmtree_log_exc(func, path, excinfo):
 
 def rmtree(path):
     """Remove given path recursively with shutil.rmtree().
-    Errors will be logged."""
+    Errors will be logged.
+    """
     make_user_readable(path)
     if sys.version_info >= (3, 12, 0, "final", 0):
         shutil.rmtree(path, onexc=rmtree_log_exc)
@@ -178,7 +179,8 @@ def make_dir_readable(filename):
 
 def make_user_readable(directory):
     """Make all files in given directory user readable. Also recurse into
-    subdirectories."""
+    subdirectories.
+    """
     for root, dirs, files in os.walk(directory, onerror=log_error):
         for filename in files:
             make_file_readable(os.path.join(root, filename))

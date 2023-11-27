@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2016 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,20 +13,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the 7zr program"""
 from . import ArchiveTest
 from .. import needs_program
 
-class Test7zr (ArchiveTest):
+class Test7zr(ArchiveTest):
+    """Test class for the 7zr program"""
 
     program = '7zr'
 
     @needs_program(program)
-    def test_7zr (self):
+    def test_7zr(self):
+        """Run archive commands with 7Z archives."""
         self.archive_commands('t .7z')
         self.archive_commands('t .cb7')
 
     @needs_program('file')
     @needs_program(program)
-    def test_7z_file (self):
+    def test_7z_file(self):
+        """Run archive commands with renamed 7Z archives."""
         self.archive_commands('t.7z.foo', skip_create=True)
         self.archive_commands('t.cb7.foo', skip_create=True)

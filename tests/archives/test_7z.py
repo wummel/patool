@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2016 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the 7z program"""
 from . import ArchiveTest, Content
 from .. import needs_program, needs_codec
 
 class Test7z(ArchiveTest):
+    """Test class for the 7z program"""
 
     program = '7z'
 
     @needs_program(program)
     def test_7z(self):
+        """Run archive commands with archives that 7z supports."""
         self.archive_commands('t .7z')
         self.archive_commands('t .cb7')
         self.archive_commands('t.zip')
@@ -71,6 +74,7 @@ class Test7z(ArchiveTest):
 
     @needs_codec(program, 'rar')
     def test_7z_rar(self):
+        """Run archive commands with RAR archives."""
         # only succeeds with the rar module for 7z installed
         self.archive_list('t.rar')
         self.archive_extract('t.rar')
@@ -79,6 +83,7 @@ class Test7z(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_7z_file(self):
+        """Run archive commands with renamed archives that 7z supports."""
         self.archive_commands('t.7z.foo', skip_create=True)
         self.archive_commands('t.cb7.foo', skip_create=True)
         self.archive_commands('t.zip.foo', skip_create=True)
@@ -121,6 +126,7 @@ class Test7z(ArchiveTest):
     @needs_program('file')
     @needs_codec(program, 'rar')
     def test_7z_rar_file(self):
+        """Run archive commands with renamed RAR archives."""
         # only succeeds with the rar module for 7z installed
         self.archive_list(self.filename + '.rar.foo')
         self.archive_extract(self.filename + '.rar.foo')
@@ -128,18 +134,21 @@ class Test7z(ArchiveTest):
 
 
 class Test7zPassword(ArchiveTest):
+    """Test class for the 7z program with password protected archives"""
 
     program = '7z'
     password = 'thereisnotry'
 
     @needs_program(program)
     def test_7z(self):
+        """Run archive commands with password protected archives for 7z."""
         self.archive_commands('p .7z')
         self.archive_commands('p.zip')
         self.archive_commands('p.cbz')
 
     @needs_codec(program, 'rar')
     def test_7z_rar(self):
+        """Run archive commands with password protected RAR archives."""
         # only succeeds with the rar module for 7z installed
         self.archive_list('p.rar')
         self.archive_extract('p.rar')
@@ -148,6 +157,7 @@ class Test7zPassword(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_7z_file(self):
+        """Run archive commands with renamed password protected archives for 7z."""
         self.archive_commands('p.7z.foo', skip_create=True)
         self.archive_commands('p.zip.foo', skip_create=True)
         self.archive_commands('p.cbz.foo', skip_create=True)
@@ -155,6 +165,7 @@ class Test7zPassword(ArchiveTest):
     @needs_program('file')
     @needs_codec(program, 'rar')
     def test_7z_rar_file(self):
+        """Run archive commands with renamed password protected RAR archives."""
         # only succeeds with the rar module for 7z installed
         self.archive_list('p.rar.foo')
         self.archive_extract('p.rar.foo')

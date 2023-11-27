@@ -13,14 +13,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test patool --help option."""
 import unittest
 import pytest
 from patoolib import cli
 
 
 class TestHelp(unittest.TestCase):
+    """Test class for patool --help option."""
 
     def test_help(self):
+        """Run cli function with --help option."""
         args = ['--help']
         with pytest.raises(SystemExit) as exc_info:
             cli.main(args=args)

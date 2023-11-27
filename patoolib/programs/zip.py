@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist.extend(filenames)
     return cmdlist
 
-def test_zip (archive, compression, cmd, verbosity, interactive):
+def test_zip(archive, compression, cmd, verbosity, interactive):
     """Test a ZIP archive."""
     cmdlist = [cmd, '--test']
     if verbosity > 1:

@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the lz4 program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
 class TestLz4(ArchiveTest):
+    """Test class for the lz4 program"""
 
     program = 'lz4'
 
     @needs_program(program)
     def test_lz4(self):
+        """Run archive commands with LZ4 archive."""
         self.archive_extract('t.txt.lz4', check=Content.Singlefile)
         self.archive_test('t.txt.lz4')
         self.archive_list('t.txt.lz4')
@@ -30,6 +33,7 @@ class TestLz4(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_lz4_file(self):
+        """Run archive commands with renamed LZ4 archive."""
         self.archive_extract('t.txt.lz4.foo', check=Content.Singlefile)
         self.archive_test('t.txt.lz4.foo')
         self.archive_list('t.txt.lz4.foo')

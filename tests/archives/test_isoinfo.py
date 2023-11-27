@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2013-2015 Bastian Kleineidam
+# Copyright (C) 2013-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,17 +13,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the isoinfo program"""
 from . import ArchiveTest
 from .. import needs_program
 
 class TestIsoinfo(ArchiveTest):
+    """Test class for the isoinfo program"""
 
     program = 'isoinfo'
 
     @needs_program(program)
     def test_isoinfo(self):
+        """List an ISO archive."""
         self.archive_list('t.iso')
 
     @needs_program(program)
     def test_isoinfo_file(self):
+        """List a renamed ISO archive."""
         self.archive_list('t.iso.foo')

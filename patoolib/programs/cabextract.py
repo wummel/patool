@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the cabextract program."""
 
-def extract_cab (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_cab(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CAB archive."""
     cmdlist = [cmd, '-d', outdir]
     if verbosity > 0:
@@ -23,7 +23,7 @@ def extract_cab (archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.append(archive)
     return cmdlist
 
-def list_cab (archive, compression, cmd, verbosity, interactive):
+def list_cab(archive, compression, cmd, verbosity, interactive):
     """List a CAB archive."""
     cmdlist = [cmd, '-l']
     if verbosity > 0:
@@ -31,6 +31,6 @@ def list_cab (archive, compression, cmd, verbosity, interactive):
     cmdlist.append(archive)
     return cmdlist
 
-def test_cab (archive, compression, cmd, verbosity, interactive):
+def test_cab(archive, compression, cmd, verbosity, interactive):
     """Test a CAB archive."""
     return [cmd, '-t', archive]

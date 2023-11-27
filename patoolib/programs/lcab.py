@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012-2015 Bastian Kleineidam
+# Copyright (C) 2012-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lcab program."""
 
-def create_cab (archive, compression, cmd, verbosity, interactive, filenames):
+def create_cab(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a CAB archive."""
     cmdlist = [cmd, '-r']
     cmdlist.extend(filenames)

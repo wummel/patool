@@ -13,8 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-A lot of these tests need an external compression program.
+"""A lot of these tests need an external compression program.
 See https://salsa.debian.org/debian/patool/-/blob/master/debian/control
 at the "Suggests:" for a list of packages with supported compression
 programs.

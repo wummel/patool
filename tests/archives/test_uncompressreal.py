@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,19 +13,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the uncompress.real program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class TestUncompressReal (ArchiveTest):
+class TestUncompressReal(ArchiveTest):
+    """Test class for the uncompress.real program"""
 
     program = 'uncompress.real'
 
     @needs_program(program)
-    def test_uncompress (self):
+    def test_uncompress(self):
+        """Extract a COMPRESS archive."""
         self.archive_extract('t.txt.Z', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)
-    def test_uncompress_file (self):
+    def test_uncompress_file(self):
+        """Extract a renamed COMPRESS archive."""
         self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
-

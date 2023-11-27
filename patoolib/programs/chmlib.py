@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2012-2015 Bastian Kleineidam
+# Copyright (C) 2012-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,6 @@
 import os
 
 
-def extract_chm (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_chm(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CHM archive."""
     return [cmd, os.path.abspath(archive), outdir]

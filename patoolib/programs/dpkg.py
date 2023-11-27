@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the dpkg-deb program."""
 
-def extract_deb (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_deb(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a DEB archive."""
     cmdlist = [cmd]
     if verbosity > 1:
@@ -25,7 +25,7 @@ def extract_deb (archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend(['--', archive, outdir])
     return cmdlist
 
-def list_deb (archive, compression, cmd, verbosity, interactive):
+def list_deb(archive, compression, cmd, verbosity, interactive):
     """List a DEB archive."""
     return [cmd, '--contents', '--', archive]
 

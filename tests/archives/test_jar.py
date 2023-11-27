@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the jar program"""
 from . import ArchiveTest
 from .. import needs_program
 
 class TestJar(ArchiveTest):
+    """Test class for the jar program"""
 
     program = 'jar'
 
     @needs_program(program)
     def test_jar(self):
+        """Extract and list different ZIP archives."""
         self.archive_extract('t.zip', check=None)
         self.archive_list('t.zip')
         self.archive_extract('t.cbz', check=None)
@@ -36,6 +39,7 @@ class TestJar(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_jar_file(self):
+        """Extract and list different renamed ZIP archives."""
         self.archive_extract('t.zip.foo', check=None)
         self.archive_list('t.zip.foo')
         self.archive_extract('t.cbz.foo', check=None)

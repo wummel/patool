@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2012 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,21 +13,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the unrar program"""
 from . import ArchiveTest
 from .. import needs_program
 
-class TestUnrar (ArchiveTest):
+class TestUnrar(ArchiveTest):
+    """Test class for the unrar program"""
 
     program = 'unrar'
 
     @needs_program(program)
     def test_unrar(self):
+        """List and extract a RAR archive."""
         self.archive_list('t.rar')
         self.archive_extract('t.rar')
 
     @needs_program('file')
     @needs_program(program)
     def test_unrar_file(self):
+        """List and extract a renamed RAR archive."""
         self.archive_list('t.rar.foo')
         self.archive_extract('t.rar.foo')
-

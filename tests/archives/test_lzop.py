@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,19 +13,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the lzop program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class TestLzop (ArchiveTest):
+class TestLzop(ArchiveTest):
+    """Test class for the lzop program"""
 
     program = 'lzop'
 
     @needs_program(program)
     def test_lzop(self):
+        """Run archive commands with LZOP archive."""
         self.archive_commands('t.txt.lzo', check=Content.Singlefile)
 
     @needs_program('file')
     @needs_program(program)
     def test_lzop_file(self):
+        """Run archive commands with renamed LZOP archive."""
         self.archive_commands('t.txt.lzo.foo', skip_create=True, check=Content.Singlefile)
-

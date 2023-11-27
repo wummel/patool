@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,9 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Standard archive functions for singlefile archives."""
 from .. import fileutil, util
 
-def extract_singlefile_standard (archive, compression, cmd, verbosity, interactive, outdir):
+def extract_singlefile_standard(archive, compression, cmd, verbosity, interactive, outdir):
     """Standard routine to extract a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
@@ -26,7 +27,7 @@ def extract_singlefile_standard (archive, compression, cmd, verbosity, interacti
     return (cmdlist, {'shell': True})
 
 
-def test_singlefile_standard (archive, compression, cmd, verbosity, interactive):
+def test_singlefile_standard(archive, compression, cmd, verbosity, interactive):
     """Standard routine to test a singlefile archive (like gzip)."""
     cmdlist = [cmd]
     if verbosity > 1:
@@ -35,7 +36,7 @@ def test_singlefile_standard (archive, compression, cmd, verbosity, interactive)
     return cmdlist
 
 
-def create_singlefile_standard (archive, compression, cmd, verbosity, interactive, filenames):
+def create_singlefile_standard(archive, compression, cmd, verbosity, interactive, filenames):
     """Standard routine to create a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:

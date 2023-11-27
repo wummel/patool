@@ -1,13 +1,10 @@
 # Copyright (C) 2013-2023 Bastian Kleineidam
-"""
-Define basic configuration data like version or application name.
-"""
+"""Define basic configuration data like version or application name."""
 AppName = "patool"
-Version = "2.0.1"
+Version = "2.1.0"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
-#ReleaseDate = configdata.release_date
 App = AppName+" "+Version
 Author = MyName
 AuthorEmail = MyEmail

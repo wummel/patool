@@ -4,7 +4,7 @@
 pytest==7.4.3
 
 # for python code linting
-ruff==0.1.5
+ruff==0.1.6
 
 # for generating a Python .whl file
 wheel==0.41.3

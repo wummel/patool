@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the unar program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
 class TestUnar(ArchiveTest):
+    """Test class for the unar program"""
 
     program = 'unar'
 
     @needs_program(program)
     def test_unar(self):
+        """Extract different archives."""
         self.archive_extract(self.filename + '.rar')
         self.archive_extract(self.filename + '.zip')
         self.archive_extract(self.filename + ' .7z')
@@ -40,6 +43,7 @@ class TestUnar(ArchiveTest):
     @needs_program('file')
     @needs_program(program)
     def test_unar_file(self):
+        """Extract renamed different archives."""
         self.archive_extract(self.filename + '.rar.foo')
         self.archive_extract(self.filename + '.7z.foo')
         self.archive_extract(self.filename + '.tar.foo')

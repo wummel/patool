@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2010-2015 Bastian Kleineidam
+# Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,15 +13,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Test the lzma program"""
 from . import ArchiveTest, Content
 from .. import needs_program
 
-class TestLzma (ArchiveTest):
+class TestLzma(ArchiveTest):
+    """Test class for the lzma program"""
 
     program = 'lzma'
 
     @needs_program(program)
     def test_lzma(self):
+        """Test, extract and create an LZMA archive."""
         self.archive_test('t.txt.lzma')
         self.archive_extract('t.txt.lzma', check=Content.Singlefile)
         self.archive_create('t.txt.lzma', check=Content.Singlefile)
@@ -32,4 +35,3 @@ class TestLzma (ArchiveTest):
     #def test_lzma_file(self):
     #    self.archive_test('t.lzma.foo')
     #    self.archive_extract('t.lzma.foo')
-
