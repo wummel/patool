@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,7 +24,7 @@ class PatoolError(Exception):
     pass
 
 
-class memoized(object):
+class memoized:
     """Decorator that caches a function's return value each time it is called.
     If called later with the same arguments, the cached value is returned, and
     not re-evaluated.
@@ -183,7 +182,7 @@ def get_nt_7z_dir():
             return winreg.QueryValueEx(key, "Path")[0]
         finally:
             winreg.CloseKey(key)
-    except WindowsError:
+    except OSError:
         return ""
 
 

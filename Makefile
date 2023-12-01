@@ -148,11 +148,11 @@ checkchangelog:
 
 .PHONY: lint
 lint:
-	ruff setup.py patoolib tests
+	ruff setup.py patoolib tests doc/web/source
 
 .PHONY: reformat
 reformat:
-	ruff --fix setup.py patoolib tests
+	ruff --fix setup.py patoolib tests doc/web/source
 
 .PHONY: checkoutdated
 checkoutdated:

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Copyright (C) 2010-2023 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
@@ -28,7 +27,7 @@ def read_configdata(basedir):
     """Read package meta data from configuration module."""
     configdata = {}
     configdata_py = os.path.join(basedir, "patoolib", "configuration.py")
-    with open(configdata_py, "r", encoding="utf-8") as f:
+    with open(configdata_py, encoding="utf-8") as f:
         exec(f.read(), configdata)
     return configdata
 
@@ -36,7 +35,7 @@ def read_configdata(basedir):
 def read_readme(basedir):
     """Get contents of the README.md file."""
     readme_md = os.path.join(basedir,"README.md")
-    with open(readme_md, "r", encoding="utf-8") as f:
+    with open(readme_md, encoding="utf-8") as f:
         return f.read()
 
 

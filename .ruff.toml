@@ -4,6 +4,7 @@ select = [
     "B", # flake8-bugbear
     "I", # isort
     "D", # pydocstyle
+    "UP", # pyupgrade
 ]
 
 # Ignored rules
