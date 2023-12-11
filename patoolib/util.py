@@ -81,10 +81,17 @@ def run(cmd, verbosity=0, **kwargs):
         if kwargs.get("shell"):
             # for shell calls the command must be a string
             cmd = " ".join(cmd)
-    if verbosity < 1:
+    if verbosity == 1:
         # hide command output on stdout
         kwargs['stdout'] = subprocess.DEVNULL
+    elif verbosity == 2:
+        # only list_archive function sets verbosity to 2
+        kwargs["stdout"] = subprocess.PIPE
+    
     res = subprocess.run(cmd, **kwargs)
+    # display what comes out from subprocess.run here
+    if verbosity == 2:
+        print(res.stdout.decode())
     return res.returncode
 
 

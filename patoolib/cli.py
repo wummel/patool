@@ -54,8 +54,10 @@ def run_list(args):
     for archive in args.archive:
         try:
             # increase default verbosity since the listing output should be visible
-            verbosity = args.verbosity + 1
-            list_archive(archive, verbosity=verbosity, interactive=args.interactive, password=args.password)
+
+            # changing verbosity to a hard-coded 2 for list_archive function
+            # verbosity = args.verbosity + 1
+            list_archive(archive, verbosity=2, interactive=args.interactive, password=args.password)
         except PatoolError as msg:
             log_error(f"error listing {archive}: {msg}")
             res += 1

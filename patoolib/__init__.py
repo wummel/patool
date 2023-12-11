@@ -743,8 +743,10 @@ def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive
     return _extract_archive(archive, verbosity=verbosity, interactive=interactive, outdir=outdir, program=program, password=password)
 
 
-def list_archive(archive, verbosity=1, program=None, interactive=True, password=None):
+def list_archive(archive, verbosity=2, program=None, interactive=True, password=None):
+
     """List given archive."""
+    # update : setting verbosity to 2 only on list_archive function to display what comes out from the command line
     # Set default verbosity to 1 since the listing output should be visible.
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
