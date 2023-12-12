@@ -90,8 +90,10 @@ def run(cmd, verbosity=0, **kwargs):
     
     res = subprocess.run(cmd, **kwargs)
     # display what comes out from subprocess.run here
+    # I need to stdout in a variable for later use
     if verbosity == 2:
         print(res.stdout.decode())
+
     return res.returncode
 
 
