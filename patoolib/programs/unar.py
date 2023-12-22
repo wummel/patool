@@ -18,7 +18,7 @@ def _extract(archive, compression, cmd, verbosity, interactive, outdir, password
     """Extract an archive."""
     cmdlist = [cmd, '-o', outdir]
     if password:
-        cmdlist.append('-p', password)
+        cmdlist.extend('-p', password)
     cmdlist.append(archive)
     return cmdlist
 
