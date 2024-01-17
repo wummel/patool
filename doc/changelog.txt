@@ -5,6 +5,9 @@
   Closes: GH bug #100
 * Log warnings when subprocesses in utility functions return errors
   that are ignored.
+* Fix a TypeError when using unar with passwords.
+  Thanks to Kevin Matt for the patch.
+  Closes: GH bug #144
 
 
 2.0.0 (released 14.11.2023)
