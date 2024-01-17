@@ -1,4 +1,4 @@
-# Copyright (C) 2010-2023 Bastian Kleineidam
+# Copyright (C) 2010-2024 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 """MIME type detection functions."""
 import os
 import mimetypes
+import subprocess
 from . import ArchiveMimetypes, ArchiveCompressions, program_supports_compression
 from .log import log_error, log_warning
 from .util import memoized, find_program, backtick
@@ -161,7 +162,7 @@ def guess_mime_file(filename):
         try:
             outparts = backtick(cmd).strip().split(";")
             mime2 = outparts[0].split(" ", 1)[0]
-        except OSError as err:
+        except (OSError, subprocess.CalledProcessError) as err:
             log_warning(f"error executing {cmd}: {err}")
             mime2 = None
         # Some file(1) implementations return an empty or unknown mime type

@@ -1,4 +1,4 @@
-2.1.0 (released xx.xx.xxxx)
+2.1.0 (released 17.01.2024)
 
 * Document all functions and modules, and add linting rule for it.
 * Remove spaces between function and argument list
@@ -8,6 +8,8 @@
 * Fix a TypeError when using unar with passwords.
   Thanks to Kevin Matt for the patch.
   Closes: GH bug #144
+* Catch errors when using file --uncompress on system which do not support this.
+  Closes: GH bug #141
 
 
 2.0.0 (released 14.11.2023)
