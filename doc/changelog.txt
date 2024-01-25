@@ -1,3 +1,6 @@
+2.1.1 (released xx.xx.xxxx)
+  *
+
 2.1.0 (released 17.01.2024)
 
 * Document all functions and modules, and add linting rule for it.
