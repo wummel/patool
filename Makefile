@@ -30,7 +30,7 @@ PIP_VERSION:=23.3.2
 # Pytest options:
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts
-PYTESTOPTS?=-s --full-trace
+PYTESTOPTS?=-s --full-trace --log-file=build/test.log
 # which test modules to run
 TESTS ?= tests/
 # set test options
