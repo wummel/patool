@@ -1,4 +1,4 @@
-# Copyright (C) 2023 Bastian Kleineidam
+# Copyright (C) 2023-2024 Bastian Kleineidam
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,3 +55,15 @@ class TestUnar(ArchiveTest):
         self.archive_extract(self.filename + '.cpio.foo')
         self.archive_extract(self.filename + '.txt.Z.foo', check=Content.Singlefile)
         self.archive_extract(self.filename + '.zoo.foo', check=Content.Multifile)
+
+
+class TestUnarPassword(ArchiveTest):
+    """Test class for the unar program with password protected archives"""
+
+    program = 'unar'
+    password = 'thereisnotry'
+
+    @needs_program(program)
+    def test_unar(self):
+        """Run archive commands with password protected archives for unar."""
+        self.archive_extract('p.zip')
