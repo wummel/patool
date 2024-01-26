@@ -78,9 +78,12 @@ def tmpdir(dir=None, prefix="Unpack_"):
 
 
 def stripext(filename):
-    """Return the basename without extension of given filename."""
+    """Return the basename without extension of given filename
+    For compressed TAR archives, the filename without the .tar
+    extension is returned, ie. output of 'a.tar.xz' will be
+    'a'."""
     basename, _ = os.path.splitext(os.path.basename(filename))
-    if basename.endswith(".tar"):
+    if basename.endswith(".tar") and basename != ".tar":
         basename, _ = os.path.splitext(basename)
     return basename
 
