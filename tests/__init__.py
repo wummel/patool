@@ -87,5 +87,9 @@ def needs_codec(program, codec):
 def has_codec(program, codec):
     """Test if program supports given codec."""
     if program == '7z' and codec == 'rar':
+        # On Debian, the non-free p7zip-rar package must be installed to support RAR
         return patoolib.util.p7zip_supports_rar()
+    if program in ('7zz', '7zzs') and codec == 'rar':
+        # the 7-Zip program directly supports RAR
+        return True
     return patoolib.program_supports_compression(program, codec)

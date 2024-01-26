@@ -100,7 +100,7 @@ ArchiveMimetypes = {
 # Programs starting with "py_" are Python modules.
 ArchivePrograms = {
     '7z': {
-        None: ('7z', '7za', '7zr'),
+        None: ('7z', '7za', '7zr', '7zz', '7zzs'),
         'extract': ('unar',),
     },
     'ace': {
@@ -135,12 +135,12 @@ ArchivePrograms = {
     },
     'arj': {
         None: ('arj',),
-        'extract': ('7z',),
-        'list': ('7z',),
-        'test': ('7z',),
+        'extract': ('7z', '7zz', '7zzs'),
+        'list': ('7z', '7zz', '7zzs'),
+        'test': ('7z', '7zz', '7zzs'),
     },
     'bzip2': {
-        None: ('7z', '7za'),
+        None: ('7z', '7za', '7zz', '7zzs'),
         'extract': ('pbzip2', 'lbzip2', 'bzip2', 'unar', 'py_bz2'),
         'test': ('pbzip2', 'lbzip2', 'bzip2'),
         'create': ('pbzip2', 'lbzip2', 'bzip2', 'py_bz2'),
@@ -153,26 +153,26 @@ ArchivePrograms = {
         'list': ('py_echo',),
     },
     'cab': {
-        'extract': ('cabextract', '7z', 'unar'),
+        'extract': ('cabextract', '7z', '7zz', '7zzs', 'unar'),
         'create': ('lcab',),
-        'list': ('cabextract', '7z'),
-        'test': ('cabextract', '7z'),
+        'list': ('cabextract', '7z', '7zz', '7zzs'),
+        'test': ('cabextract', '7z', '7zz', '7zzs'),
     },
     'chm': {
-        'extract': ('7z', 'archmage', 'extract_chmLib'),
-        'test': ('7z', 'archmage',),
-        'list': ('7z',),
+        'extract': ('7z', '7zz', '7zzs', 'archmage', 'extract_chmLib'),
+        'test': ('7z', '7zz', '7zzs', 'archmage'),
+        'list': ('7z', '7zz', '7zzs'),
     },
     'compress': {
-        'extract': ('gzip', '7z', '7za', 'unar', 'uncompress.real'),
-        'list': ('7z', '7za', 'py_echo',),
-        'test': ('gzip', '7z', '7za'),
+        'extract': ('gzip', '7z', '7za', '7zz', '7zzs', 'unar', 'uncompress.real'),
+        'list': ('7z', '7za', '7zz', '7zzs', 'py_echo',),
+        'test': ('gzip', '7z', '7za', '7zz', '7zzs'),
         'create': ('compress',),
     },
     'cpio': {
-        'extract': ('cpio', 'bsdcpio', '7z', 'unar'),
-        'list': ('cpio', 'bsdcpio', '7z'),
-        'test': ('cpio', 'bsdcpio', '7z',),
+        'extract': ('cpio', 'bsdcpio', '7z', '7zz', '7zzs', 'unar'),
+        'list': ('cpio', 'bsdcpio', '7z', '7zz', '7zzs'),
+        'test': ('cpio', 'bsdcpio', '7z', '7zz', '7zzs'),
         'create': ('cpio', 'bsdcpio'),
     },
     'flac': {
@@ -182,14 +182,14 @@ ArchivePrograms = {
         'list': ('py_echo',),
     },
     'gzip': {
-        None: ('7z', '7za', 'pigz', 'gzip'),
+        None: ('7z', '7za', '7zz', '7zzs', 'pigz', 'gzip'),
         'extract': ('unar', 'py_gzip',),
         'create': ('zopfli', 'py_gzip'),
     },
     'iso': {
-        'extract': ('7z', 'unar'),
-        'list': ('7z', 'isoinfo'),
-        'test': ('7z',),
+        'extract': ('7z', '7zz', '7zzs', 'unar'),
+        'list': ('7z', '7zz', '7zzs', 'isoinfo'),
+        'test': ('7z', '7zz', '7zzs',),
         'create': ('genisoimage',),
     },
     'lz4': {
@@ -206,9 +206,9 @@ ArchivePrograms = {
         'create': ('plzip', 'lzip', 'clzip', 'pdlzip'),
     },
     'lzma': {
-        'extract': ('7z', 'lzma', 'xz', 'unar', 'py_lzma'),
-        'list': ('7z', 'py_echo'),
-        'test': ('7z', 'lzma', 'xz'),
+        'extract': ('7z', '7zz', '7zzs', 'lzma', 'xz', 'unar', 'py_lzma'),
+        'list': ('7z', '7zz', '7zzs', 'py_echo'),
+        'test': ('7z', '7zz', '7zzs', 'lzma', 'xz'),
         'create': ('lzma', 'xz', 'py_lzma'),
     },
     'lrzip': {
@@ -219,19 +219,19 @@ ArchivePrograms = {
     },
     'rar': {
         None: ('rar',),
-        'extract': ('unrar', '7z', 'unar'),
-        'list': ('unrar', '7z'),
-        'test': ('unrar', '7z'),
+        'extract': ('unrar', '7z', '7zz', '7zzs', 'unar'),
+        'list': ('unrar', '7z', '7zz', '7zzs'),
+        'test': ('unrar', '7z', '7zz', '7zzs'),
     },
     'rpm': {
-        'extract': ('rpm2cpio', '7z'),
-        'list': ('rpm', '7z', '7za'),
-        'test': ('rpm', '7z'),
+        'extract': ('rpm2cpio', '7z', '7zz', '7zzs'),
+        'list': ('rpm', '7z', '7za', '7zz', '7zzs'),
+        'test': ('rpm', '7z', '7zz', '7zzs'),
     },
     'deb': {
-        'extract': ('dpkg-deb', '7z'),
-        'list': ('dpkg-deb', '7z'),
-        'test': ('dpkg-deb', '7z'),
+        'extract': ('dpkg-deb', '7z', '7zz', '7zzs'),
+        'list': ('dpkg-deb', '7z', '7zz', '7zzs'),
+        'test': ('dpkg-deb', '7z', '7zz', '7zzs'),
     },
     'dms': {
         'extract': ('xdms', 'unar'),
@@ -260,17 +260,17 @@ ArchivePrograms = {
         'extract': ('unar',),
     },
     'vhd': {
-        'extract': ('7z',),
-        'list': ('7z',),
-        'test': ('7z',),
+        'extract': ('7z', '7zz', '7zzs',),
+        'list': ('7z', '7zz', '7zzs',),
+        'test': ('7z', '7zz', '7zzs',),
     },
     'xz': {
-        None: ('xz', '7z'),
+        None: ('xz', '7z', '7zz', '7zzs'),
         'extract': ('unar', 'py_lzma',),
         'create': ('py_lzma',),
     },
     'zip': {
-        None: ('7z', '7za', 'py_zipfile'),
+        None: ('7z', '7za', '7zz', '7zzs', 'py_zipfile'),
         'extract': ('unzip', 'unar', 'jar'),
         'list': ('unzip', 'jar'),
         'test': ('zip', 'unzip',),
@@ -291,37 +291,37 @@ ArchivePrograms = {
 # List of programs by archive type, which don't support password use
 NoPasswordSupportArchivePrograms = {
     'bzip2': {
-        None: ('7z', )
+        None: ('7z', '7zz', '7zzs', )
     },
     'cab': {
-        None: ('7z', )
+        None: ('7z', '7zz', '7zzs', )
     },
     'arj': {
-        None: ('7z',)
+        None: ('7z', '7zz', '7zzs',)
         },
     'gzip': {
-        None: ('7z',)
+        None: ('7z', '7zz', '7zzs',)
     },
     'iso': {
-        None: ('7z',)
+        None: ('7z', '7zz', '7zzs',)
     },
     'cpio': {
-        None: ('7z', )
+        None: ('7z', '7zz', '7zzs', )
     },
     'rpm': {
-        None: ('7z', )
+        None: ('7z', '7zz', '7zzs', )
     },
     'deb': {
-        None: ('7z', )
+        None: ('7z', '7zz', '7zzs', )
     },
     'lzma': {
-        None: ('7z', )
+        None: ('7z', '7zz', '7zzs', )
     },
     'vhd': {
-        None: ('7z', )
+        None: ('7z', '7zz', '7zzs', )
     },
     'xz': {
-        None: ('7z',)
+        None: ('7z', '7zz', '7zzs',)
     },
     'zip': {
         'create': ('py_zipfile',),
@@ -336,6 +336,8 @@ ProgramModules = {
     '7z': 'p7zip',
     '7za': 'p7azip',
     '7zr': 'p7rzip',
+    '7zz': 'p7zz',
+    '7zzs': 'p7zzs',
     'uncompress.real': 'uncompress',
     'dpkg-deb': 'dpkg',
     'extract_chmlib': 'chmlib',
