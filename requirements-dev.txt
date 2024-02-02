@@ -1,10 +1,10 @@
 # these modules are only needed for development
 
 # for testing
-pytest==7.4.3
+pytest==8.0.0
 
 # for python code linting
-ruff==0.1.14
+ruff==0.2.0
 
 # for generating a Python .whl file
 wheel==0.42.0
