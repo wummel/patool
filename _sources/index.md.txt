@@ -96,6 +96,15 @@ patool search "def urlopen" python-3.3.tar.gz
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 ```
 
+Donate
+-------
+If you like patool, consider a donation to support it. Thanks!
+
+<form action="https://www.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="C5UB3PQF9T33J" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+</form>
+
 API
 ----
 If you install patool, there is also a Python module patoolib.
@@ -104,20 +113,9 @@ to handle archives.
 
 Log output will be on sys.stdout and sys.stderr.
 On errors, `PatoolError` will be raised.
-Note that extra options such as password input or customization
-for specific archive programs are not supported.
+Note that extra options or customization for specific archive programs are not supported.
 
-```python
-import patoolib
-patoolib.extract_archive("archive.zip", outdir="/tmp")
-patoolib.test_archive("dist.tar.gz", verbosity=1)
-patoolib.list_archive("package.deb")
-patoolib.create_archive("/path/to/myfiles.zip", ("file1.txt", "dir/"))
-patoolib.diff_archives("release1.0.tar.gz", "release2.0.zip")
-patoolib.search_archive("def urlopen", "python3.3.tar.gz")
-patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
-patoolib.is_archive("package.deb")
-```
+The following functions are currently supported as an API:
 
 ```{eval-rst}
 .. autofunction:: patoolib.list_formats
@@ -138,12 +136,3 @@ patoolib.is_archive("package.deb")
 
 .. autofunction:: patoolib.is_archive
 ```
-
-Donate
--------
-If you like patool, consider a donation to support it. Thanks!
-
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="C5UB3PQF9T33J" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-</form>

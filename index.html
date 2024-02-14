@@ -122,6 +122,14 @@ patool<span class="w"> </span>repack<span class="w"> </span>linux-2.6.33.tar.gz<
 </pre></div>
 </div>
 </section>
+<section id="donate">
+<h2>Donate<a class="headerlink" href="#donate" title="Link to this heading">¶</a></h2>
+<p>If you like patool, consider a donation to support it. Thanks!</p>
+<form action="https://www.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="C5UB3PQF9T33J" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+</form>
+</section>
 <section id="api">
 <h2>API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h2>
 <p>If you install patool, there is also a Python module patoolib.
@@ -129,19 +137,8 @@ You can use functions in patoolib from other Python applications
 to handle archives.</p>
 <p>Log output will be on sys.stdout and sys.stderr.
 On errors, <code class="docutils literal notranslate"><span class="pre">PatoolError</span></code> will be raised.
-Note that extra options such as password input or customization
-for specific archive programs are not supported.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">patoolib</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">extract_archive</span><span class="p">(</span><span class="s2">&quot;archive.zip&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s2">&quot;/tmp&quot;</span><span class="p">)</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">test_archive</span><span class="p">(</span><span class="s2">&quot;dist.tar.gz&quot;</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">list_archive</span><span class="p">(</span><span class="s2">&quot;package.deb&quot;</span><span class="p">)</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">create_archive</span><span class="p">(</span><span class="s2">&quot;/path/to/myfiles.zip&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;file1.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;dir/&quot;</span><span class="p">))</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">diff_archives</span><span class="p">(</span><span class="s2">&quot;release1.0.tar.gz&quot;</span><span class="p">,</span> <span class="s2">&quot;release2.0.zip&quot;</span><span class="p">)</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">search_archive</span><span class="p">(</span><span class="s2">&quot;def urlopen&quot;</span><span class="p">,</span> <span class="s2">&quot;python3.3.tar.gz&quot;</span><span class="p">)</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">repack_archive</span><span class="p">(</span><span class="s2">&quot;linux-2.6.33.tar.gz&quot;</span><span class="p">,</span> <span class="s2">&quot;linux-2.6.33.tar.bz2&quot;</span><span class="p">)</span>
-<span class="n">patoolib</span><span class="o">.</span><span class="n">is_archive</span><span class="p">(</span><span class="s2">&quot;package.deb&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+Note that extra options or customization for specific archive programs are not supported.</p>
+<p>The following functions are currently supported as an API:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="patoolib.list_formats">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">list_formats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.list_formats" title="Link to this definition">¶</a></dt>
@@ -160,6 +157,37 @@ for specific archive programs are not supported.</p>
 <dt class="sig sig-object py" id="patoolib.list_archive">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">list_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.list_archive" title="Link to this definition">¶</a></dt>
 <dd><p>List given archive.</p>
+<p>Example: patoolib.list_archive(“package.deb”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archive</strong> (<em>str</em>) – The archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>verbosity</strong> (<em>int</em>) – larger values print more information. 0 is the default, -1 or lower means no output,
+values &gt;= 1 prints command output</p></li>
+<li><p><strong>program</strong> (<em>str</em><em> or </em><em>None</em>) – If None (the default), a list of suitable archive programs are checked if they
+exist in the system search path (defined by the PATH environment variable).
+If a program name is given, it is added to the list of programs that is searched for.
+The program should be a relative or absolute path name to an executable.</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – If True (the default), wait for user input if the extraction program asks for it.
+This should be set to True if you intend to type in a password interactively.
+If set to False, standard input will be set to an empty string to prevent simple hangs from
+programs requiring input.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> or </em><em>None</em>) – If an archive is encrypted, set the given password with command line options.
+Note that the password might be written to logs that keep track of your command line
+history. If an archive program does not support passwords this option is ignored by patool.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>patoolib.PatoolError</strong> – If an archive does not exist or is not a regular file, or on errors while
+listing.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -177,7 +205,10 @@ extraction, even if all files were successful extracted.</p>
 values &gt;= 1 prints command output</p></li>
 <li><p><strong>outdir</strong> (<em>str</em><em> or </em><em>None</em>) – The directory where the archive should be extracted. A value of None (the default)
 uses the current working directory.</p></li>
-<li><p><strong>program</strong> (<em>str</em><em> or </em><em>None</em>) – </p></li>
+<li><p><strong>program</strong> (<em>str</em><em> or </em><em>None</em>) – If None (the default), a list of suitable archive programs are checked if they
+exist in the system search path (defined by the PATH environment variable).
+If a program name is given, it is added to the list of programs that is searched for.
+The program should be a relative or absolute path name to an executable.</p></li>
 <li><p><strong>interactive</strong> (<em>bool</em>) – If True (the default), wait for user input if the extraction program asks for it.
 This should be set to True if you intend to type in a password interactively.
 If set to False, standard input will be set to an empty string to prevent simple hangs from
@@ -204,46 +235,196 @@ extracting.</p>
 <dt class="sig sig-object py" id="patoolib.test_archive">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">test_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.test_archive" title="Link to this definition">¶</a></dt>
 <dd><p>Test given archive.</p>
+<p>Example: patoolib.test_archive(“dist.tar.gz”, verbosity=1)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archive</strong> (<em>str</em>) – The archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>verbosity</strong> (<em>int</em>) – larger values print more information. 0 is the default, -1 or lower means no output,
+values &gt;= 1 prints command output</p></li>
+<li><p><strong>program</strong> (<em>str</em><em> or </em><em>None</em>) – If None (the default), a list of suitable archive programs are checked if they
+exist in the system search path (defined by the PATH environment variable).
+If a program name is given, it is added to the list of programs that is searched for.
+The program should be a relative or absolute path name to an executable.</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – If True (the default), wait for user input if the extraction program asks for it.
+This should be set to True if you intend to type in a password interactively.
+If set to False, standard input will be set to an empty string to prevent simple hangs from
+programs requiring input.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> or </em><em>None</em>) – If an archive is encrypted, set the given password with command line options.
+Note that the password might be written to logs that keep track of your command line
+history. If an archive program does not support passwords this option is ignored by patool.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>patoolib.PatoolError</strong> – If an archive does not exist or is not a regular file, or on errors while
+testing.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="patoolib.create_archive">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">create_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.create_archive" title="Link to this definition">¶</a></dt>
 <dd><p>Create given archive with given files.</p>
+<p>Example: patoolib.create_archive(“/path/to/myfiles.zip”, (“file1.txt”, “dir/”))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archive</strong> (<em>str</em>) – The archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>filenames</strong> (<em>tuple</em><em> of </em><em>str</em>) – A list of filenames to add to the archive. Can be relative to the current
+working directory or absolute.</p></li>
+<li><p><strong>verbosity</strong> (<em>int</em>) – larger values print more information. 0 is the default, -1 or lower means no output,
+values &gt;= 1 prints command output</p></li>
+<li><p><strong>program</strong> (<em>str</em><em> or </em><em>None</em>) – If None (the default), a list of suitable archive programs are checked if they
+exist in the system search path (defined by the PATH environment variable).
+If a program name is given, it is added to the list of programs that is searched for.
+The program should be a relative or absolute path name to an executable.</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – If True (the default), wait for user input if the extraction program asks for it.
+This should be set to True if you intend to type in a password interactively.
+If set to False, standard input will be set to an empty string to prevent simple hangs from
+programs requiring input.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> or </em><em>None</em>) – If an archive is encrypted, set the given password with command line options.
+Note that the password might be written to logs that keep track of your command line
+history. If an archive program does not support passwords this option is ignored by patool.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>patoolib.PatoolError</strong> – on errors while creating the archive</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="patoolib.diff_archives">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">diff_archives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.diff_archives" title="Link to this definition">¶</a></dt>
-<dd><p>Print differences between two archives.</p>
+<dd><p>Compare two archives and print their differences.</p>
+<p>Both archives will be extracted in temporary directories. Both directory contents will be compared
+recursively with the diff(1) tool.</p>
+<p>Example: patoolib.diff_archives(“release1.0.tar.gz”, “release2.0.zip”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archive1</strong> (<em>str</em>) – The first archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>archive2</strong> (<em>str</em>) – The second archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>verbosity</strong> (<em>int</em>) – larger values print more information. 0 is the default, -1 or lower means no output,
+values &gt;= 1 prints command output</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – If True (the default), wait for user input if the extraction program asks for it.
+This should be set to True if you intend to type in a password interactively.
+If set to False, standard input will be set to an empty string to prevent simple hangs from
+programs requiring input.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>patoolib.PatoolError</strong> – on errors while comparing the archives.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="patoolib.search_archive">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">search_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.search_archive" title="Link to this definition">¶</a></dt>
 <dd><p>Search pattern in archive members.</p>
+<p>The archive will be extracted in a temporary directory. The directory contents will then be searched
+with the grep(1) tool.</p>
+<p>Example: patoolib.search_archive(“def urlopen”, “python3.3.tar.gz”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pattern</strong> (<em>str</em>) – The pattern to search for. See the grep(1) manual page for pattern syntax.</p></li>
+<li><p><strong>archive</strong> (<em>str</em>) – The archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>verbosity</strong> (<em>int</em>) – larger values print more information. 0 is the default, -1 or lower means no output,
+values &gt;= 1 prints command output</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – If True (the default), wait for user input if the extraction program asks for it.
+This should be set to True if you intend to type in a password interactively.
+If set to False, standard input will be set to an empty string to prevent simple hangs from
+programs requiring input.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> or </em><em>None</em>) – If an archive is encrypted, set the given password with command line options.
+Note that the password might be written to logs that keep track of your command line
+history. If an archive program does not support passwords this option is ignored by patool.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>patoolib.PatoolError</strong> – on errors while extracting or searching the archive</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="patoolib.repack_archive">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">repack_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive_new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.repack_archive" title="Link to this definition">¶</a></dt>
 <dd><p>Repack archive to different file and/or format.</p>
+<p>The archive will be extracted and recompressed to archive_new.</p>
+<p>Example: patoolib.repack_archive(“linux-2.6.33.tar.gz”, “linux-2.6.33.tar.bz2”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archive</strong> (<em>str</em>) – The archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>archive_new</strong> (<em>str</em>) – The new archive filename. Can be relative to the current working directory or absolute.</p></li>
+<li><p><strong>verbosity</strong> (<em>int</em>) – larger values print more information. 0 is the default, -1 or lower means no output,
+values &gt;= 1 prints command output</p></li>
+<li><p><strong>interactive</strong> (<em>bool</em>) – If True (the default), wait for user input if the extraction program asks for it.
+This should be set to True if you intend to type in a password interactively.
+If set to False, standard input will be set to an empty string to prevent simple hangs from
+programs requiring input.</p></li>
+<li><p><strong>password</strong> (<em>str</em><em> or </em><em>None</em>) – If an archive is encrypted, set the given password with command line options.
+Note that the password might be written to logs that keep track of your command line
+history. If an archive program does not support passwords this option is ignored by patool.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>patoolib.PatoolError</strong> – on errors while extracting or creating the archive</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="patoolib.is_archive">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">is_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.is_archive" title="Link to this definition">¶</a></dt>
 <dd><p>Detect if the file is a known archive.</p>
+<p>Example: patoolib.is_archive(“package.deb”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The filename to check. Can be relative to the current working directory or absolute.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if given filename is an archive file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
-</section>
-<section id="donate">
-<h2>Donate<a class="headerlink" href="#donate" title="Link to this heading">¶</a></h2>
-<p>If you like patool, consider a donation to support it. Thanks!</p>
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="C5UB3PQF9T33J" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-</form>
 </section>
 </section>
 
