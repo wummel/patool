@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Utility functions."""
 import os
+import sys
 import shutil
 import subprocess
 from .log import log_info
@@ -60,6 +61,15 @@ def backtick(cmd, encoding='utf-8'):
                           encoding=encoding, errors="replace").stdout
 
 
+def run_under_pythonw():
+    """Return True iff this script is run with pythonw.exe on Windows."""
+    return (
+        os.name == 'nt' and
+        sys.executable is not None and
+        sys.executable.lower().endswith('pythonw.exe')
+    )
+
+
 def run(cmd, verbosity=0, **kwargs):
     """Run command without error checking.
     @return: command return code
@@ -69,7 +79,7 @@ def run(cmd, verbosity=0, **kwargs):
     if verbosity >= 0:
         info = " ".join(map(shell_quote_nt, cmd))
         log_info(f"running {info}")
-    if os.name == "nt":
+    if run_under_pythonw():
         # prevent opening of additional consoles when running with pythonw.exe
         kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
     # try to prevent hangs for programs requiring input
