@@ -96,6 +96,49 @@ patool search "def urlopen" python-3.3.tar.gz
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 ```
 
+API
+----
+If you install patool, there is also a Python module patoolib.
+You can use functions in patoolib from other Python applications
+to handle archives.
+
+Log output will be on sys.stdout and sys.stderr.
+On errors, `PatoolError` will be raised.
+Note that extra options such as password input or customization
+for specific archive programs are not supported.
+
+```python
+import patoolib
+patoolib.extract_archive("archive.zip", outdir="/tmp")
+patoolib.test_archive("dist.tar.gz", verbosity=1)
+patoolib.list_archive("package.deb")
+patoolib.create_archive("/path/to/myfiles.zip", ("file1.txt", "dir/"))
+patoolib.diff_archives("release1.0.tar.gz", "release2.0.zip")
+patoolib.search_archive("def urlopen", "python3.3.tar.gz")
+patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
+patoolib.is_archive("package.deb")
+```
+
+```{eval-rst}
+.. autofunction:: patoolib.list_formats
+
+.. autofunction:: patoolib.list_archive
+
+.. autofunction:: patoolib.extract_archive
+
+.. autofunction:: patoolib.test_archive
+
+.. autofunction:: patoolib.create_archive
+
+.. autofunction:: patoolib.diff_archives
+
+.. autofunction:: patoolib.search_archive
+
+.. autofunction:: patoolib.repack_archive
+
+.. autofunction:: patoolib.is_archive
+```
+
 Donate
 -------
 If you like patool, consider a donation to support it. Thanks!
