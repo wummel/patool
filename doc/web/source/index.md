@@ -104,3 +104,35 @@ If you like patool, consider a donation to support it. Thanks!
 <input type="hidden" name="hosted_button_id" value="C5UB3PQF9T33J" />
 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
 </form>
+
+API
+----
+If you install patool, there is also a Python module patoolib.
+You can use functions in patoolib from other Python applications
+to handle archives.
+
+Log output will be on sys.stdout and sys.stderr.
+On errors, `PatoolError` will be raised.
+Note that extra options or customization for specific archive programs are not supported.
+
+The following functions are currently supported as an API:
+
+```{eval-rst}
+.. autofunction:: patoolib.list_formats
+
+.. autofunction:: patoolib.list_archive
+
+.. autofunction:: patoolib.extract_archive
+
+.. autofunction:: patoolib.test_archive
+
+.. autofunction:: patoolib.create_archive
+
+.. autofunction:: patoolib.diff_archives
+
+.. autofunction:: patoolib.search_archive
+
+.. autofunction:: patoolib.repack_archive
+
+.. autofunction:: patoolib.is_archive
+```

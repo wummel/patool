@@ -13,19 +13,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Main package providing archive functions."""
-import inspect
 import sys
+# check for compatible Python version before importing other packages
 if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
     raise SystemExit("This program requires Python 3.10 or later.")
+import inspect
 import os
 import shutil
 import importlib
 # PEP 396: supply __version__
 from .configuration import App, Version as __version__ # noqa: F401
 from . import fileutil, log, util
-__all__ = ['list_formats', 'list_archive', 'extract_archive', 'test_archive',
+# export API functions
+__all__ = [
+    'list_formats', 'list_archive', 'extract_archive', 'test_archive',
     'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
-    'is_archive', 'program_supports_compression']
+    'is_archive',
+]
 
 
 # Supported archive commands
@@ -364,7 +368,15 @@ def program_supports_compression(program, compression):
 from .mime import guess_mime # noqa: E402
 
 def is_archive(filename):
-    """Detect if the file is a known archive."""
+    """Detect if the file is a known archive.
+
+    Example: patoolib.is_archive("package.deb")
+    
+    :param filename: The filename to check. Can be relative to the current working directory or absolute.
+    :type filename: str
+    :return: True if given filename is an archive file.
+    :rtype: bool
+    """
     mime, compression = guess_mime(filename)
     return mime in ArchiveMimetypes
 
@@ -443,7 +455,11 @@ def _remove_command_without_password_support(programs, format, command):
 
 
 def list_formats():
-    """Print information about available archive formats to stdout."""
+    """Print information about available archive formats to stdout.
+
+    :return: None
+    :rtype:  None
+    """
     print("Archive programs of", App)
     print("Archive programs are searched in the following directories:")
     print(util.system_search_path())
@@ -738,7 +754,40 @@ def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=
 # the patool library API
 
 def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive=True, password=None):
-    """Extract given archive."""
+    """Extract an archive file.
+
+    Extracting never overwrites existing files or directories. The original archive file is kept after
+    extraction, even if all files were successful extracted.
+
+    Example: patoolib.extract_archive("archive.zip", outdir="/tmp")
+    
+    :param archive: The archive filename. Can be relative to the current working directory or absolute.
+    :type archive: str
+    :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
+         values >= 1 prints command output
+    :type verbosity: int
+    :param outdir: The directory where the archive should be extracted. A value of None (the default)
+         uses the current working directory.
+    :type outdir: str or None
+    :param program: If None (the default), a list of suitable archive programs are checked if they
+         exist in the system search path (defined by the PATH environment variable).
+         If a program name is given, it is added to the list of programs that is searched for.
+         The program should be a relative or absolute path name to an executable.
+    :type program: str or None
+    :param interactive: If True (the default), wait for user input if the extraction program asks for it.
+         This should be set to True if you intend to type in a password interactively.
+         If set to False, standard input will be set to an empty string to prevent simple hangs from
+         programs requiring input.
+    :type interactive: bool
+    :param password: If an archive is encrypted, set the given password with command line options.
+         Note that the password might be written to logs that keep track of your command line
+         history. If an archive program does not support passwords this option is ignored by patool.
+    :type password: str or None
+    :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
+         extracting.
+    :return: The directory where the archive has been extracted.
+    :rtype: str
+    """
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
         log.log_info(f"Extracting {archive} ...")
@@ -746,7 +795,34 @@ def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive
 
 
 def list_archive(archive, verbosity=1, program=None, interactive=True, password=None):
-    """List given archive."""
+    """List given archive.
+
+    Example: patoolib.list_archive("package.deb")
+    
+    :param archive: The archive filename. Can be relative to the current working directory or absolute.
+    :type archive: str
+    :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
+         values >= 1 prints command output
+    :type verbosity: int
+    :param program: If None (the default), a list of suitable archive programs are checked if they
+         exist in the system search path (defined by the PATH environment variable).
+         If a program name is given, it is added to the list of programs that is searched for.
+         The program should be a relative or absolute path name to an executable.
+    :type program: str or None
+    :param interactive: If True (the default), wait for user input if the extraction program asks for it.
+         This should be set to True if you intend to type in a password interactively.
+         If set to False, standard input will be set to an empty string to prevent simple hangs from
+         programs requiring input.
+    :type interactive: bool
+    :param password: If an archive is encrypted, set the given password with command line options.
+         Note that the password might be written to logs that keep track of your command line
+         history. If an archive program does not support passwords this option is ignored by patool.
+    :type password: str or None
+    :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
+         listing.
+    :return: None
+    :rtype: None
+    """
     # Set default verbosity to 1 since the listing output should be visible.
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
@@ -755,7 +831,34 @@ def list_archive(archive, verbosity=1, program=None, interactive=True, password=
 
 
 def test_archive(archive, verbosity=0, program=None, interactive=True, password=None):
-    """Test given archive."""
+    """Test given archive.
+
+    Example: patoolib.test_archive("dist.tar.gz", verbosity=1)
+    
+    :param archive: The archive filename. Can be relative to the current working directory or absolute.
+    :type archive: str
+    :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
+         values >= 1 prints command output
+    :type verbosity: int
+    :param program: If None (the default), a list of suitable archive programs are checked if they
+         exist in the system search path (defined by the PATH environment variable).
+         If a program name is given, it is added to the list of programs that is searched for.
+         The program should be a relative or absolute path name to an executable.
+    :type program: str or None
+    :param interactive: If True (the default), wait for user input if the extraction program asks for it.
+         This should be set to True if you intend to type in a password interactively.
+         If set to False, standard input will be set to an empty string to prevent simple hangs from
+         programs requiring input.
+    :type interactive: bool
+    :param password: If an archive is encrypted, set the given password with command line options.
+         Note that the password might be written to logs that keep track of your command line
+         history. If an archive program does not support passwords this option is ignored by patool.
+    :type password: str or None
+    :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
+         testing.
+    :return: None
+    :rtype: None
+    """
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
         log.log_info(f"Testing {archive} ...")
@@ -767,7 +870,36 @@ def test_archive(archive, verbosity=0, program=None, interactive=True, password=
 
 
 def create_archive(archive, filenames, verbosity=0, program=None, interactive=True, password=None):
-    """Create given archive with given files."""
+    """Create given archive with given files.
+
+    Example: patoolib.create_archive("/path/to/myfiles.zip", ("file1.txt", "dir/"))
+    
+    :param archive: The archive filename. Can be relative to the current working directory or absolute.
+    :type archive: str
+    :param filenames: A list of filenames to add to the archive. Can be relative to the current
+          working directory or absolute.
+    :type filenames: tuple of str
+    :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
+         values >= 1 prints command output
+    :type verbosity: int
+    :param program: If None (the default), a list of suitable archive programs are checked if they
+         exist in the system search path (defined by the PATH environment variable).
+         If a program name is given, it is added to the list of programs that is searched for.
+         The program should be a relative or absolute path name to an executable.
+    :type program: str or None
+    :param interactive: If True (the default), wait for user input if the extraction program asks for it.
+         This should be set to True if you intend to type in a password interactively.
+         If set to False, standard input will be set to an empty string to prevent simple hangs from
+         programs requiring input.
+    :type interactive: bool
+    :param password: If an archive is encrypted, set the given password with command line options.
+         Note that the password might be written to logs that keep track of your command line
+         history. If an archive program does not support passwords this option is ignored by patool.
+    :type password: str or None
+    :raise patoolib.PatoolError: on errors while creating the archive
+    :return: None
+    :rtype: None
+    """
     fileutil.check_new_filename(archive)
     fileutil.check_archive_filelist(filenames)
     if verbosity >= 0:
@@ -780,7 +912,29 @@ def create_archive(archive, filenames, verbosity=0, program=None, interactive=Tr
 
 
 def diff_archives(archive1, archive2, verbosity=0, interactive=True):
-    """Print differences between two archives."""
+    """Compare two archives and print their differences.
+
+    Both archives will be extracted in temporary directories. Both directory contents will be compared
+    recursively with the diff(1) tool.
+
+    Example: patoolib.diff_archives("release1.0.tar.gz", "release2.0.zip")
+    
+    :param archive1: The first archive filename. Can be relative to the current working directory or absolute.
+    :type archive1: str
+    :param archive2: The second archive filename. Can be relative to the current working directory or absolute.
+    :type archive2: str
+    :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
+         values >= 1 prints command output
+    :type verbosity: int
+    :param interactive: If True (the default), wait for user input if the extraction program asks for it.
+         This should be set to True if you intend to type in a password interactively.
+         If set to False, standard input will be set to an empty string to prevent simple hangs from
+         programs requiring input.
+    :type interactive: bool
+    :raise patoolib.PatoolError: on errors while comparing the archives.
+    :return: None
+    :rtype: None
+    """
     fileutil.check_existing_filename(archive1)
     fileutil.check_existing_filename(archive2)
     if verbosity >= 0:
@@ -792,7 +946,33 @@ def diff_archives(archive1, archive2, verbosity=0, interactive=True):
 
 
 def search_archive(pattern, archive, verbosity=0, interactive=True, password=None):
-    """Search pattern in archive members."""
+    """Search pattern in archive members.
+
+    The archive will be extracted in a temporary directory. The directory contents will then be searched
+    with the grep(1) tool.
+
+    Example: patoolib.search_archive("def urlopen", "python3.3.tar.gz")
+    
+    :param pattern: The pattern to search for. See the grep(1) manual page for pattern syntax.
+    :type pattern: str
+    :param archive: The archive filename. Can be relative to the current working directory or absolute.
+    :type archive: str
+    :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
+         values >= 1 prints command output
+    :type verbosity: int
+    :param interactive: If True (the default), wait for user input if the extraction program asks for it.
+         This should be set to True if you intend to type in a password interactively.
+         If set to False, standard input will be set to an empty string to prevent simple hangs from
+         programs requiring input.
+    :type interactive: bool
+    :param password: If an archive is encrypted, set the given password with command line options.
+         Note that the password might be written to logs that keep track of your command line
+         history. If an archive program does not support passwords this option is ignored by patool.
+    :type password: str or None
+    :raise patoolib.PatoolError: on errors while extracting or searching the archive
+    :return: None
+    :rtype: None
+    """
     if not pattern:
         raise util.PatoolError("empty search pattern")
     fileutil.check_existing_filename(archive)
@@ -805,7 +985,32 @@ def search_archive(pattern, archive, verbosity=0, interactive=True, password=Non
 
 
 def repack_archive(archive, archive_new, verbosity=0, interactive=True, password=None):
-    """Repack archive to different file and/or format."""
+    """Repack archive to different file and/or format.
+
+    The archive will be extracted and recompressed to archive_new.
+
+    Example: patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
+    
+    :param archive: The archive filename. Can be relative to the current working directory or absolute.
+    :type archive: str
+    :param archive_new: The new archive filename. Can be relative to the current working directory or absolute.
+    :type archive_new: str
+    :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
+         values >= 1 prints command output
+    :type verbosity: int
+    :param interactive: If True (the default), wait for user input if the extraction program asks for it.
+         This should be set to True if you intend to type in a password interactively.
+         If set to False, standard input will be set to an empty string to prevent simple hangs from
+         programs requiring input.
+    :type interactive: bool
+    :param password: If an archive is encrypted, set the given password with command line options.
+         Note that the password might be written to logs that keep track of your command line
+         history. If an archive program does not support passwords this option is ignored by patool.
+    :type password: str or None
+    :raise patoolib.PatoolError: on errors while extracting or creating the archive
+    :return: None
+    :rtype: None
+    """
     fileutil.check_existing_filename(archive)
     fileutil.check_new_filename(archive_new)
     if verbosity >= 0:

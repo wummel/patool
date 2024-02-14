@@ -65,7 +65,7 @@ API
 You can use patool functions from other Python applications.
 Log output will be on sys.stdout and sys.stderr.
 On errors, `PatoolError` will be raised.
-Note that extra options such as password input or customization
+Note that extra options or customization
 for specific archive programs are not supported.
 
 ```
@@ -79,6 +79,8 @@ patoolib.search_archive("def urlopen", "python3.3.tar.gz")
 patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
 patoolib.is_archive("package.deb")
 ```
+
+See https://wummel.github.io/patool/ for detailed API documentation.
 
 Test suite status
 ------------------
