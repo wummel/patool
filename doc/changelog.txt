@@ -1,8 +1,9 @@
 2.2.0 (released xx.xx.xxxx)
-  *
 
-2.1.2 (released xx.xx.xxxx)
-  *
+* Improved detection when running under pythonw.exe.
+  Also fixes the output problems on Windows systems.
+  Closes: GH bug #147
+
 
 2.1.1 (released 26.01.2024)
 
