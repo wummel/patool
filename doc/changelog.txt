@@ -1,3 +1,6 @@
+2.2.0 (released xx.xx.xxxx)
+  *
+
 2.1.2 (released xx.xx.xxxx)
   *
 
