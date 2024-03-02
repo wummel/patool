@@ -43,6 +43,10 @@ jobs:
       run: |
         pytest -s tests/
 
+    - name: Check linting errors
+      run: |
+        ruff setup.py patoolib tests doc/web/source
+
     - name: Check code formatted
       run: |
         ruff format --check setup.py patoolib tests doc/web/source
