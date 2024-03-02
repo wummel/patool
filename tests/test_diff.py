@@ -22,9 +22,9 @@ from . import datadir, needs_program
 class ArchiveDiffTest(unittest.TestCase):
     """Test class for patool diff command."""
 
-    @needs_program('diff')
-    @needs_program('tar')
-    @needs_program('unzip')
+    @needs_program("diff")
+    @needs_program("tar")
+    @needs_program("unzip")
     def test_diff(self):
         """Run cli function to compare a TAR and ZIP archive."""
         archive1 = os.path.join(datadir, "t.tar")

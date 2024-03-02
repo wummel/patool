@@ -16,20 +16,21 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestMac(ArchiveTest):
     """Test class for the mac program"""
 
-    program = 'mac'
+    program = "mac"
 
     @needs_program(program)
     def test_mac(self):
         """Extract, test and create an APE archive."""
-        self.archive_extract('t.ape', check=None)
-        self.archive_test('t.ape')
-        self.archive_create('t.ape', srcfiles=("t.wav",))
+        self.archive_extract("t.ape", check=None)
+        self.archive_test("t.ape")
+        self.archive_create("t.ape", srcfiles=("t.wav",))
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_mac_file(self):
         """Extract a renamed APE archive."""
-        self.archive_extract('t.ape.foo', check=None)
+        self.archive_extract("t.ape.foo", check=None)

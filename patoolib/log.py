@@ -42,10 +42,9 @@ def encode_safe(*args, encoding=sys.stderr.encoding):
     @return: a space-separated string that will not have encoding errors
     with the given encoding
     """
-    return " ".join([
-        str(arg).encode(encoding, errors="replace").decode()
-        for arg in args
-    ])
+    return " ".join(
+        [str(arg).encode(encoding, errors="replace").decode() for arg in args]
+    )
 
 
 def log_error(msg):
@@ -70,11 +69,12 @@ EnvKeys = ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG")
 def log_internal_error():
     """Print internal error message."""
     now = strtime(time.time())
-    env = os.linesep.join([f"{key}={os.getenv(key)!r}"
-                           for key in EnvKeys
-                           if os.getenv(key) is not None])
-    logger.exception(encode_safe(
-f"""********** Oops, I did it again. *************
+    env = os.linesep.join(
+        [f"{key}={os.getenv(key)!r}" for key in EnvKeys if os.getenv(key) is not None]
+    )
+    logger.exception(
+        encode_safe(
+            f"""********** Oops, I did it again. *************
 
 You have found an internal error in {configuration.AppName}.
 Please write a bug report at
@@ -92,13 +92,14 @@ sys.orig_argv: {sys.orig_argv}
 Environment:
 {env}
 ******** {configuration.AppName} internal error, over and out ********
-"""))
+"""
+        )
+    )
 
 
 def strtime(t):
     """Return ISO 8601 formatted time."""
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t)) + \
-           strtimezone()
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t)) + strtimezone()
 
 
 def strtimezone():
@@ -107,7 +108,7 @@ def strtimezone():
         zone = time.altzone
     else:
         zone = time.timezone
-    return "%+04d" % (-zone//3600)
+    return "%+04d" % (-zone // 3600)
 
 
 init_logging()

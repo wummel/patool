@@ -16,20 +16,21 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestUnrar(ArchiveTest):
     """Test class for the unrar program"""
 
-    program = 'unrar'
+    program = "unrar"
 
     @needs_program(program)
     def test_unrar(self):
         """List and extract a RAR archive."""
-        self.archive_list('t.rar')
-        self.archive_extract('t.rar')
+        self.archive_list("t.rar")
+        self.archive_extract("t.rar")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_unrar_file(self):
         """List and extract a renamed RAR archive."""
-        self.archive_list('t.rar.foo')
-        self.archive_extract('t.rar.foo')
+        self.archive_list("t.rar.foo")
+        self.archive_extract("t.rar.foo")

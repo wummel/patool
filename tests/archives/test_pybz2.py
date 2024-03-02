@@ -16,19 +16,20 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestPybz2(ArchiveTest):
     """Test class for the python zipfile module"""
 
-    program = 'py_bz2'
+    program = "py_bz2"
 
-    @needs_program('bzip2')
+    @needs_program("bzip2")
     def test_py_bz2(self):
         """Extract and create BZIP2 archives."""
-        self.archive_extract('t.txt.bz2', check=Content.Singlefile)
+        self.archive_extract("t.txt.bz2", check=Content.Singlefile)
         # bzip2 is used to test the created archive
-        self.archive_create('t.txt.bz2', check=Content.Singlefile)
+        self.archive_create("t.txt.bz2", check=Content.Singlefile)
 
-    @needs_program('file')
+    @needs_program("file")
     def test_py_bz2_file(self):
         """Extract renamed BZIP2 archives."""
-        self.archive_extract('t.txt.bz2.foo', check=Content.Singlefile)
+        self.archive_extract("t.txt.bz2.foo", check=Content.Singlefile)

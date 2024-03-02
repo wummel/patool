@@ -15,7 +15,8 @@
 """Archive commands for the unshar program."""
 import os
 
+
 def extract_shar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a SHAR archive."""
     cmdlist = [cmd, os.path.abspath(archive)]
-    return (cmdlist, {'cwd': outdir})
+    return (cmdlist, {"cwd": outdir})

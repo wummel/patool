@@ -42,3 +42,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -s tests/
+
+    - name: Check code formatted
+      run: |
+        ruff format --check setup.py patoolib tests doc/web/source

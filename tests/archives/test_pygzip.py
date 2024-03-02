@@ -16,19 +16,20 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestPygzip(ArchiveTest):
     """Test class for the python gzip module"""
 
-    program = 'py_gzip'
+    program = "py_gzip"
 
-    @needs_program('gzip')
+    @needs_program("gzip")
     def test_py_gzip(self):
         """Extract and create GZIP archives."""
-        self.archive_extract('t.txt.gz', check=Content.Singlefile)
+        self.archive_extract("t.txt.gz", check=Content.Singlefile)
         # gzip is used to test the created archive
-        self.archive_create('t.txt.gz', check=Content.Singlefile)
+        self.archive_create("t.txt.gz", check=Content.Singlefile)
 
-    @needs_program('file')
+    @needs_program("file")
     def test_py_gzip_file(self):
         """Extract renamed GZIP archives."""
-        self.archive_extract('t.txt.gz.foo', check=Content.Singlefile)
+        self.archive_extract("t.txt.gz.foo", check=Content.Singlefile)

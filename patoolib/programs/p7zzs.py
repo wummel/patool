@@ -21,4 +21,3 @@ package.
 
 # ruff: noqa: F403
 from .p7zz import *
-

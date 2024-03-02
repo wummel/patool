@@ -17,26 +17,23 @@
 from .. import fileutil, util
 import lzma
 
-READ_SIZE_BYTES = 1024*1024
+READ_SIZE_BYTES = 1024 * 1024
 
 # Adapters for different lzma bindings.
-if hasattr(lzma, 'FORMAT_ALONE'):
+if hasattr(lzma, "FORMAT_ALONE"):
+
     def _get_lzma_options(format):
         return {
-            'format': {
-                'alone': lzma.FORMAT_ALONE,
-                'xz': lzma.FORMAT_XZ,
-                }[format]
-            }
+            "format": {
+                "alone": lzma.FORMAT_ALONE,
+                "xz": lzma.FORMAT_XZ,
+            }[format]
+        }
 else:
     # might not be available e.g. in Debian's python-lzma 0.5.3
     # which is pyliblzma.
     def _get_lzma_options(format):
-        return {
-            'options': {
-                'format': format
-            }
-        }
+        return {"options": {"format": format}}
 
 
 def _extract(archive, compression, cmd, format, verbosity, outdir):
@@ -44,7 +41,7 @@ def _extract(archive, compression, cmd, format, verbosity, outdir):
     targetname = fileutil.get_single_outfile(outdir, archive)
     try:
         with lzma.LZMAFile(archive, **_get_lzma_options(format)) as lzmafile:
-            with open(targetname, 'wb') as targetfile:
+            with open(targetname, "wb") as targetfile:
                 data = lzmafile.read(READ_SIZE_BYTES)
                 while data:
                     targetfile.write(data)
@@ -54,23 +51,25 @@ def _extract(archive, compression, cmd, format, verbosity, outdir):
         raise util.PatoolError(msg) from err
     return None
 
+
 def extract_lzma(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an LZMA archive with the lzma Python module."""
-    return _extract(archive, compression, cmd, 'alone', verbosity, outdir)
+    return _extract(archive, compression, cmd, "alone", verbosity, outdir)
+
 
 def extract_xz(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an XZ archive with the lzma Python module."""
-    return _extract(archive, compression, cmd, 'xz', verbosity, outdir)
+    return _extract(archive, compression, cmd, "xz", verbosity, outdir)
 
 
 def _create(archive, compression, cmd, format, verbosity, filenames):
     """Create an LZMA or XZ archive with the lzma Python module."""
     if len(filenames) > 1:
-        raise util.PatoolError('multi-file compression not supported in Python lzma')
+        raise util.PatoolError("multi-file compression not supported in Python lzma")
     try:
-        with lzma.LZMAFile(archive, mode='wb', **_get_lzma_options(format)) as lzmafile:
+        with lzma.LZMAFile(archive, mode="wb", **_get_lzma_options(format)) as lzmafile:
             filename = filenames[0]
-            with open(filename, 'rb') as srcfile:
+            with open(filename, "rb") as srcfile:
                 data = srcfile.read(READ_SIZE_BYTES)
                 while data:
                     lzmafile.write(data)
@@ -79,10 +78,12 @@ def _create(archive, compression, cmd, format, verbosity, filenames):
         raise util.PatoolError(f"error creating {archive}") from err
     return None
 
+
 def create_lzma(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an LZMA archive with the lzma Python module."""
-    return _create(archive, compression, cmd, 'alone', verbosity, filenames)
+    return _create(archive, compression, cmd, "alone", verbosity, filenames)
+
 
 def create_xz(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an XZ archive with the lzma Python module."""
-    return _create(archive, compression, cmd, 'xz', verbosity, filenames)
+    return _create(archive, compression, cmd, "xz", verbosity, filenames)

@@ -16,24 +16,24 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestUnalz(ArchiveTest):
     """Test class for the unalz program"""
 
-    program = 'unalz'
+    program = "unalz"
 
     @needs_program(program)
     def test_unalz(self):
         """Test, list and extract ALZ archives."""
-        self.archive_test('t.alz')
-        self.archive_list('t.alz')
-        self.archive_extract('t.alz')
+        self.archive_test("t.alz")
+        self.archive_list("t.alz")
+        self.archive_extract("t.alz")
 
     # file(1) does not recognize .alz files
-    #@needs_program('file')
-    #@needs_program(program)
-    #def test_unalz_file(self):
+    # @needs_program('file')
+    # @needs_program(program)
+    # def test_unalz_file(self):
     #    """Test, list and extract renamed ALZ archives."""
     #    self.archive_test('t.alz.foo')
     #    self.archive_list('t.alz.foo')
     #    self.archive_extract('t.alz.foo')
-

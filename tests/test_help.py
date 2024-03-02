@@ -23,7 +23,7 @@ class TestHelp(unittest.TestCase):
 
     def test_help(self):
         """Run cli function with --help option."""
-        args = ['--help']
+        args = ["--help"]
         with pytest.raises(SystemExit) as exc_info:
             cli.main(args=args)
         # exit code should be zero

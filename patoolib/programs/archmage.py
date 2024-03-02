@@ -23,9 +23,9 @@ def extract_chm(archive, compression, cmd, verbosity, interactive, outdir):
     # so a nice dirname is created
     name = fileutil.get_single_outfile("", archive)
     outfile = os.path.join(outdir, name)
-    return [cmd, '-x', os.path.abspath(archive), outfile]
+    return [cmd, "-x", os.path.abspath(archive), outfile]
 
 
 def test_chm(archive, compression, cmd, verbosity, interactive):
     """Test a CHM archive."""
-    return [cmd, '-d', os.path.abspath(archive)]
+    return [cmd, "-d", os.path.abspath(archive)]

@@ -17,39 +17,47 @@ import os
 import sys
 from .. import util
 
+
 def extract_cpio(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CPIO archive."""
-    cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
-        '--preserve-modification-time']
-    if sys.platform.startswith('linux') and not cmd.endswith('bsdcpio'):
-        cmdlist.extend(['--no-absolute-filenames',
-        '--force-local', '--nonmatching', r'"*\.\.*"'])
+    cmdlist = [
+        util.shell_quote(cmd),
+        "--extract",
+        "--make-directories",
+        "--preserve-modification-time",
+    ]
+    if sys.platform.startswith("linux") and not cmd.endswith("bsdcpio"):
+        cmdlist.extend(
+            ["--no-absolute-filenames", "--force-local", "--nonmatching", r'"*\.\.*"']
+        )
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
-    return (cmdlist, {'cwd': outdir, 'shell': True})
+        cmdlist.append("-v")
+    cmdlist.extend(["<", util.shell_quote(os.path.abspath(archive))])
+    return (cmdlist, {"cwd": outdir, "shell": True})
 
 
 def list_cpio(archive, compression, cmd, verbosity, interactive):
     """List a CPIO archive."""
-    cmdlist = [cmd, '-i', '-t']
+    cmdlist = [cmd, "-i", "-t"]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-F', archive])
+        cmdlist.append("-v")
+    cmdlist.extend(["-F", archive])
     return cmdlist
+
 
 test_cpio = list_cpio
 
+
 def create_cpio(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a CPIO archive."""
-    cmdlist = [util.shell_quote(cmd), '--create']
+    cmdlist = [util.shell_quote(cmd), "--create"]
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     if len(filenames) != 0:
-        findcmd = ['find']
+        findcmd = ["find"]
         findcmd.extend([util.shell_quote(x) for x in filenames])
-        findcmd.extend(['-print0', '|'])
+        findcmd.extend(["-print0", "|"])
         cmdlist[0:0] = findcmd
-        cmdlist.append('-0')
+        cmdlist.append("-0")
     cmdlist.extend([">", util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    return (cmdlist, {"shell": True})

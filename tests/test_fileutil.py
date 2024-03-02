@@ -31,7 +31,7 @@ class UtilTest(unittest.TestCase):
         """Test is_same_file* with relative paths"""
         parentdir = os.path.dirname(__file__)
         filename1 = os.path.dirname(parentdir)
-        filename2 = os.path.join(parentdir, '..')
+        filename2 = os.path.join(parentdir, "..")
         self.assertTrue(fileutil.is_same_filename(filename1, filename2))
         self.assertTrue(fileutil.is_same_file(filename1, filename2))
 
@@ -39,7 +39,7 @@ class UtilTest(unittest.TestCase):
         """Test is_same_file* with different files"""
         parentdir = os.path.dirname(__file__)
         filename1 = os.path.dirname(parentdir)
-        filename2 = os.path.join(parentdir, '.')
+        filename2 = os.path.join(parentdir, ".")
         self.assertFalse(fileutil.is_same_file(filename1, filename2))
         self.assertFalse(fileutil.is_same_filename(filename1, filename2))
 
@@ -50,7 +50,6 @@ class UtilTest(unittest.TestCase):
         self.assertTrue(fileutil.stripext("foo/bartar.gz") == "bartar")
         self.assertTrue(fileutil.stripext("foo/bar.7z") == "bar")
         self.assertTrue(fileutil.stripext("foo/bar") == "bar")
-
 
     def test_rmtree(self):
         """Test rmtree() with non-existing and temporary dirs"""

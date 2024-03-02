@@ -15,23 +15,27 @@
 """Archive commands for the arj program."""
 from ..util import PatoolError
 
+
 def _get_password_switch(password):
     """Check password and return password switch for ARJ."""
-    if ' ' in password:
+    if " " in password:
         raise PatoolError("Password for ARJ can't contain spaces.")
-    return f'-g{password}'
+    return f"-g{password}"
+
 
 def _maybe_add_password(cmdlist, password):
     if password:
         cmdlist.append(_get_password_switch(password))
 
 
-def extract_arj(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_arj(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract an ARJ archive."""
-    cmdlist = [cmd, 'x', '-r']
+    cmdlist = [cmd, "x", "-r"]
     _maybe_add_password(cmdlist, password)
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.append("-y")
     cmdlist.extend([archive, outdir])
     return cmdlist
 
@@ -41,31 +45,33 @@ def list_arj(archive, compression, cmd, verbosity, interactive, password=None):
     cmdlist = [cmd]
     _maybe_add_password(cmdlist, password)
     if verbosity > 1:
-        cmdlist.append('v')
+        cmdlist.append("v")
     else:
-        cmdlist.append('l')
+        cmdlist.append("l")
     if not interactive:
-        cmdlist.append('-y')
-    cmdlist.extend(['-r', archive])
+        cmdlist.append("-y")
+    cmdlist.extend(["-r", archive])
     return cmdlist
 
 
 def test_arj(archive, compression, cmd, verbosity, interactive, password=None):
     """Test an ARJ archive."""
-    cmdlist = [cmd, 't', '-r']
+    cmdlist = [cmd, "t", "-r"]
     _maybe_add_password(cmdlist, password)
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.append("-y")
     cmdlist.append(archive)
     return cmdlist
 
 
-def create_arj(archive, compression, cmd, verbosity, interactive, filenames, password=None):
+def create_arj(
+    archive, compression, cmd, verbosity, interactive, filenames, password=None
+):
     """Create an ARJ archive."""
-    cmdlist = [cmd, 'a', '-r']
+    cmdlist = [cmd, "a", "-r"]
     _maybe_add_password(cmdlist, password)
     if not interactive:
-        cmdlist.append('-y')
+        cmdlist.append("-y")
     cmdlist.append(archive)
     cmdlist.extend(filenames)
     return cmdlist

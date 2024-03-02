@@ -16,18 +16,19 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestZoo(ArchiveTest):
     """Test class for the zoo program"""
 
-    program = 'zoo'
+    program = "zoo"
 
     @needs_program(program)
     def test_zoo(self):
         """Run archive commands with ZOO archive."""
-        self.archive_commands('t.zoo', check=Content.Multifile)
+        self.archive_commands("t.zoo", check=Content.Multifile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_zoo_file(self):
         """Run archive commands with renamed ZOO archive."""
-        self.archive_commands('t.zoo.foo', skip_create=True, check=Content.Multifile)
+        self.archive_commands("t.zoo.foo", skip_create=True, check=Content.Multifile)

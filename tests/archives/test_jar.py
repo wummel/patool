@@ -16,36 +16,37 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestJar(ArchiveTest):
     """Test class for the jar program"""
 
-    program = 'jar'
+    program = "jar"
 
     @needs_program(program)
     def test_jar(self):
         """Extract and list different ZIP archives."""
-        self.archive_extract('t.zip', check=None)
-        self.archive_list('t.zip')
-        self.archive_extract('t.cbz', check=None)
-        self.archive_list('t.cbz')
-        self.archive_extract('t.apk', check=None)
-        self.archive_list('t.apk')
-        self.archive_extract('t.jar', check=None)
-        self.archive_list('t.jar')
-        self.archive_extract('t.epub', check=None)
-        self.archive_list('t.epub')
+        self.archive_extract("t.zip", check=None)
+        self.archive_list("t.zip")
+        self.archive_extract("t.cbz", check=None)
+        self.archive_list("t.cbz")
+        self.archive_extract("t.apk", check=None)
+        self.archive_list("t.apk")
+        self.archive_extract("t.jar", check=None)
+        self.archive_list("t.jar")
+        self.archive_extract("t.epub", check=None)
+        self.archive_list("t.epub")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_jar_file(self):
         """Extract and list different renamed ZIP archives."""
-        self.archive_extract('t.zip.foo', check=None)
-        self.archive_list('t.zip.foo')
-        self.archive_extract('t.cbz.foo', check=None)
-        self.archive_list('t.cbz.foo')
-        self.archive_extract('t.apk.foo', check=None)
-        self.archive_list('t.apk.foo')
-        self.archive_extract('t.jar.foo', check=None)
-        self.archive_list('t.jar.foo')
-        self.archive_extract('t.epub.foo', check=None)
-        self.archive_list('t.epub.foo')
+        self.archive_extract("t.zip.foo", check=None)
+        self.archive_list("t.zip.foo")
+        self.archive_extract("t.cbz.foo", check=None)
+        self.archive_list("t.cbz.foo")
+        self.archive_extract("t.apk.foo", check=None)
+        self.archive_list("t.apk.foo")
+        self.archive_extract("t.jar.foo", check=None)
+        self.archive_list("t.jar.foo")
+        self.archive_extract("t.epub.foo", check=None)
+        self.archive_list("t.epub.foo")

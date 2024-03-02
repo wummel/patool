@@ -16,18 +16,19 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestChmlib(ArchiveTest):
     """Test class for the extract_chmLib program"""
 
-    program = 'extract_chmLib'
+    program = "extract_chmLib"
 
     @needs_program(program)
     def test_chmlib(self):
         """Extract a CHM archive."""
-        self.archive_extract('t.chm', check=None)
+        self.archive_extract("t.chm", check=None)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_chmlib_file(self):
         """Extract a renamed CHM archive."""
-        self.archive_extract('t.chm.foo', check=None)
+        self.archive_extract("t.chm.foo", check=None)

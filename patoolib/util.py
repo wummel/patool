@@ -22,6 +22,7 @@ from .log import log_info
 
 class PatoolError(Exception):
     """Raised when errors occur."""
+
     pass
 
 
@@ -55,18 +56,19 @@ class memoized:
         return self.func.__doc__
 
 
-def backtick(cmd, encoding='utf-8'):
+def backtick(cmd, encoding="utf-8"):
     """Return decoded output from command."""
-    return subprocess.run(cmd, stdout=subprocess.PIPE, check=True,
-                          encoding=encoding, errors="replace").stdout
+    return subprocess.run(
+        cmd, stdout=subprocess.PIPE, check=True, encoding=encoding, errors="replace"
+    ).stdout
 
 
 def run_under_pythonw():
     """Return True iff this script is run with pythonw.exe on Windows."""
     return (
-        os.name == 'nt' and
-        sys.executable is not None and
-        sys.executable.lower().endswith('pythonw.exe')
+        os.name == "nt"
+        and sys.executable is not None
+        and sys.executable.lower().endswith("pythonw.exe")
     )
 
 
@@ -93,7 +95,7 @@ def run(cmd, verbosity=0, **kwargs):
             cmd = " ".join(cmd)
     if verbosity < 1:
         # hide command output on stdout
-        kwargs['stdout'] = subprocess.DEVNULL
+        kwargs["stdout"] = subprocess.DEVNULL
     res = subprocess.run(cmd, **kwargs)
     return res.returncode
 
@@ -111,7 +113,7 @@ def shell_quote(value):
     """Quote all shell metacharacters in given string value with strong
     (i.e. single) quotes, handling the single quote especially.
     """
-    if os.name == 'nt':
+    if os.name == "nt":
         return shell_quote_nt(value)
     return shell_quote_unix(value)
 
@@ -133,13 +135,20 @@ def shell_quote_nt(value):
 
 def p7zip_supports_rar():
     """Determine if the RAR codec is installed for 7z program."""
-    if os.name == 'nt':
+    if os.name == "nt":
         # Assume RAR support is compiled into the binary.
         return True
     # the subdirectory and codec name
-    codecnames = ['p7zip/Codecs/Rar29.so', 'p7zip/Codecs/Rar.so']
+    codecnames = ["p7zip/Codecs/Rar29.so", "p7zip/Codecs/Rar.so"]
     # search canonical user library dirs
-    for libdir in ('/usr/lib', '/usr/local/lib', '/usr/lib64', '/usr/local/lib64', '/usr/lib/i386-linux-gnu', '/usr/lib/x86_64-linux-gnu'):
+    for libdir in (
+        "/usr/lib",
+        "/usr/local/lib",
+        "/usr/lib64",
+        "/usr/local/lib64",
+        "/usr/lib/i386-linux-gnu",
+        "/usr/lib/x86_64-linux-gnu",
+    ):
         for codecname in codecnames:
             fname = os.path.join(libdir, codecname)
             if os.path.exists(fname):
@@ -150,7 +159,7 @@ def p7zip_supports_rar():
 def system_search_path():
     """Get the list of directories to search for executable programs."""
     path = os.environ.get("PATH", os.defpath)
-    if os.name == 'nt':
+    if os.name == "nt":
         # Add some well-known archiver programs to the search path
         path = append_to_path(path, get_nt_7z_dir())
         path = append_to_path(path, get_nt_mac_dir())
@@ -179,13 +188,18 @@ def get_nt_7z_dir():
     """Return 7-Zip directory from registry, or an empty string."""
     import winreg
     import platform
+
     python_bits = platform.architecture()[0]
     keyname = r"SOFTWARE\7-Zip"
     try:
-        if python_bits == '32bit' and platform.machine().endswith('64'):
+        if python_bits == "32bit" and platform.machine().endswith("64"):
             # get 64-bit registry key from 32-bit Python
-            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyname,
-                  0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
+            key = winreg.OpenKey(
+                winreg.HKEY_LOCAL_MACHINE,
+                keyname,
+                0,
+                winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+            )
         else:
             key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyname)
         try:

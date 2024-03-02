@@ -16,20 +16,21 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestCabextract(ArchiveTest):
     """Test class for the cabextract program"""
 
-    program = 'cabextract'
+    program = "cabextract"
 
     @needs_program(program)
     def test_cabextract(self):
         """List and extract a CAB archive."""
-        self.archive_list('t.cab')
-        self.archive_extract('t.cab', check=None)
+        self.archive_list("t.cab")
+        self.archive_extract("t.cab", check=None)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_cabextract_file(self):
         """List and extract a renamed CAB archive."""
-        self.archive_list('t.cab.foo')
-        self.archive_extract('t.cab.foo', check=None)
+        self.archive_list("t.cab.foo")
+        self.archive_extract("t.cab.foo", check=None)

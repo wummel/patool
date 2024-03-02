@@ -15,25 +15,29 @@
 """Archive commands for the star program."""
 from .tar import add_tar_opts as add_star_opts
 
+
 def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive."""
-    cmdlist = [cmd, '-x']
+    cmdlist = [cmd, "-x"]
     add_star_opts(cmdlist, compression, verbosity)
-    cmdlist.extend(['-C', outdir, f"file={archive}"])
+    cmdlist.extend(["-C", outdir, f"file={archive}"])
     return cmdlist
+
 
 def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive."""
-    cmdlist = [cmd, '-n']
+    cmdlist = [cmd, "-n"]
     add_star_opts(cmdlist, compression, verbosity)
     cmdlist.append(f"file={archive}")
     return cmdlist
 
+
 test_tar = list_tar
+
 
 def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive."""
-    cmdlist = [cmd, '-c']
+    cmdlist = [cmd, "-c"]
     add_star_opts(cmdlist, compression, verbosity)
     cmdlist.append(f"file={archive}")
     cmdlist.extend(filenames)

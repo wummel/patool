@@ -16,20 +16,21 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestArchmage(ArchiveTest):
     """Test class for the archmage program"""
 
-    program = 'archmage'
+    program = "archmage"
 
     @needs_program(program)
     def test_archmage(self):
         """Extract and test a CHM archive."""
-        self.archive_extract('t.chm', check=None)
-        self.archive_test('t.chm')
+        self.archive_extract("t.chm", check=None)
+        self.archive_test("t.chm")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_archmage_file(self):
         """Extract and test a renamed CHM archive."""
-        self.archive_extract('t.chm.foo', check=None)
-        self.archive_test('t.chm.foo')
+        self.archive_extract("t.chm.foo", check=None)
+        self.archive_test("t.chm.foo")

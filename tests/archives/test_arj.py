@@ -16,25 +16,26 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestArj(ArchiveTest):
     """Test class for the arj program"""
 
-    program = 'arj'
+    program = "arj"
 
     @needs_program(program)
     def test_arj(self):
         """Run archive commands with ARJ archive."""
-        self.archive_commands(self.filename + '.arj')
+        self.archive_commands(self.filename + ".arj")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_arj_file(self):
         """Run archive commands with renamed ARJ archive."""
-        self.archive_commands(self.filename + '.arj.foo', skip_create=True)
+        self.archive_commands(self.filename + ".arj.foo", skip_create=True)
 
 
 class TestArjPassword(TestArj):
     """Test class for the arj program with password protected archives"""
 
-    password = 'thereisnotry'
-    filename = 'p'
+    password = "thereisnotry"
+    filename = "p"

@@ -21,39 +21,43 @@ def _add_password_to_options(options, password):
     """Check password and add it to ARC options."""
     if password is None:
         return options
-    if ' ' in password:
+    if " " in password:
         raise PatoolError("Password for ARC can't contain spaces.")
-    options += f'g{password}'
+    options += f"g{password}"
     return options
 
 
-def extract_arc(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_arc(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a ARC archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
-    options = _add_password_to_options('x', password)
+    options = _add_password_to_options("x", password)
     cmdlist = [cmd, options, os.path.abspath(archive)]
-    return (cmdlist, {'cwd': outdir})
+    return (cmdlist, {"cwd": outdir})
 
 
 def list_arc(archive, compression, cmd, verbosity, interactive, password=None):
     """List a ARC archive."""
     cmdlist = [cmd]
     if verbosity > 1:
-        cmdlist.append(_add_password_to_options('v', password))
+        cmdlist.append(_add_password_to_options("v", password))
     else:
-        cmdlist.append(_add_password_to_options('l', password))
+        cmdlist.append(_add_password_to_options("l", password))
     cmdlist.append(archive)
     return cmdlist
 
 
 def test_arc(archive, compression, cmd, verbosity, interactive, password=None):
     """Test a ARC archive."""
-    return [cmd, _add_password_to_options('t', password), archive]
+    return [cmd, _add_password_to_options("t", password), archive]
 
 
-def create_arc(archive, compression, cmd, verbosity, interactive, filenames, password=None):
+def create_arc(
+    archive, compression, cmd, verbosity, interactive, filenames, password=None
+):
     """Create a ARC archive."""
-    cmdlist = [cmd, _add_password_to_options('a', password), archive]
+    cmdlist = [cmd, _add_password_to_options("a", password), archive]
     cmdlist.extend(filenames)
     return cmdlist

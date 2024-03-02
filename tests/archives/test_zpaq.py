@@ -16,20 +16,21 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestZpaq(ArchiveTest):
     """Test class for the zpaq program"""
 
-    program = 'zpaq'
+    program = "zpaq"
 
     @needs_program(program)
     def test_zpaq(self):
         """Run archive commands with ZPAQ archive."""
-        self.archive_commands('t.zpaq', check=Content.Multifile)
+        self.archive_commands("t.zpaq", check=Content.Multifile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_zpaq_file(self):
         """Run archive commands with renamed ZPAQ archive."""
-        self.archive_extract('t.zpaq.foo', check=Content.Multifile)
-        self.archive_test('t.zpaq.foo')
-        self.archive_list('t.zpaq.foo')
+        self.archive_extract("t.zpaq.foo", check=Content.Multifile)
+        self.archive_test("t.zpaq.foo")
+        self.archive_list("t.zpaq.foo")

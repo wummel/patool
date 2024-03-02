@@ -16,18 +16,19 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestBsdcpio(ArchiveTest):
     """Test class for the bsdcpio program"""
 
-    program = 'bsdcpio'
+    program = "bsdcpio"
 
     @needs_program(program)
     def test_bsdcpio(self):
         """Run archive commands with CPIO archive."""
-        self.archive_commands('t.cpio')
+        self.archive_commands("t.cpio")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_bsdcpio_file(self):
         """Run archive commands with renamed CPIO archive."""
-        self.archive_commands('t.cpio.foo', skip_create=True)
+        self.archive_commands("t.cpio.foo", skip_create=True)

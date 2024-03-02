@@ -16,18 +16,19 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestCpio(ArchiveTest):
     """Test class for the cpio program"""
 
-    program = 'cpio'
+    program = "cpio"
 
     @needs_program(program)
     def test_cpio(self):
         """Run archive commands with CPIO archive."""
-        self.archive_commands('t.cpio')
+        self.archive_commands("t.cpio")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_cpio_file(self):
         """Run archive commands with renamed CPIO archive."""
-        self.archive_commands('t.cpio.foo', skip_create=True)
+        self.archive_commands("t.cpio.foo", skip_create=True)

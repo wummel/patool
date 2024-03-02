@@ -16,25 +16,28 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestArc(ArchiveTest):
     """Test class for the arc program"""
 
-    program = 'arc'
+    program = "arc"
 
     @needs_program(program)
     def test_arc(self):
         """Run archive commands with ARC archive."""
-        self.archive_commands(self.filename + '.arc', check=Content.Multifile)
+        self.archive_commands(self.filename + ".arc", check=Content.Multifile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_arc_file(self):
         """Run archive commands with renamed ARC archive."""
-        self.archive_commands(self.filename + '.arc.foo', check=Content.Multifile, skip_create=True)
+        self.archive_commands(
+            self.filename + ".arc.foo", check=Content.Multifile, skip_create=True
+        )
 
 
 class TestArcPassword(TestArc):
     """Test class for the arc program with password protected archives"""
 
-    password = 'thereisnotry'
-    filename = 'p'
+    password = "thereisnotry"
+    filename = "p"

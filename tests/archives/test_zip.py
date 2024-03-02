@@ -16,31 +16,32 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestZip(ArchiveTest):
     """Test class for the zip program"""
 
-    program = 'zip'
+    program = "zip"
 
     @needs_program(program)
     def test_zip(self):
         """Create and test ZIP archives with different extensions."""
-        self.archive_create('t.zip')
-        self.archive_test('t.zip')
-        self.archive_create('t.cbz')
-        self.archive_test('t.cbz')
-        self.archive_create('t.apk')
-        self.archive_test('t.apk')
-        self.archive_create('t.jar')
-        self.archive_test('t.jar')
-        self.archive_create('t.epub')
-        self.archive_test('t.epub')
+        self.archive_create("t.zip")
+        self.archive_test("t.zip")
+        self.archive_create("t.cbz")
+        self.archive_test("t.cbz")
+        self.archive_create("t.apk")
+        self.archive_test("t.apk")
+        self.archive_create("t.jar")
+        self.archive_test("t.jar")
+        self.archive_create("t.epub")
+        self.archive_test("t.epub")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_zip_file(self):
         """Test renamed ZIP archives with different extensions."""
-        self.archive_test('t.zip.foo')
-        self.archive_test('t.cbz.foo')
-        self.archive_test('t.apk.foo')
-        self.archive_test('t.jar.foo')
-        self.archive_test('t.epub.foo')
+        self.archive_test("t.zip.foo")
+        self.archive_test("t.cbz.foo")
+        self.archive_test("t.apk.foo")
+        self.archive_test("t.jar.foo")
+        self.archive_test("t.epub.foo")

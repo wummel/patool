@@ -19,7 +19,8 @@ import patoolib
 from .. import basedir, datadir
 
 # All text files have '42' as content.
-TextFileContent = '42'
+TextFileContent = "42"
+
 
 class Content:
     """The test archives have one of several set of content files.
@@ -32,15 +33,15 @@ class Content:
     # Recursive archives for creation have two text files in directories:
     # foo dir/t.txt
     # foo dir/bar/t.txt
-    Recursive = 'recursive'
+    Recursive = "recursive"
 
     # Singlefile archives for extraction have a text file t.txt
     # Singlefile archives for creation have a text file `foo .txt'
-    Singlefile = 'singlefile'
+    Singlefile = "singlefile"
 
     # Multifile archives for extraction have two text files: t.txt and t2.txt
     # Multifile archives for creation have two text files: foo .txt and foo2 .txt
-    Multifile = 'multifile'
+    Multifile = "multifile"
 
 
 class ArchiveTest(unittest.TestCase):
@@ -51,26 +52,28 @@ class ArchiveTest(unittest.TestCase):
     # set password for test with password
     password = None
     # default archive basename to check
-    filename = 't'
+    filename = "t"
 
     def archive_commands(self, filename, **kwargs):
         """Run archive commands list, test, extract and create.
         All keyword arguments are delegated to the create test function.
         """
         self.archive_list(filename)
-        if not kwargs.get('skip_test'):
+        if not kwargs.get("skip_test"):
             self.archive_test(filename)
-        self.archive_extract(filename, check=kwargs.get('check', Content.Recursive))
-        if not kwargs.get('skip_create'):
+        self.archive_extract(filename, check=kwargs.get("check", Content.Recursive))
+        if not kwargs.get("skip_create"):
             self.archive_create(filename, **kwargs)
 
     def archive_extract(self, filename, check=Content.Recursive):
         """Test archive extraction."""
         archive = os.path.join(datadir, filename)
-        self.assertTrue(os.path.isabs(archive), f"archive path is not absolute: {archive!r}")
+        self.assertTrue(
+            os.path.isabs(archive), f"archive path is not absolute: {archive!r}"
+        )
         self._archive_extract(archive, check)
         # archive name relative to tmpdir
-        relarchive = os.path.join("..", archive[len(basedir)+1:])
+        relarchive = os.path.join("..", archive[len(basedir) + 1 :])
         self._archive_extract(relarchive, check, verbosity=1)
 
     def _archive_extract(self, archive, check, verbosity=0):
@@ -82,7 +85,13 @@ class ArchiveTest(unittest.TestCase):
         try:
             olddir = patoolib.fileutil.chdir(tmpdir)
             try:
-                output = patoolib.extract_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
+                output = patoolib.extract_archive(
+                    archive,
+                    program=self.program,
+                    verbosity=verbosity,
+                    interactive=False,
+                    password=self.password,
+                )
                 if check:
                     self.check_extracted_archive(archive, output, check)
             finally:
@@ -95,19 +104,19 @@ class ArchiveTest(unittest.TestCase):
         """Check contents of an extracted archive"""
         if check == Content.Recursive:
             # outdir is the 't' directory of the archive
-            self.assertEqual(output, 't')
-            self.check_directory(output, 't')
-            txtfile = os.path.join(output, 't.txt')
-            self.check_textfile(txtfile, 't.txt')
+            self.assertEqual(output, "t")
+            self.check_directory(output, "t")
+            txtfile = os.path.join(output, "t.txt")
+            self.check_textfile(txtfile, "t.txt")
         elif check == Content.Singlefile:
             # a non-existing directory to ensure files do not exist in it
             expected_output = self.get_expected_singlefile_output(archive)
             self.check_textfile(output, expected_output)
         elif check == Content.Multifile:
-            txtfile = os.path.join(output, 't.txt')
-            self.check_textfile(txtfile, 't.txt')
-            txtfile2 = os.path.join(output, 't2.txt')
-            self.check_textfile(txtfile2, 't2.txt')
+            txtfile = os.path.join(output, "t.txt")
+            self.check_textfile(txtfile, "t.txt")
+            txtfile2 = os.path.join(output, "t2.txt")
+            self.check_textfile(txtfile2, "t2.txt")
 
     def get_expected_singlefile_output(self, archive):
         """Return the expected output file name of a singlefile archive."""
@@ -130,31 +139,48 @@ class ArchiveTest(unittest.TestCase):
         """Test archive listing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
-            patoolib.list_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
+            patoolib.list_archive(
+                archive,
+                program=self.program,
+                verbosity=verbosity,
+                interactive=False,
+                password=self.password,
+            )
 
     def archive_test(self, filename):
         """Test archive testing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
-            patoolib.test_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
+            patoolib.test_archive(
+                archive,
+                program=self.program,
+                verbosity=verbosity,
+                interactive=False,
+                password=self.password,
+            )
 
     def archive_create(self, archive, srcfiles=None, check=Content.Recursive):
         """Test archive creation."""
         if srcfiles is None:
             if check == Content.Recursive:
-                srcfiles = ('t',)
+                srcfiles = ("t",)
             elif check == Content.Singlefile:
-                srcfiles = ('t.txt',)
+                srcfiles = ("t.txt",)
             elif check == Content.Multifile:
-                srcfiles = ('t.txt', 't2.txt',)
+                srcfiles = (
+                    "t.txt",
+                    "t2.txt",
+                )
             else:
-                raise ValueError('invalid check value {check!r}')
+                raise ValueError("invalid check value {check!r}")
         olddir = patoolib.fileutil.chdir(datadir)
         try:
             # The format and compression arguments are needed for creating
             # archives with unusual file extensions.
             for verbosity in (-1, 0, 1, 2):
-                self._archive_create(archive, srcfiles, program=self.program, verbosity=verbosity)
+                self._archive_create(
+                    archive, srcfiles, program=self.program, verbosity=verbosity
+                )
         finally:
             if olddir:
                 os.chdir(olddir)
@@ -168,8 +194,17 @@ class ArchiveTest(unittest.TestCase):
         tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
         try:
             archive = os.path.join(tmpdir, archive)
-            self.assertTrue(os.path.isabs(archive), f"archive path is not absolute: {archive!r}")
-            patoolib.create_archive(archive, srcfiles, verbosity=verbosity, interactive=False, program=program, password=self.password)
+            self.assertTrue(
+                os.path.isabs(archive), f"archive path is not absolute: {archive!r}"
+            )
+            patoolib.create_archive(
+                archive,
+                srcfiles,
+                verbosity=verbosity,
+                interactive=False,
+                program=program,
+                password=self.password,
+            )
             self.assertTrue(os.path.isfile(archive))
             self.check_created_archive_with_test(archive)
             self.check_created_archive_with_diff(archive, srcfiles)
@@ -183,22 +218,22 @@ class ArchiveTest(unittest.TestCase):
         command = patoolib.test_archive
         program = self.program
         # special case for programs that cannot test what they create
-        if self.program in ('compress', 'py_gzip', 'zopfli'):
-            program = 'gzip'
-        elif self.program == 'py_bz2':
-            program = 'bzip2'
-        elif self.program == 'py_lzma':
-            program = 'xz'
-        elif self.program == 'zip':
-            program = 'unzip'
-        elif self.program in ('rzip', 'shorten'):
-            program = 'py_echo'
+        if self.program in ("compress", "py_gzip", "zopfli"):
+            program = "gzip"
+        elif self.program == "py_bz2":
+            program = "bzip2"
+        elif self.program == "py_lzma":
+            program = "xz"
+        elif self.program == "zip":
+            program = "unzip"
+        elif self.program in ("rzip", "shorten"):
+            program = "py_echo"
             command = patoolib.list_archive
-        elif self.program == 'lcab':
-            program = 'cabextract'
-        elif self.program == 'genisoimage':
-            program = '7z'
-        elif self.program == 'shar':
+        elif self.program == "lcab":
+            program = "cabextract"
+        elif self.program == "genisoimage":
+            program = "7z"
+        elif self.program == "shar":
             return
         command(archive, program=program, password=self.password)
 
@@ -210,21 +245,23 @@ class ArchiveTest(unittest.TestCase):
             return
         program = self.program
         # special case for programs that cannot extract what they create
-        if self.program in ('compress', 'zopfli'):
-            program = 'gzip'
-        elif self.program == 'zip':
-            program = 'unzip'
-        elif self.program == 'lcab':
-            program = 'cabextract'
-        elif self.program == 'shar':
-            program = 'unshar'
-        elif self.program == 'genisoimage':
-            program = '7z'
+        if self.program in ("compress", "zopfli"):
+            program = "gzip"
+        elif self.program == "zip":
+            program = "unzip"
+        elif self.program == "lcab":
+            program = "cabextract"
+        elif self.program == "shar":
+            program = "unshar"
+        elif self.program == "genisoimage":
+            program = "7z"
         tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
         try:
             olddir = patoolib.fileutil.chdir(tmpdir)
             try:
-                output = patoolib.extract_archive(archive, program=program, interactive=False, password=self.password)
+                output = patoolib.extract_archive(
+                    archive, program=program, interactive=False, password=self.password
+                )
                 if len(srcfiles) == 1:
                     source = os.path.join(datadir, srcfiles[0])
                     patoolib.util.run_checked([diff, "-urN", source, output])

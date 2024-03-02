@@ -15,10 +15,11 @@
 """Archive commands for the zopfli program."""
 from .. import util
 
+
 def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a GZIP archive."""
     cmdlist = [util.shell_quote(cmd)]
-    cmdlist.extend(['-c', '--'])
+    cmdlist.extend(["-c", "--"])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend([">", util.shell_quote(archive)])
+    return (cmdlist, {"shell": True})

@@ -22,7 +22,7 @@ from . import basedir, datadir, needs_program
 class ArchiveExtractTest(unittest.TestCase):
     """Test class for patool extract command."""
 
-    @needs_program('7z')
+    @needs_program("7z")
     def test_extract(self):
         """Run cli function to extract a 7Z archive."""
         tmpdir = fileutil.tmpdir(dir=basedir)

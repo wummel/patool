@@ -18,10 +18,11 @@ import os
 from patoolib import cli, fileutil
 from . import basedir, datadir, needs_program
 
+
 class ArchiveCreateTest(unittest.TestCase):
     """Test class for patool create command."""
 
-    @needs_program('7z')
+    @needs_program("7z")
     def test_create(self):
         """Run cli function to create a 7Z archive."""
         tmpdir = fileutil.tmpdir(dir=basedir)

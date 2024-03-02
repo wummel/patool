@@ -14,29 +14,35 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unzip program."""
 
+
 def _maybe_add_password(cmdlist, password):
     if password:
-        cmdlist.extend(['-P', password])
+        cmdlist.extend(["-P", password])
 
-def extract_zip(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+
+def extract_zip(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a ZIP archive."""
     cmdlist = [cmd]
     _maybe_add_password(cmdlist, password)
-    cmdlist.extend(['--', archive, '-d', outdir])
+    cmdlist.extend(["--", archive, "-d", outdir])
     return cmdlist
+
 
 def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
     """List a ZIP archive."""
-    cmdlist = [cmd, '-l']
+    cmdlist = [cmd, "-l"]
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     _maybe_add_password(cmdlist, password)
-    cmdlist.extend(['--', archive])
+    cmdlist.extend(["--", archive])
     return cmdlist
+
 
 def test_zip(archive, compression, cmd, verbosity, interactive, password=None):
     """Test a ZIP archive."""
-    cmdlist = [cmd, '-t']
+    cmdlist = [cmd, "-t"]
     _maybe_add_password(cmdlist, password)
-    cmdlist.extend(['--', archive])
+    cmdlist.extend(["--", archive])
     return cmdlist

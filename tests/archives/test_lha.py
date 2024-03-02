@@ -16,18 +16,19 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestLha(ArchiveTest):
     """Test class for the lha program"""
 
-    program = 'lha'
+    program = "lha"
 
     @needs_program(program)
     def _test_lha(self):
         """Run archive commands with LHA archive."""
-        self.archive_commands('t.lha')
+        self.archive_commands("t.lha")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_lha_file(self):
         """Run archive commands with renamed LHA archive."""
-        self.archive_commands('t.lha.foo', skip_create=True)
+        self.archive_commands("t.lha.foo", skip_create=True)

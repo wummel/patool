@@ -175,6 +175,13 @@ checkoutdated: ## Check for outdated Python requirements
 	test $$? = 1
 
 
+############ Formatting ############
+
+.PHONY: format
+format: ## run formatter
+	ruff format setup.py patoolib tests doc/web/source
+
+
 ############ Testing ############
 
 .PHONY: test

@@ -16,12 +16,13 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestUnshar(ArchiveTest):
     """Test class for the unshar program"""
 
-    program = 'unshar'
+    program = "unshar"
 
     @needs_program(program)
     def test_unshar(self):
         """Extract a SHAR archive."""
-        self.archive_extract('t.shar', check=None)
+        self.archive_extract("t.shar", check=None)

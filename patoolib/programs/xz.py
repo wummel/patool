@@ -20,12 +20,13 @@ from .. import fileutil, util
 extract_xz = extract_singlefile_standard
 test_xz = test_singlefile_standard
 
+
 def list_xz(archive, compression, cmd, verbosity, interactive):
     """List a XZ archive."""
     cmdlist = [cmd]
-    cmdlist.append('-l')
+    cmdlist.append("-l")
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     cmdlist.append(archive)
     return cmdlist
 
@@ -34,39 +35,40 @@ def create_xz(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an XZ archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-c', '--'])
+        cmdlist.append("-v")
+    cmdlist.extend(["-c", "--"])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend([">", util.shell_quote(archive)])
+    return (cmdlist, {"shell": True})
 
 
 def extract_lzma(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an LZMA archive."""
-    cmdlist = [util.shell_quote(cmd), '--format=lzma']
+    cmdlist = [util.shell_quote(cmd), "--format=lzma"]
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     outfile = fileutil.get_single_outfile(outdir, archive)
-    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend(
+        ["-c", "-d", "--", util.shell_quote(archive), ">", util.shell_quote(outfile)]
+    )
+    return (cmdlist, {"shell": True})
 
 
 def test_lzma(archive, compression, cmd, verbosity, interactive):
     """Test an LZMA archive."""
-    cmdlist = [cmd, '--format=lzma']
+    cmdlist = [cmd, "--format=lzma"]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['--test', archive])
+        cmdlist.append("-v")
+    cmdlist.extend(["--test", archive])
     return cmdlist
 
 
 def create_lzma(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an LZMA archive."""
-    cmdlist = [util.shell_quote(cmd), '--format=lzma']
+    cmdlist = [util.shell_quote(cmd), "--format=lzma"]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-c', '--'])
+        cmdlist.append("-v")
+    cmdlist.extend(["-c", "--"])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend([">", util.shell_quote(archive)])
+    return (cmdlist, {"shell": True})

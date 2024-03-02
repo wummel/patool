@@ -16,14 +16,14 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestShar(ArchiveTest):
     """Test class for the shar program"""
 
-    program = 'shar'
+    program = "shar"
 
     @needs_program(program)
-    @needs_program('unshar')
+    @needs_program("unshar")
     def test_shar(self):
         """Create a SHAR archive."""
-        self.archive_create('t.shar', check=Content.Singlefile)
-
+        self.archive_create("t.shar", check=Content.Singlefile)
