@@ -42,3 +42,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -s tests/
+
+    - name: Check optional static types
+      run: |
+        mypy setup.py patoolib

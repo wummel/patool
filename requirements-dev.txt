@@ -6,6 +6,9 @@ pytest==8.0.0
 # for python code linting
 ruff==0.2.0
 
+# for static type checking
+mypy==1.8.0
+
 # for generating a Python .whl file
 wheel==0.42.0
 

@@ -159,6 +159,10 @@ lint: ## lint python code
 reformat: ## fix linting errors automatically
 	ruff --fix setup.py patoolib tests doc/web/source
 
+.PHONY: checktype
+checktype: ## check optional static types
+	mypy setup.py patoolib
+
 .PHONY: checkoutdated
 checkoutdated: ## Check for outdated Python requirements
 # Assumes that all requirements have pinned versions with "==".
