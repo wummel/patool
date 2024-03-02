@@ -16,20 +16,21 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestRpm2cpio(ArchiveTest):
     """Test class for the rpm2cpio program"""
 
-    program = 'rpm2cpio'
+    program = "rpm2cpio"
 
     @needs_program(program)
-    @needs_program('cpio')
+    @needs_program("cpio")
     def test_rpm2cpio(self):
         """Extract an RPM archive."""
-        self.archive_extract('t.rpm', check=None)
+        self.archive_extract("t.rpm", check=None)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
-    @needs_program('cpio')
+    @needs_program("cpio")
     def test_rpm2cpio_file(self):
         """Extract a renamed RPM archive."""
-        self.archive_extract('t.rpm.foo', check=None)
+        self.archive_extract("t.rpm.foo", check=None)

@@ -20,30 +20,31 @@ but does not need any others.
 """
 
 # ruff: noqa: F401
-from .p7zip import \
-  extract_bzip2, \
-  extract_gzip, \
-  extract_zip, \
-  extract_compress, \
-  extract_rar, \
-  extract_cab, \
-  extract_7z, \
-  list_bzip2, \
-  list_gzip, \
-  list_zip, \
-  list_compress, \
-  list_rar, \
-  list_cab, \
-  list_rpm, \
-  list_7z, \
-  test_bzip2, \
-  test_gzip, \
-  test_zip, \
-  test_compress, \
-  test_rar, \
-  test_cab, \
-  test_7z, \
-  create_7z, \
-  create_zip, \
-  create_gzip, \
-  create_bzip2
+from .p7zip import (
+    extract_bzip2,
+    extract_gzip,
+    extract_zip,
+    extract_compress,
+    extract_rar,
+    extract_cab,
+    extract_7z,
+    list_bzip2,
+    list_gzip,
+    list_zip,
+    list_compress,
+    list_rar,
+    list_cab,
+    list_rpm,
+    list_7z,
+    test_bzip2,
+    test_gzip,
+    test_zip,
+    test_compress,
+    test_rar,
+    test_cab,
+    test_7z,
+    create_7z,
+    create_zip,
+    create_gzip,
+    create_bzip2,
+)

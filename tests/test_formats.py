@@ -22,5 +22,5 @@ class TestFormats(unittest.TestCase):
 
     def test_list_formats(self):
         """Run cli function with formats command."""
-        args = ["-vv", "--non-interactive", 'formats']
+        args = ["-vv", "--non-interactive", "formats"]
         cli.main(args=args)

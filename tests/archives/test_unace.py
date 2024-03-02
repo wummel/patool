@@ -16,31 +16,32 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestUnace(ArchiveTest):
     """Test class for the unace program"""
 
-    program = 'unace'
+    program = "unace"
 
     @needs_program(program)
     def test_unace(self):
         """Run archive commands with different ACE archives."""
-        self.archive_list(self.filename + '.ace')
-        self.archive_test(self.filename + '.ace')
-        #self.archive_extract(self.filename + '.ace')
-        self.archive_list(self.filename + '.cba')
-        self.archive_test(self.filename + '.cba')
-        #self.archive_extract(self.filename + '.cba')
+        self.archive_list(self.filename + ".ace")
+        self.archive_test(self.filename + ".ace")
+        # self.archive_extract(self.filename + '.ace')
+        self.archive_list(self.filename + ".cba")
+        self.archive_test(self.filename + ".cba")
+        # self.archive_extract(self.filename + '.cba')
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_unace_file(self):
         """Run archive commands with different renamed ACE archives."""
-        self.archive_list(self.filename + '.ace.foo')
-        self.archive_test(self.filename + '.ace.foo')
-        #self.archive_extract(self.filename + '.ace.foo')
-        self.archive_list(self.filename + '.cba.foo')
-        self.archive_test(self.filename + '.cba.foo')
-        #self.archive_extract(self.filename + '.cba.foo')
+        self.archive_list(self.filename + ".ace.foo")
+        self.archive_test(self.filename + ".ace.foo")
+        # self.archive_extract(self.filename + '.ace.foo')
+        self.archive_list(self.filename + ".cba.foo")
+        self.archive_test(self.filename + ".cba.foo")
+        # self.archive_extract(self.filename + '.cba.foo')
 
 
 # TODO: add p.ace, p.ace.foo, p.cba, p.cba.foo with password to repository

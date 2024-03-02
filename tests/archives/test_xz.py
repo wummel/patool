@@ -16,26 +16,27 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestXz(ArchiveTest):
     """Test class for the xz program"""
 
-    program = 'xz'
+    program = "xz"
 
     @needs_program(program)
     def test_xz(self):
         """Run archive commands with XZ archive."""
-        self.archive_commands('t.txt.xz', check=Content.Singlefile)
+        self.archive_commands("t.txt.xz", check=Content.Singlefile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_xz_file(self):
         """Test and extract a renamed XZ archive."""
-        self.archive_test('t.txt.xz.foo')
-        self.archive_extract('t.txt.xz.foo', check=Content.Singlefile)
+        self.archive_test("t.txt.xz.foo")
+        self.archive_extract("t.txt.xz.foo", check=Content.Singlefile)
 
     @needs_program(program)
     def test_lzma(self):
         """Test, extract and create a LZMA archive."""
-        self.archive_test('t.txt.lzma')
-        self.archive_extract('t.txt.lzma', check=Content.Singlefile)
-        self.archive_create('t.txt.lzma', check=Content.Singlefile)
+        self.archive_test("t.txt.lzma")
+        self.archive_extract("t.txt.lzma", check=Content.Singlefile)
+        self.archive_create("t.txt.lzma", check=Content.Singlefile)

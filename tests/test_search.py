@@ -22,16 +22,16 @@ from . import datadir, needs_program
 class ArchiveSearchTest(unittest.TestCase):
     """Test class for patool search command"""
 
-    @needs_program('grep')
-    @needs_program('tar')
+    @needs_program("grep")
+    @needs_program("tar")
     def test_search_tar(self):
         """Run cli function to search in TAR archive."""
         pattern = "42"
         archive = os.path.join(datadir, "t.tar")
         self.search(pattern, archive)
 
-    @needs_program('grep')
-    @needs_program('unzip')
+    @needs_program("grep")
+    @needs_program("unzip")
     def test_search_zip(self):
         """Run cli function to search in ZIP archive."""
         pattern = "42"

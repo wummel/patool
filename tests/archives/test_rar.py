@@ -16,39 +16,40 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestRar(ArchiveTest):
     """Test class for the rar program"""
 
-    program = 'rar'
+    program = "rar"
 
     @needs_program(program)
     def test_rar(self):
         """Run archive commands with RAR and CBR archive."""
-        self.archive_commands(self.filename + '.rar')
-        self.archive_commands(self.filename + '.cbr')
+        self.archive_commands(self.filename + ".rar")
+        self.archive_commands(self.filename + ".cbr")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_rar_file(self):
         """Run archive commands with renamed RAR and CBR archive."""
-        self.archive_commands(self.filename + '.rar.foo', skip_create=True)
-        self.archive_commands(self.filename + '.cbr.foo', skip_create=True)
+        self.archive_commands(self.filename + ".rar.foo", skip_create=True)
+        self.archive_commands(self.filename + ".cbr.foo", skip_create=True)
 
 
 class TestRarPassword(ArchiveTest):
     """Test class for the rar program with password"""
 
-    filename = 'p'
-    password = 'thereisnotry'
-    program = 'rar'
+    filename = "p"
+    password = "thereisnotry"
+    program = "rar"
 
     @needs_program(program)
     def test_rar(self):
         """Run archive commands with password protected RAR archive."""
-        self.archive_commands(self.filename + '.rar')
+        self.archive_commands(self.filename + ".rar")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_rar_file(self):
         """Run archive commands with renamed password protected RAR archive."""
-        self.archive_commands(self.filename + '.rar.foo', skip_create=True)
+        self.archive_commands(self.filename + ".rar.foo", skip_create=True)

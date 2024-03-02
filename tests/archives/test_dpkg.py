@@ -16,22 +16,23 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestDpkg(ArchiveTest):
     """Test class for the dpkg-deb program"""
 
-    program = 'dpkg-deb'
+    program = "dpkg-deb"
 
     @needs_program(program)
     def test_dpkg(self):
         """List, extract and test a DEB archive."""
-        self.archive_list('t.deb')
-        self.archive_extract('t.deb', check=None)
-        self.archive_test('t.deb')
+        self.archive_list("t.deb")
+        self.archive_extract("t.deb", check=None)
+        self.archive_test("t.deb")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_dpkg_file(self):
         """List, extract and test a renamed DEB archive."""
-        self.archive_list('t.deb.foo')
-        self.archive_extract('t.deb.foo', check=None)
-        self.archive_test('t.deb.foo')
+        self.archive_list("t.deb.foo")
+        self.archive_extract("t.deb.foo", check=None)
+        self.archive_test("t.deb.foo")

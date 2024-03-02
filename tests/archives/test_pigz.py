@@ -16,22 +16,24 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestPigz(ArchiveTest):
     """Test class for the pigz program"""
 
-    program = 'pigz'
+    program = "pigz"
 
     @needs_program(program)
     def test_pigz(self):
         """Run archive commands with GZIP archive."""
-        self.archive_commands('t.txt.gz', check=Content.Singlefile)
+        self.archive_commands("t.txt.gz", check=Content.Singlefile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_pigz_file(self):
         """Run archive commands with renamed GZIP archive."""
-        self.archive_commands('t.txt.gz.foo', check=Content.Singlefile,
-          skip_create=True, skip_test=True)
+        self.archive_commands(
+            "t.txt.gz.foo", check=Content.Singlefile, skip_create=True, skip_test=True
+        )
 
     def get_expected_singlefile_output(self, archive):
         """Pigz restores the original filename for .gz files"""

@@ -16,14 +16,15 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestGenisoimage(ArchiveTest):
     """Test class for the genisoimage program"""
 
-    program = 'genisoimage'
+    program = "genisoimage"
 
     # needs 7z for testing
-    @needs_program('7z')
+    @needs_program("7z")
     @needs_program(program)
     def test_genisoimage(self):
         """Create an ISO archive."""
-        self.archive_create('t.iso')
+        self.archive_create("t.iso")

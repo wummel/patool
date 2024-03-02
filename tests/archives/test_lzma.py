@@ -16,21 +16,22 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestLzma(ArchiveTest):
     """Test class for the lzma program"""
 
-    program = 'lzma'
+    program = "lzma"
 
     @needs_program(program)
     def test_lzma(self):
         """Test, extract and create an LZMA archive."""
-        self.archive_test('t.txt.lzma')
-        self.archive_extract('t.txt.lzma', check=Content.Singlefile)
-        self.archive_create('t.txt.lzma', check=Content.Singlefile)
+        self.archive_test("t.txt.lzma")
+        self.archive_extract("t.txt.lzma", check=Content.Singlefile)
+        self.archive_create("t.txt.lzma", check=Content.Singlefile)
 
     # file(1) does not recognize .lzma files
-    #@needs_program('file')
-    #@needs_program(program)
-    #def test_lzma_file(self):
+    # @needs_program('file')
+    # @needs_program(program)
+    # def test_lzma_file(self):
     #    self.archive_test('t.lzma.foo')
     #    self.archive_extract('t.lzma.foo')

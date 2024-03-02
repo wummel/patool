@@ -16,18 +16,21 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestLzop(ArchiveTest):
     """Test class for the lzop program"""
 
-    program = 'lzop'
+    program = "lzop"
 
     @needs_program(program)
     def test_lzop(self):
         """Run archive commands with LZOP archive."""
-        self.archive_commands('t.txt.lzo', check=Content.Singlefile)
+        self.archive_commands("t.txt.lzo", check=Content.Singlefile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_lzop_file(self):
         """Run archive commands with renamed LZOP archive."""
-        self.archive_commands('t.txt.lzo.foo', skip_create=True, check=Content.Singlefile)
+        self.archive_commands(
+            "t.txt.lzo.foo", skip_create=True, check=Content.Singlefile
+        )

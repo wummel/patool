@@ -16,18 +16,19 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestUncompressReal(ArchiveTest):
     """Test class for the uncompress.real program"""
 
-    program = 'uncompress.real'
+    program = "uncompress.real"
 
     @needs_program(program)
     def test_uncompress(self):
         """Extract a COMPRESS archive."""
-        self.archive_extract('t.txt.Z', check=Content.Singlefile)
+        self.archive_extract("t.txt.Z", check=Content.Singlefile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_uncompress_file(self):
         """Extract a renamed COMPRESS archive."""
-        self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
+        self.archive_extract("t.txt.Z.foo", check=Content.Singlefile)

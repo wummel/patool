@@ -111,7 +111,7 @@ def is_same_file(filename1, filename2):
     """
     if filename1 == filename2:
         return True
-    if os.name == 'posix':
+    if os.name == "posix":
         return os.path.samefile(filename1, filename2)
     return is_same_filename(filename1, filename2)
 
@@ -179,7 +179,7 @@ def make_file_readable(filename):
 
 def make_dir_readable(filename):
     """Make directory user readable and executable."""
-    set_mode(filename, stat.S_IRUSR|stat.S_IXUSR)
+    set_mode(filename, stat.S_IRUSR | stat.S_IXUSR)
 
 
 def make_user_readable(directory):

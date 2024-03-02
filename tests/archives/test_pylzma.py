@@ -16,24 +16,25 @@
 from . import ArchiveTest, Content
 from .. import needs_program, needs_module
 
+
 class TestPylzma(ArchiveTest):
     """Test class for the python lzma module"""
 
-    program = 'py_lzma'
+    program = "py_lzma"
 
-    @needs_program('xz')
-    @needs_module('lzma')
+    @needs_program("xz")
+    @needs_module("lzma")
     def test_py_lzma(self):
         """Extract and create LZMA and XZ archives."""
-        self.archive_extract('t.txt.lzma', check=Content.Singlefile)
-        self.archive_extract('t.txt.xz', check=Content.Singlefile)
+        self.archive_extract("t.txt.lzma", check=Content.Singlefile)
+        self.archive_extract("t.txt.xz", check=Content.Singlefile)
         # xz is used to test the created archive
-        self.archive_create('t.txt.lzma', check=Content.Singlefile)
-        self.archive_create('t.txt.xz', check=Content.Singlefile)
+        self.archive_create("t.txt.lzma", check=Content.Singlefile)
+        self.archive_create("t.txt.xz", check=Content.Singlefile)
 
-    @needs_program('file')
-    @needs_module('lzma')
+    @needs_program("file")
+    @needs_module("lzma")
     def test_py_lzma_file(self):
         """Extract renamed LZMA and XZ archives."""
-        self.archive_extract('t.txt.lzma.foo', check=Content.Singlefile)
-        self.archive_extract('t.txt.xz.foo', check=Content.Singlefile)
+        self.archive_extract("t.txt.lzma.foo", check=Content.Singlefile)
+        self.archive_extract("t.txt.xz.foo", check=Content.Singlefile)

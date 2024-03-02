@@ -20,12 +20,13 @@ from .. import util
 extract_lzip = extract_singlefile_standard
 test_lzip = test_singlefile_standard
 
+
 def create_lzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an LZIP archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-c', '--'])
+        cmdlist.append("-v")
+    cmdlist.extend(["-c", "--"])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend([">", util.shell_quote(archive)])
+    return (cmdlist, {"shell": True})

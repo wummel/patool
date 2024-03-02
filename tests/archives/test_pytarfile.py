@@ -16,40 +16,41 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestPytarfile(ArchiveTest):
     """Test class for the python tarfile module"""
 
-    program = 'py_tarfile'
+    program = "py_tarfile"
 
     def test_py_tarfile(self):
         """Run archive commands with TAR archives."""
-        self.archive_commands('t.tar')
-        self.archive_commands('t.cbt')
+        self.archive_commands("t.tar")
+        self.archive_commands("t.cbt")
 
     def test_py_tarfile_gz(self):
         """Run archive commands with GZIP TAR archives."""
-        self.archive_commands('t.tar.gz')
-        self.archive_commands('t.tgz')
+        self.archive_commands("t.tar.gz")
+        self.archive_commands("t.tgz")
 
     def test_py_tarfile_bz2(self):
         """Run archive commands with BZIP2 TAR archives."""
-        self.archive_commands('t.tar.bz2')
-        self.archive_commands('t.tbz2')
+        self.archive_commands("t.tar.bz2")
+        self.archive_commands("t.tbz2")
 
-    @needs_program('file')
+    @needs_program("file")
     def test_py_tarfile_file(self):
         """Run archive commands with renamed TAR archives."""
-        self.archive_commands('t.tar.foo', skip_create=True)
-        self.archive_commands('t.cbt.foo', skip_create=True)
+        self.archive_commands("t.tar.foo", skip_create=True)
+        self.archive_commands("t.cbt.foo", skip_create=True)
 
-    @needs_program('file')
+    @needs_program("file")
     def test_py_tarfile_gz_file(self):
         """Run archive commands with renamed GZIP TAR archives."""
-        self.archive_commands('t.tar.gz.foo', skip_create=True)
-        self.archive_commands('t.tgz.foo', skip_create=True)
+        self.archive_commands("t.tar.gz.foo", skip_create=True)
+        self.archive_commands("t.tgz.foo", skip_create=True)
 
-    @needs_program('file')
+    @needs_program("file")
     def test_py_tarfile_bz2_file(self):
         """Run archive commands with renamed BZIP2 TAR archives."""
-        self.archive_commands('t.tar.bz2.foo', skip_create=True)
-        self.archive_commands('t.tbz2.foo', skip_create=True)
+        self.archive_commands("t.tar.bz2.foo", skip_create=True)
+        self.archive_commands("t.tbz2.foo", skip_create=True)

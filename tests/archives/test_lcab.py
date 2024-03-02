@@ -16,13 +16,14 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestLcab(ArchiveTest):
     """Test class for the lcab program"""
 
-    program = 'lcab'
+    program = "lcab"
 
     @needs_program(program)
-    @needs_program('cabextract')
+    @needs_program("cabextract")
     def test_lcab(self):
         """Create a CAB archive."""
-        self.archive_create('t.cab')
+        self.archive_create("t.cab")

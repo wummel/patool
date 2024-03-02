@@ -15,23 +15,25 @@
 """Archive commands for the zpaq program."""
 import os
 
+
 def extract_zpaq(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a ZPAQ archive."""
-    cmdlist = [cmd, 'x', os.path.abspath(archive)]
-    return (cmdlist, {'cwd': outdir})
+    cmdlist = [cmd, "x", os.path.abspath(archive)]
+    return (cmdlist, {"cwd": outdir})
 
 
 def list_zpaq(archive, compression, cmd, verbosity, interactive):
     """List a ZPAQ archive."""
-    return [cmd, 'l', archive]
+    return [cmd, "l", archive]
 
 
 def create_zpaq(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a ZPAQ archive."""
-    cmdlist = [cmd, 'a', archive]
+    cmdlist = [cmd, "a", archive]
     cmdlist.extend(filenames)
-    cmdlist.extend(['-method', '4'])
+    cmdlist.extend(["-method", "4"])
     return cmdlist
+
 
 # zpaq has no separate test mode, so use listing instead
 test_zpaq = list_zpaq

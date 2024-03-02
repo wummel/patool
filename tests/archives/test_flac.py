@@ -16,21 +16,22 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestFlac(ArchiveTest):
     """Test class for the flac program"""
 
-    program = 'flac'
+    program = "flac"
 
     @needs_program(program)
     def test_flac(self):
         """Extract, test and create a FLAC archive."""
-        self.archive_extract('t.flac', check=None)
-        self.archive_test('t.flac')
-        self.archive_create('t.flac', srcfiles=("t.wav",))
+        self.archive_extract("t.flac", check=None)
+        self.archive_test("t.flac")
+        self.archive_create("t.flac", srcfiles=("t.wav",))
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_flac_file(self):
         """Extract and test a renamed FLAC archive."""
-        self.archive_extract('t.flac.foo', check=None)
-        self.archive_test('t.flac.foo')
+        self.archive_extract("t.flac.foo", check=None)
+        self.archive_test("t.flac.foo")

@@ -24,6 +24,7 @@ from .util import memoized, find_program, backtick
 # internal MIME database
 mimedb = None
 
+
 def init_mimedb():
     """Initialize the internal MIME database."""
     global mimedb
@@ -37,51 +38,51 @@ def init_mimedb():
 
 def add_mimedb_data(mimedb):
     """Add missing encodings and mimetypes to MIME database."""
-    mimedb.encodings_map['.bz2'] = 'bzip2'
-    mimedb.encodings_map['.lzma'] = 'lzma'
-    mimedb.encodings_map['.xz'] = 'xz'
-    mimedb.encodings_map['.lz'] = 'lzip'
+    mimedb.encodings_map[".bz2"] = "bzip2"
+    mimedb.encodings_map[".lzma"] = "lzma"
+    mimedb.encodings_map[".xz"] = "xz"
+    mimedb.encodings_map[".lz"] = "lzip"
     mimedb.encodings_map[".zst"] = "zstd"
-    mimedb.suffix_map['.tbz2'] = '.tar.bz2'
-    add_mimetype(mimedb, 'application/x-lzop', '.lzo')
-    add_mimetype(mimedb, 'application/x-adf', '.adf')
-    add_mimetype(mimedb, 'application/x-arj', '.arj')
-    add_mimetype(mimedb, 'application/x-bzip3', '.bz3')
-    add_mimetype(mimedb, 'application/x-lzma', '.lzma')
-    add_mimetype(mimedb, 'application/x-xz', '.xz')
-    add_mimetype(mimedb, 'application/java-archive', '.jar')
-    add_mimetype(mimedb, 'application/x-rar', '.rar')
-    add_mimetype(mimedb, 'application/x-rar', '.cbr')
-    add_mimetype(mimedb, 'application/x-7z-compressed', '.7z')
-    add_mimetype(mimedb, 'application/x-7z-compressed', '.cb7')
-    add_mimetype(mimedb, 'application/x-cab', '.cab')
-    add_mimetype(mimedb, 'application/x-rpm', '.rpm')
-    add_mimetype(mimedb, 'application/x-debian-package', '.deb')
-    add_mimetype(mimedb, 'application/x-ace', '.ace')
-    add_mimetype(mimedb, 'application/x-ace', '.cba')
-    add_mimetype(mimedb, 'application/x-archive', '.a')
-    add_mimetype(mimedb, 'application/x-alzip', '.alz')
-    add_mimetype(mimedb, 'application/x-arc', '.arc')
-    add_mimetype(mimedb, 'application/x-lrzip', '.lrz')
-    add_mimetype(mimedb, 'application/x-lha', '.lha')
-    add_mimetype(mimedb, 'application/x-lzh', '.lzh')
-    add_mimetype(mimedb, 'application/x-lz4', '.lz4')
-    add_mimetype(mimedb, 'application/x-rzip', '.rz')
-    add_mimetype(mimedb, 'application/x-zoo', '.zoo')
-    add_mimetype(mimedb, 'application/x-dms', '.dms')
-    add_mimetype(mimedb, 'application/x-zip-compressed', '.crx')
-    add_mimetype(mimedb, 'application/x-shar', '.shar')
-    add_mimetype(mimedb, 'application/x-tar', '.cbt')
-    add_mimetype(mimedb, 'application/x-vhd', '.vhd')
-    add_mimetype(mimedb, 'audio/x-ape', '.ape')
-    add_mimetype(mimedb, 'audio/x-shn', '.shn')
-    add_mimetype(mimedb, 'audio/flac', '.flac')
-    add_mimetype(mimedb, 'application/x-chm', '.chm')
-    add_mimetype(mimedb, 'application/x-iso9660-image', '.iso')
-    add_mimetype(mimedb, 'application/zip', '.cbz')
-    add_mimetype(mimedb, 'application/zip', '.epub')
-    add_mimetype(mimedb, 'application/zip', '.apk')
-    add_mimetype(mimedb, 'application/zpaq', '.zpaq')
+    mimedb.suffix_map[".tbz2"] = ".tar.bz2"
+    add_mimetype(mimedb, "application/x-lzop", ".lzo")
+    add_mimetype(mimedb, "application/x-adf", ".adf")
+    add_mimetype(mimedb, "application/x-arj", ".arj")
+    add_mimetype(mimedb, "application/x-bzip3", ".bz3")
+    add_mimetype(mimedb, "application/x-lzma", ".lzma")
+    add_mimetype(mimedb, "application/x-xz", ".xz")
+    add_mimetype(mimedb, "application/java-archive", ".jar")
+    add_mimetype(mimedb, "application/x-rar", ".rar")
+    add_mimetype(mimedb, "application/x-rar", ".cbr")
+    add_mimetype(mimedb, "application/x-7z-compressed", ".7z")
+    add_mimetype(mimedb, "application/x-7z-compressed", ".cb7")
+    add_mimetype(mimedb, "application/x-cab", ".cab")
+    add_mimetype(mimedb, "application/x-rpm", ".rpm")
+    add_mimetype(mimedb, "application/x-debian-package", ".deb")
+    add_mimetype(mimedb, "application/x-ace", ".ace")
+    add_mimetype(mimedb, "application/x-ace", ".cba")
+    add_mimetype(mimedb, "application/x-archive", ".a")
+    add_mimetype(mimedb, "application/x-alzip", ".alz")
+    add_mimetype(mimedb, "application/x-arc", ".arc")
+    add_mimetype(mimedb, "application/x-lrzip", ".lrz")
+    add_mimetype(mimedb, "application/x-lha", ".lha")
+    add_mimetype(mimedb, "application/x-lzh", ".lzh")
+    add_mimetype(mimedb, "application/x-lz4", ".lz4")
+    add_mimetype(mimedb, "application/x-rzip", ".rz")
+    add_mimetype(mimedb, "application/x-zoo", ".zoo")
+    add_mimetype(mimedb, "application/x-dms", ".dms")
+    add_mimetype(mimedb, "application/x-zip-compressed", ".crx")
+    add_mimetype(mimedb, "application/x-shar", ".shar")
+    add_mimetype(mimedb, "application/x-tar", ".cbt")
+    add_mimetype(mimedb, "application/x-vhd", ".vhd")
+    add_mimetype(mimedb, "audio/x-ape", ".ape")
+    add_mimetype(mimedb, "audio/x-shn", ".shn")
+    add_mimetype(mimedb, "audio/flac", ".flac")
+    add_mimetype(mimedb, "application/x-chm", ".chm")
+    add_mimetype(mimedb, "application/x-iso9660-image", ".iso")
+    add_mimetype(mimedb, "application/zip", ".cbz")
+    add_mimetype(mimedb, "application/zip", ".epub")
+    add_mimetype(mimedb, "application/zip", ".apk")
+    add_mimetype(mimedb, "application/zpaq", ".zpaq")
     add_mimetype(mimedb, "application/zstd", ".zst")
 
 
@@ -108,17 +109,17 @@ def guess_mime(filename):
 
 
 Encoding2Mime = {
-    'gzip': "application/gzip",
-    'bzip2': "application/x-bzip2",
-    'compress': "application/x-compress",
-    'lzma': "application/x-lzma",
-    'lzip': "application/x-lzip",
-    'xz': "application/x-xz",
+    "gzip": "application/gzip",
+    "bzip2": "application/x-bzip2",
+    "compress": "application/x-compress",
+    "lzma": "application/x-lzma",
+    "lzip": "application/x-lzip",
+    "xz": "application/x-xz",
     "zstd": "application/zstd",
 }
 Mime2Encoding = dict([(_val, _key) for _key, _val in Encoding2Mime.items()])
 # libmagic before version 5.14 identified .gz files as application/x-gzip
-Mime2Encoding['application/x-gzip'] = 'gzip'
+Mime2Encoding["application/x-gzip"] = "gzip"
 
 
 def guess_mime_mimedb(filename):
@@ -146,7 +147,7 @@ def guess_mime_file(filename):
     """
     mime, encoding = None, None
     base, ext = os.path.splitext(filename)
-    if ext.lower() in ('.alz',):
+    if ext.lower() in (".alz",):
         # let mimedb recognize these extensions
         return mime, encoding
     if os.path.isfile(filename):
@@ -169,8 +170,11 @@ def guess_mime_file(filename):
         # when the uncompressor program is not installed, other
         # implementation return the original file type.
         # The following detects both cases.
-        if (mime2 in ('application/x-empty', 'application/octet-stream') or
-            mime2 in Mime2Encoding or not mime2):
+        if (
+            mime2 in ("application/x-empty", "application/octet-stream")
+            or mime2 in Mime2Encoding
+            or not mime2
+        ):
             # The uncompressor program file(1) uses is not installed
             # or is not able to uncompress.
             # Try to get mime information from the file extension.
@@ -249,6 +253,7 @@ FileText2Mime = {
     "MS Windows HtmlHelp Data": "application/x-chm",
     "ZPAQ stream": "application/zpaq",
 }
+
 
 def guess_mime_file_text(file_prog, filename):
     """Determine MIME type of filename with file(1)."""

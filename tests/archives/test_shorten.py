@@ -16,21 +16,21 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestShorten(ArchiveTest):
     """Test class for the shorten program"""
 
-    program = 'shorten'
+    program = "shorten"
 
     @needs_program(program)
     def test_shorten(self):
         """Extract and create SHORTEN archives."""
-        self.archive_extract('t.shn', check=None)
-        self.archive_create('t.shn', srcfiles=("t.wav",))
+        self.archive_extract("t.shn", check=None)
+        self.archive_create("t.shn", srcfiles=("t.wav",))
 
     # file(1) does not recognize .shn files
-    #@needs_program('file')
-    #@needs_program(program)
-    #def test_shorten_file(self):
+    # @needs_program('file')
+    # @needs_program(program)
+    # def test_shorten_file(self):
     #    """Extract a renamed SHORTEN archive."""
     #    self.archive_extract('t.shn.foo', check=None)
-

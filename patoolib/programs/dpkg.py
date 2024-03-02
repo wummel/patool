@@ -14,18 +14,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the dpkg-deb program."""
 
+
 def extract_deb(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a DEB archive."""
     cmdlist = [cmd]
     if verbosity > 1:
-        cmdlist.append('--vextract')
+        cmdlist.append("--vextract")
     else:
-        cmdlist.append('--extract')
-    cmdlist.extend(['--', archive, outdir])
+        cmdlist.append("--extract")
+    cmdlist.extend(["--", archive, outdir])
     return cmdlist
+
 
 def list_deb(archive, compression, cmd, verbosity, interactive):
     """List a DEB archive."""
-    return [cmd, '--contents', '--', archive]
+    return [cmd, "--contents", "--", archive]
+
 
 test_deb = list_deb

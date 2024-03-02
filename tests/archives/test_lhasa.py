@@ -16,12 +16,13 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestLhasa(ArchiveTest):
     """Test class for the lhasa program"""
 
-    program = 'lhasa'
+    program = "lhasa"
 
     @needs_program(program)
     def test_lhasa(self):
         """Extract an LHA archive."""
-        self.archive_extract('t.lha')
+        self.archive_extract("t.lha")

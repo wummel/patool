@@ -16,20 +16,21 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class Test7zr(ArchiveTest):
     """Test class for the 7zr program"""
 
-    program = '7zr'
+    program = "7zr"
 
     @needs_program(program)
     def test_7zr(self):
         """Run archive commands with 7Z archives."""
-        self.archive_commands('t .7z')
-        self.archive_commands('t .cb7')
+        self.archive_commands("t .7z")
+        self.archive_commands("t .cb7")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_7z_file(self):
         """Run archive commands with renamed 7Z archives."""
-        self.archive_commands('t.7z.foo', skip_create=True)
-        self.archive_commands('t.cb7.foo', skip_create=True)
+        self.archive_commands("t.7z.foo", skip_create=True)
+        self.archive_commands("t.cb7.foo", skip_create=True)

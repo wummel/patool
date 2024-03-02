@@ -18,10 +18,11 @@ import os
 from patoolib import cli
 from . import datadir, needs_program
 
+
 class ArchiveTestTest(unittest.TestCase):
     """Test class for patool test command"""
 
-    @needs_program('7z')
+    @needs_program("7z")
     def test_test(self):
         """Run cli function to test a 7z archive."""
         archive = os.path.join(datadir, "t .7z")

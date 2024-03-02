@@ -15,26 +15,27 @@
 """Archive commands for the zoo program."""
 import os
 
+
 def extract_zoo(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a ZOO archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
-    cmdlist = [cmd, '-extract', os.path.abspath(archive)]
-    return (cmdlist, {'cwd': outdir})
+    cmdlist = [cmd, "-extract", os.path.abspath(archive)]
+    return (cmdlist, {"cwd": outdir})
 
 
 def list_zoo(archive, compression, cmd, verbosity, interactive):
     """List a ZOO archive."""
-    return [cmd, '-list', archive]
+    return [cmd, "-list", archive]
 
 
 def test_zoo(archive, compression, cmd, verbosity, interactive):
     """Test a ZOO archive."""
-    return [cmd, '-test', archive]
+    return [cmd, "-test", archive]
 
 
 def create_zoo(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a ZOO archive."""
-    cmdlist = [cmd, '-add', archive]
+    cmdlist = [cmd, "-add", archive]
     cmdlist.extend(filenames)
     return cmdlist

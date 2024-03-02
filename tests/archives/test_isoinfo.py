@@ -16,17 +16,18 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestIsoinfo(ArchiveTest):
     """Test class for the isoinfo program"""
 
-    program = 'isoinfo'
+    program = "isoinfo"
 
     @needs_program(program)
     def test_isoinfo(self):
         """List an ISO archive."""
-        self.archive_list('t.iso')
+        self.archive_list("t.iso")
 
     @needs_program(program)
     def test_isoinfo_file(self):
         """List a renamed ISO archive."""
-        self.archive_list('t.iso.foo')
+        self.archive_list("t.iso.foo")

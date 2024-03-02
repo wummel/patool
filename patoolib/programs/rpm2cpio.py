@@ -16,17 +16,29 @@
 import os
 from .. import util
 
+
 def extract_rpm(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a RPM archive."""
     # also check cpio
     cpio = util.find_program("cpio")
     if not cpio:
-        raise util.PatoolError("cpio(1) is required for rpm2cpio extraction; please install it")
+        raise util.PatoolError(
+            "cpio(1) is required for rpm2cpio extraction; please install it"
+        )
     path = util.shell_quote(os.path.abspath(archive))
-    cmdlist = [util.shell_quote(cmd), path, "|", util.shell_quote(cpio),
-        '--extract', '--make-directories', '--preserve-modification-time',
-        '--no-absolute-filenames', '--force-local', '--nonmatching',
-        r'"*\.\.*"']
+    cmdlist = [
+        util.shell_quote(cmd),
+        path,
+        "|",
+        util.shell_quote(cpio),
+        "--extract",
+        "--make-directories",
+        "--preserve-modification-time",
+        "--no-absolute-filenames",
+        "--force-local",
+        "--nonmatching",
+        r'"*\.\.*"',
+    ]
     if verbosity > 1:
-        cmdlist.append('-v')
-    return (cmdlist, {'cwd': outdir, 'shell': True})
+        cmdlist.append("-v")
+    return (cmdlist, {"cwd": outdir, "shell": True})

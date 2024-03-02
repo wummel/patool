@@ -5,7 +5,7 @@ Version = "2.2.0"
 MyName = "Bastian Kleineidam"
 MyEmail = "bastian.kleineidam@web.de"
 
-App = AppName+" "+Version
+App = AppName + " " + Version
 Author = MyName
 AuthorEmail = MyEmail
 Copyright = "Copyright (C) 2004-2023 " + Author

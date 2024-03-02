@@ -23,10 +23,11 @@ def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive with the tarfile Python module."""
     try:
         with tarfile.open(archive) as tfile:
-            tfile.list(verbose=verbosity>1)
+            tfile.list(verbose=verbosity > 1)
     except Exception as err:
         raise util.PatoolError(f"error listing {archive}") from err
     return None
+
 
 test_tar = list_tar
 
@@ -36,7 +37,7 @@ def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     try:
         with tarfile.open(archive) as tfile:
             if sys.version_info >= (3, 12, 0, "final", 0):
-                tfile.extractall(path=outdir, filter='data')
+                tfile.extractall(path=outdir, filter="data")
             else:
                 safe_extract(tfile, outdir)
     except Exception as err:
@@ -85,14 +86,14 @@ def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
 
 def get_tar_mode(compression):
     """Determine tarfile open mode according to the given compression."""
-    if compression == 'gzip':
-        return 'w:gz'
-    if compression == 'bzip2':
-        return 'w:bz2'
-    if compression == 'lzma':
-        return 'w:xz'
+    if compression == "gzip":
+        return "w:gz"
+    if compression == "bzip2":
+        return "w:bz2"
+    if compression == "lzma":
+        return "w:xz"
     if compression:
-        msg = f'pytarfile does not support {compression} for tar compression'
+        msg = f"pytarfile does not support {compression} for tar compression"
         raise util.PatoolError(msg)
     # no compression
-    return 'w'
+    return "w"

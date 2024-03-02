@@ -16,20 +16,21 @@
 from . import ArchiveTest, Content
 from .. import needs_program, needs_os
 
+
 class TestAr(ArchiveTest):
     """Test class for the ar program"""
 
-    program = 'ar'
+    program = "ar"
 
-    @needs_os('posix')
+    @needs_os("posix")
     @needs_program(program)
     def test_ar(self):
         """Run archive commands with AR archive."""
-        self.archive_commands('t.txt.a', check=Content.Singlefile)
+        self.archive_commands("t.txt.a", check=Content.Singlefile)
 
-    @needs_os('posix')
-    @needs_program('file')
+    @needs_os("posix")
+    @needs_program("file")
     @needs_program(program)
     def test_ar_file(self):
         """Run archive commands with renamed AR archive."""
-        self.archive_commands('t.txt.a.foo', skip_create=True, check=None)
+        self.archive_commands("t.txt.a.foo", skip_create=True, check=None)

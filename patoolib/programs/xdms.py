@@ -18,24 +18,26 @@ from .. import util
 
 def _maybe_add_password(cmdlist, password):
     if password:
-        cmdlist.extend(['-p', password])
+        cmdlist.extend(["-p", password])
 
 
-def extract_dms(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_dms(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a DMS archive."""
     check_archive_ext(archive)
-    cmdlist = [cmd, '-d', outdir]
+    cmdlist = [cmd, "-d", outdir]
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     _maybe_add_password(cmdlist, password)
-    cmdlist.extend(['u', archive])
+    cmdlist.extend(["u", archive])
     return cmdlist
 
 
 def list_dms(archive, compression, cmd, verbosity, interactive, password=None):
     """List a DMS archive."""
     check_archive_ext(archive)
-    cmdlist = [cmd, 'v']
+    cmdlist = [cmd, "v"]
     _maybe_add_password(cmdlist, password)
     cmdlist.append(archive)
     return cmdlist
@@ -44,7 +46,7 @@ def list_dms(archive, compression, cmd, verbosity, interactive, password=None):
 def test_dms(archive, compression, cmd, verbosity, interactive, password=None):
     """Test a DMS archive."""
     check_archive_ext(archive)
-    cmdlist = [cmd, 't']
+    cmdlist = [cmd, "t"]
     _maybe_add_password(cmdlist, password)
     cmdlist.append(archive)
     return cmdlist

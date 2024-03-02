@@ -16,21 +16,22 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestBzip3(ArchiveTest):
     """Test class for the bzip3 program"""
 
-    program = 'bzip3'
+    program = "bzip3"
 
     @needs_program(program)
     def test_bzip3(self):
         """Extract, test and create a BZIP3 archive."""
-        self.archive_extract('t.txt.bz3', check=Content.Singlefile)
-        self.archive_test('t.txt.bz3')
-        self.archive_create('t.txt.bz3', check=Content.Singlefile)
+        self.archive_extract("t.txt.bz3", check=Content.Singlefile)
+        self.archive_test("t.txt.bz3")
+        self.archive_create("t.txt.bz3", check=Content.Singlefile)
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_bzip3_file(self):
         """Extract and test a renamed BZIP3 archive."""
-        self.archive_extract('t.txt.bz3.foo', check=Content.Singlefile)
-        self.archive_test('t.txt.bz3.foo')
+        self.archive_extract("t.txt.bz3.foo", check=Content.Singlefile)
+        self.archive_test("t.txt.bz3.foo")

@@ -20,15 +20,18 @@ import subprocess
 
 test_gzip = test_compress = test_singlefile_standard
 
+
 def extract_gzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract given gzip archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     outfile = get_original_filename(cmd, outdir, archive)
-    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend(
+        ["-c", "-d", "--", util.shell_quote(archive), ">", util.shell_quote(outfile)]
+    )
+    return (cmdlist, {"shell": True})
+
 
 extract_compress = extract_singlefile_standard
 
@@ -59,17 +62,17 @@ def create_gzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a GZIP archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-c', '--'])
+        cmdlist.append("-v")
+    cmdlist.extend(["-c", "--"])
     cmdlist.extend([util.shell_quote(x) for x in filenames])
-    cmdlist.extend(['>', util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend([">", util.shell_quote(archive)])
+    return (cmdlist, {"shell": True})
 
 
 def list_gzip(archive, compression, cmd, verbosity, interactive):
     """List a GZIP archive."""
     cmdlist = [cmd]
     if verbosity > 0:
-        cmdlist.append('-v')
-    cmdlist.extend(['-l', '--', archive])
+        cmdlist.append("-v")
+    cmdlist.extend(["-l", "--", archive])
     return cmdlist

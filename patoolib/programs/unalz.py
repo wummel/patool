@@ -14,14 +14,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unalz program."""
 
+
 def _maybe_add_password(cmdlist, password):
     if password:
-        cmdlist.extend(['-pwd', password])
+        cmdlist.extend(["-pwd", password])
 
 
-def extract_alzip(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_alzip(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a ALZIP archive."""
-    cmdlist = [cmd, '-d', outdir]
+    cmdlist = [cmd, "-d", outdir]
     _maybe_add_password(cmdlist, password)
     cmdlist.append(archive)
     return cmdlist
@@ -29,9 +32,10 @@ def extract_alzip(archive, compression, cmd, verbosity, interactive, outdir, pas
 
 def list_alzip(archive, compression, cmd, verbosity, interactive, password=None):
     """List a ALZIP archive."""
-    cmdlist = [cmd, '-l']
+    cmdlist = [cmd, "-l"]
     _maybe_add_password(cmdlist, password)
     cmdlist.append(archive)
     return cmdlist
+
 
 test_alzip = list_alzip

@@ -19,49 +19,54 @@ import subprocess
 
 def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive."""
-    cmdlist = [cmd, '--extract']
+    cmdlist = [cmd, "--extract"]
     add_tar_opts(cmdlist, compression, verbosity)
-    cmdlist.extend(["--file", archive, '--directory', outdir])
+    cmdlist.extend(["--file", archive, "--directory", outdir])
     return cmdlist
+
 
 def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive."""
-    cmdlist = [cmd, '--list']
+    cmdlist = [cmd, "--list"]
     add_tar_opts(cmdlist, compression, verbosity)
     cmdlist.extend(["--file", archive])
     return cmdlist
 
+
 test_tar = list_tar
+
 
 def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive."""
-    cmdlist = [cmd, '--create']
+    cmdlist = [cmd, "--create"]
     add_tar_opts(cmdlist, compression, verbosity)
-    cmdlist.extend(["--file", archive, '--'])
+    cmdlist.extend(["--file", archive, "--"])
     cmdlist.extend(filenames)
     return cmdlist
+
 
 def add_tar_opts(cmdlist, compression, verbosity):
     """Add tar options to cmdlist."""
     progname = os.path.basename(cmdlist[0]).lower()
-    if progname.endswith('.exe'):
+    if progname.endswith(".exe"):
         progname = progname[:-4]
-    if compression == 'gzip':
-        cmdlist.append('-z')
-    elif compression == 'compress':
-        cmdlist.append('-Z')
-    elif compression == 'bzip2':
-        cmdlist.append('-j')
-    elif compression == 'xz':
-        cmdlist.append('-J')
-    elif compression in ('lzma', 'lzip'):
-        cmdlist.append(f'--{compression}')
+    if compression == "gzip":
+        cmdlist.append("-z")
+    elif compression == "compress":
+        cmdlist.append("-Z")
+    elif compression == "bzip2":
+        cmdlist.append("-j")
+    elif compression == "xz":
+        cmdlist.append("-J")
+    elif compression in ("lzma", "lzip"):
+        cmdlist.append(f"--{compression}")
     if verbosity > 1:
-        cmdlist.append('--verbose')
-    if progname == 'tar':
+        cmdlist.append("--verbose")
+    if progname == "tar":
         # Some tar implementations (ie. Windows tar.exe, and macos)
         # do not support --force-local
         testcmdlist = [cmdlist[0], "--force-local", "--help"]
         from .. import util
+
         if util.run(testcmdlist, stderr=subprocess.DEVNULL) == 0:
-            cmdlist.append('--force-local')
+            cmdlist.append("--force-local")

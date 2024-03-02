@@ -16,27 +16,27 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestRpm(ArchiveTest):
     """Test class for the rpm program"""
 
-    program = 'rpm'
+    program = "rpm"
 
     @needs_program(program)
     def test_rpm(self):
         """List an RPM archive."""
-        self.archive_list('t.rpm')
+        self.archive_list("t.rpm")
         # The rpm test fails on non-rpm system with missing dependencies.
         # I am too lazy to build a tiny rpm with one file
         # and no dependency.
-        #self.archive_test('t.rpm')
+        # self.archive_test('t.rpm')
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_rpm_file(self):
         """List a renamed RPM archive."""
-        self.archive_list('t.rpm.foo')
+        self.archive_list("t.rpm.foo")
         # The rpm test fails on non-rpm system with missing dependencies.
         # I am too lazy to build a tiny rpm with one file
         # and no dependency.
-        #self.archive_test('t.rpm.foo')
-
+        # self.archive_test('t.rpm.foo')

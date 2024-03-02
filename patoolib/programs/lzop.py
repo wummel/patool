@@ -21,25 +21,27 @@ extract_lzop = extract_singlefile_standard
 
 def list_lzop(archive, compression, cmd, verbosity, interactive):
     """List a LZOP archive."""
-    cmdlist = [cmd, '--list']
+    cmdlist = [cmd, "--list"]
     if verbosity > 1:
-        cmdlist.append('--verbose')
-    cmdlist.extend(['--', archive])
+        cmdlist.append("--verbose")
+    cmdlist.extend(["--", archive])
     return cmdlist
+
 
 def test_lzop(archive, compression, cmd, verbosity, interactive):
     """Test a LZOP archive."""
-    cmdlist = [cmd, '--test']
+    cmdlist = [cmd, "--test"]
     if verbosity > 1:
-        cmdlist.append('--verbose')
-    cmdlist.extend(['--', archive])
+        cmdlist.append("--verbose")
+    cmdlist.extend(["--", archive])
     return cmdlist
+
 
 def create_lzop(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a LZOP archive."""
     cmdlist = [cmd]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-o', archive, '--'])
+        cmdlist.append("-v")
+    cmdlist.extend(["-o", archive, "--"])
     cmdlist.extend(filenames)
     return cmdlist

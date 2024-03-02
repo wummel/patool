@@ -14,18 +14,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rpm program."""
 
+
 def list_rpm(archive, compression, cmd, verbosity, interactive):
     """List a RPM archive."""
-    cmdlist = [cmd, '-q', '-l']
+    cmdlist = [cmd, "-q", "-l"]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-p', '--', archive])
+        cmdlist.append("-v")
+    cmdlist.extend(["-p", "--", archive])
     return cmdlist
+
 
 def test_rpm(archive, compression, cmd, verbosity, interactive):
     """Test a RPM archive."""
-    cmdlist = [cmd, 'V']
+    cmdlist = [cmd, "V"]
     if verbosity > 1:
-        cmdlist.append('-v')
-    cmdlist.extend(['-p', '--', archive])
+        cmdlist.append("-v")
+    cmdlist.extend(["-p", "--", archive])
     return cmdlist

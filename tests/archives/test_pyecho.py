@@ -16,34 +16,35 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestPyecho(ArchiveTest):
     """Test class for the python print function"""
 
-    program = 'py_echo'
+    program = "py_echo"
 
     def test_py_echo(self):
         """List different single-file archives."""
-        self.archive_list('t.txt.bz2')
-        self.archive_list('t.txt.Z')
-        self.archive_list('t.txt.lzma')
-        self.archive_list('t.txt.lz')
-        self.archive_list('t.txt.lrz')
-        self.archive_list('t.txt.rz')
-        self.archive_list('t.ape')
-        self.archive_list('t.shn')
-        self.archive_list('t.flac')
+        self.archive_list("t.txt.bz2")
+        self.archive_list("t.txt.Z")
+        self.archive_list("t.txt.lzma")
+        self.archive_list("t.txt.lz")
+        self.archive_list("t.txt.lrz")
+        self.archive_list("t.txt.rz")
+        self.archive_list("t.ape")
+        self.archive_list("t.shn")
+        self.archive_list("t.flac")
 
-    @needs_program('file')
+    @needs_program("file")
     def test_py_echo_file(self):
         """List different renamed single-file archives."""
-        self.archive_list('t.txt.bz2.foo')
-        self.archive_list('t.txt.Z.foo')
+        self.archive_list("t.txt.bz2.foo")
+        self.archive_list("t.txt.Z.foo")
         # file(1) does not recognize .lzma files
-        #self.archive_list('t.lzma.foo')
-        self.archive_list('t.txt.lz.foo')
-        self.archive_list('t.txt.lrz')
-        self.archive_list('t.txt.rz.foo')
-        self.archive_list('t.ape.foo')
+        # self.archive_list('t.lzma.foo')
+        self.archive_list("t.txt.lz.foo")
+        self.archive_list("t.txt.lrz")
+        self.archive_list("t.txt.rz.foo")
+        self.archive_list("t.ape.foo")
         # file(1) does not recognize .shn files
-        #self.archive_list('t.shn.foo')
-        self.archive_list('t.flac.foo')
+        # self.archive_list('t.shn.foo')
+        self.archive_list("t.flac.foo")

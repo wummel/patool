@@ -16,22 +16,23 @@
 from . import ArchiveTest
 from .. import needs_program
 
+
 class TestUnadf(ArchiveTest):
     """Test class for the unadf program"""
 
-    program = 'unadf'
+    program = "unadf"
 
     @needs_program(program)
     def test_unadf(self):
         """Extract, list and test an ADF archive"""
-        self.archive_extract('t.adf', check=None)
-        self.archive_list('t.adf')
-        self.archive_test('t.adf')
+        self.archive_extract("t.adf", check=None)
+        self.archive_list("t.adf")
+        self.archive_test("t.adf")
 
-    @needs_program('file')
+    @needs_program("file")
     @needs_program(program)
     def test_unadf_file(self):
         """Extract, list and test a renamed ADF archive"""
-        self.archive_extract('t.adf.foo', check=None)
-        self.archive_test('t.adf.foo')
-        self.archive_list('t.adf.foo')
+        self.archive_extract("t.adf.foo", check=None)
+        self.archive_test("t.adf.foo")
+        self.archive_list("t.adf.foo")

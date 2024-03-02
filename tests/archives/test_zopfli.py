@@ -16,12 +16,13 @@
 from . import ArchiveTest, Content
 from .. import needs_program
 
+
 class TestZopfli(ArchiveTest):
     """Test class for the zopfli program"""
 
-    program = 'zopfli'
+    program = "zopfli"
 
     @needs_program(program)
     def test_zopfli(self):
         """Create a GZIP archive with zopfli."""
-        self.archive_create('t.txt.gz', check=Content.Singlefile)
+        self.archive_create("t.txt.gz", check=Content.Singlefile)

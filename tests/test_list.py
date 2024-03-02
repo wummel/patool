@@ -22,7 +22,7 @@ from . import datadir, needs_program
 class ArchiveListTest(unittest.TestCase):
     """Test class for patool list command"""
 
-    @needs_program('tar')
+    @needs_program("tar")
     def test_list(self):
         """Run cli function to list a TAR archive."""
         archive = os.path.join(datadir, "t.tar")

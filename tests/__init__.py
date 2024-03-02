@@ -27,51 +27,60 @@ import pytest
 import importlib
 
 basedir = os.path.dirname(__file__)
-datadir = os.path.join(basedir, 'data')
+datadir = os.path.join(basedir, "data")
 
 # Python 3.x function name attribute
-fnameattr = '__name__'
+fnameattr = "__name__"
+
 
 def _need_func(testfunc, name, description):
     """Decorator skipping test if given testfunc returns False."""
+
     def check_func(func):
         def newfunc(*args, **kwargs):
             if not testfunc(name):
                 pytest.skip(f"{description} {name!r} is not available")
             return func(*args, **kwargs)
+
         setattr(newfunc, fnameattr, getattr(func, fnameattr))
         return newfunc
+
     return check_func
 
 
 def needs_os(name):
     """Decorator skipping test if given operating system is not available."""
-    return _need_func(lambda x: os.name == x, name, 'operating system')
+    return _need_func(lambda x: os.name == x, name, "operating system")
 
 
 def needs_program(name):
     """Decorator skipping test if given program is not available."""
-    return _need_func(lambda x: patoolib.util.find_program(x), name, 'program')
+    return _need_func(lambda x: patoolib.util.find_program(x), name, "program")
 
 
 def needs_one_program(programs):
     """Decorator skipping test if not one of given programs are available."""
-    return _need_func(lambda x: any(map(patoolib.util.find_program, x)), programs, 'programs')
+    return _need_func(
+        lambda x: any(map(patoolib.util.find_program, x)), programs, "programs"
+    )
 
 
 def needs_module(name):
     """Decorator skipping test if given module is not available."""
+
     def has_module(module):
         try:
             importlib.import_module(module)
             return True
         except ImportError:
             return False
-    return _need_func(has_module, name, 'Python module')
+
+    return _need_func(has_module, name, "Python module")
 
 
 def needs_codec(program, codec):
     """Decorator skipping test if given program codec is not available."""
+
     def check_prog(f):
         def newfunc(*args, **kwargs):
             if not patoolib.util.find_program(program):
@@ -79,17 +88,19 @@ def needs_codec(program, codec):
             if not has_codec(program, codec):
                 pytest.skip(f"codec `{codec}' for program `{program}' not available")
             return f(*args, **kwargs)
+
         setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc
+
     return check_prog
 
 
 def has_codec(program, codec):
     """Test if program supports given codec."""
-    if program == '7z' and codec == 'rar':
+    if program == "7z" and codec == "rar":
         # On Debian, the non-free p7zip-rar package must be installed to support RAR
         return patoolib.util.p7zip_supports_rar()
-    if program in ('7zz', '7zzs') and codec == 'rar':
+    if program in ("7zz", "7zzs") and codec == "rar":
         # the 7-Zip program directly supports RAR
         return True
     return patoolib.program_supports_compression(program, codec)

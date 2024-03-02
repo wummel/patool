@@ -15,13 +15,15 @@
 """Archive commands for the shorten program."""
 from .. import fileutil, util
 
+
 def extract_shn(archive, compression, cmd, verbosity, interactive, outdir):
     """Decompress a SHN archive to a WAV file."""
     cmdlist = [util.shell_quote(cmd)]
     outfile = fileutil.get_single_outfile(outdir, archive, extension=".wav")
-    cmdlist.extend(['-x', '-', util.shell_quote(outfile), '<',
-        util.shell_quote(archive)])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend(
+        ["-x", "-", util.shell_quote(outfile), "<", util.shell_quote(archive)]
+    )
+    return (cmdlist, {"shell": True})
 
 
 def create_shn(archive, compression, cmd, verbosity, interactive, filenames):
@@ -29,6 +31,7 @@ def create_shn(archive, compression, cmd, verbosity, interactive, filenames):
     if len(filenames) > 1:
         raise util.PatoolError("multiple filenames for shorten not supported")
     cmdlist = [util.shell_quote(cmd)]
-    cmdlist.extend(['-', util.shell_quote(archive), '<',
-        util.shell_quote(filenames[0])])
-    return (cmdlist, {'shell': True})
+    cmdlist.extend(
+        ["-", util.shell_quote(archive), "<", util.shell_quote(filenames[0])]
+    )
+    return (cmdlist, {"shell": True})

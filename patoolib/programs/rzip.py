@@ -15,19 +15,21 @@
 """Archive commands for the rzip program."""
 from .. import fileutil
 
+
 def extract_rzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an RZIP archive."""
-    cmdlist = [cmd, '-d', '-k']
+    cmdlist = [cmd, "-d", "-k"]
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     outfile = fileutil.get_single_outfile(outdir, archive)
     cmdlist.extend(["-o", outfile, archive])
     return cmdlist
 
+
 def create_rzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an RZIP archive."""
-    cmdlist = [cmd, '-k', '-o', archive]
+    cmdlist = [cmd, "-k", "-o", archive]
     if verbosity > 1:
-        cmdlist.append('-v')
+        cmdlist.append("-v")
     cmdlist.extend(filenames)
     return cmdlist
