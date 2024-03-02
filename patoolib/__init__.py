@@ -33,10 +33,10 @@ __all__ = [
 
 
 # Supported archive commands
-ArchiveCommands = ('list', 'extract', 'test', 'create')
+ArchiveCommands: tuple[str, ...] = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
-ArchiveFormats = (
+ArchiveFormats: tuple[str, ...] = (
     '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
     'bzip2', 'bzip3', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
     'flac', 'gzip', 'iso', 'lrzip', 'lz4', 'lzh', 'lzip', 'lzma', 'lzop',
@@ -45,12 +45,12 @@ ArchiveFormats = (
 
 # Supported compressions (used with tar for example)
 # Note that all compressions must also be archive formats
-ArchiveCompressions = (
+ArchiveCompressions: tuple[str, ...] = (
     'bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz', 'zstd',
 )
 
 # Map MIME types to archive format
-ArchiveMimetypes = {
+ArchiveMimetypes: dict[str, str] = {
     'application/gzip': 'gzip',
     'application/jar': 'zip',  # reported on older systems such as ubuntu 14.04
     'application/java-archive': 'zip',
@@ -102,7 +102,7 @@ ArchiveMimetypes = {
 # List of programs supporting the given archive format and command.
 # If command is None, the program supports all commands (list, extract, ...)
 # Programs starting with "py_" are Python modules.
-ArchivePrograms = {
+ArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
     '7z': {
         None: ('7z', '7za', '7zr', '7zz', '7zzs'),
         'extract': ('unar',),
@@ -293,7 +293,7 @@ ArchivePrograms = {
 }
 
 # List of programs by archive type, which don't support password use
-NoPasswordSupportArchivePrograms = {
+NoPasswordSupportArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
     'bzip2': {
         None: ('7z', '7zz', '7zzs', )
     },
@@ -336,7 +336,7 @@ NoPasswordSupportArchivePrograms = {
 
 # List those programs that have different python module names because of
 # Python module naming restrictions.
-ProgramModules = {
+ProgramModules: dict[str, str] = {
     '7z': 'p7zip',
     '7za': 'p7azip',
     '7zr': 'p7rzip',
@@ -367,7 +367,7 @@ def program_supports_compression(program, compression):
 
 from .mime import guess_mime # noqa: E402
 
-def is_archive(filename):
+def is_archive(filename: str) -> bool:
     """Detect if the file is a known archive.
 
     Example: patoolib.is_archive("package.deb")
@@ -454,7 +454,7 @@ def _remove_command_without_password_support(programs, format, command):
     return programs_with_support
 
 
-def list_formats():
+def list_formats() -> None:
     """Print information about available archive formats to stdout.
 
     :return: None
@@ -753,7 +753,7 @@ def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=
 
 # the patool library API
 
-def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive=True, password=None):
+def extract_archive(archive: str, verbosity: int = 0, outdir: str | None = None, program: str | None = None, interactive: bool = True, password: str | None = None) -> str:
     """Extract an archive file.
 
     Extracting never overwrites existing files or directories. The original archive file is kept after
@@ -794,7 +794,7 @@ def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive
     return _extract_archive(archive, verbosity=verbosity, interactive=interactive, outdir=outdir, program=program, password=password)
 
 
-def list_archive(archive, verbosity=1, program=None, interactive=True, password=None):
+def list_archive(archive: str, verbosity: int = 1, program: str | None = None, interactive: bool = True, password: str | None = None) -> None:
     """List given archive.
 
     Example: patoolib.list_archive("package.deb")
@@ -830,7 +830,7 @@ def list_archive(archive, verbosity=1, program=None, interactive=True, password=
     return _handle_archive(archive, 'list', verbosity=verbosity, interactive=interactive, program=program, password=password)
 
 
-def test_archive(archive, verbosity=0, program=None, interactive=True, password=None):
+def test_archive(archive: str, verbosity: int = 0, program: str | None = None, interactive: bool = True, password: str | None = None) -> None:
     """Test given archive.
 
     Example: patoolib.test_archive("dist.tar.gz", verbosity=1)
@@ -869,7 +869,7 @@ def test_archive(archive, verbosity=0, program=None, interactive=True, password=
     return res
 
 
-def create_archive(archive, filenames, verbosity=0, program=None, interactive=True, password=None):
+def create_archive(archive: str, filenames: tuple[str, ...], verbosity: int = 0, program: str | None = None, interactive: bool = True, password: str | None = None) -> None:
     """Create given archive with given files.
 
     Example: patoolib.create_archive("/path/to/myfiles.zip", ("file1.txt", "dir/"))
@@ -911,7 +911,7 @@ def create_archive(archive, filenames, verbosity=0, program=None, interactive=Tr
     return res
 
 
-def diff_archives(archive1, archive2, verbosity=0, interactive=True):
+def diff_archives(archive1: str, archive2: str, verbosity: int = 0, interactive: bool = True) -> None:
     """Compare two archives and print their differences.
 
     Both archives will be extracted in temporary directories. Both directory contents will be compared
@@ -945,7 +945,7 @@ def diff_archives(archive1, archive2, verbosity=0, interactive=True):
     return res
 
 
-def search_archive(pattern, archive, verbosity=0, interactive=True, password=None):
+def search_archive(pattern: str, archive: str, verbosity: int = 0, interactive: bool = True, password: str | None = None) -> None:
     """Search pattern in archive members.
 
     The archive will be extracted in a temporary directory. The directory contents will then be searched
@@ -984,7 +984,7 @@ def search_archive(pattern, archive, verbosity=0, interactive=True, password=Non
     return res
 
 
-def repack_archive(archive, archive_new, verbosity=0, interactive=True, password=None):
+def repack_archive(archive: str, archive_new: str, verbosity: int = 0, interactive: bool = True, password: str | None = None) -> None:
     """Repack archive to different file and/or format.
 
     The archive will be extracted and recompressed to archive_new.
