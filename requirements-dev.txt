@@ -1,20 +1,20 @@
 # these modules are only needed for development
 
 # for testing
-pytest==8.1.1
+pytest==8.2.2
 
 # for python code linting
-ruff==0.3.3
+ruff==0.4.9
 
 # for generating a Python .whl file
 wheel==0.43.0
 
 # for uploading releases
-twine==5.0.0
+twine==5.1.0
 
 # for generating the web page
-Sphinx==7.2.6
-myst-parser==2.0.0
+Sphinx==7.3.7
+myst-parser==3.0.1
 
 # for upgrading the version number
 bump2version==1.0.1
