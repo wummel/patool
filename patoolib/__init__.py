@@ -477,7 +477,7 @@ def list_formats():
                 if format == 'tar':
                     encs = [x for x in ArchiveCompressions if util.find_program(x)]
                     if encs:
-                        print("(supported compressions: %s)" % ", ".join(encs), end=' ')
+                        print("(supported compressions: {})".format(", ".join(encs)), end=' ')
                 elif format == '7z':
                     if util.p7zip_supports_rar():
                         print("(rar archives supported)", end=' ')
