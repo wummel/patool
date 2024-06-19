@@ -1,16 +1,16 @@
 # these modules are only needed for development
 
 # for testing
-pytest==8.0.0
+pytest==8.1.1
 
 # for python code linting
-ruff==0.2.0
+ruff==0.3.3
 
 # for generating a Python .whl file
-wheel==0.42.0
+wheel==0.43.0
 
 # for uploading releases
-twine==4.0.2
+twine==5.0.0
 
 # for generating the web page
 Sphinx==7.2.6

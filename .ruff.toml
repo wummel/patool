@@ -33,3 +33,6 @@ force-sort-within-sections = false
 
 [lint.pydocstyle]
 convention = "google"
+
+[format]
+quote-style = "preserve"

@@ -27,7 +27,7 @@ HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/source/conf.py
 CHANGELOG:=doc/changelog.txt
 GIT_MAIN_BRANCH:=master
-PIP_VERSION:=23.3.2
+PIP_VERSION:=24.0
 # Pytest options:
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts
@@ -87,17 +87,16 @@ upload: ## upload a new release to pypi
 	twine upload --config-file $(XDG_CONFIG_HOME)/pypirc \
 	  dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
 
-.PHONY: tag
-tag: ## add and push a git version tag for a released version
-	git tag upstream/$(VERSION)
-	git push --tags origin upstream/$(VERSION)
+.PHONY: hub
+hub: ## add and push a github release
+	hub release create -a dist/$(ARCHIVE_SOURCE) -a dist/$(ARCHIVE_WHEEL) upstream/$(VERSION)
 
 # Make a new release by calling all the distinct steps in the correct order.
 # Each step is a separate target so that it's easy to do this manually if
 # anything screwed up.
 .PHONY: release
 release: distclean releasecheck ## release a new version of patool
-	$(MAKE) dist upload homepage tag github-issues
+	$(MAKE) dist hub upload homepage github-issues
 
 .PHONY: releasecheck
 releasecheck: checkgit checkchangelog lint test ## check that repo is ready for release
@@ -153,11 +152,11 @@ checkchangelog: ## check changelog before release
 
 .PHONY: lint
 lint: ## lint python code
-	ruff setup.py patoolib tests doc/web/source
+	ruff check setup.py patoolib tests doc/web/source
 
 .PHONY: reformat
 reformat: ## fix linting errors automatically
-	ruff --fix setup.py patoolib tests doc/web/source
+	ruff check --fix setup.py patoolib tests doc/web/source
 
 .PHONY: checkoutdated
 checkoutdated: ## Check for outdated Python requirements
