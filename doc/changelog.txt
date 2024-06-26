@@ -1,4 +1,4 @@
-2.3.0 (released xx.xx.xxxx)
+2.3.0 (released 26.06.2024)
   * Add linting check to github workflow CI.
     Idea and patch by sorairolake, thanks!
   * Format the python code with ruff, and
