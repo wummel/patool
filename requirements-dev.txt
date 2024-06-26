@@ -1,5 +1,8 @@
 # these modules are only needed for development
 
+# for using setuptools.setup() in setup.py
+setuptools==70.1.1
+
 # for testing
 pytest==8.2.2
 
