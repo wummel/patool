@@ -17,12 +17,14 @@
 import os
 import sys
 import time
+import locale
 import logging
 from . import configuration
 
 
 # the global logging.Logger object, initialized by init_logging()
 logger = None
+default_encoding = locale.getpreferredencoding()
 
 
 def init_logging(stream=sys.stderr):
@@ -38,7 +40,7 @@ def init_logging(stream=sys.stderr):
     logger.setLevel(logging.INFO)
 
 
-def encode_safe(*args, encoding=sys.stderr.encoding):
+def encode_safe(*args, encoding=default_encoding):
     """Replacing unknown characters in args for the given encoding.
     @return: a space-separated string that will not have encoding errors
     with the given encoding
