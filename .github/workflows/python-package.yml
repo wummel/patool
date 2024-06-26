@@ -33,6 +33,10 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements-dev.txt
 
+    - name: Check linting errors
+      run: |
+        ruff check setup.py patoolib tests doc/web/source
+
     - name: Install archive programs on ${{ runner.os }} running ${{ matrix.os }}
       if: ${{ runner.os=='Linux' }}
       run: >
