@@ -155,8 +155,8 @@ lint: ## lint python code
 	ruff check setup.py patoolib tests doc/web/source
 
 .PHONY: reformat
-reformat: ## fix linting errors automatically
-	ruff check --fix setup.py patoolib tests doc/web/source
+reformat: ## format the python code
+	ruff format setup.py patoolib tests doc/web/source
 
 .PHONY: checkoutdated
 checkoutdated: ## Check for outdated Python requirements
