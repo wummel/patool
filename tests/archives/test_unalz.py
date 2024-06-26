@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the unalz program"""
+
 from . import ArchiveTest
 from .. import needs_program
+
 
 class TestUnalz(ArchiveTest):
     """Test class for the unalz program"""
@@ -29,11 +31,10 @@ class TestUnalz(ArchiveTest):
         self.archive_extract('t.alz')
 
     # file(1) does not recognize .alz files
-    #@needs_program('file')
-    #@needs_program(program)
-    #def test_unalz_file(self):
+    # @needs_program('file')
+    # @needs_program(program)
+    # def test_unalz_file(self):
     #    """Test, list and extract renamed ALZ archives."""
     #    self.archive_test('t.alz.foo')
     #    self.archive_list('t.alz.foo')
     #    self.archive_extract('t.alz.foo')
-

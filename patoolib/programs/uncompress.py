@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the uncompress.real program."""
+
 from .. import util, fileutil
 
 
@@ -22,6 +23,5 @@ def extract_compress(archive, compression, cmd, verbosity, interactive, outdir):
     if verbosity > 1:
         cmdlist.append('-v')
     outfile = fileutil.get_single_outfile(outdir, archive)
-    cmdlist.extend(['-c', util.shell_quote(archive), '>',
-                    util.shell_quote(outfile)])
+    cmdlist.extend(['-c', util.shell_quote(archive), '>', util.shell_quote(outfile)])
     return (cmdlist, {'shell': True})

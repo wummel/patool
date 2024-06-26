@@ -13,9 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unace program."""
+
 import os
 
-def extract_ace(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+
+def extract_ace(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract an ACE archive."""
     cmdlist = [cmd, 'x']
     if not outdir.endswith(os.sep):
@@ -24,6 +28,7 @@ def extract_ace(archive, compression, cmd, verbosity, interactive, outdir, passw
         cmdlist.append(f'-p{password}')
     cmdlist.extend([archive, outdir])
     return cmdlist
+
 
 def list_ace(archive, compression, cmd, verbosity, interactive, password=None):
     """List an ACE archive."""
@@ -36,6 +41,7 @@ def list_ace(archive, compression, cmd, verbosity, interactive, password=None):
         cmdlist.append(f'-p{password}')
     cmdlist.append(archive)
     return cmdlist
+
 
 def test_ace(archive, compression, cmd, verbosity, interactive, password=None):
     """Test an ACE archive."""

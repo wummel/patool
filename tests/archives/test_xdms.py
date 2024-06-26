@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the xdms program"""
+
 from . import ArchiveTest
 from .. import needs_program
+
 
 class TestXdms(ArchiveTest):
     """Test class for the xdms program"""
@@ -29,10 +31,9 @@ class TestXdms(ArchiveTest):
         self.archive_test('t.dms')
 
     # xdms(1) cannot handle files without '.dms' extension
-    #@needs_program(program)
-    #def test_xdms_file(self):
+    # @needs_program(program)
+    # def test_xdms_file(self):
     #    """Test, extract and list a renamed DMS archive."""
     #    self.archive_extract('t.dms.foo')
     #    self.archive_test('t.dms.foo')
     #    self.archive_list('t.dms.foo')
-

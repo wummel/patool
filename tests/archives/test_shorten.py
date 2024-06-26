@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the shorten program"""
+
 from . import ArchiveTest
 from .. import needs_program
+
 
 class TestShorten(ArchiveTest):
     """Test class for the shorten program"""
@@ -28,9 +30,8 @@ class TestShorten(ArchiveTest):
         self.archive_create('t.shn', srcfiles=("t.wav",))
 
     # file(1) does not recognize .shn files
-    #@needs_program('file')
-    #@needs_program(program)
-    #def test_shorten_file(self):
+    # @needs_program('file')
+    # @needs_program(program)
+    # def test_shorten_file(self):
     #    """Extract a renamed SHORTEN archive."""
     #    self.archive_extract('t.shn.foo', check=None)
-

@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rzip program."""
+
 from .. import fileutil
+
 
 def extract_rzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an RZIP archive."""
@@ -23,6 +25,7 @@ def extract_rzip(archive, compression, cmd, verbosity, interactive, outdir):
     outfile = fileutil.get_single_outfile(outdir, archive)
     cmdlist.extend(["-o", outfile, archive])
     return cmdlist
+
 
 def create_rzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an RZIP archive."""

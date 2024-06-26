@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the lrzip program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program
+
 
 class TestLrzip(ArchiveTest):
     """Test class for the lrzip program"""
@@ -29,11 +31,10 @@ class TestLrzip(ArchiveTest):
         self.archive_create('t.txt.lrz', check=Content.Singlefile)
 
     # file(1) does not recognize .lrz files
-    #@needs_program('file')
-    #@needs_program(program)
-    #def test_lrzip_file(self):
+    # @needs_program('file')
+    # @needs_program(program)
+    # def test_lrzip_file(self):
     #    """Test, extract and create a renamed LRZIP archive."""
     #    self.archive_test('t.txt.lrz.foo')
     #    self.archive_extract('t.txt.lrz.foo')
     #    self.archive_create('t.txt.lrz.foo', format="lrzip", check=Content.Singlefile)
-

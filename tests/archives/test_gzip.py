@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the gzip program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program
+
 
 class TestGzip(ArchiveTest):
     """Test class for the gzip program"""
@@ -31,7 +33,9 @@ class TestGzip(ArchiveTest):
     @needs_program(program)
     def test_gzip_file(self):
         """Run archive commands with renamed GZIP and COMPRESS archive."""
-        self.archive_commands('t.txt.gz.foo', skip_create=True, check=Content.Singlefile)
+        self.archive_commands(
+            't.txt.gz.foo', skip_create=True, check=Content.Singlefile
+        )
         self.archive_extract('t.txt.Z.foo', check=Content.Singlefile)
 
     def get_expected_singlefile_output(self, archive):

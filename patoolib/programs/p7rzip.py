@@ -20,6 +20,7 @@
 # ruff: noqa: F401
 from .p7zip import create_7z
 
+
 def extract_7z(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a 7z archive."""
     cmdlist = [cmd, 'x']
@@ -28,6 +29,7 @@ def extract_7z(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend([f'-o{outdir}', '--', archive])
     return cmdlist
 
+
 def list_7z(archive, compression, cmd, verbosity, interactive):
     """List a 7z archive."""
     cmdlist = [cmd, 'l']
@@ -35,6 +37,7 @@ def list_7z(archive, compression, cmd, verbosity, interactive):
         cmdlist.append('-y')
     cmdlist.extend(['--', archive])
     return cmdlist
+
 
 def test_7z(archive, compression, cmd, verbosity, interactive):
     """Test a 7z archive."""

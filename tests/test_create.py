@@ -13,10 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test patool create command."""
+
 import unittest
 import os
 from patoolib import cli, fileutil
 from . import basedir, datadir, needs_program
+
 
 class ArchiveCreateTest(unittest.TestCase):
     """Test class for patool create command."""

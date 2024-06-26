@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the zopfli program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program
+
 
 class TestZopfli(ArchiveTest):
     """Test class for the zopfli program"""

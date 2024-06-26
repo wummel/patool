@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the star program"""
+
 from . import ArchiveTest
 from .. import needs_program, needs_codec
+
 
 class TestStar(ArchiveTest):
     """Test class for the star program"""
@@ -91,9 +93,9 @@ class TestStar(ArchiveTest):
         self.archive_commands('t.tbz2.foo', skip_create=True)
 
     # file(1) does not recognize .lzma files
-    #@needs_program('file')
-    #@needs_codec(program, 'lzma')
-    #def test_star_lzma_file(self):
+    # @needs_program('file')
+    # @needs_codec(program, 'lzma')
+    # def test_star_lzma_file(self):
     #    """Run archive commands with renamed TAR LZMA archive."""
     #    self.archive_commands('t.tar.lzma.foo', skip_create=True)
 

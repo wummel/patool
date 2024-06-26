@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """MIME type detection functions."""
+
 import os
 import mimetypes
 import subprocess
@@ -23,6 +24,7 @@ from .util import memoized, find_program, backtick
 
 # internal MIME database
 mimedb = None
+
 
 def init_mimedb():
     """Initialize the internal MIME database."""
@@ -169,8 +171,11 @@ def guess_mime_file(filename):
         # when the uncompressor program is not installed, other
         # implementation return the original file type.
         # The following detects both cases.
-        if (mime2 in ('application/x-empty', 'application/octet-stream') or
-            mime2 in Mime2Encoding or not mime2):
+        if (
+            mime2 in ('application/x-empty', 'application/octet-stream')
+            or mime2 in Mime2Encoding
+            or not mime2
+        ):
             # The uncompressor program file(1) uses is not installed
             # or is not able to uncompress.
             # Try to get mime information from the file extension.
@@ -249,6 +254,7 @@ FileText2Mime = {
     "MS Windows HtmlHelp Data": "application/x-chm",
     "ZPAQ stream": "application/zpaq",
 }
+
 
 def guess_mime_file_text(file_prog, filename):
     """Determine MIME type of filename with file(1)."""

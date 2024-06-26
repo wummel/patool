@@ -13,21 +13,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test patool configuration values"""
+
 import unittest
 import patoolib
+
 
 class TestConfiguration(unittest.TestCase):
     """Test class for patool configuration values"""
 
     def test_archive_mimetypes(self):
         """Test that each format has a MIME type"""
-        self.assertEqual(set(patoolib.ArchiveFormats),
-                         set(patoolib.ArchiveMimetypes.values()))
+        self.assertEqual(
+            set(patoolib.ArchiveFormats), set(patoolib.ArchiveMimetypes.values())
+        )
 
     def test_archive_programs(self):
         """Test that the archive program key is an archive format"""
-        self.assertEqual(set(patoolib.ArchiveFormats),
-                         set(patoolib.ArchivePrograms.keys()))
+        self.assertEqual(
+            set(patoolib.ArchiveFormats), set(patoolib.ArchivePrograms.keys())
+        )
         for commands in patoolib.ArchivePrograms.values():
             for command in commands:
                 if command is not None:
@@ -37,13 +41,15 @@ class TestConfiguration(unittest.TestCase):
 
     def test_compression_programs(self):
         """Test that compressions are archive formats"""
-        self.assertTrue(set(patoolib.ArchiveCompressions).issubset(
-                         set(patoolib.ArchiveFormats)))
+        self.assertTrue(
+            set(patoolib.ArchiveCompressions).issubset(set(patoolib.ArchiveFormats))
+        )
 
     def test_encoding_mimes_keys(self):
         """Test that all compressions have a mime type"""
-        self.assertEqual(set(patoolib.ArchiveCompressions),
-                         set(patoolib.mime.Encoding2Mime.keys()))
+        self.assertEqual(
+            set(patoolib.ArchiveCompressions), set(patoolib.mime.Encoding2Mime.keys())
+        )
 
     def test_encoding_mimes_values(self):
         """Test that all encoding mimes are known mime types"""

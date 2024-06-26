@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Utility functions."""
+
 import os
 import sys
 import shutil
@@ -22,6 +23,7 @@ from .log import log_info
 
 class PatoolError(Exception):
     """Raised when errors occur."""
+
     pass
 
 
@@ -57,16 +59,17 @@ class memoized:
 
 def backtick(cmd, encoding='utf-8'):
     """Return decoded output from command."""
-    return subprocess.run(cmd, stdout=subprocess.PIPE, check=True,
-                          encoding=encoding, errors="replace").stdout
+    return subprocess.run(
+        cmd, stdout=subprocess.PIPE, check=True, encoding=encoding, errors="replace"
+    ).stdout
 
 
 def run_under_pythonw():
     """Return True iff this script is run with pythonw.exe on Windows."""
     return (
-        os.name == 'nt' and
-        sys.executable is not None and
-        sys.executable.lower().endswith('pythonw.exe')
+        os.name == 'nt'
+        and sys.executable is not None
+        and sys.executable.lower().endswith('pythonw.exe')
     )
 
 
@@ -139,7 +142,14 @@ def p7zip_supports_rar():
     # the subdirectory and codec name
     codecnames = ['p7zip/Codecs/Rar29.so', 'p7zip/Codecs/Rar.so']
     # search canonical user library dirs
-    for libdir in ('/usr/lib', '/usr/local/lib', '/usr/lib64', '/usr/local/lib64', '/usr/lib/i386-linux-gnu', '/usr/lib/x86_64-linux-gnu'):
+    for libdir in (
+        '/usr/lib',
+        '/usr/local/lib',
+        '/usr/lib64',
+        '/usr/local/lib64',
+        '/usr/lib/i386-linux-gnu',
+        '/usr/lib/x86_64-linux-gnu',
+    ):
         for codecname in codecnames:
             fname = os.path.join(libdir, codecname)
             if os.path.exists(fname):
@@ -179,13 +189,18 @@ def get_nt_7z_dir():
     """Return 7-Zip directory from registry, or an empty string."""
     import winreg
     import platform
+
     python_bits = platform.architecture()[0]
     keyname = r"SOFTWARE\7-Zip"
     try:
         if python_bits == '32bit' and platform.machine().endswith('64'):
             # get 64-bit registry key from 32-bit Python
-            key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyname,
-                  0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
+            key = winreg.OpenKey(
+                winreg.HKEY_LOCAL_MACHINE,
+                keyname,
+                0,
+                winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
+            )
         else:
             key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, keyname)
         try:

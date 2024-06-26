@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the extract_chmLib program"""
+
 from . import ArchiveTest
 from .. import needs_program
+
 
 class TestChmlib(ArchiveTest):
     """Test class for the extract_chmLib program"""

@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the 7zz program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program, needs_codec
+
 
 class Test7zz(ArchiveTest):
     """Test class for the 7zz program"""
@@ -87,7 +89,9 @@ class Test7zz(ArchiveTest):
         self.archive_commands('t.cb7.foo', skip_create=True)
         self.archive_commands('t.zip.foo', skip_create=True)
         self.archive_commands('t.cbz.foo', skip_create=True)
-        self.archive_commands('t.txt.xz.foo', skip_create=True, check=Content.Singlefile)
+        self.archive_commands(
+            't.txt.xz.foo', skip_create=True, check=Content.Singlefile
+        )
         self.archive_list('t.txt.gz.foo')
         self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.jar.foo')

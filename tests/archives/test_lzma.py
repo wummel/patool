@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the lzma program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program
+
 
 class TestLzma(ArchiveTest):
     """Test class for the lzma program"""
@@ -29,8 +31,8 @@ class TestLzma(ArchiveTest):
         self.archive_create('t.txt.lzma', check=Content.Singlefile)
 
     # file(1) does not recognize .lzma files
-    #@needs_program('file')
-    #@needs_program(program)
-    #def test_lzma_file(self):
+    # @needs_program('file')
+    # @needs_program(program)
+    # def test_lzma_file(self):
     #    self.archive_test('t.lzma.foo')
     #    self.archive_extract('t.lzma.foo')

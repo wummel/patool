@@ -13,12 +13,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the xz program."""
+
 from . import extract_singlefile_standard, test_singlefile_standard
 from .. import fileutil, util
 
 
 extract_xz = extract_singlefile_standard
 test_xz = test_singlefile_standard
+
 
 def list_xz(archive, compression, cmd, verbosity, interactive):
     """List a XZ archive."""
@@ -47,8 +49,9 @@ def extract_lzma(archive, compression, cmd, verbosity, interactive, outdir):
     if verbosity > 1:
         cmdlist.append('-v')
     outfile = fileutil.get_single_outfile(outdir, archive)
-    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
+    cmdlist.extend(
+        ['-c', '-d', '--', util.shell_quote(archive), '>', util.shell_quote(outfile)]
+    )
     return (cmdlist, {'shell': True})
 
 

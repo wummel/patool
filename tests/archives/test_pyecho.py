@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the python print function"""
+
 from . import ArchiveTest
 from .. import needs_program
+
 
 class TestPyecho(ArchiveTest):
     """Test class for the python print function"""
@@ -39,11 +41,11 @@ class TestPyecho(ArchiveTest):
         self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.txt.Z.foo')
         # file(1) does not recognize .lzma files
-        #self.archive_list('t.lzma.foo')
+        # self.archive_list('t.lzma.foo')
         self.archive_list('t.txt.lz.foo')
         self.archive_list('t.txt.lrz')
         self.archive_list('t.txt.rz.foo')
         self.archive_list('t.ape.foo')
         # file(1) does not recognize .shn files
-        #self.archive_list('t.shn.foo')
+        # self.archive_list('t.shn.foo')
         self.archive_list('t.flac.foo')

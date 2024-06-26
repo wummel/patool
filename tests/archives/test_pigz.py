@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the pigz program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program
+
 
 class TestPigz(ArchiveTest):
     """Test class for the pigz program"""
@@ -30,8 +32,9 @@ class TestPigz(ArchiveTest):
     @needs_program(program)
     def test_pigz_file(self):
         """Run archive commands with renamed GZIP archive."""
-        self.archive_commands('t.txt.gz.foo', check=Content.Singlefile,
-          skip_create=True, skip_test=True)
+        self.archive_commands(
+            't.txt.gz.foo', check=Content.Singlefile, skip_create=True, skip_test=True
+        )
 
     def get_expected_singlefile_output(self, archive):
         """Pigz restores the original filename for .gz files"""

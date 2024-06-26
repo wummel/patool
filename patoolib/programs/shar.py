@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the shar program."""
+
 from .. import util
+
 
 def create_shar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a SHAR archive."""

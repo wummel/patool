@@ -13,5 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the BSD tar program."""
+
 # ruff: noqa: F401
 from .tar import extract_tar, list_tar, test_tar, create_tar

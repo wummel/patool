@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the shar program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program
+
 
 class TestShar(ArchiveTest):
     """Test class for the shar program"""
@@ -26,4 +28,3 @@ class TestShar(ArchiveTest):
     def test_shar(self):
         """Create a SHAR archive."""
         self.archive_create('t.shar', check=Content.Singlefile)
-

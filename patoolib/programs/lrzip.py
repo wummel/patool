@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lrzip program."""
+
 import os
 from .. import fileutil
+
 
 def extract_lrzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a LRZIP archive."""
@@ -25,6 +27,7 @@ def extract_lrzip(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend(["-o", outfile, os.path.abspath(archive)])
     return cmdlist
 
+
 def test_lrzip(archive, compression, cmd, verbosity, interactive):
     """Test a LRZIP archive."""
     cmdlist = [cmd, '-t']
@@ -32,6 +35,7 @@ def test_lrzip(archive, compression, cmd, verbosity, interactive):
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist
+
 
 def create_lrzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a LRZIP archive."""

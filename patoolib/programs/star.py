@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the star program."""
+
 from .tar import add_tar_opts as add_star_opts
+
 
 def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive."""
@@ -22,6 +24,7 @@ def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend(['-C', outdir, f"file={archive}"])
     return cmdlist
 
+
 def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive."""
     cmdlist = [cmd, '-n']
@@ -29,7 +32,9 @@ def list_tar(archive, compression, cmd, verbosity, interactive):
     cmdlist.append(f"file={archive}")
     return cmdlist
 
+
 test_tar = list_tar
+
 
 def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive."""

@@ -13,10 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the jar program."""
+
 import os
 
 
-def extract_zip(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_zip(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a ZIP archive."""
     cmdlist = [cmd, '-x']
     if verbosity > 1:

@@ -13,9 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the rar program."""
+
 import os
 
-def extract_rar(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+
+def extract_rar(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a RAR archive."""
     cmdlist = [cmd, 'x']
     if not interactive:
@@ -24,6 +28,7 @@ def extract_rar(archive, compression, cmd, verbosity, interactive, outdir, passw
         cmdlist.append(f'-p{password}')
     cmdlist.extend(['--', os.path.abspath(archive)])
     return (cmdlist, {'cwd': outdir})
+
 
 def list_rar(archive, compression, cmd, verbosity, interactive, password=None):
     """List a RAR archive."""
@@ -39,6 +44,7 @@ def list_rar(archive, compression, cmd, verbosity, interactive, password=None):
     cmdlist.extend(['--', archive])
     return cmdlist
 
+
 def test_rar(archive, compression, cmd, verbosity, interactive, password=None):
     """Test a RAR archive."""
     cmdlist = [cmd, 't']
@@ -49,7 +55,10 @@ def test_rar(archive, compression, cmd, verbosity, interactive, password=None):
     cmdlist.extend(['--', archive])
     return cmdlist
 
-def create_rar(archive, compression, cmd, verbosity, interactive, filenames, password=None):
+
+def create_rar(
+    archive, compression, cmd, verbosity, interactive, filenames, password=None
+):
     """Create a RAR archive."""
     cmdlist = [cmd, 'a']
     if not interactive:

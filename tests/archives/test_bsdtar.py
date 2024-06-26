@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the bsdtar program"""
+
 from . import ArchiveTest
 from .. import needs_program, needs_codec
+
 
 class TestBsdtar(ArchiveTest):
     """Test class for the bsdtar program"""
@@ -34,9 +36,9 @@ class TestBsdtar(ArchiveTest):
         self.archive_commands('t.tgz')
 
     # fixme: broken tests
-    #@needs_program(program)
-    #@needs_program('compress')
-    #def test_bsdtar_z(self):
+    # @needs_program(program)
+    # @needs_program('compress')
+    # def test_bsdtar_z(self):
     #    """Run archive commands with TAR COMPRESS archives."""
     #    self.archive_commands('t.tar.Z')
     #    self.archive_commands('t.taz')
@@ -53,9 +55,9 @@ class TestBsdtar(ArchiveTest):
         self.archive_commands('t.tar.lzma')
 
     # bsdtar cannot read archives created with tar and lzip
-    #@needs_program(program)
-    #@needs_program('lzip')
-    #def test_bsdtar_lzip(self):
+    # @needs_program(program)
+    # @needs_program('lzip')
+    # def test_bsdtar_lzip(self):
     #    """Run archive commands with TAR LZIP archives."""
     #    self.archive_commands('t.tar.lz')
 
@@ -79,9 +81,9 @@ class TestBsdtar(ArchiveTest):
         self.archive_commands('t.tgz.foo', skip_create=True)
 
     # fixme: broken tests
-    #@needs_program('file')
-    #@needs_codec(program, 'compress')
-    #def test_bsdtar_z_file(self):
+    # @needs_program('file')
+    # @needs_codec(program, 'compress')
+    # def test_bsdtar_z_file(self):
     #    """Run archive commands with renamed TAR COMPRESS archives."""
     #    self.archive_commands('t.tar.Z.foo', skip_create=True)
     #    self.archive_commands('t.taz.foo', skip_create=True)
@@ -94,17 +96,17 @@ class TestBsdtar(ArchiveTest):
         self.archive_commands('t.tbz2.foo', skip_create=True)
 
     # file(1) does not recognize .lzma files (at least not with --uncompress)
-    #@needs_program('file')
-    #@needs_codec(program, 'lzma')
-    #def test_bsdtar_lzma_file(self):
+    # @needs_program('file')
+    # @needs_codec(program, 'lzma')
+    # def test_bsdtar_lzma_file(self):
     #    """Run archive commands with renamed TAR LZMA archives."""
     #    self.archive_commands('t.tar.lzma.foo', skip_create=True)
 
     # bsdtar cannot read archives created with tar and lzip
-    #@needs_program('lzip')
-    #@needs_program('file')
-    #@needs_codec(program, 'lzip')
-    #def test_bsdtar_lzip_file(self):
+    # @needs_program('lzip')
+    # @needs_program('file')
+    # @needs_codec(program, 'lzip')
+    # def test_bsdtar_lzip_file(self):
     #    """Run archive commands with renamed TAR LZIP archives."""
     #    self.archive_commands('t.tar.lz.foo', skip_create=True)
 

@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Main package providing archive functions."""
+
 import sys
+
 # check for compatible Python version before importing other packages
 if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
     raise SystemExit("This program requires Python 3.10 or later.")
@@ -21,13 +23,21 @@ import inspect
 import os
 import shutil
 import importlib
+
 # PEP 396: supply __version__
-from .configuration import App, Version as __version__ # noqa: F401
+from .configuration import App, Version as __version__  # noqa: F401
 from . import fileutil, log, util
+
 # export API functions
 __all__ = [
-    'list_formats', 'list_archive', 'extract_archive', 'test_archive',
-    'create_archive', 'diff_archives', 'search_archive', 'repack_archive',
+    'list_formats',
+    'list_archive',
+    'extract_archive',
+    'test_archive',
+    'create_archive',
+    'diff_archives',
+    'search_archive',
+    'repack_archive',
     'is_archive',
 ]
 
@@ -37,16 +47,55 @@ ArchiveCommands = ('list', 'extract', 'test', 'create')
 
 # Supported archive formats
 ArchiveFormats = (
-    '7z', 'ace', 'adf', 'alzip', 'ape', 'ar', 'arc', 'arj',
-    'bzip2', 'bzip3', 'cab', 'chm', 'compress', 'cpio', 'deb', 'dms',
-    'flac', 'gzip', 'iso', 'lrzip', 'lz4', 'lzh', 'lzip', 'lzma', 'lzop',
-    'rar', 'rpm', 'rzip', 'shar', 'shn', 'tar', 'vhd', 'xz',
-    'zip', 'zoo', 'zpaq', 'zstd')
+    '7z',
+    'ace',
+    'adf',
+    'alzip',
+    'ape',
+    'ar',
+    'arc',
+    'arj',
+    'bzip2',
+    'bzip3',
+    'cab',
+    'chm',
+    'compress',
+    'cpio',
+    'deb',
+    'dms',
+    'flac',
+    'gzip',
+    'iso',
+    'lrzip',
+    'lz4',
+    'lzh',
+    'lzip',
+    'lzma',
+    'lzop',
+    'rar',
+    'rpm',
+    'rzip',
+    'shar',
+    'shn',
+    'tar',
+    'vhd',
+    'xz',
+    'zip',
+    'zoo',
+    'zpaq',
+    'zstd',
+)
 
 # Supported compressions (used with tar for example)
 # Note that all compressions must also be archive formats
 ArchiveCompressions = (
-    'bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz', 'zstd',
+    'bzip2',
+    'compress',
+    'gzip',
+    'lzip',
+    'lzma',
+    'xz',
+    'zstd',
 )
 
 # Map MIME types to archive format
@@ -169,7 +218,13 @@ ArchivePrograms = {
     },
     'compress': {
         'extract': ('gzip', '7z', '7za', '7zz', '7zzs', 'unar', 'uncompress.real'),
-        'list': ('7z', '7za', '7zz', '7zzs', 'py_echo',),
+        'list': (
+            '7z',
+            '7za',
+            '7zz',
+            '7zzs',
+            'py_echo',
+        ),
         'test': ('gzip', '7z', '7za', '7zz', '7zzs'),
         'create': ('compress',),
     },
@@ -187,18 +242,23 @@ ArchivePrograms = {
     },
     'gzip': {
         None: ('7z', '7za', '7zz', '7zzs', 'pigz', 'gzip'),
-        'extract': ('unar', 'py_gzip',),
+        'extract': (
+            'unar',
+            'py_gzip',
+        ),
         'create': ('zopfli', 'py_gzip'),
     },
     'iso': {
         'extract': ('7z', '7zz', '7zzs', 'unar'),
         'list': ('7z', '7zz', '7zzs', 'isoinfo'),
-        'test': ('7z', '7zz', '7zzs',),
+        'test': (
+            '7z',
+            '7zz',
+            '7zzs',
+        ),
         'create': ('genisoimage',),
     },
-    'lz4': {
-        None: ('lz4',)
-    },
+    'lz4': {None: ('lz4',)},
     'lzh': {
         None: ('lha',),
         'extract': ('lhasa', 'unar'),
@@ -264,20 +324,38 @@ ArchivePrograms = {
         'extract': ('unar',),
     },
     'vhd': {
-        'extract': ('7z', '7zz', '7zzs',),
-        'list': ('7z', '7zz', '7zzs',),
-        'test': ('7z', '7zz', '7zzs',),
+        'extract': (
+            '7z',
+            '7zz',
+            '7zzs',
+        ),
+        'list': (
+            '7z',
+            '7zz',
+            '7zzs',
+        ),
+        'test': (
+            '7z',
+            '7zz',
+            '7zzs',
+        ),
     },
     'xz': {
         None: ('xz', '7z', '7zz', '7zzs'),
-        'extract': ('unar', 'py_lzma',),
+        'extract': (
+            'unar',
+            'py_lzma',
+        ),
         'create': ('py_lzma',),
     },
     'zip': {
         None: ('7z', '7za', '7zz', '7zzs', 'py_zipfile'),
         'extract': ('unzip', 'unar', 'jar'),
         'list': ('unzip', 'jar'),
-        'test': ('zip', 'unzip',),
+        'test': (
+            'zip',
+            'unzip',
+        ),
         'create': ('zip',),
     },
     'zoo': {
@@ -295,37 +373,81 @@ ArchivePrograms = {
 # List of programs by archive type, which don't support password use
 NoPasswordSupportArchivePrograms = {
     'bzip2': {
-        None: ('7z', '7zz', '7zzs', )
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'cab': {
-        None: ('7z', '7zz', '7zzs', )
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'arj': {
-        None: ('7z', '7zz', '7zzs',)
-        },
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
+    },
     'gzip': {
-        None: ('7z', '7zz', '7zzs',)
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'iso': {
-        None: ('7z', '7zz', '7zzs',)
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'cpio': {
-        None: ('7z', '7zz', '7zzs', )
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'rpm': {
-        None: ('7z', '7zz', '7zzs', )
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'deb': {
-        None: ('7z', '7zz', '7zzs', )
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'lzma': {
-        None: ('7z', '7zz', '7zzs', )
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'vhd': {
-        None: ('7z', '7zz', '7zzs', )
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'xz': {
-        None: ('7z', '7zz', '7zzs',)
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
     },
     'zip': {
         'create': ('py_zipfile',),
@@ -354,24 +476,31 @@ def program_supports_compression(program, compression):
     @return: True iff the program supports the given compression format
       natively, else False.
     """
-    if program in ('tar', ):
+    if program in ('tar',):
         if os.name == 'nt':
             return compression in ('gzip', 'bzip2')
         return compression in (
-            'bzip2', 'compress', 'gzip', 'lzip', 'lzma', 'xz', 'zstd',
+            'bzip2',
+            'compress',
+            'gzip',
+            'lzip',
+            'lzma',
+            'xz',
+            'zstd',
         )
     elif program in ('star', 'bsdtar', 'py_tarfile'):
         return compression in ('gzip', 'bzip2', 'lzma')
     return False
 
 
-from .mime import guess_mime # noqa: E402
+from .mime import guess_mime  # noqa: E402
+
 
 def is_archive(filename):
     """Detect if the file is a known archive.
 
     Example: patoolib.is_archive("package.deb")
-    
+
     :param filename: The filename to check. Can be relative to the current working directory or absolute.
     :type filename: str
     :return: True if given filename is an archive file.
@@ -389,7 +518,9 @@ def get_archive_format(filename):
     if mime in ArchiveMimetypes:
         format = ArchiveMimetypes[mime]
     else:
-        raise util.PatoolError(f"unknown archive mime format {mime} for file `{filename}'")
+        raise util.PatoolError(
+            f"unknown archive mime format {mime} for file `{filename}'"
+        )
     if format == compression:
         # file cannot be in same format compressed
         compression = None
@@ -430,7 +561,10 @@ def find_archive_program(format, command, program=None, password=None):
                 continue
             return exe
     # no programs found
-    raise util.PatoolError(f"could not find an executable program to {command} format {format}; candidates are " + ",".join(programs))
+    raise util.PatoolError(
+        f"could not find an executable program to {command} format {format}; candidates are "
+        + ",".join(programs)
+    )
 
 
 def _remove_command_without_password_support(programs, format, command):
@@ -450,7 +584,9 @@ def _remove_command_without_password_support(programs, format, command):
         if program not in no_password_support_programs:
             programs_with_support.append(program)
     if not programs_with_support and programs:
-        raise util.PatoolError(f"{command} archive format `{format}' with password is not supported")
+        raise util.PatoolError(
+            f"{command} archive format `{format}' with password is not supported"
+        )
     return programs_with_support
 
 
@@ -477,7 +613,10 @@ def list_formats():
                 if format == 'tar':
                     encs = [x for x in ArchiveCompressions if util.find_program(x)]
                     if encs:
-                        print("(supported compressions: {})".format(", ".join(encs)), end=' ')
+                        print(
+                            "(supported compressions: {})".format(", ".join(encs)),
+                            end=' ',
+                        )
                 elif format == '7z':
                     if util.p7zip_supports_rar():
                         print("(rar archives supported)", end=' ')
@@ -487,7 +626,9 @@ def list_formats():
             except util.PatoolError:
                 # display information what programs can handle this archive format
                 handlers = programs.get(None, programs.get(command))
-                print(f"   {command:>8}: - (no program found; install {util.strlist_with_or(handlers)})")
+                print(
+                    f"   {command:>8}: - (no program found; install {util.strlist_with_or(handlers)})"
+                )
 
 
 def check_program_compression(archive, command, program, compression):
@@ -551,15 +692,25 @@ def cleanup_outdir(outdir, archive):
     return outdir2, f"`{outdir2}' ({msg})"
 
 
-def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
-                     program=None, format=None, compression=None, password=None):
+def _extract_archive(
+    archive,
+    verbosity=0,
+    interactive=True,
+    outdir=None,
+    program=None,
+    format=None,
+    compression=None,
+    password=None,
+):
     """Extract an archive.
     @return: output directory if command is 'extract', else None
     """
     if format is None:
         format, compression = get_archive_format(archive)
     check_archive_format(format, compression)
-    program = find_archive_program(format, 'extract', program=program, password=password)
+    program = find_archive_program(
+        format, 'extract', program=program, password=password
+    )
     check_program_compression(archive, 'extract', program, compression)
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'extract', format)
     if outdir is None:
@@ -575,7 +726,15 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
             log.log_info(f"... creating output directory `{outdir}'.")
             os.makedirs(outdir)
     try:
-        cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, outdir, password=password)
+        cmdlist = get_archive_cmdlist(
+            archive,
+            compression,
+            program,
+            verbosity,
+            interactive,
+            outdir,
+            password=password,
+        )
         if cmdlist:
             # an empty command list means the get_archive_cmdlist() function
             # already handled the command (e.g. when it's a builtin Python
@@ -595,13 +754,23 @@ def _extract_archive(archive, verbosity=0, interactive=True, outdir=None,
                 os.rmdir(outdir)
             except OSError as err:
                 if sys.exc_info()[0] is not None:
-                    msg = "extraction error, could not remove temporary " \
-                          f"extraction directory {outdir}: {err}"
+                    msg = (
+                        "extraction error, could not remove temporary "
+                        f"extraction directory {outdir}: {err}"
+                    )
                     log.log_error(msg)
 
 
-def _create_archive(archive, filenames, verbosity=0, interactive=True,
-                    program=None, format=None, compression=None, password=None):
+def _create_archive(
+    archive,
+    filenames,
+    verbosity=0,
+    interactive=True,
+    program=None,
+    format=None,
+    compression=None,
+    password=None,
+):
     """Create an archive."""
     if format is None:
         format, compression = get_archive_format(archive)
@@ -609,7 +778,15 @@ def _create_archive(archive, filenames, verbosity=0, interactive=True,
     program = find_archive_program(format, 'create', program=program, password=password)
     check_program_compression(archive, 'create', program, compression)
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'create', format)
-    cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, filenames, password=password)
+    cmdlist = get_archive_cmdlist(
+        archive,
+        compression,
+        program,
+        verbosity,
+        interactive,
+        filenames,
+        password=password,
+    )
     if cmdlist:
         # an empty command list means the get_archive_cmdlist() function
         # already handled the command (e.g. when it's a builtin Python
@@ -617,8 +794,16 @@ def _create_archive(archive, filenames, verbosity=0, interactive=True,
         run_archive_cmdlist(cmdlist, verbosity=verbosity)
 
 
-def _handle_archive(archive, command, verbosity=0, interactive=True,
-                    program=None, format=None, compression=None, password=None):
+def _handle_archive(
+    archive,
+    command,
+    verbosity=0,
+    interactive=True,
+    program=None,
+    format=None,
+    compression=None,
+    password=None,
+):
     """Test and list archives."""
     if format is None:
         format, compression = get_archive_format(archive)
@@ -629,7 +814,9 @@ def _handle_archive(archive, command, verbosity=0, interactive=True,
     check_program_compression(archive, command, program, compression)
     get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
     # prepare keyword arguments for command list
-    cmdlist = get_archive_cmdlist(archive, compression, program, verbosity, interactive, password=password)
+    cmdlist = get_archive_cmdlist(
+        archive, compression, program, verbosity, interactive, password=password
+    )
     if cmdlist:
         # an empty command list means the get_archive_cmdlist() function
         # already handled the command (e.g. when it's a builtin Python
@@ -654,6 +841,7 @@ def get_archive_cmdlist_func(program, command, format):
     except AttributeError as err:
         msg = f"could not find {command}_{format} in {module}"
         raise util.PatoolError(msg) from err
+
     def check_for_password_before_cmdlist_func_call(*args, **kwargs):
         """If password is None, or not set, run command as usual.
         If password is set, but can't be accepted raise appropriate
@@ -668,6 +856,7 @@ def get_archive_cmdlist_func(program, command, format):
                 return archive_cmdlist_func(*args, **kwargs)
             msg = f'There is no support for password in {program}'
             raise util.PatoolError(msg)
+
     return check_for_password_before_cmdlist_func_call
 
 
@@ -697,7 +886,9 @@ def _diff_archives(archive1, archive2, verbosity=0, interactive=True):
             else:
                 diffpath1 = path1
                 diffpath2 = path2
-            return util.run_checked([diff, "-urN", diffpath1, diffpath2], verbosity=1, ret_ok=(0, 1))
+            return util.run_checked(
+                [diff, "-urN", diffpath1, diffpath2], verbosity=1, ret_ok=(0, 1)
+            )
         finally:
             fileutil.rmtree(tmpdir2)
     finally:
@@ -713,7 +904,9 @@ def _search_archive(pattern, archive, verbosity=0, interactive=True, password=No
     tmpdir = fileutil.tmpdir()
     try:
         path = _extract_archive(archive, outdir=tmpdir, verbosity=-1, password=password)
-        return util.run_checked([grep, "-r", "-e", pattern, "."], ret_ok=(0, 1), verbosity=1, cwd=path)
+        return util.run_checked(
+            [grep, "-r", "-e", pattern, "."], ret_ok=(0, 1), verbosity=1, cwd=path
+        )
     finally:
         fileutil.rmtree(tmpdir)
 
@@ -724,13 +917,15 @@ def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=
     format2, compression2 = get_archive_format(archive2)
     if format1 == format2 and compression1 == compression2:
         # same format and compression allows to copy the file
-        log.log_info(f"copy `{archive1}' -> `{archive2}' in same format {format1} and compression {compression1}")
+        log.log_info(
+            f"copy `{archive1}' -> `{archive2}' in same format {format1} and compression {compression1}"
+        )
         fileutil.link_or_copy(archive1, archive2, verbosity=verbosity)
         return
     tmpdir = fileutil.tmpdir()
     try:
         kwargs = dict(verbosity=verbosity, outdir=tmpdir, password=password)
-        same_format = (format1 == format2 and compression1 and compression2)
+        same_format = format1 == format2 and compression1 and compression2
         if same_format:
             # only decompress since the format is the same
             kwargs['format'] = compression1
@@ -740,7 +935,9 @@ def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=
         olddir = os.getcwd()
         os.chdir(path)
         try:
-            kwargs = dict(verbosity=verbosity, interactive=interactive, password=password)
+            kwargs = dict(
+                verbosity=verbosity, interactive=interactive, password=password
+            )
             if same_format:
                 # only compress since the format is the same
                 kwargs['format'] = compression2
@@ -753,14 +950,17 @@ def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=
 
 # the patool library API
 
-def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive=True, password=None):
+
+def extract_archive(
+    archive, verbosity=0, outdir=None, program=None, interactive=True, password=None
+):
     """Extract an archive file.
 
     Extracting never overwrites existing files or directories. The original archive file is kept after
     extraction, even if all files were successful extracted.
 
     Example: patoolib.extract_archive("archive.zip", outdir="/tmp")
-    
+
     :param archive: The archive filename. Can be relative to the current working directory or absolute.
     :type archive: str
     :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
@@ -791,14 +991,21 @@ def extract_archive(archive, verbosity=0, outdir=None, program=None, interactive
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
         log.log_info(f"Extracting {archive} ...")
-    return _extract_archive(archive, verbosity=verbosity, interactive=interactive, outdir=outdir, program=program, password=password)
+    return _extract_archive(
+        archive,
+        verbosity=verbosity,
+        interactive=interactive,
+        outdir=outdir,
+        program=program,
+        password=password,
+    )
 
 
 def list_archive(archive, verbosity=1, program=None, interactive=True, password=None):
     """List given archive.
 
     Example: patoolib.list_archive("package.deb")
-    
+
     :param archive: The archive filename. Can be relative to the current working directory or absolute.
     :type archive: str
     :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
@@ -827,14 +1034,21 @@ def list_archive(archive, verbosity=1, program=None, interactive=True, password=
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
         log.log_info(f"Listing {archive} ...")
-    return _handle_archive(archive, 'list', verbosity=verbosity, interactive=interactive, program=program, password=password)
+    return _handle_archive(
+        archive,
+        'list',
+        verbosity=verbosity,
+        interactive=interactive,
+        program=program,
+        password=password,
+    )
 
 
 def test_archive(archive, verbosity=0, program=None, interactive=True, password=None):
     """Test given archive.
 
     Example: patoolib.test_archive("dist.tar.gz", verbosity=1)
-    
+
     :param archive: The archive filename. Can be relative to the current working directory or absolute.
     :type archive: str
     :param verbosity: larger values print more information. 0 is the default, -1 or lower means no output,
@@ -862,18 +1076,26 @@ def test_archive(archive, verbosity=0, program=None, interactive=True, password=
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
         log.log_info(f"Testing {archive} ...")
-    res = _handle_archive(archive, 'test', verbosity=verbosity,
-        interactive=interactive, program=program, password=password)
+    res = _handle_archive(
+        archive,
+        'test',
+        verbosity=verbosity,
+        interactive=interactive,
+        program=program,
+        password=password,
+    )
     if verbosity >= 0:
         log.log_info("... tested ok.")
     return res
 
 
-def create_archive(archive, filenames, verbosity=0, program=None, interactive=True, password=None):
+def create_archive(
+    archive, filenames, verbosity=0, program=None, interactive=True, password=None
+):
     """Create given archive with given files.
 
     Example: patoolib.create_archive("/path/to/myfiles.zip", ("file1.txt", "dir/"))
-    
+
     :param archive: The archive filename. Can be relative to the current working directory or absolute.
     :type archive: str
     :param filenames: A list of filenames to add to the archive. Can be relative to the current
@@ -904,8 +1126,14 @@ def create_archive(archive, filenames, verbosity=0, program=None, interactive=Tr
     fileutil.check_archive_filelist(filenames)
     if verbosity >= 0:
         log.log_info(f"Creating {archive} ...")
-    res = _create_archive(archive, filenames, verbosity=verbosity,
-                          interactive=interactive, program=program, password=password)
+    res = _create_archive(
+        archive,
+        filenames,
+        verbosity=verbosity,
+        interactive=interactive,
+        program=program,
+        password=password,
+    )
     if verbosity >= 0:
         log.log_info(f"... {archive} created.")
     return res
@@ -918,7 +1146,7 @@ def diff_archives(archive1, archive2, verbosity=0, interactive=True):
     recursively with the diff(1) tool.
 
     Example: patoolib.diff_archives("release1.0.tar.gz", "release2.0.zip")
-    
+
     :param archive1: The first archive filename. Can be relative to the current working directory or absolute.
     :type archive1: str
     :param archive2: The second archive filename. Can be relative to the current working directory or absolute.
@@ -939,7 +1167,9 @@ def diff_archives(archive1, archive2, verbosity=0, interactive=True):
     fileutil.check_existing_filename(archive2)
     if verbosity >= 0:
         log.log_info(f"Comparing {archive1} with {archive2} ...")
-    res = _diff_archives(archive1, archive2, verbosity=verbosity, interactive=interactive)
+    res = _diff_archives(
+        archive1, archive2, verbosity=verbosity, interactive=interactive
+    )
     if res == 0 and verbosity >= 0:
         log.log_info("... no differences found.")
     return res
@@ -952,7 +1182,7 @@ def search_archive(pattern, archive, verbosity=0, interactive=True, password=Non
     with the grep(1) tool.
 
     Example: patoolib.search_archive("def urlopen", "python3.3.tar.gz")
-    
+
     :param pattern: The pattern to search for. See the grep(1) manual page for pattern syntax.
     :type pattern: str
     :param archive: The archive filename. Can be relative to the current working directory or absolute.
@@ -978,7 +1208,13 @@ def search_archive(pattern, archive, verbosity=0, interactive=True, password=Non
     fileutil.check_existing_filename(archive)
     if verbosity >= 0:
         log.log_info(f"Searching {pattern!r} in {archive} ...")
-    res = _search_archive(pattern, archive, verbosity=verbosity, interactive=interactive, password=password)
+    res = _search_archive(
+        pattern,
+        archive,
+        verbosity=verbosity,
+        interactive=interactive,
+        password=password,
+    )
     if res == 1 and verbosity >= 0:
         log.log_info(f"... {pattern!r} not found")
     return res
@@ -990,7 +1226,7 @@ def repack_archive(archive, archive_new, verbosity=0, interactive=True, password
     The archive will be extracted and recompressed to archive_new.
 
     Example: patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
-    
+
     :param archive: The archive filename. Can be relative to the current working directory or absolute.
     :type archive: str
     :param archive_new: The new archive filename. Can be relative to the current working directory or absolute.
@@ -1015,7 +1251,13 @@ def repack_archive(archive, archive_new, verbosity=0, interactive=True, password
     fileutil.check_new_filename(archive_new)
     if verbosity >= 0:
         log.log_info(f"Repacking {archive} to {archive_new} ...")
-    res = _repack_archive(archive, archive_new, verbosity=verbosity, interactive=interactive, password=password)
+    res = _repack_archive(
+        archive,
+        archive_new,
+        verbosity=verbosity,
+        interactive=interactive,
+        password=password,
+    )
     if verbosity >= 0:
         log.log_info("... repacking successful.")
     return res

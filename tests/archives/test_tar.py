@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the tar program"""
+
 from . import ArchiveTest
 from .. import needs_program, needs_codec
+
 
 class TestTar(ArchiveTest):
     """Test class for the tar program"""
@@ -79,10 +81,10 @@ class TestTar(ArchiveTest):
         self.archive_commands('t.tgz.foo', skip_create=True)
 
     # fixme: broken tests
-    #@needs_program('file')
-    #@needs_program('compress')
-    #@needs_codec(program, 'compress')
-    #def test_tar_z_file(self):
+    # @needs_program('file')
+    # @needs_program('compress')
+    # @needs_codec(program, 'compress')
+    # def test_tar_z_file(self):
     #    """Run archive commands with renamed TAR COMPRESS archives."""
     #    self.archive_commands('t.tar.Z.foo', skip_create=True)
     #    self.archive_commands('t.taz.foo', skip_create=True)
@@ -95,19 +97,19 @@ class TestTar(ArchiveTest):
         self.archive_commands('t.tbz2.foo', skip_create=True)
 
     # file(1) does not recognize .lzma files (at least not with --uncompress)
-    #@needs_program('file')
-    #@needs_codec(program, 'lzma')
-    #def test_tar_lzma_file(self):
+    # @needs_program('file')
+    # @needs_codec(program, 'lzma')
+    # def test_tar_lzma_file(self):
     #    """Run archive commands with renamed TAR LZMA archive."""
     #    self.archive_commands('t.tar.lzma.foo', format="tar", compression="lzma")
 
     # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for archive detection
     # fixme: broken tests
-    #@needs_program('lzip')
-    #@needs_program('file')
-    #@needs_codec(program, 'lzip')
-    #def test_tar_lzip_file(self):
+    # @needs_program('lzip')
+    # @needs_program('file')
+    # @needs_codec(program, 'lzip')
+    # def test_tar_lzip_file(self):
     #    """Run archive commands with renamed TAR LZIP archive."""
     #    self.archive_commands('t.tar.lz.foo', skip_create=True)
 

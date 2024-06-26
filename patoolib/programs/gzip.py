@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the gzip program."""
+
 from . import extract_singlefile_standard, test_singlefile_standard
 from .. import util, fileutil, log
 import os
@@ -20,15 +21,18 @@ import subprocess
 
 test_gzip = test_compress = test_singlefile_standard
 
+
 def extract_gzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract given gzip archive."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
         cmdlist.append('-v')
     outfile = get_original_filename(cmd, outdir, archive)
-    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
+    cmdlist.extend(
+        ['-c', '-d', '--', util.shell_quote(archive), '>', util.shell_quote(outfile)]
+    )
     return (cmdlist, {'shell': True})
+
 
 extract_compress = extract_singlefile_standard
 

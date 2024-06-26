@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the tarfile Python module."""
+
 from .. import util
 import os
 import sys
@@ -23,10 +24,11 @@ def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive with the tarfile Python module."""
     try:
         with tarfile.open(archive) as tfile:
-            tfile.list(verbose=verbosity>1)
+            tfile.list(verbose=verbosity > 1)
     except Exception as err:
         raise util.PatoolError(f"error listing {archive}") from err
     return None
+
 
 test_tar = list_tar
 

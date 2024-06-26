@@ -24,4 +24,5 @@ def list_adf(archive, compression, cmd, verbosity, interactive):
     """List an ADF archive."""
     return [cmd, '-l', archive]
 
+
 test_adf = list_adf

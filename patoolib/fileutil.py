@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """File and directory utility functions."""
+
 import os
 import sys
 import shutil
@@ -179,7 +180,7 @@ def make_file_readable(filename):
 
 def make_dir_readable(filename):
     """Make directory user readable and executable."""
-    set_mode(filename, stat.S_IRUSR|stat.S_IXUSR)
+    set_mode(filename, stat.S_IRUSR | stat.S_IXUSR)
 
 
 def make_user_readable(directory):

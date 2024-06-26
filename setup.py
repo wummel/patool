@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Setup file for building, packaging and distributing this software."""
+
 import sys
 
 if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
@@ -34,7 +35,7 @@ def read_configdata(basedir):
 
 def read_readme(basedir):
     """Get contents of the README.md file."""
-    readme_md = os.path.join(basedir,"README.md")
+    readme_md = os.path.join(basedir, "README.md")
     with open(readme_md, encoding="utf-8") as f:
         return f.read()
 
@@ -45,27 +46,27 @@ readme = read_readme(basedir)
 
 
 setup(
-    name = configdata["AppName"],
-    version = configdata["Version"],
-    description = configdata["Description"],
-    long_description = readme,
+    name=configdata["AppName"],
+    version=configdata["Version"],
+    description=configdata["Description"],
+    long_description=readme,
     long_description_content_type="text/markdown",
-    author = configdata["Author"],
-    author_email = configdata["AuthorEmail"],
-    license = configdata["License"],
-    url = configdata["Url"],
+    author=configdata["Author"],
+    author_email=configdata["AuthorEmail"],
+    license=configdata["License"],
+    url=configdata["Url"],
     python_requires=">=3.10",
-    project_urls = {
+    project_urls={
         "Source": "https://github.com/wummel/patool",
     },
-    packages = ['patoolib', 'patoolib.programs'],
+    packages=['patoolib', 'patoolib.programs'],
     entry_points={
         'console_scripts': [
             'patool = patoolib.cli:main_cli',
         ]
     },
-    keywords = "archiver,archive,compression,commandline,manager",
-    classifiers = [
+    keywords="archiver,archive,compression,commandline,manager",
+    classifiers=[
         'Environment :: Console',
         'Topic :: System :: Archiving :: Compression',
         'Development Status :: 5 - Production/Stable',

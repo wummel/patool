@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the genisoimage program."""
 
+
 def create_iso(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an ISO archive."""
     # Use Joliet (-J) and Rock-Ridge (-r) format.

@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the arc program"""
+
 from . import ArchiveTest, Content
 from .. import needs_program
+
 
 class TestArc(ArchiveTest):
     """Test class for the arc program"""
@@ -30,7 +32,9 @@ class TestArc(ArchiveTest):
     @needs_program(program)
     def test_arc_file(self):
         """Run archive commands with renamed ARC archive."""
-        self.archive_commands(self.filename + '.arc.foo', check=Content.Multifile, skip_create=True)
+        self.archive_commands(
+            self.filename + '.arc.foo', check=Content.Multifile, skip_create=True
+        )
 
 
 class TestArcPassword(TestArc):

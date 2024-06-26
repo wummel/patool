@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the GNU tar program."""
+
 import os
 import subprocess
 
@@ -24,6 +25,7 @@ def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist.extend(["--file", archive, '--directory', outdir])
     return cmdlist
 
+
 def list_tar(archive, compression, cmd, verbosity, interactive):
     """List a TAR archive."""
     cmdlist = [cmd, '--list']
@@ -31,7 +33,9 @@ def list_tar(archive, compression, cmd, verbosity, interactive):
     cmdlist.extend(["--file", archive])
     return cmdlist
 
+
 test_tar = list_tar
+
 
 def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a TAR archive."""
@@ -40,6 +44,7 @@ def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist.extend(["--file", archive, '--'])
     cmdlist.extend(filenames)
     return cmdlist
+
 
 def add_tar_opts(cmdlist, compression, verbosity):
     """Add tar options to cmdlist."""
@@ -63,5 +68,6 @@ def add_tar_opts(cmdlist, compression, verbosity):
         # do not support --force-local
         testcmdlist = [cmdlist[0], "--force-local", "--help"]
         from .. import util
+
         if util.run(testcmdlist, stderr=subprocess.DEVNULL) == 0:
             cmdlist.append('--force-local')

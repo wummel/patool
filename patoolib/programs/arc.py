@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the arc program."""
+
 import os
 from ..util import PatoolError
 
@@ -27,7 +28,9 @@ def _add_password_to_options(options, password):
     return options
 
 
-def extract_arc(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+def extract_arc(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a ARC archive."""
     # Since extracted files will be placed in the current directory,
     # the cwd argument has to be the output directory.
@@ -52,7 +55,9 @@ def test_arc(archive, compression, cmd, verbosity, interactive, password=None):
     return [cmd, _add_password_to_options('t', password), archive]
 
 
-def create_arc(archive, compression, cmd, verbosity, interactive, filenames, password=None):
+def create_arc(
+    archive, compression, cmd, verbosity, interactive, filenames, password=None
+):
     """Create a ARC archive."""
     cmdlist = [cmd, _add_password_to_options('a', password), archive]
     cmdlist.extend(filenames)

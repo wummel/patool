@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the unar program."""
 
+
 def _extract(archive, compression, cmd, verbosity, interactive, outdir, password=None):
     """Extract an archive."""
     cmdlist = [cmd, '-o', outdir]
@@ -21,6 +22,7 @@ def _extract(archive, compression, cmd, verbosity, interactive, outdir, password
         cmdlist.extend(['-p', password])
     cmdlist.append(archive)
     return cmdlist
+
 
 extract_rar = _extract
 extract_zip = _extract

@@ -13,12 +13,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the clzip program."""
+
 from . import extract_singlefile_standard, test_singlefile_standard
 from .. import util
 
 
 extract_lzip = extract_singlefile_standard
 test_lzip = test_singlefile_standard
+
 
 def create_lzip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create an LZIP archive."""

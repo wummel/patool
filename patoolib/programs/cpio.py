@@ -13,17 +13,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the cpio program."""
+
 import os
 import sys
 from .. import util
 
+
 def extract_cpio(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a CPIO archive."""
-    cmdlist = [util.shell_quote(cmd), '--extract', '--make-directories',
-        '--preserve-modification-time']
+    cmdlist = [
+        util.shell_quote(cmd),
+        '--extract',
+        '--make-directories',
+        '--preserve-modification-time',
+    ]
     if sys.platform.startswith('linux') and not cmd.endswith('bsdcpio'):
-        cmdlist.extend(['--no-absolute-filenames',
-        '--force-local', '--nonmatching', r'"*\.\.*"'])
+        cmdlist.extend(
+            ['--no-absolute-filenames', '--force-local', '--nonmatching', r'"*\.\.*"']
+        )
     if verbosity > 1:
         cmdlist.append('-v')
     cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
@@ -38,7 +45,9 @@ def list_cpio(archive, compression, cmd, verbosity, interactive):
     cmdlist.extend(['-F', archive])
     return cmdlist
 
+
 test_cpio = list_cpio
+
 
 def create_cpio(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a CPIO archive."""

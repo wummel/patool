@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Tests for utility functions"""
+
 import unittest
 import os
 from patoolib import fileutil
@@ -50,7 +51,6 @@ class UtilTest(unittest.TestCase):
         self.assertTrue(fileutil.stripext("foo/bartar.gz") == "bartar")
         self.assertTrue(fileutil.stripext("foo/bar.7z") == "bar")
         self.assertTrue(fileutil.stripext("foo/bar") == "bar")
-
 
     def test_rmtree(self):
         """Test rmtree() with non-existing and temporary dirs"""

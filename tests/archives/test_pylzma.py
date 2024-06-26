@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the python lzma module"""
+
 from . import ArchiveTest, Content
 from .. import needs_program, needs_module
+
 
 class TestPylzma(ArchiveTest):
     """Test class for the python lzma module"""

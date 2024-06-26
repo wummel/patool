@@ -13,11 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the gzip Python module."""
+
 # now gzip refers to the Python standard module, not the local one
 import gzip
 from .. import fileutil, util
 
-READ_SIZE_BYTES = 1024*1024
+READ_SIZE_BYTES = 1024 * 1024
+
 
 def extract_gzip(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a GZIP archive with the gzip Python module."""

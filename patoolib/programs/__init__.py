@@ -13,16 +13,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Standard archive functions for singlefile archives."""
+
 from .. import fileutil, util
 
-def extract_singlefile_standard(archive, compression, cmd, verbosity, interactive, outdir):
+
+def extract_singlefile_standard(
+    archive, compression, cmd, verbosity, interactive, outdir
+):
     """Standard routine to extract a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
         cmdlist.append('-v')
     outfile = fileutil.get_single_outfile(outdir, archive)
-    cmdlist.extend(['-c', '-d', '--', util.shell_quote(archive), '>',
-        util.shell_quote(outfile)])
+    cmdlist.extend(
+        ['-c', '-d', '--', util.shell_quote(archive), '>', util.shell_quote(outfile)]
+    )
     return (cmdlist, {'shell': True})
 
 
@@ -35,7 +40,9 @@ def test_singlefile_standard(archive, compression, cmd, verbosity, interactive):
     return cmdlist
 
 
-def create_singlefile_standard(archive, compression, cmd, verbosity, interactive, filenames):
+def create_singlefile_standard(
+    archive, compression, cmd, verbosity, interactive, filenames
+):
     """Standard routine to create a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:

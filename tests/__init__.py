@@ -21,6 +21,7 @@ The file type detection uses the file(1) program which uses a library
 of "magic" patterns. The contents of the magic pattern library can vary
 between distributions so the tests might not run on all systems.
 """
+
 import os
 import patoolib
 import pytest
@@ -32,15 +33,19 @@ datadir = os.path.join(basedir, 'data')
 # Python 3.x function name attribute
 fnameattr = '__name__'
 
+
 def _need_func(testfunc, name, description):
     """Decorator skipping test if given testfunc returns False."""
+
     def check_func(func):
         def newfunc(*args, **kwargs):
             if not testfunc(name):
                 pytest.skip(f"{description} {name!r} is not available")
             return func(*args, **kwargs)
+
         setattr(newfunc, fnameattr, getattr(func, fnameattr))
         return newfunc
+
     return check_func
 
 
@@ -56,22 +61,27 @@ def needs_program(name):
 
 def needs_one_program(programs):
     """Decorator skipping test if not one of given programs are available."""
-    return _need_func(lambda x: any(map(patoolib.util.find_program, x)), programs, 'programs')
+    return _need_func(
+        lambda x: any(map(patoolib.util.find_program, x)), programs, 'programs'
+    )
 
 
 def needs_module(name):
     """Decorator skipping test if given module is not available."""
+
     def has_module(module):
         try:
             importlib.import_module(module)
             return True
         except ImportError:
             return False
+
     return _need_func(has_module, name, 'Python module')
 
 
 def needs_codec(program, codec):
     """Decorator skipping test if given program codec is not available."""
+
     def check_prog(f):
         def newfunc(*args, **kwargs):
             if not patoolib.util.find_program(program):
@@ -79,8 +89,10 @@ def needs_codec(program, codec):
             if not has_codec(program, codec):
                 pytest.skip(f"codec `{codec}' for program `{program}' not available")
             return f(*args, **kwargs)
+
         setattr(newfunc, fnameattr, getattr(f, fnameattr))
         return newfunc
+
     return check_prog
 
 

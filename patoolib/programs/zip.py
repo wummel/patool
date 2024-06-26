@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the zip program."""
 
+
 def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a ZIP archive."""
     cmdlist = [cmd, '-r']
@@ -22,6 +23,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist.append(archive)
     cmdlist.extend(filenames)
     return cmdlist
+
 
 def test_zip(archive, compression, cmd, verbosity, interactive):
     """Test a ZIP archive."""

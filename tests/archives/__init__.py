@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Basic archive test utility functions."""
+
 import unittest
 import os
 import patoolib
@@ -20,6 +21,7 @@ from .. import basedir, datadir
 
 # All text files have '42' as content.
 TextFileContent = '42'
+
 
 class Content:
     """The test archives have one of several set of content files.
@@ -67,10 +69,12 @@ class ArchiveTest(unittest.TestCase):
     def archive_extract(self, filename, check=Content.Recursive):
         """Test archive extraction."""
         archive = os.path.join(datadir, filename)
-        self.assertTrue(os.path.isabs(archive), f"archive path is not absolute: {archive!r}")
+        self.assertTrue(
+            os.path.isabs(archive), f"archive path is not absolute: {archive!r}"
+        )
         self._archive_extract(archive, check)
         # archive name relative to tmpdir
-        relarchive = os.path.join("..", archive[len(basedir)+1:])
+        relarchive = os.path.join("..", archive[len(basedir) + 1 :])
         self._archive_extract(relarchive, check, verbosity=1)
 
     def _archive_extract(self, archive, check, verbosity=0):
@@ -82,7 +86,13 @@ class ArchiveTest(unittest.TestCase):
         try:
             olddir = patoolib.fileutil.chdir(tmpdir)
             try:
-                output = patoolib.extract_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
+                output = patoolib.extract_archive(
+                    archive,
+                    program=self.program,
+                    verbosity=verbosity,
+                    interactive=False,
+                    password=self.password,
+                )
                 if check:
                     self.check_extracted_archive(archive, output, check)
             finally:
@@ -130,13 +140,25 @@ class ArchiveTest(unittest.TestCase):
         """Test archive listing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
-            patoolib.list_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
+            patoolib.list_archive(
+                archive,
+                program=self.program,
+                verbosity=verbosity,
+                interactive=False,
+                password=self.password,
+            )
 
     def archive_test(self, filename):
         """Test archive testing."""
         archive = os.path.join(datadir, filename)
         for verbosity in (-1, 0, 1, 2):
-            patoolib.test_archive(archive, program=self.program, verbosity=verbosity, interactive=False, password=self.password)
+            patoolib.test_archive(
+                archive,
+                program=self.program,
+                verbosity=verbosity,
+                interactive=False,
+                password=self.password,
+            )
 
     def archive_create(self, archive, srcfiles=None, check=Content.Recursive):
         """Test archive creation."""
@@ -146,7 +168,10 @@ class ArchiveTest(unittest.TestCase):
             elif check == Content.Singlefile:
                 srcfiles = ('t.txt',)
             elif check == Content.Multifile:
-                srcfiles = ('t.txt', 't2.txt',)
+                srcfiles = (
+                    't.txt',
+                    't2.txt',
+                )
             else:
                 raise ValueError('invalid check value {check!r}')
         olddir = patoolib.fileutil.chdir(datadir)
@@ -154,7 +179,9 @@ class ArchiveTest(unittest.TestCase):
             # The format and compression arguments are needed for creating
             # archives with unusual file extensions.
             for verbosity in (-1, 0, 1, 2):
-                self._archive_create(archive, srcfiles, program=self.program, verbosity=verbosity)
+                self._archive_create(
+                    archive, srcfiles, program=self.program, verbosity=verbosity
+                )
         finally:
             if olddir:
                 os.chdir(olddir)
@@ -168,8 +195,17 @@ class ArchiveTest(unittest.TestCase):
         tmpdir = patoolib.fileutil.tmpdir(dir=basedir)
         try:
             archive = os.path.join(tmpdir, archive)
-            self.assertTrue(os.path.isabs(archive), f"archive path is not absolute: {archive!r}")
-            patoolib.create_archive(archive, srcfiles, verbosity=verbosity, interactive=False, program=program, password=self.password)
+            self.assertTrue(
+                os.path.isabs(archive), f"archive path is not absolute: {archive!r}"
+            )
+            patoolib.create_archive(
+                archive,
+                srcfiles,
+                verbosity=verbosity,
+                interactive=False,
+                program=program,
+                password=self.password,
+            )
             self.assertTrue(os.path.isfile(archive))
             self.check_created_archive_with_test(archive)
             self.check_created_archive_with_diff(archive, srcfiles)
@@ -224,7 +260,9 @@ class ArchiveTest(unittest.TestCase):
         try:
             olddir = patoolib.fileutil.chdir(tmpdir)
             try:
-                output = patoolib.extract_archive(archive, program=program, interactive=False, password=self.password)
+                output = patoolib.extract_archive(
+                    archive, program=program, interactive=False, password=self.password
+                )
                 if len(srcfiles) == 1:
                     source = os.path.join(datadir, srcfiles[0])
                     patoolib.util.run_checked([diff, "-urN", source, output])

@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the nomarch program."""
+
 import os
+
 
 def extract_arc(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract an ARC archive."""
@@ -22,6 +24,7 @@ def extract_arc(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist = [cmd, os.path.abspath(archive)]
     return (cmdlist, {'cwd': outdir})
 
+
 def list_arc(archive, compression, cmd, verbosity, interactive):
     """List an ARC archive."""
     cmdlist = [cmd, '-l']
@@ -29,6 +32,7 @@ def list_arc(archive, compression, cmd, verbosity, interactive):
         cmdlist.append('-v')
     cmdlist.append(archive)
     return cmdlist
+
 
 def test_arc(archive, compression, cmd, verbosity, interactive):
     """Test an ARC archive."""

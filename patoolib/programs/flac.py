@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the flac program."""
+
 from .. import fileutil
+
 
 def extract_flac(archive, compression, cmd, verbosity, interactive, outdir):
     """Decompress a FLAC archive to a WAV file."""

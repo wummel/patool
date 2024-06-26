@@ -13,11 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the zipfile Python module."""
+
 from .. import util
 import zipfile
 import os
 
-READ_SIZE_BYTES = 1024*1024
+READ_SIZE_BYTES = 1024 * 1024
 
 
 def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
@@ -33,9 +34,13 @@ def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
         raise util.PatoolError(f"error listing {archive}") from err
     return None
 
+
 test_zip = list_zip
 
-def extract_zip(archive, compression, cmd, verbosity, interactive, outdir, password=None):
+
+def extract_zip(
+    archive, compression, cmd, verbosity, interactive, outdir, password=None
+):
     """Extract a ZIP archive with the zipfile Python module."""
     try:
         if password:
@@ -63,7 +68,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
 
 def write_directory(zfile, directory):
     """Write recursively all directories and filenames to zipfile instance."""
-    for dirpath, dirnames, filenames in os.walk(directory): # noqa: B007
+    for dirpath, dirnames, filenames in os.walk(directory):  # noqa: B007
         zfile.write(dirpath)
         for filename in filenames:
             zfile.write(os.path.join(dirpath, filename))

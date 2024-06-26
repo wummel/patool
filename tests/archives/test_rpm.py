@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Test the rpm program"""
+
 from . import ArchiveTest
 from .. import needs_program
+
 
 class TestRpm(ArchiveTest):
     """Test class for the rpm program"""
@@ -28,7 +30,7 @@ class TestRpm(ArchiveTest):
         # The rpm test fails on non-rpm system with missing dependencies.
         # I am too lazy to build a tiny rpm with one file
         # and no dependency.
-        #self.archive_test('t.rpm')
+        # self.archive_test('t.rpm')
 
     @needs_program('file')
     @needs_program(program)
@@ -38,5 +40,4 @@ class TestRpm(ArchiveTest):
         # The rpm test fails on non-rpm system with missing dependencies.
         # I am too lazy to build a tiny rpm with one file
         # and no dependency.
-        #self.archive_test('t.rpm.foo')
-
+        # self.archive_test('t.rpm.foo')

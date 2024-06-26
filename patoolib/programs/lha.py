@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the lha program."""
 
+
 def extract_lzh(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a LZH archive."""
     opts = 'x'
@@ -21,6 +22,7 @@ def extract_lzh(archive, compression, cmd, verbosity, interactive, outdir):
         opts += 'v'
     opts += f"w={outdir}"
     return [cmd, opts, archive]
+
 
 def list_lzh(archive, compression, cmd, verbosity, interactive):
     """List a LZH archive."""
@@ -32,12 +34,14 @@ def list_lzh(archive, compression, cmd, verbosity, interactive):
     cmdlist.append(archive)
     return cmdlist
 
+
 def test_lzh(archive, compression, cmd, verbosity, interactive):
     """Test a LZH archive."""
     opts = 't'
     if verbosity > 1:
         opts += 'v'
     return [cmd, opts, archive]
+
 
 def create_lzh(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a LZH archive."""

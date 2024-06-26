@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the ar program."""
+
 import os
+
 
 def extract_ar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a AR archive."""
@@ -23,6 +25,7 @@ def extract_ar(archive, compression, cmd, verbosity, interactive, outdir):
     cmdlist = [cmd, opts, os.path.abspath(archive)]
     return (cmdlist, {'cwd': outdir})
 
+
 def list_ar(archive, compression, cmd, verbosity, interactive):
     """List a AR archive."""
     opts = 't'
@@ -30,7 +33,9 @@ def list_ar(archive, compression, cmd, verbosity, interactive):
         opts += 'v'
     return [cmd, opts, archive]
 
+
 test_ar = list_ar
+
 
 def create_ar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a AR archive."""

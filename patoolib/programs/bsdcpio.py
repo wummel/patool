@@ -13,5 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the bsdcpio program."""
+
 # ruff: noqa: F401
 from .cpio import extract_cpio, list_cpio, test_cpio, create_cpio

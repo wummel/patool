@@ -13,7 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the MAC.exe program."""
+
 from .. import fileutil
+
 
 def extract_ape(archive, compression, cmd, verbosity, interactive, outdir):
     """Decompress an APE archive to a WAV file."""
