@@ -4,13 +4,13 @@
 pytest==8.2.2
 
 # for python code linting
-ruff==0.4.9
+ruff==0.4.10
 
 # for generating a Python .whl file
 wheel==0.43.0
 
 # for uploading releases
-twine==5.1.0
+twine==5.1.1
 
 # for generating the web page
 Sphinx==7.3.7
