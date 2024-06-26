@@ -11,6 +11,7 @@ __pycache__
 
 # local files
 /patool.egg-info/
+/.env
 
 # local development files
 /todo.txt
