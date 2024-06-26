@@ -37,6 +37,10 @@ jobs:
       run: |
         ruff check setup.py patoolib tests doc/web/source
 
+    - name: Check code formatting
+      run: |
+        ruff format --check setup.py patoolib tests doc/web/source
+
     - name: Install archive programs on ${{ runner.os }} running ${{ matrix.os }}
       if: ${{ runner.os=='Linux' }}
       run: >
