@@ -53,6 +53,11 @@ class TestTar(ArchiveTest):
         """Run archive commands with TAR LZMA archive."""
         self.archive_commands('t.tar.lzma')
 
+    @needs_codec(program, 'zstd')
+    def test_tar_zstandard(self):
+        """Run archive commands with TAR ZSTANDARD archive."""
+        self.archive_commands('t.tar.zst')
+
     # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for archive detection
     @needs_program(program)

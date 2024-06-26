@@ -5,6 +5,8 @@
     add a check to github workflow CI.
     Idea and initial patch by sorairolake, thanks!
     Closes: GH bug #151
+  * Support tar --zstd for extracting TAR archives compressed with ZSTANDARD.
+    Closes: GH bug #162
 
 
 2.2.0 (released 14.02.2024)
