@@ -89,7 +89,11 @@ upload: ## upload a new release to pypi
 
 .PHONY: hub
 hub: ## add and push a github release
-	hub release create -a dist/$(ARCHIVE_SOURCE) -a dist/$(ARCHIVE_WHEEL) upstream/$(VERSION)
+	hub release create \
+	  -a dist/$(ARCHIVE_SOURCE) \
+	  -a dist/$(ARCHIVE_WHEEL) \
+	  -m "Release $(VERSION)"
+	  upstream/$(VERSION)
 
 # Make a new release by calling all the distinct steps in the correct order.
 # Each step is a separate target so that it's easy to do this manually if
