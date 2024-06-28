@@ -21,7 +21,20 @@ from patoolib import cli
 class TestFormats(unittest.TestCase):
     """Test class for patool formats command."""
 
-    def test_list_formats(self):
+    def test_print_formats(self):
         """Run cli function with formats command."""
-        args = ["-vv", "--non-interactive", 'formats']
+        args = ["-vv", "--non-interactive", "formats"]
+        cli.main(args=args)
+
+    def test_supported_formats(self):
+        """Run cli function with supported_formats command."""
+        args = [
+            "-vv",
+            "--non-interactive",
+            "supported_formats",
+            "list",
+            "extract",
+            "test",
+            "create",
+        ]
         cli.main(args=args)
