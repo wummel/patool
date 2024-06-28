@@ -601,7 +601,8 @@ def supported_formats(operations=ArchiveCommands):
     """
     supported = list(ArchiveFormats)
     for format in ArchiveFormats:
-        for command in operations:
+        # FIXME: cli nargs creates empty list and cannot be set to nothing...
+        for command in operations if operations else ArchiveCommands:
             try:
                 find_archive_program(format, command)
             except util.PatoolError:
