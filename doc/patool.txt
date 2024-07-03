@@ -125,15 +125,17 @@ COMMANDS
    search
        patool search <pattern> <archive>
 
-       Search in archive contents for given pattern using the  grep(1)
-       program.   The grep options used are -r; additional options can
-       be supplied with the GREP_OPTIONS environment variable.
+       Unpack the given archive in a temporary directory and search in
+       archive  contents  for given pattern using the grep(1) program.
+       The grep options used are -r; additional options  can  be  sup‐
+       plied with the GREP_OPTIONS environment variable.
 
    repack
        patool repack <archive> <archive_new>
 
-       Repackage archive to a different  format.  The  target  archive
-       format is determined by the file extension of archive_new.
+       Extract  and  re-compress  archive  to a different format.  The
+       target archive format is determined by the  file  extension  of
+       archive_new.
 
    formats
        patool formats

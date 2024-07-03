@@ -127,14 +127,15 @@ The diff options used are \fB\-urN\fP.
 .SS search
 \fBpatool\fP \fBsearch\fP <\fIpattern\fP> <\fIarchive\fP>
 .PP
-Search in archive contents for given pattern using the \fBgrep(1)\fP program.
+Unpack the given archive in a temporary directory and search in archive
+contents for given pattern using the \fBgrep(1)\fP program.
 The grep options used are \fB\-r\fP; additional options can be supplied
 with the \fBGREP_OPTIONS\fP environment variable.
 .SS repack
 \fBpatool\fP \fBrepack\fP <\fIarchive\fP> <\fIarchive_new\fP>
 .PP
-Repackage archive to a different format. The target archive format is
-determined by the file extension of \fIarchive_new\fP.
+Extract and re-compress archive to a different format.
+The target archive format is determined by the file extension of \fIarchive_new\fP.
 .SS formats
 \fBpatool\fP \fBformats\fP
 .PP
