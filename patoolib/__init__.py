@@ -606,7 +606,7 @@ def list_formats():
         for command in ArchiveCommands:
             programs = ArchivePrograms[format]
             if command not in programs and None not in programs:
-                print("   {command:>8}: - (not supported)")
+                print(f"   {command:>8}: - (not supported)")
                 continue
             try:
                 program = find_archive_program(format, command)
