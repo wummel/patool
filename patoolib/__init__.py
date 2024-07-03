@@ -632,9 +632,9 @@ def list_formats():
                 )
 
 
-def supported_formats(operations=ArchiveCommands) -> list[str]:
+def supported_formats(operations=ArchiveCommands):
     """
-    Return a list of supported archive formats for a iterable of operations.
+    Return a list of supported archive formats for an iterable of operations.
 
     :param operations: The operations to check for, defaults to ArchiveCommands.
     :type operations:  List|Tuple|Set|Dict[str]
@@ -644,7 +644,7 @@ def supported_formats(operations=ArchiveCommands) -> list[str]:
 
     supported = list(ArchiveFormats)
     for format in ArchiveFormats:
-        # NOTE: If we wish to include supported_formats to the CLI
+        # NOTE: If we wish to include supported formats in the CLI
         # argparse default nargs to an empty list, so we would need some
         # check to set operations to ArchiveCommands if bool(operations) is False.
         for command in operations:
