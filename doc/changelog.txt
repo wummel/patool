@@ -1,3 +1,8 @@
+2.4.0 (released xx.xx.xxxx)
+  * Document that patool extracts the archive for the search and repack commands.
+    Closes: GH bug #154
+
+
 2.3.0 (released 26.06.2024)
   * Add linting check to github workflow CI.
     Idea and patch by sorairolake, thanks!
