@@ -1,13 +1,13 @@
 # these modules are only needed for development
 
 # for using setuptools.setup() in setup.py
-setuptools==70.1.1
+setuptools==72.1.0
 
 # for testing
-pytest==8.2.2
+pytest==8.3.2
 
 # for python code linting
-ruff==0.4.10
+ruff==0.5.6
 
 # for generating a Python .whl file
 wheel==0.43.0

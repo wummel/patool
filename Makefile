@@ -27,7 +27,7 @@ HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/source/conf.py
 CHANGELOG:=doc/changelog.txt
 GIT_MAIN_BRANCH:=master
-PIP_VERSION:=24.1
+PIP_VERSION:=24.2
 # Pytest options:
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts
