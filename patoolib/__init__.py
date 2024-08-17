@@ -31,6 +31,7 @@ from . import fileutil, log, util
 # export API functions
 __all__ = [
     'list_formats',
+    'supported_formats',
     'list_archive',
     'extract_archive',
     'test_archive',
@@ -605,7 +606,7 @@ def list_formats():
         for command in ArchiveCommands:
             programs = ArchivePrograms[format]
             if command not in programs and None not in programs:
-                print("   {command:>8}: - (not supported)")
+                print(f"   {command:>8}: - (not supported)")
                 continue
             try:
                 program = find_archive_program(format, command)
@@ -629,6 +630,30 @@ def list_formats():
                 print(
                     f"   {command:>8}: - (no program found; install {util.strlist_with_or(handlers)})"
                 )
+
+
+def supported_formats(operations=ArchiveCommands):
+    """
+    Return a list of supported archive formats for an iterable of operations.
+
+    :param operations: The operations to check for, defaults to ArchiveCommands.
+    :type operations:  List|Tuple|Set|Dict[str]
+    :return:           A list of supported archive formats.
+    :rtype:            List[str]
+    """
+
+    supported = list(ArchiveFormats)
+    for format in ArchiveFormats:
+        # NOTE: If we wish to include supported formats in the CLI
+        # argparse default nargs to an empty list, so we would need some
+        # check to set operations to ArchiveCommands if bool(operations) is False.
+        for command in operations:
+            try:
+                find_archive_program(format, command)
+            except util.PatoolError:
+                supported.remove(format)
+                break
+    return supported
 
 
 def check_program_compression(archive, command, program, compression):
