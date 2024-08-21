@@ -1,13 +1,13 @@
 # these modules are only needed for development
 
 # for using setuptools.setup() in setup.py
-setuptools==72.1.0
+setuptools==73.0.1
 
 # for testing
 pytest==8.3.2
 
 # for python code linting
-ruff==0.5.6
+ruff==0.6.1
 
 # for generating a Python .whl file
 wheel==0.43.0
@@ -16,8 +16,8 @@ wheel==0.43.0
 twine==5.1.1
 
 # for generating the web page
-Sphinx==7.3.7
-myst-parser==3.0.1
+Sphinx==8.0.2
+myst-parser==4.0.0
 
 # for upgrading the version number
 bump2version==1.0.1
