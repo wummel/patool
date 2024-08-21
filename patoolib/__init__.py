@@ -633,15 +633,13 @@ def list_formats():
 
 
 def supported_formats(operations=ArchiveCommands):
-    """
-    Return a list of supported archive formats for an iterable of operations.
+    """Return a list of supported archive formats for an iterable of operations.
 
     :param operations: The operations to check for, defaults to ArchiveCommands.
     :type operations:  List|Tuple|Set|Dict[str]
     :return:           A list of supported archive formats.
     :rtype:            List[str]
     """
-
     supported = list(ArchiveFormats)
     for format in ArchiveFormats:
         # NOTE: If we wish to include supported formats in the CLI

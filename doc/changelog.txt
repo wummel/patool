@@ -1,6 +1,9 @@
 2.4.0 (released xx.xx.xxxx)
   * Document that patool extracts the archive for the search and repack commands.
     Closes: GH bug #154
+  * Add supported_formats() API function listing supported formats and operations
+    for each format.
+    Idea and patch by github user nohr-ai, thanks!
 
 
 2.3.0 (released 26.06.2024)
