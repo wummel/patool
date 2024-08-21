@@ -92,7 +92,7 @@ hub: ## add and push a github release
 	hub release create \
 	  -a dist/$(ARCHIVE_SOURCE) \
 	  -a dist/$(ARCHIVE_WHEEL) \
-	  -m "Release $(VERSION)"
+	  -m "Release $(VERSION)" \ 
 	  upstream/$(VERSION)
 
 # Make a new release by calling all the distinct steps in the correct order.
