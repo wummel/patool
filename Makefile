@@ -54,12 +54,12 @@ help:	## display this help section
 
 .PHONY: init ## install pip and required development packages
 init:	requirements-dev.txt
-	pip install --upgrade pip==$(PIP_VERSION)
-	pip install -r $<
+	uv pip install --upgrade pip==$(PIP_VERSION)
+	uv pip install -r $<
 
 .PHONY: localbuild ## install patool in local environment
 localbuild:
-	pip install --editable .
+	uv pip install --editable .
 
 
 ############ Build and release targets ############
@@ -67,7 +67,7 @@ localbuild:
 .PHONY: clean
 clean: ## remove generated python, web page files and all local patool installations
 	python setup.py clean --all
-	pip uninstall --yes patool
+	uv pip uninstall patool
 	$(MAKE) -C doc/web clean
 
 .PHONY: distclean
@@ -173,8 +173,8 @@ checkoutdated: ## Check for outdated Python requirements
 # In this case, grep exits with exitcode 1. Test for this after running grep.
 	@set +e; \
 	echo "Check for outdated Python packages"; \
-	pip list --format=columns --outdated | \
-	  grep -E "($(shell cat requirements-dev.txt | grep == | cut -f1 -d= | sort | paste -sd '|' | sed -e 's/|/ |/g') )"; \
+	uv pip list --format=freeze |sed 's/==.*//' | uv pip compile - --color=never --quiet --no-deps --no-header --no-annotate |diff <(uv pip list --format=freeze) - --side-by-side --suppress-common-lines | \
+	  grep -iE "( $(shell cat requirements-dev.txt | grep == | cut -f1 -d= | cut -f1 -d[ | sort | paste -sd '|' | sed -e 's/|/|\t/g') )"; \
 	test $$? = 1
 
 
