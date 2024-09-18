@@ -1,3 +1,6 @@
+2.4.1 (released xx.xx.xxxx)
+  *
+
 2.4.0 (released 21.08.2024)
   * Document that patool extracts the archive for the search and repack commands.
     Closes: GH bug #154
