@@ -54,6 +54,8 @@ class ArchiveTest(unittest.TestCase):
     password = None
     # default archive basename to check
     filename = 't'
+    # verbosity levels in decreasing order, so that failing tests have maximum verbosity
+    verbosity_levels = (2, 1, 0, -1)
 
     def archive_commands(self, filename, **kwargs):
         """Run archive commands list, test, extract and create.
@@ -139,7 +141,7 @@ class ArchiveTest(unittest.TestCase):
     def archive_list(self, filename):
         """Test archive listing."""
         archive = os.path.join(datadir, filename)
-        for verbosity in (-1, 0, 1, 2):
+        for verbosity in self.verbosity_levels:
             patoolib.list_archive(
                 archive,
                 program=self.program,
@@ -151,7 +153,7 @@ class ArchiveTest(unittest.TestCase):
     def archive_test(self, filename):
         """Test archive testing."""
         archive = os.path.join(datadir, filename)
-        for verbosity in (-1, 0, 1, 2):
+        for verbosity in self.verbosity_levels:
             patoolib.test_archive(
                 archive,
                 program=self.program,
@@ -178,7 +180,7 @@ class ArchiveTest(unittest.TestCase):
         try:
             # The format and compression arguments are needed for creating
             # archives with unusual file extensions.
-            for verbosity in (-1, 0, 1, 2):
+            for verbosity in self.verbosity_levels:
                 self._archive_create(
                     archive, srcfiles, program=self.program, verbosity=verbosity
                 )
