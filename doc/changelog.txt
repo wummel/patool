@@ -8,6 +8,8 @@
     Closes: GH bug #86
   * The Python module "tarfile" supports LZMA and XZ compressed archives.
     Added tests for these archive formats (.tar.lzma and .tar.xz).
+  * Do not print program output when running with verbosity=-1.
+    Closes: GH bug #157
 
 
 2.4.0 (released 21.08.2024)

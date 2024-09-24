@@ -23,6 +23,7 @@ import inspect
 import os
 import shutil
 import importlib
+import subprocess
 
 # PEP 396: supply __version__
 from .configuration import App, Version as __version__  # noqa: F401
@@ -487,7 +488,7 @@ def program_supports_compression(program, exe, compression):
         # * tar programs allow long option --<compression> for supported compressions
         # This way running "tar --<compression> --help" determines, if the compression is supported
         cmd = [exe, f"--{compression}", "--help"]
-        retcode = util.run(cmd)
+        retcode = util.run(cmd, stderr=subprocess.DEVNULL, verbosity=-1)
         return retcode == 0
     elif program in ('py_tarfile',):
         # the python tarfile module has a fixed list of supported compression modules
