@@ -19,6 +19,7 @@ import sys
 import time
 import locale
 import logging
+import platform
 from . import configuration
 
 
@@ -90,6 +91,7 @@ I can work with ;) .
 
 {configuration.App}
 Python {sys.version} on {sys.platform}
+Platform: {platform.platform()}
 Local time: {now}
 sys.orig_argv: {sys.orig_argv}
 Environment:
