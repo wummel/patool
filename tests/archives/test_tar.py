@@ -66,10 +66,16 @@ class TestTar(ArchiveTest):
         """Run archive commands with TAR LZIP archive."""
         self.archive_commands('t.tar.lz')
 
-    @needs_codec(program, 'xz')
+    @needs_codec(program, 'xz', commands=('list', 'extract', 'test'))
     def test_tar_xz(self):
         """Run archive commands with TAR XZ archive."""
-        self.archive_commands('t.tar.xz')
+        self.archive_commands('t.tar.xz', skip_create=True)
+
+    # run create test in extra function since Windows tar.exe does not support creating .tar.xz files
+    @needs_codec(program, 'xz', commands=('create',))
+    def test_tar_xz_create(self):
+        """Run archive commands with TAR XZ archive."""
+        self.archive_create('t.tar.xz')
 
     @needs_program('file')
     @needs_program(program)

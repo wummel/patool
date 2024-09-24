@@ -472,8 +472,11 @@ ProgramModules = {
 }
 
 
-def program_supports_compression(program, exe, compression):
+@util.memoized
+def program_supports_compression(command, program, exe, compression):
     """Decide if the given program supports the compression natively.
+    The result is memoized since this function can call the given program
+    for testing if it supports certain options.
 
     @return: True iff the program supports the given compression format
       natively, else False.
@@ -481,7 +484,7 @@ def program_supports_compression(program, exe, compression):
     if program in ('tar', 'star', 'bsdtar'):
         # Unfortunately, different tar implementations support different compressions,
         # even while having the same program name.
-        # So a reliable way to determine support is by running the tar program itself.
+        # So a better way to determine support is by running the tar program itself.
         # Use the following features (which are hopefully true on all platforms):
         # * tar programs support the "--help" option
         # * tar programs exit with error on unsupported options
@@ -494,6 +497,15 @@ def program_supports_compression(program, exe, compression):
         # in addition to the commandline option, tar also needs the corresponding compression program
         if util.find_program(compression):
             # the compression program is available for tar
+            if (
+                program == 'tar'
+                and command == 'create'
+                and compression == 'xz'
+                and os.name == 'nt'
+            ):
+                # The native tar.exe on windows does not support creating tar.xz archives,
+                # even when xz.exe is available. Complicated ...
+                return False
             return True
     elif program in ('py_tarfile',):
         # the python tarfile module has a fixed list of supported compression modules
@@ -599,7 +611,7 @@ def check_program_compression(command, program, exe, compression):
     if not compression:
         return True
     # check if compression is supported
-    if program_supports_compression(program, exe, compression):
+    if program_supports_compression(command, program, exe, compression):
         return True
     if command == 'create':
         comp_command = command

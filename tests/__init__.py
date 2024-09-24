@@ -79,7 +79,7 @@ def needs_module(name):
     return _need_func(has_module, name, 'Python module')
 
 
-def needs_codec(program, codec):
+def needs_codec(program, codec, commands=patoolib.ArchiveCommands):
     """Decorator skipping test if given program codec is not available."""
 
     def check_prog(f):
@@ -87,8 +87,11 @@ def needs_codec(program, codec):
             exe = patoolib.util.find_program(program)
             if not exe:
                 pytest.skip(f"program `{program}' not available")
-            if not has_codec(program, exe, codec):
-                pytest.skip(f"codec `{codec}' for program `{program}' not available")
+            for command in commands:
+                if not has_codec(command, program, exe, codec):
+                    pytest.skip(
+                        f"codec `{codec}' for program `{program}' and command `{command}' not available"
+                    )
             return f(*args, **kwargs)
 
         setattr(newfunc, fnameattr, getattr(f, fnameattr))
@@ -97,12 +100,12 @@ def needs_codec(program, codec):
     return check_prog
 
 
-def has_codec(program, exe, codec):
-    """Test if program supports given codec."""
+def has_codec(command, program, exe, codec):
+    """Test if program supports given codec with given command."""
     if program == '7z' and codec == 'rar':
         # On Debian, the non-free p7zip-rar package must be installed to support RAR
         return patoolib.util.p7zip_supports_rar()
     if program in ('7zz', '7zzs') and codec == 'rar':
         # the 7-Zip program directly supports RAR
         return True
-    return patoolib.program_supports_compression(program, exe, codec)
+    return patoolib.program_supports_compression(command, program, exe, codec)
