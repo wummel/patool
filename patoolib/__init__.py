@@ -471,26 +471,27 @@ ProgramModules = {
 }
 
 
-def program_supports_compression(program, compression):
+def program_supports_compression(program, exe, compression):
     """Decide if the given program supports the compression natively.
 
     @return: True iff the program supports the given compression format
       natively, else False.
     """
-    if program in ('tar',):
-        if os.name == 'nt':
-            return compression in ('gzip', 'bzip2')
-        return compression in (
-            'bzip2',
-            'compress',
-            'gzip',
-            'lzip',
-            'lzma',
-            'xz',
-            'zstd',
-        )
-    elif program in ('star', 'bsdtar', 'py_tarfile'):
-        return compression in ('gzip', 'bzip2', 'lzma')
+    if program in ('tar', 'star', 'bsdtar'):
+        # Unfortunately, different tar implementations support different compressions,
+        # even while having the same program name.
+        # So a reliable way to determine support is by running the tar program itself.
+        # Use the following features (which are hopefully true on all platforms):
+        # * tar programs support the "--help" option
+        # * tar programs exit with error on unsupported options
+        # * tar programs allow long option --<compression> for supported compressions
+        # This way running "tar --<compression> --help" determines, if the compression is supported
+        cmd = [exe, f"--{compression}", "--help"]
+        retcode = util.run(cmd)
+        return retcode == 0
+    elif program in ('py_tarfile',):
+        # the python tarfile module has a fixed list of supported compression modules
+        return compression in ('gzip', 'bzip2', 'lzma', 'xz')
     return False
 
 
@@ -536,7 +537,9 @@ def check_archive_format(format, compression):
         raise util.PatoolError(f"unknown archive compression `{compression}'")
 
 
-def find_archive_program(format, command, program=None, password=None):
+def find_archive_program(
+    format, command, program=None, password=None, compression=None
+):
     """Find suitable archive program for given format and mode."""
     commands = ArchivePrograms[format]
     programs = []
@@ -560,12 +563,46 @@ def find_archive_program(format, command, program=None, password=None):
         if exe:
             if program == '7z' and format == 'rar' and not util.p7zip_supports_rar():
                 continue
+            if not check_program_compression(command, program, exe, compression):
+                continue
             return exe
+
+    if compression is not None and compression in util.Encoding2Mime:
+        # there is no program supporting the archive format with the given compression
+        # try to fall back to an archive program for only the compression encoding
+        msg = f"could not find an executable program to {command} format {format} and compression {compression}, trying to run {command} only for {compression}"
+        log.log_info(msg)
+        return find_archive_program(util.Encoding2Mime[compression], command, program)
+
     # no programs found
-    raise util.PatoolError(
-        f"could not find an executable program to {command} format {format}; candidates are "
-        + ",".join(programs)
-    )
+    msg = f"could not find an executable program to {command} format {format}"
+    if compression is not None:
+        msg += f" and compression {compression}"
+    msg += "; candidates are " + ",".join(programs)
+    raise util.PatoolError(msg)
+
+
+def check_program_compression(command, program, exe, compression):
+    """Check if a program supports the given compression.
+
+    @return:
+      + True if compression is None or empty
+      + True if given program supports the archive compression
+      + False else
+    """
+    if not compression:
+        return True
+    # check if compression is supported
+    if program_supports_compression(program, exe, compression):
+        return True
+    if command == 'create':
+        comp_command = command
+    else:
+        comp_command = 'extract'
+    comp_prog = find_archive_program(compression, comp_command)
+    if comp_prog:
+        return True
+    return False
 
 
 def _remove_command_without_password_support(programs, format, command):
@@ -654,22 +691,6 @@ def supported_formats(operations=ArchiveCommands):
     return supported
 
 
-def check_program_compression(archive, command, program, compression):
-    """Check if a program supports the given compression."""
-    program = os.path.basename(program)
-    if compression:
-        # check if compression is supported
-        if not program_supports_compression(program, compression):
-            if command == 'create':
-                comp_command = command
-            else:
-                comp_command = 'extract'
-            comp_prog = find_archive_program(compression, comp_command)
-            if not comp_prog:
-                msg = f"cannot {command} archive `{archive}': compression `{compression}' not supported"
-                raise util.PatoolError(msg)
-
-
 def move_outdir_orphan(outdir):
     """Move a single file or directory inside outdir a level up.
     Never overwrite files.
@@ -732,9 +753,8 @@ def _extract_archive(
         format, compression = get_archive_format(archive)
     check_archive_format(format, compression)
     program = find_archive_program(
-        format, 'extract', program=program, password=password
+        format, 'extract', program=program, password=password, compression=compression
     )
-    check_program_compression(archive, 'extract', program, compression)
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'extract', format)
     if outdir is None:
         outdir = fileutil.tmpdir(dir=".")
@@ -798,8 +818,9 @@ def _create_archive(
     if format is None:
         format, compression = get_archive_format(archive)
     check_archive_format(format, compression)
-    program = find_archive_program(format, 'create', program=program, password=password)
-    check_program_compression(archive, 'create', program, compression)
+    program = find_archive_program(
+        format, 'create', program=program, password=password, compression=compression
+    )
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'create', format)
     cmdlist = get_archive_cmdlist(
         archive,
@@ -833,8 +854,9 @@ def _handle_archive(
     check_archive_format(format, compression)
     if command not in ('list', 'test'):
         raise util.PatoolError(f"invalid archive command `{command}'")
-    program = find_archive_program(format, command, program=program, password=password)
-    check_program_compression(archive, command, program, compression)
+    program = find_archive_program(
+        format, command, program=program, password=password, compression=compression
+    )
     get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
     # prepare keyword arguments for command list
     cmdlist = get_archive_cmdlist(

@@ -91,7 +91,7 @@ def get_tar_mode(compression):
         return 'w:gz'
     if compression == 'bzip2':
         return 'w:bz2'
-    if compression == 'lzma':
+    if compression in ('lzma', 'xz'):
         return 'w:xz'
     if compression:
         msg = f'pytarfile does not support {compression} for tar compression'

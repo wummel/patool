@@ -55,3 +55,11 @@ class TestPytarfile(ArchiveTest):
         """Run archive commands with renamed BZIP2 TAR archives."""
         self.archive_commands('t.tar.bz2.foo', skip_create=True)
         self.archive_commands('t.tbz2.foo', skip_create=True)
+
+    def test_tar_lzma(self):
+        """Run archive commands with TAR LZMA archive."""
+        self.archive_commands('t.tar.lzma')
+
+    def test_tar_xz(self):
+        """Run archive commands with TAR XZ archive."""
+        self.archive_commands('t.tar.xz')

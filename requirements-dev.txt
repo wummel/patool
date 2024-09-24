@@ -7,7 +7,7 @@ setuptools==75.1.0
 pytest==8.3.3
 
 # for python code linting
-ruff==0.6.5
+ruff==0.6.7
 
 # for generating a Python .whl file
 wheel==0.44.0

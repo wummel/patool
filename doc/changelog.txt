@@ -1,5 +1,14 @@
-2.4.1 (released xx.xx.xxxx)
-  *
+3.0.0 (released xx.xx.xxxx)
+  * When a program does not support a compression type, try to find other programs instead of failing.
+    This changes some library functions which are not part of the official API, but might be used by
+    other programs, hence the major version upgrade.
+    Thanks to github user benjaminwinger for the idea and initial patch!
+    Closes: GH bug #87
+  * Better detection for tar programs which compression is supported.
+    Closes: GH bug #86
+  * The Python module "tarfile" supports LZMA and XZ compressed archives.
+    Added tests for these archive formats (.tar.lzma and .tar.xz).
+
 
 2.4.0 (released 21.08.2024)
   * Document that patool extracts the archive for the search and repack commands.

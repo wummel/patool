@@ -17,7 +17,7 @@
 import os
 import mimetypes
 import subprocess
-from . import ArchiveMimetypes, ArchiveCompressions, program_supports_compression
+from . import ArchiveMimetypes, ArchiveCompressions
 from .log import log_error, log_warning
 from .util import memoized, find_program, backtick
 
@@ -186,12 +186,7 @@ def guess_mime_file(filename):
         elif mime2 in ArchiveMimetypes:
             mime = mime2
             encoding = get_file_mime_encoding(outparts)
-    # Only return mime and encoding if the given mime can natively support the encoding.
-    if program_supports_compression(ArchiveMimetypes.get(mime), encoding):
-        return mime, encoding
-    else:
-        # If encoding is None, default back to `mime`.
-        return Encoding2Mime.get(encoding, mime), None
+    return mime, encoding
 
 
 def guess_mime_file_mime(file_prog, filename):

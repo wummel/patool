@@ -16,7 +16,6 @@
 
 import os
 import subprocess
-from patoolib import program_supports_compression
 
 
 def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
@@ -52,17 +51,8 @@ def add_tar_opts(cmdlist, compression, verbosity):
     progname = os.path.basename(cmdlist[0]).lower()
     if progname.endswith('.exe'):
         progname = progname[:-4]
-    if program_supports_compression(progname, compression):
-        if compression == 'gzip':
-            cmdlist.append('-z')
-        elif compression == 'compress':
-            cmdlist.append('-Z')
-        elif compression == 'bzip2':
-            cmdlist.append('-j')
-        elif compression == 'xz':
-            cmdlist.append('-J')
-        elif compression in ('lzma', 'lzip', 'zstd'):
-            cmdlist.append(f'--{compression}')
+    if compression:
+        cmdlist.append(f'--{compression}')
     if verbosity > 1:
         cmdlist.append('--verbose')
     if progname == 'tar':

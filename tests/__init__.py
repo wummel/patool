@@ -84,9 +84,10 @@ def needs_codec(program, codec):
 
     def check_prog(f):
         def newfunc(*args, **kwargs):
-            if not patoolib.util.find_program(program):
+            exe = patoolib.util.find_program(program)
+            if not exe:
                 pytest.skip(f"program `{program}' not available")
-            if not has_codec(program, codec):
+            if not has_codec(program, exe, codec):
                 pytest.skip(f"codec `{codec}' for program `{program}' not available")
             return f(*args, **kwargs)
 
@@ -96,7 +97,7 @@ def needs_codec(program, codec):
     return check_prog
 
 
-def has_codec(program, codec):
+def has_codec(program, exe, codec):
     """Test if program supports given codec."""
     if program == '7z' and codec == 'rar':
         # On Debian, the non-free p7zip-rar package must be installed to support RAR
@@ -104,4 +105,4 @@ def has_codec(program, codec):
     if program in ('7zz', '7zzs') and codec == 'rar':
         # the 7-Zip program directly supports RAR
         return True
-    return patoolib.program_supports_compression(program, codec)
+    return patoolib.program_supports_compression(program, exe, codec)
