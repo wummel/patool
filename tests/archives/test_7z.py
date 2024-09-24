@@ -86,6 +86,7 @@ class Test7z(ArchiveTest):
     def test_7z_file(self):
         """Run archive commands with renamed archives that 7z supports."""
         self.archive_commands('t.7z.foo', skip_create=True)
+        self.archive_commands('t.7z.001', skip_create=True)
         self.archive_commands('t.cb7.foo', skip_create=True)
         self.archive_commands('t.zip.foo', skip_create=True)
         self.archive_commands('t.cbz.foo', skip_create=True)
