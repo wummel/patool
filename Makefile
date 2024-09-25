@@ -115,7 +115,7 @@ hub-publish:			## add the wheel file and publish the draft
 # anything screwed up.
 .PHONY: release
 release: distclean releasecheck ## release a new version of patool
-	$(MAKE) dist tag hub upload homepage github-issues
+	$(MAKE) dist hub upload homepage github-issues
 
 .PHONY: releasecheck
 releasecheck: checkgit checkgitreleasetag checkchangelog lint test ## check that repo is ready for release
