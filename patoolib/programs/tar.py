@@ -64,6 +64,6 @@ def get_tar_opts(cmd, compression, verbosity):
         testcmdlist = [cmd, "--force-local", "--help"]
         from .. import util
 
-        if util.run(testcmdlist, stderr=subprocess.DEVNULL, verbosity=verbosity) == 0:
+        if util.run(testcmdlist, stderr=subprocess.DEVNULL, verbosity=-1) == 0:
             cmdlist.append('--force-local')
     return cmdlist
