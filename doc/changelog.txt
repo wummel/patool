@@ -1,4 +1,4 @@
-3.0.0 (released xx.xx.xxxx)
+3.0.0 (released 25.09.2024)
   * When a program does not support a compression type, try to find other programs instead of failing.
     This changes some library functions which are not part of the official API, but might be used by
     other programs, hence the major version upgrade.
