@@ -21,6 +21,7 @@ AUTHOR:=$(shell grep "MyName =" patoolib/configuration.py | cut -d '"' -f2)
 APPNAME:=$(shell grep "AppName =" patoolib/configuration.py | cut -d '"' -f2)
 ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
 ARCHIVE_WHEEL:=$(APPNAME)-$(VERSION)-py2.py3-none-any.whl
+GITRELEASETAG:=$(VERSION)
 GITUSER:=wummel
 GITREPO:=$(APPNAME)
 HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
@@ -87,23 +88,37 @@ upload: ## upload a new release to pypi
 	twine upload --config-file $(XDG_CONFIG_HOME)/pypirc \
 	  dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
 
-.PHONY: hub
-hub: ## add and push a github release
+# export GITHUB_TOKEN for the hub command
+# Generate a fine grained access token with:
+# - Restricted to this repository (patool)
+# - Repository permission: Metadata -> Read (displayed as "Read access to metadata" in token view)
+# - Repository permission: Contents -> Read and write (displayed as "Read and Write access to code" in token view)
+# - Expiration in 90 days
+# After token generation or renewal, copy the contents in the local .envrc file and run "direnv allow ."
+.PHONY: hub hub-draft hub-publish
+hub: hub-draft hub-publish	## make a github release
+hub-draft:			## create a draft release
 	hub release create \
-	  -a dist/$(ARCHIVE_SOURCE) \
-	  -a dist/$(ARCHIVE_WHEEL) \
-	  -m "Release $(VERSION)" \ 
-	  upstream/$(VERSION)
+	  --draft \
+	  --attach dist/$(ARCHIVE_SOURCE) \
+	  --message "Release $(GITRELEASETAG)" \
+	  "$(GITRELEASETAG)"
+hub-publish:			## add the wheel file and publish the draft
+	hub release edit \
+	  --draft=false \
+	  --attach dist/$(ARCHIVE_WHEEL) \
+	  --message "" \
+	  "$(GITRELEASETAG)"
 
 # Make a new release by calling all the distinct steps in the correct order.
 # Each step is a separate target so that it's easy to do this manually if
 # anything screwed up.
 .PHONY: release
 release: distclean releasecheck ## release a new version of patool
-	$(MAKE) dist hub upload homepage github-issues
+	$(MAKE) dist tag hub upload homepage github-issues
 
 .PHONY: releasecheck
-releasecheck: checkgit checkchangelog lint test ## check that repo is ready for release
+releasecheck: checkgit checkgitreleasetag checkchangelog lint test ## check that repo is ready for release
 
 .PHONY: checkgit
 checkgit: ## check that git changes are all committed on the main branch
@@ -120,11 +135,18 @@ checkgit: ## check that git changes are all committed on the main branch
 	  false; \
 	fi
 
+.PHONY: checkgitreleasetag
+checkgitreleasetag:	## check release tag for git exists
+	@if [ -z "$(shell git tag -l -- $(GITRELEASETAG))" ]; then \
+	  echo "ERROR: git tag \"$(GITRELEASETAG)\" does not exist, execute 'git tag -a $(GITRELEASETAG) -m \"$(GITRELEASETAG)\"'"; \
+	  false; \
+	fi
+
 .PHONY: github-issues
 github-issues: ## close github issues mentioned in changelog
 # github-changelog is a local tool which parses the changelog and automatically
 # closes issues mentioned in the changelog entries.
-	cd .. && github-changelog $(DRYRUN) $(GITUSER) $(GITREPO) patool.git/doc/changelog.txt
+	cd .. && github-changelog $(GITUSER) $(GITREPO) patool.git/doc/changelog.txt
 
 
 ############ Versioning ############
