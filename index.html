@@ -156,6 +156,23 @@ Note that extra options or customization for specific archive programs are not s
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="patoolib.supported_formats">
+<span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">supported_formats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('list',</span> <span class="pre">'extract',</span> <span class="pre">'test',</span> <span class="pre">'create')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.supported_formats" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of supported archive formats for an iterable of operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operations</strong> (<em>List</em><em>|</em><em>Tuple</em><em>|</em><em>Set</em><em>|</em><em>Dict</em><em>[</em><em>str</em><em>]</em>) – The operations to check for, defaults to ArchiveCommands.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of supported archive formats.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="patoolib.list_archive">
 <span class="sig-prename descclassname"><span class="pre">patoolib.</span></span><span class="sig-name descname"><span class="pre">list_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">archive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">program</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#patoolib.list_archive" title="Link to this definition">¶</a></dt>
 <dd><p>List given archive.</p>

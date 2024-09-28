@@ -120,6 +120,8 @@ The following functions are currently supported as an API:
 ```{eval-rst}
 .. autofunction:: patoolib.list_formats
 
+.. autofunction:: patoolib.supported_formats
+
 .. autofunction:: patoolib.list_archive
 
 .. autofunction:: patoolib.extract_archive
