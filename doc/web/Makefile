@@ -38,7 +38,7 @@ help:
 .PHONY: release
 release:	html
 	cp -r $(BUILDDIR)/html/* $(WEBDIR)/
-	cd $(WEBDIR) && git add . && git commit -m "Updated" && git push
+	(cd $(WEBDIR); git add .; git commit -m "Updated"; git push)
 
 
 # Catch-all target: route all unknown targets to Sphinx using the new

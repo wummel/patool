@@ -1,77 +1,41 @@
-Development with the patoolib library
-======================================
+Development
+============
 
-The patool functionality can also be used in other Python programs.
-To do this, install the patool program, import the library and
-use one or more of the convenience functions.
+Development for patool needs the following environment:
 
-import patoolib
-try:
-    patoolib.extract("myarchive.zip", verbose=True)
-    print("Success.")
-except patoolib.util.PatoolError as msg:
-    print("Error:", msg)
+1. Python >= 3.10 from https://www.python.org/
 
-General rules for all convenience functions:
+2. uv from https://github.com/astral-sh/uv
 
-* All convenience functions raise PatoolError on errors.
+   Install the `uv` binary into a local directory in your PATH.
 
-* Error messages are printed on stderr, informative messages
-  are printed on stdout.
+3. GNU make
 
-* All file arguments are filenames. File objects are not accepted
-  as input.
 
-* Filenames can be relative or absolute.
+To start developing, run the following commands:
 
-* If verbosity is increased, additional output of the archive
-  program is shown.
+1. Checkout the source code and change into base project directory
 
-* Usually the program to be executed is automatically determined
-  but it can be set manually with the program parameter.
+   $ git clone https://github.com/wummel/patool.git && cd patool
 
-The convenience functions are:
+2. Initialize the source directory
 
-* ``def extract_archive(archive, verbosity=0, outdir=None, program=None)``
+   $ make init
 
-  Extracts the given archive filename to the current working directory
-  or if specified to the given directory name in outdir.
-  Checks that the archive exists and is readable before extracting it.
+   This creates a virtual Python environment in the directory `.venv/` and installs
+   required modules for development.
 
-* ``def list_archive(archive, verbosity=1, program=None)``
+   You should add the virtual Python environment binaries to PATH
 
-  Lists the contents of the given archive filename on stdout.
-  Checks that the archive exists and is readable before listing it.
+   $ export PATH=.venv/bin:$PATH
 
-* ``def test_archive(archive, verbosity=0, program=None)``
+3. Run the tests
 
-  Tests the given archive filename.
-  Checks that the archive exists and is readable before testing it.
+   $ make test
 
-* ``def create_archive(archive, filenames, verbosity=0, program=None)``
+4. Change the code, and test the new code by installing patool in the virtual Python environment
 
-  Creates a new archive. The type of archive is determined
-  by the archive filename extension.
-  Checks that the archive is not already existing to avoid overwriting it.
-  Also checks that the filename list is not empty and that all files exist
-  and are readable.
+   $ make localbuild
 
-* ``diff_archives(archive1, archive2, verbosity=0)``
+   Now the `patool` binary will be installed in the `.venv/bin` directory.
 
-  This function lists differences in the content of the two archives.
-  Both archives are extracted and the contents are compared
-  recursively with the diff(1) program.
-  Checks that both archives exist and are readable.
-
-* ``def search_archive(pattern, archive, verbosity=0)``
-
-  This function searches the given pattern in the archive file contents
-  with grep(1).
-  Checks that archive exists and is readable.
-
-* ``repack_archive (archive, archive_new, verbosity=0)``
-
-  This function extracts the contents of the archive and packs them
-  into archive_new.
-  Checks that archive exists and is readable. Also checks that
-  archive_new does not exist to avoid overwriting it.

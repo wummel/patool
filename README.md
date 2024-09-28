@@ -82,9 +82,10 @@ patoolib.is_archive("package.deb")
 
 See https://wummel.github.io/patool/ for detailed API documentation.
 
-Test suite status
-------------------
-Patool has extensive unit tests to ensure the code quality.
+Test suite
+-----------
+Patool has [extensive unit tests](https://github.com/wummel/patool/tree/master/tests) to ensure the code quality.
+The tests are run on each commit by a github runner.
 
 
 Bash completion
