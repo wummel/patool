@@ -1,3 +1,34 @@
+[project]
+name = "patool"
+version = "3.0.1"
+requires-python = ">=3.10"
+dependencies = []
+# these values are set by setup.py
+dynamic = ["scripts", "authors", "keywords", "classifiers", "urls", "license", "readme", "description"]
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+# these modules are only needed for development
+
+[tool.uv]
+dev-dependencies = [
+  # for using setuptools.setup() in setup.py
+  "setuptools==75.1.0",
+
+  # for testing
+  "pytest==8.3.3",
+
+  # for python code linting
+  "ruff==0.6.8",
+
+  # for generating a Python .whl file
+  "wheel==0.44.0",
+
+  # for generating the web page
+  "Sphinx==8.0.2",
+  "myst-parser==4.0.0",
+
+  # for upgrading the version number
+  "bump2version==1.0.1"
+]

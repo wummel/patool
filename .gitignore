@@ -2,6 +2,7 @@
 __pycache__
 /.pytest_cache
 /.ruff_cache
+/uv.lock
 
 # build and dist dirs
 /build

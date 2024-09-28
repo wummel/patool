@@ -28,7 +28,6 @@ HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/source/conf.py
 CHANGELOG:=doc/changelog.txt
 GIT_MAIN_BRANCH:=master
-PIP_VERSION:=24.2
 # Pytest options:
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts
@@ -53,14 +52,13 @@ help:	## display this help section
 # these targets work best in a virtual python environment
 # see https://github.com/pyenv/pyenv for more info
 
-.PHONY: init ## install pip and required development packages
-init:	requirements-dev.txt
-	uv pip install --upgrade pip==$(PIP_VERSION)
-	uv pip install -r $<
+.PHONY: init ## install python virtual env and required development packages
+init:
+	uv sync --no-install-project
 
 .PHONY: localbuild ## install patool in local environment
 localbuild:
-	uv pip install --editable .
+	uv sync
 
 
 ############ Build and release targets ############
@@ -81,12 +79,11 @@ distclean:	clean ## run clean and additionally remove all build and dist files
 
 .PHONY: dist
 dist: ## build source and wheel distribution file
-	python setup.py sdist bdist_wheel
+	uv build
 
 .PHONY: upload
 upload: ## upload a new release to pypi
-	twine upload --config-file $(XDG_CONFIG_HOME)/pypirc \
-	  dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
+	uv publish dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
 
 # export GITHUB_TOKEN for the hub command
 # Generate a fine grained access token with:
@@ -184,20 +181,30 @@ lint: ## lint python code
 reformat: ## format the python code
 	ruff format setup.py patoolib tests doc/web/source
 
-.PHONY: checkoutdated
-checkoutdated: ## Check for outdated Python requirements
+.PHONY: checkoutdated checkoutdatedpy checkoutdatedgh
+checkoutdated: checkoutdatedpy checkoutdatedgh
+
+checkoutdatedpy:	## Check for outdated package requirements
+# Compare the list of currently installed packages with the same list of packages with latest versions from pypi.
 # Assumes that all requirements have pinned versions with "==".
-# Filter the output of `pip list --outdated` using grep with a regular
+# To check only direct dependencies, not those of further down the dependency tree,
+# the output is filtered by using `pip tree -d0` and grep with a regular
 # expression of the form
-# `grep -E "(package1 |package2 | ... |packageN )"`.
-# The trailing space after each package prevents matching substrings.
-# When grep does not find any match, all packages are uptodate.
+# `grep -E "(\tpackage1\t|package2\t| ... |\tpackageN)"`.
+# The leading tab before each package prevents matching substrings.
+# When grep does not find any match, all required packages are uptodate.
 # In this case, grep exits with exitcode 1. Test for this after running grep.
 	@set +e; \
 	echo "Check for outdated Python packages"; \
 	uv pip list --format=freeze |sed 's/==.*//' | uv pip compile - --color=never --quiet --no-deps --no-header --no-annotate |diff <(uv pip list --format=freeze) - --side-by-side --suppress-common-lines | \
-	  grep -iE "( $(shell cat requirements-dev.txt | grep == | cut -f1 -d= | cut -f1 -d[ | sort | paste -sd '|' | sed -e 's/|/|\t/g') )"; \
+	grep -iE "($(shell uv pip tree -d0 | cut -f1 -d" " | sort | paste -sd '|' | sed -e 's/|/|\t/g'))"; \
 	test $$? = 1
+
+checkoutdatedgh:	## check for outedated github tools
+# github-check-outdated is a local tool which compares a given version with the latest available github release version
+# see https://gist.github.com/wummel/ef14989766009effa4e262b01096fc8c for an example implementation
+	@echo "Check for outdated Github tools"
+	github-check-outdated astral-sh uv "$(shell uv version | cut -f2 -d" ")"
 
 
 ############ Testing ############
