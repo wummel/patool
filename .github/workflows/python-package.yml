@@ -34,7 +34,7 @@ jobs:
 
     - name: Install Python ${{ matrix.python-version }}
       run: |
-        uv python install
+        uv python install "${{ matrix.python-version }}"
 
     - name: Install ruff
       run: |
