@@ -23,15 +23,22 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    # https://github.com/marketplace/actions/python-setup-uv
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        version: "latest"
 
-    - name: Install dependencies
+    - name: Set UV_PYTHON
+      run: echo "UV_PYTHON=${{ matrix.python-version }}" >> $GITHUB_ENV
+
+    - name: Install Python ${{ matrix.python-version }}
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements-dev.txt
+        uv python install
+
+    - name: Install ruff
+      run: |
+        uv tool install ruff
 
     - name: Check linting errors
       run: |
@@ -41,11 +48,15 @@ jobs:
       run: |
         ruff format --check setup.py patoolib tests doc/web/source
 
-    - name: Install archive programs on ${{ runner.os }} running ${{ matrix.os }}
+    - name: Install archive programs on Linux
       if: ${{ runner.os=='Linux' }}
       run: >
         sudo apt-get update &&
         sudo apt-get install arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress nomarch pbzip2 p7zip-full rpm2cpio unzip unace unalz unar sharutils tar xdms zip zopfli zstd
+
+    - name: Install pytest
+      run: |
+        uv tool install pytest
 
     - name: Test with pytest
       run: |
