@@ -784,7 +784,8 @@ def _extract_archive(
                 msg = f"output path `{outdir}' exists and is not a directory"
                 raise util.PatoolError(msg)
         else:
-            log.log_info(f"... creating output directory `{outdir}'.")
+            if verbosity >= 0:
+                log.log_info(f"... creating output directory `{outdir}'.")
             os.makedirs(outdir)
     try:
         cmdlist = get_archive_cmdlist(
