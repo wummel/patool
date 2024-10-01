@@ -556,7 +556,7 @@ def check_archive_format(format, compression):
 
 
 def find_archive_program(
-    format, command, program=None, password=None, compression=None
+    format, command, program=None, password=None, compression=None, verbosity=0
 ):
     """Find suitable archive program for given format and mode."""
     commands = ArchivePrograms[format]
@@ -581,16 +581,24 @@ def find_archive_program(
         if exe:
             if program == '7z' and format == 'rar' and not util.p7zip_supports_rar():
                 continue
-            if not check_program_compression(command, program, exe, compression):
+            if not check_program_compression(
+                command, program, exe, compression, verbosity=verbosity
+            ):
                 continue
             return exe
 
     if compression is not None and compression in util.Encoding2Mime:
         # there is no program supporting the archive format with the given compression
         # try to fall back to an archive program for only the compression encoding
-        msg = f"could not find an executable program to {command} format {format} and compression {compression}, trying to run {command} only for {compression}"
-        log.log_info(msg)
-        return find_archive_program(util.Encoding2Mime[compression], command, program)
+        if verbosity >= 0:
+            msg = f"could not find an executable program to {command} format {format} and compression {compression}, trying to run {command} only for {compression}"
+            log.log_info(msg)
+        return find_archive_program(
+            util.Encoding2Mime[compression],
+            command,
+            program=program,
+            verbosity=verbosity,
+        )
 
     # no programs found
     msg = f"could not find an executable program to {command} format {format}"
@@ -600,7 +608,7 @@ def find_archive_program(
     raise util.PatoolError(msg)
 
 
-def check_program_compression(command, program, exe, compression):
+def check_program_compression(command, program, exe, compression, verbosity=0):
     """Check if a program supports the given compression.
 
     @return:
@@ -617,7 +625,7 @@ def check_program_compression(command, program, exe, compression):
         comp_command = command
     else:
         comp_command = 'extract'
-    comp_prog = find_archive_program(compression, comp_command)
+    comp_prog = find_archive_program(compression, comp_command, verbosity=verbosity)
     if comp_prog:
         return True
     return False
@@ -771,7 +779,12 @@ def _extract_archive(
         format, compression = get_archive_format(archive)
     check_archive_format(format, compression)
     program = find_archive_program(
-        format, 'extract', program=program, password=password, compression=compression
+        format,
+        'extract',
+        program=program,
+        password=password,
+        compression=compression,
+        verbosity=verbosity,
     )
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'extract', format)
     if outdir is None:
@@ -838,7 +851,12 @@ def _create_archive(
         format, compression = get_archive_format(archive)
     check_archive_format(format, compression)
     program = find_archive_program(
-        format, 'create', program=program, password=password, compression=compression
+        format,
+        'create',
+        program=program,
+        password=password,
+        compression=compression,
+        verbosity=verbosity,
     )
     get_archive_cmdlist = get_archive_cmdlist_func(program, 'create', format)
     cmdlist = get_archive_cmdlist(
@@ -874,7 +892,12 @@ def _handle_archive(
     if command not in ('list', 'test'):
         raise util.PatoolError(f"invalid archive command `{command}'")
     program = find_archive_program(
-        format, command, program=program, password=password, compression=compression
+        format,
+        command,
+        program=program,
+        password=password,
+        compression=compression,
+        verbosity=verbosity,
     )
     get_archive_cmdlist = get_archive_cmdlist_func(program, command, format)
     # prepare keyword arguments for command list
@@ -981,9 +1004,10 @@ def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=
     format2, compression2 = get_archive_format(archive2)
     if format1 == format2 and compression1 == compression2:
         # same format and compression allows to copy the file
-        log.log_info(
-            f"copy `{archive1}' -> `{archive2}' in same format {format1} and compression {compression1}"
-        )
+        if verbosity >= 0:
+            log.log_info(
+                f"copy `{archive1}' -> `{archive2}' in same format {format1} and compression {compression1}"
+            )
         fileutil.link_or_copy(archive1, archive2, verbosity=verbosity)
         return
     tmpdir = fileutil.tmpdir()
