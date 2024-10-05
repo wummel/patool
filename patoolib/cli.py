@@ -61,8 +61,10 @@ def run_list(args):
     res = 0
     for archive in args.archive:
         try:
+            verbosity = args.verbosity
             # increase default verbosity since the listing output should be visible
-            verbosity = args.verbosity + 1
+            if verbosity == 0:
+                verbosity = 1
             list_archive(
                 archive,
                 verbosity=verbosity,
@@ -202,6 +204,14 @@ def create_argparser():
         default=0,
         dest='verbosity',
         help="verbose operation; can be given multiple times",
+    )
+    parser.add_argument(
+        '--quiet',
+        '-q',
+        action='store_const',
+        const=-1,
+        dest='verbosity',
+        help="quiet operation",
     )
     parser.add_argument(
         '--non-interactive',

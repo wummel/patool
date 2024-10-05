@@ -1,5 +1,6 @@
 3.0.1 (released xx.xx.xxxx)
   * Use more uv command to replace other build tools, ie. twine.
+  * Add new --quiet option to suppress command output.
 
 3.0.0 (released 25.09.2024)
   * When a program does not support a compression type, try to find other programs instead of failing.

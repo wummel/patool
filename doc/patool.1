@@ -1,5 +1,5 @@
 .\"                                      -*- nroff -*-
-.\" Copyright (C) 2010-2023 Bastian Kleineidam
+.\" Copyright (C) 2010-2024 Bastian Kleineidam
 .\"
 .\" This program is free software: you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -11,11 +11,11 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.TH PATOOL "1" "July 2013" "patool"
+.TH PATOOL "1" "October 2024" "patool"
 .SH NAME
 patool - portable archive file manager
 .SH SYNOPSIS
- \fBpatool\fP [\fIglobal-options\fP] (\fBlist\fP|\fBtest\fP|\fBextract\fP|\fBcreate\fP|\fBdiff\fP|\fBsearch\fP|\fBrepack\fP|\fBformats\fP) [\fIcommand-options\fP] <\fIcommand-arguments\fP>...
+ \fBpatool\fP [\fIglobal-options\fP] (\fBlist\fP|\fBtest\fP|\fBextract\fP|\fBcreate\fP|\fBdiff\fP|\fBsearch\fP|\fBrepack\fP|\fBformats\fP|\fBversion\fP) [\fIcommand-options\fP] [\fIcommand-arguments\fP]...
 .SH DESCRIPTION
 Various archive formats can be created, extracted, tested, listed, searched,
 repacked and compared by
@@ -54,6 +54,9 @@ installed.
 Display more info about what patool does, and display the output
 of helper applications. Can be given multiple times to increase
 the output even more.
+.TP
+\fB\-q\fP, \fB\-\-quiet\fP
+Work quietly, exept on commands \fBformats\fP and \fBversion\fP, which still print their output.
 .TP
 \fB\-\-non\-interactive\fP
 Try to prevent any interactive user input (i.e. prompting for passwords
@@ -161,4 +164,4 @@ When running under a Unix shell the following aliases can be defined to save som
 .SH AUTHOR
 Bastian Kleineidam <bastian.kleineidam@web.de>
 .SH COPYRIGHT
-Copyright \(co 2010-2023 Bastian Kleineidam
+Copyright \(co 2010-2024 Bastian Kleineidam
