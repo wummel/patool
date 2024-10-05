@@ -1,5 +1,5 @@
 include MANIFEST.in
-include COPYING doc/*.1 doc/*.txt doc/icon/*
+include COPYING doc/*.1 doc/*.txt doc/*.md doc/icon/*
 include Makefile
 graft tests
 global-exclude *.py[cod]
