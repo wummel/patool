@@ -1,3 +1,6 @@
+3.0.2 (released xx.xx.xxxx)
+  *
+
 3.0.1 (released 06.10.2024)
   * Use more uv command to replace other build tools, ie. twine.
   * Add new --quiet option to suppress command output.
