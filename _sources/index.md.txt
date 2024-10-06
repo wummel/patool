@@ -46,19 +46,14 @@ sudo pip install patool
 And on Windows:
 
 ```bash
-c:\python3\scripts\pip install patool
+py.exe -m pip install patool
 ```
 
-Or after downloading the patool .whl file:
+You will need Python 3.10 or later.
 
-```bash
-c:\python3\scripts\pip install patool-1.9-py2.py3-none-any.whl
-```
+For more information, especially for installing additional tools on Windows, read the detailed
+[installation instructions](https://github.com/wummel/patool/blob/master/doc/install.md).
 
-You will need at least Python 3.10.
-
-If you install from source read the
-[installation instructions](https://github.com/wummel/patool/blob/master/doc/install.txt).
 
 Running
 --------
