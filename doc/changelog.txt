@@ -1,5 +1,5 @@
 3.0.2 (released xx.xx.xxxx)
-  *
+  * When running in verbose mode (-vv), print mime and compression info.
 
 3.0.1 (released 06.10.2024)
   * Use more uv command to replace other build tools, ie. twine.
