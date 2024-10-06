@@ -20,7 +20,7 @@ dev-dependencies = [
   "pytest==8.3.3",
 
   # for python code linting
-  "ruff==0.6.8",
+  "ruff==0.6.9",
 
   # for generating a Python .whl file
   "wheel==0.44.0",
