@@ -14,12 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """MIME type detection functions."""
 
+import functools
 import os
 import mimetypes
 import subprocess
 from . import ArchiveMimetypes, ArchiveCompressions
 from .log import log_error, log_warning
-from .util import memoized, find_program, backtick
+from .util import find_program, backtick
 
 
 # internal MIME database
@@ -94,7 +95,7 @@ def add_mimetype(mimedb, mimetype, extension):
     mimedb.add_type(mimetype, extension, strict=strict)
 
 
-@memoized
+@functools.cache
 def guess_mime(filename):
     """Guess the MIME type of given filename using file(1) and if that
     fails by looking at the filename extension with the Python mimetypes
