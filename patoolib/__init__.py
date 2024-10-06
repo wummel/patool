@@ -531,9 +531,11 @@ def is_archive(filename):
     return mime in ArchiveMimetypes
 
 
-def get_archive_format(filename):
+def get_archive_format(filename, verbosity=0):
     """Detect filename archive format and optional compression."""
     mime, compression = guess_mime(filename)
+    if verbosity >= 2:
+        log.log_info(f"archive has mime {mime} and compression {compression}")
     if not (mime or compression):
         raise util.PatoolError(f"unknown archive format for file `{filename}'")
     if mime in ArchiveMimetypes:
@@ -777,7 +779,7 @@ def _extract_archive(
     @return: output directory if command is 'extract', else None
     """
     if format is None:
-        format, compression = get_archive_format(archive)
+        format, compression = get_archive_format(archive, verbosity=verbosity)
     check_archive_format(format, compression)
     program = find_archive_program(
         format,
@@ -849,7 +851,7 @@ def _create_archive(
 ):
     """Create an archive."""
     if format is None:
-        format, compression = get_archive_format(archive)
+        format, compression = get_archive_format(archive, verbosity=verbosity)
     check_archive_format(format, compression)
     program = find_archive_program(
         format,
@@ -888,7 +890,7 @@ def _handle_archive(
 ):
     """Test and list archives."""
     if format is None:
-        format, compression = get_archive_format(archive)
+        format, compression = get_archive_format(archive, verbosity=verbosity)
     check_archive_format(format, compression)
     if command not in ('list', 'test'):
         raise util.PatoolError(f"invalid archive command `{command}'")
@@ -1001,8 +1003,8 @@ def _search_archive(pattern, archive, verbosity=0, interactive=True, password=No
 
 def _repack_archive(archive1, archive2, verbosity=0, interactive=True, password=None):
     """Repackage an archive to a different format."""
-    format1, compression1 = get_archive_format(archive1)
-    format2, compression2 = get_archive_format(archive2)
+    format1, compression1 = get_archive_format(archive1, verbosity=verbosity)
+    format2, compression2 = get_archive_format(archive2, verbosity=verbosity)
     if format1 == format2 and compression1 == compression2:
         # same format and compression allows to copy the file
         if verbosity >= 0:
