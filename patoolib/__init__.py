@@ -535,7 +535,9 @@ def get_archive_format(filename, verbosity=0):
     """Detect filename archive format and optional compression."""
     mime, compression = guess_mime(filename)
     if verbosity >= 2:
-        log.log_info(f"archive {filename} has mime {mime} and compression {compression}")
+        log.log_info(
+            f"archive {filename} has mime {mime} and compression {compression}"
+        )
     if not (mime or compression):
         raise util.PatoolError(f"unknown archive format for file `{filename}'")
     if mime in ArchiveMimetypes:
