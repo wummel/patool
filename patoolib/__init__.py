@@ -514,7 +514,7 @@ def program_supports_compression(command, program, exe, compression):
     return False
 
 
-from .mime import guess_mime  # noqa: E402
+from .mime import guess_mime, Encoding2Mime  # noqa: E402
 
 
 def is_archive(filename):
@@ -594,14 +594,14 @@ def find_archive_program(
                 continue
             return exe
 
-    if compression is not None and compression in util.Encoding2Mime:
+    if compression is not None and compression in Encoding2Mime:
         # there is no program supporting the archive format with the given compression
         # try to fall back to an archive program for only the compression encoding
         if verbosity >= 0:
             msg = f"could not find an executable program to {command} format {format} and compression {compression}, trying to run {command} only for {compression}"
             log.log_info(msg)
         return find_archive_program(
-            util.Encoding2Mime[compression],
+            Encoding2Mime[compression],
             command,
             program=program,
             verbosity=verbosity,

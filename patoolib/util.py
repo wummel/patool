@@ -55,7 +55,7 @@ def run(cmd, verbosity=0, **kwargs):
         log_info(f"running {info}")
     if run_under_pythonw():
         # prevent opening of additional consoles when running with pythonw.exe
-        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW # pytype: disable=module-attr
     # try to prevent hangs for programs requiring input
     kwargs["input"] = ""
     if kwargs:
@@ -158,7 +158,7 @@ def find_program(program):
 
 def get_nt_7z_dir():
     """Return 7-Zip directory from registry, or an empty string."""
-    import winreg
+    import winreg # type: ignore
     import platform
 
     python_bits = platform.architecture()[0]

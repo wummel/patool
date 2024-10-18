@@ -92,7 +92,7 @@ def add_mimetype(mimedb, mimetype, extension):
     """Add or replace a mimetype to be used with the given extension."""
     # If extension is already a common type, strict=True must be used.
     strict = extension in mimedb.types_map[True]
-    mimedb.add_type(mimetype, extension, strict=strict)
+    mimedb.add_type(mimetype, extension, strict=strict) # pytype: disable=attribute-error
 
 
 @functools.cache
@@ -254,8 +254,8 @@ FileText2Mime = {
 
 def guess_mime_file_text(file_prog, filename):
     """Determine MIME type of filename with file(1)."""
+    cmd = [file_prog, "--brief", filename]
     try:
-        cmd = [file_prog, "--brief", filename]
         output = backtick(cmd).strip()
     except OSError as err:
         # ignore errors, as file(1) is only a fallback
