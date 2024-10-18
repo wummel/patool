@@ -11,16 +11,25 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 # these modules are only needed for development
 
+[project.optional-dependencies]
+# optional features
+argcompletion = [
+  'argcomplete==3.5.1',
+]
+
 [tool.uv]
 dev-dependencies = [
   # for using setuptools.setup() in setup.py
-  "setuptools==75.1.0",
+  "setuptools==75.2.0",
 
   # for testing
   "pytest==8.3.3",
 
   # for python code linting
-  "ruff==0.6.9",
+  "ruff==0.7.0",
+
+  # for python type checking
+  "pytype==2024.10.11",
 
   # for generating a Python .whl file
   "wheel==0.44.0",
@@ -30,5 +39,8 @@ dev-dependencies = [
   "myst-parser==4.0.0",
 
   # for upgrading the version number
-  "bump2version==1.0.1"
+  "bump2version==1.0.1",
+
+  # test optional functionality
+  "patool[argcompletion]",
 ]
