@@ -81,8 +81,8 @@ distclean:	clean ## run clean and additionally remove all build and dist files
 dist: ## build source and wheel distribution file
 	uv build
 
-.PHONY: upload
-upload: ## upload a new release to pypi
+.PHONY: release-pypi
+release-pypi: ## upload a new release to pypi
 	uv publish dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
 
 # export GITHUB_TOKEN for the hub command
@@ -91,31 +91,26 @@ upload: ## upload a new release to pypi
 # - Repository permission: Metadata -> Read (displayed as "Read access to metadata" in token view)
 # - Repository permission: Contents -> Read and write (displayed as "Read and Write access to code" in token view)
 # - Expiration in 90 days
-# After token generation or renewal, copy the contents in the local .envrc file and run "direnv allow ."
-.PHONY: hub hub-draft hub-publish
-hub: hub-draft hub-publish	## make a github release
-hub-draft:			## create a draft release
-	hub release create \
-	  --draft \
-	  --attach dist/$(ARCHIVE_SOURCE) \
-	  --message "Release $(GITRELEASETAG)" \
-	  "$(GITRELEASETAG)"
-hub-publish:			## add the wheel file and publish the draft
-	hub release edit \
-	  --draft=false \
-	  --attach dist/$(ARCHIVE_WHEEL) \
-	  --message "" \
-	  "$(GITRELEASETAG)"
+# After that run "export GITHUB_TOKEN=<token-content>"
+.PHONY: release-gh
+release-gh:	## upload a new release to github
+	gh release create \
+	  --title "Release $(GITRELEASETAG)" \
+	  --verify-tag  \
+	  "$(GITRELEASETAG)" \
+	  dist/$(ARCHIVE_SOURCE) \
+	  dist/$(ARCHIVE_WHEEL)
+
 
 # Make a new release by calling all the distinct steps in the correct order.
 # Each step is a separate target so that it's easy to do this manually if
 # anything screwed up.
 .PHONY: release
 release: distclean releasecheck ## release a new version of patool
-	$(MAKE) dist hub upload homepage github-issues
+	$(MAKE) dist release-gh release-pypi homepage github-issues
 
 .PHONY: releasecheck
-releasecheck: checkgit checkgitreleasetag checkchangelog lint test ## check that repo is ready for release
+releasecheck: update_webmeta checkgit checkgitreleasetag checkchangelog lint test ## check that repo is ready for release
 
 .PHONY: checkgit
 checkgit: ## check that git changes are all committed on the main branch
@@ -232,4 +227,3 @@ update_webmeta: ## update package metadata for the homepage
 .PHONY: homepage
 homepage: update_webmeta ## update the homepage after a release
 	$(MAKE) -C doc/web release
-
