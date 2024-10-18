@@ -110,7 +110,7 @@ release: distclean releasecheck ## release a new version of patool
 	$(MAKE) dist release-gh release-pypi homepage github-issues
 
 .PHONY: releasecheck
-releasecheck: update_webmeta checkgit checkgitreleasetag checkchangelog lint test ## check that repo is ready for release
+releasecheck: update_webmeta checkgit checkgitreleasetag checkchangelog lint test typecheck ## check that repo is ready for release
 
 .PHONY: checkgit
 checkgit: ## check that git changes are all committed on the main branch
@@ -208,6 +208,9 @@ checkoutdatedgh:	## check for outedated github tools
 test: ## run tests
 	pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
 
+.PHONY: typecheck
+typecheck:	## run pytype
+	pytype patoolib
 
 ############ Documentation ############
 
