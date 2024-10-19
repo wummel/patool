@@ -92,7 +92,9 @@ def add_mimetype(mimedb, mimetype, extension):
     """Add or replace a mimetype to be used with the given extension."""
     # If extension is already a common type, strict=True must be used.
     strict = extension in mimedb.types_map[True]
-    mimedb.add_type(mimetype, extension, strict=strict) # pytype: disable=attribute-error
+    mimedb.add_type(
+        mimetype, extension, strict=strict
+    )  # pytype: disable=attribute-error
 
 
 @functools.cache

@@ -19,11 +19,12 @@ import sys
 import shutil
 import stat
 import tempfile
+from collections.abc import Sequence, Callable
 from .log import log_info, log_warning, log_error
 from .util import PatoolError
 
 
-def check_existing_filename(filename, onlyfiles=True):
+def check_existing_filename(filename: str, onlyfiles: bool = True) -> None:
     """Ensure that given filename is a valid, existing file."""
     if not os.path.exists(filename):
         raise PatoolError(f"file `{filename}' was not found")
@@ -33,19 +34,19 @@ def check_existing_filename(filename, onlyfiles=True):
         raise PatoolError(f"`{filename}' is not a file")
 
 
-def check_writable_filename(filename):
+def check_writable_filename(filename: str) -> None:
     """Ensure that the given filename is writable."""
     if not os.access(filename, os.W_OK):
         raise PatoolError(f"file `{filename}' is not writable")
 
 
-def check_new_filename(filename):
+def check_new_filename(filename: str) -> None:
     """Check that filename does not already exist."""
     if os.path.exists(filename):
         raise PatoolError(f"cannot overwrite existing file `{filename}'")
 
 
-def check_archive_filelist(filenames):
+def check_archive_filelist(filenames: Sequence[str]) -> None:
     """Check that file list is not empty and contains only existing files."""
     if not filenames:
         raise PatoolError("cannot create archive with empty filelist")
@@ -53,7 +54,7 @@ def check_archive_filelist(filenames):
         check_existing_filename(filename, onlyfiles=False)
 
 
-def set_mode(filename, flags):
+def set_mode(filename: str, flags: int) -> None:
     """Set mode flags for given filename if not already set."""
     try:
         mode = os.lstat(filename).st_mode
@@ -68,17 +69,17 @@ def set_mode(filename, flags):
             log_warning(f"could not set mode flags for `{filename}': {err}")
 
 
-def get_filesize(filename):
+def get_filesize(filename: str) -> int:
     """Return file size in Bytes, or -1 on error."""
     return os.path.getsize(filename)
 
 
-def tmpdir(dir=None, prefix="Unpack_"):
+def tmpdir(dir: str | None = None, prefix: str = "Unpack_") -> str:
     """Return a temporary directory for extraction."""
     return tempfile.mkdtemp(suffix="", prefix=prefix, dir=dir)
 
 
-def stripext(filename):
+def stripext(filename: str) -> str:
     """Return the basename without extension of given filename
     For compressed TAR archives, the filename without the .tar
     extension is returned, ie. output of 'a.tar.xz' will be
@@ -90,7 +91,7 @@ def stripext(filename):
     return basename
 
 
-def get_single_outfile(directory, archive, extension=""):
+def get_single_outfile(directory: str, archive: str, extension: str = "") -> str:
     """Get output filename if archive is in a single file format like gzip."""
     outfile = os.path.join(directory, stripext(archive))
     if os.path.exists(outfile + extension):
@@ -104,7 +105,7 @@ def get_single_outfile(directory, archive, extension=""):
     return outfile + extension
 
 
-def is_same_file(filename1, filename2):
+def is_same_file(filename1: str, filename2: str) -> bool:
     """Check if filename1 and filename2 point to the same file object.
     There can be false negatives, i.e. the result is False, but it is
     the same file anyway. Reason is that network filesystems can create
@@ -117,12 +118,12 @@ def is_same_file(filename1, filename2):
     return is_same_filename(filename1, filename2)
 
 
-def is_same_filename(filename1, filename2):
+def is_same_filename(filename1: str, filename2: str) -> bool:
     """Check if filename1 and filename2 are the same filename."""
     return os.path.realpath(filename1) == os.path.realpath(filename2)
 
 
-def link_or_copy(src, dst, verbosity=0):
+def link_or_copy(src: str, dst: str, verbosity: int = 0) -> None:
     """Try to make a hard link from src to dst and if that fails
     copy the file. Hard links save some disk space and linking
     should fail fast since no copying is involved.
@@ -138,7 +139,7 @@ def link_or_copy(src, dst, verbosity=0):
             raise PatoolError(f"error copying {src} -> {dst}") from err
 
 
-def chdir(directory):
+def chdir(directory: str) -> str | None:
     """Remember and return current directory before calling os.chdir().
     If the current directory could not be determined, return None.
     """
@@ -151,17 +152,17 @@ def chdir(directory):
     return olddir
 
 
-def rmtree_log_error(func, path, exc):
+def rmtree_log_error(func: Callable, path: str, exc: str) -> None:
     """Error log function for shutil.rmtree()."""
     log_error(f"Error in {func.__name__}({path}): {exc[1]}")
 
 
-def rmtree_log_exc(func, path, excinfo):
+def rmtree_log_exc(func: Callable, path: str, excinfo) -> None:
     """Error log function for shutil.rmtree()."""
     log_error(f"Error in {func.__name__}({path}): {excinfo}")
 
 
-def rmtree(path):
+def rmtree(path: str) -> None:
     """Remove given path recursively with shutil.rmtree().
     Errors will be logged.
     """
@@ -172,18 +173,18 @@ def rmtree(path):
         shutil.rmtree(path, onerror=rmtree_log_error)
 
 
-def make_file_readable(filename):
+def make_file_readable(filename: str) -> None:
     """Make file user readable if it is not a link."""
     if not os.path.islink(filename):
         set_mode(filename, stat.S_IRUSR)
 
 
-def make_dir_readable(filename):
+def make_dir_readable(filename: str) -> None:
     """Make directory user readable and executable."""
     set_mode(filename, stat.S_IRUSR | stat.S_IXUSR)
 
 
-def make_user_readable(directory):
+def make_user_readable(directory: str) -> None:
     """Make all files in given directory user readable. Also recurse into
     subdirectories.
     """

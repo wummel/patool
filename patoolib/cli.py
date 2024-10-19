@@ -38,7 +38,7 @@ from .log import log_error, log_internal_error
 from .configuration import App
 
 
-def run_extract(args):
+def run_extract(args: argparse.Namespace) -> int:
     """Extract files from archive(s)."""
     res = 0
     for archive in args.archive:
@@ -56,7 +56,7 @@ def run_extract(args):
     return res
 
 
-def run_list(args):
+def run_list(args: argparse.Namespace) -> int:
     """List files in archive(s)."""
     res = 0
     for archive in args.archive:
@@ -77,7 +77,7 @@ def run_list(args):
     return res
 
 
-def run_test(args):
+def run_test(args: argparse.Namespace) -> int:
     """Test files in archive(s)."""
     res = 0
     for archive in args.archive:
@@ -94,7 +94,7 @@ def run_test(args):
     return res
 
 
-def run_create(args):
+def run_create(args: argparse.Namespace) -> int:
     """Create an archive from given files."""
     res = 0
     try:
@@ -111,7 +111,7 @@ def run_create(args):
     return res
 
 
-def run_diff(args):
+def run_diff(args: argparse.Namespace) -> int:
     """Show differences between two archives."""
     try:
         res = diff_archives(
@@ -128,7 +128,7 @@ def run_diff(args):
     return res
 
 
-def run_search(args):
+def run_search(args: argparse.Namespace) -> int:
     """Search for pattern in given archive."""
     try:
         res = search_archive(
@@ -144,7 +144,7 @@ def run_search(args):
     return res
 
 
-def run_repack(args):
+def run_repack(args: argparse.Namespace) -> int:
     """Repackage one archive in another format."""
     res = 0
     try:
@@ -160,13 +160,13 @@ def run_repack(args):
     return res
 
 
-def run_formats(args):
+def run_formats(args: argparse.Namespace) -> int:
     """List supported and available archive formats."""
     list_formats()
     return 0
 
 
-def run_version(args):
+def run_version(args: argparse.Namespace) -> int:
     """Print version number."""
     print(App)
     return 0
@@ -189,7 +189,7 @@ VERSION
 """
 
 
-def create_argparser():
+def create_argparser() -> argparse.ArgumentParser:
     """Construct and return an argument parser."""
     epilog = Examples + "\n" + Version
     parser = argparse.ArgumentParser(
@@ -287,7 +287,7 @@ def create_argparser():
     return parser
 
 
-def main(args=None):
+def main(args=None) -> int:
     """Parse options and execute commands."""
     res = 0
     try:

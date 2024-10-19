@@ -19,6 +19,7 @@ import os
 import sys
 import shutil
 import subprocess
+from collections.abc import Sequence
 from .log import log_info
 
 
@@ -28,14 +29,14 @@ class PatoolError(Exception):
     pass
 
 
-def backtick(cmd, encoding='utf-8'):
+def backtick(cmd: Sequence[str], encoding: str = 'utf-8') -> str:
     """Return decoded output from command."""
     return subprocess.run(
         cmd, stdout=subprocess.PIPE, check=True, encoding=encoding, errors="replace"
     ).stdout
 
 
-def run_under_pythonw():
+def run_under_pythonw() -> bool:
     """Return True iff this script is run with pythonw.exe on Windows."""
     return (
         os.name == 'nt'
@@ -44,7 +45,7 @@ def run_under_pythonw():
     )
 
 
-def run(cmd, verbosity=0, **kwargs):
+def run(cmd: Sequence[str], verbosity: int = 0, **kwargs) -> int:
     """Run command without error checking.
     @return: command return code
     """
@@ -55,7 +56,9 @@ def run(cmd, verbosity=0, **kwargs):
         log_info(f"running {info}")
     if run_under_pythonw():
         # prevent opening of additional consoles when running with pythonw.exe
-        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW # pytype: disable=module-attr
+        kwargs["creationflags"] = (
+            subprocess.CREATE_NO_WINDOW  # pytype: disable=module-attr
+        )
     # try to prevent hangs for programs requiring input
     kwargs["input"] = ""
     if kwargs:
@@ -72,7 +75,7 @@ def run(cmd, verbosity=0, **kwargs):
     return res.returncode
 
 
-def run_checked(cmd, ret_ok=(0,), **kwargs):
+def run_checked(cmd: Sequence[str], ret_ok: Sequence[int] = (0,), **kwargs) -> int:
     """Run command and raise PatoolError on error."""
     retcode = run(cmd, **kwargs)
     if retcode not in ret_ok:
@@ -81,7 +84,7 @@ def run_checked(cmd, ret_ok=(0,), **kwargs):
     return retcode
 
 
-def shell_quote(value):
+def shell_quote(value: str) -> str:
     """Quote all shell metacharacters in given string value with strong
     (i.e. single) quotes, handling the single quote especially.
     """
@@ -90,13 +93,13 @@ def shell_quote(value):
     return shell_quote_unix(value)
 
 
-def shell_quote_unix(value):
+def shell_quote_unix(value: str) -> str:
     """Quote argument for Unix system."""
     value = value.replace("'", r"'\''")
     return f"'{value}'"
 
 
-def shell_quote_nt(value):
+def shell_quote_nt(value: str) -> str:
     """Quote argument for Windows system. Modeled after distutils
     _nt_quote_args() function.
     """
@@ -105,7 +108,7 @@ def shell_quote_nt(value):
     return value
 
 
-def p7zip_supports_rar():
+def p7zip_supports_rar() -> bool:
     """Determine if the RAR codec is installed for 7z program."""
     if os.name == 'nt':
         # Assume RAR support is compiled into the binary.
@@ -128,7 +131,7 @@ def p7zip_supports_rar():
     return False
 
 
-def system_search_path():
+def system_search_path() -> str:
     """Get the list of directories to search for executable programs."""
     path = os.environ.get("PATH", os.defpath)
     if os.name == 'nt':
@@ -139,7 +142,7 @@ def system_search_path():
     return path
 
 
-def append_to_path(path, directory):
+def append_to_path(path: str, directory: str) -> str:
     """Add a directory to the PATH environment variable, if it is a valid
     directory.
     """
@@ -151,14 +154,14 @@ def append_to_path(path, directory):
 
 
 @functools.cache
-def find_program(program):
+def find_program(program: str) -> str | None:
     """Look for given program."""
     return shutil.which(program, path=system_search_path())
 
 
-def get_nt_7z_dir():
+def get_nt_7z_dir() -> str:
     """Return 7-Zip directory from registry, or an empty string."""
-    import winreg # type: ignore
+    import winreg  # type: ignore
     import platform
 
     python_bits = platform.architecture()[0]
@@ -182,23 +185,23 @@ def get_nt_7z_dir():
         return ""
 
 
-def get_nt_program_dir():
+def get_nt_program_dir() -> str:
     """Return the Windows program files directory."""
     progvar = "%ProgramFiles%"
     return os.path.expandvars(progvar)
 
 
-def get_nt_mac_dir():
+def get_nt_mac_dir() -> str:
     """Return Monkey Audio Compressor (MAC) directory."""
     return os.path.join(get_nt_program_dir(), "Monkey's Audio")
 
 
-def get_nt_winrar_dir():
+def get_nt_winrar_dir() -> str:
     """Return WinRAR directory."""
     return os.path.join(get_nt_program_dir(), "WinRAR")
 
 
-def strlist_with_or(alist):
+def strlist_with_or(alist: Sequence[str]) -> str:
     """Return comma separated string, and last entry appended with ' or '."""
     if len(alist) > 1:
         head = ", ".join(alist[:-1])

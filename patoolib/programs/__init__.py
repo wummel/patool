@@ -14,12 +14,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Standard archive functions for singlefile archives."""
 
+from collections.abc import Sequence
 from .. import fileutil, util
 
 
 def extract_singlefile_standard(
-    archive, compression, cmd, verbosity, interactive, outdir
-):
+    archive: str,
+    compression: str | None,
+    cmd: str,
+    verbosity: int,
+    interactive: bool,
+    outdir: str,
+) -> tuple[Sequence[str], dict[str, bool]]:
     """Standard routine to extract a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
@@ -31,7 +37,9 @@ def extract_singlefile_standard(
     return (cmdlist, {'shell': True})
 
 
-def test_singlefile_standard(archive, compression, cmd, verbosity, interactive):
+def test_singlefile_standard(
+    archive: str, compression: str | None, cmd: str, verbosity: int, interactive: bool
+) -> Sequence[str]:
     """Standard routine to test a singlefile archive (like gzip)."""
     cmdlist = [cmd]
     if verbosity > 1:
@@ -41,8 +49,13 @@ def test_singlefile_standard(archive, compression, cmd, verbosity, interactive):
 
 
 def create_singlefile_standard(
-    archive, compression, cmd, verbosity, interactive, filenames
-):
+    archive: str,
+    compression: str | None,
+    cmd: str,
+    verbosity: int,
+    interactive: bool,
+    filenames: Sequence[str],
+) -> tuple[Sequence[str], dict[str, bool]]:
     """Standard routine to create a singlefile archive (like gzip)."""
     cmdlist = [util.shell_quote(cmd)]
     if verbosity > 1:
