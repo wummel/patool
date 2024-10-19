@@ -30,17 +30,18 @@ Now install the application.
       [Modifying Python's search path](http://docs.python.org/inst/search-path.html#SECTION000410000000000000000)
       documentation.
 
-3. Optional: install cygwin file and grep packages on Windows
+3. Optional: install cygwin file, grep and diff packages on Windows
 
    On Windows systems, the archive type is only detectable through file extensions.
    To be able to detect archives with missing or non-standard file extensions,
    you have to install the `file` package from [cygwin](https://cygwin.com/).
 
    For `patool search`, the `grep` program is needed.
+   For `patool diff`, the `diff` program is needed.
 
    a) Download the [cygwin installer setup-x86_64.exe](https://cygwin.com/setup-x86_64.exe)
 
-   b) Run `setup-x86_64.exe -q -p file,grep`
+   b) Run `setup-x86_64.exe -q -p file,grep,diff`
 
    c) Add the `c:\cygwin64\bin` directory to your PATH
 
