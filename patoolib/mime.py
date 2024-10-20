@@ -19,7 +19,7 @@ import os
 import mimetypes
 import subprocess
 from . import ArchiveMimetypes, ArchiveCompressions
-from .log import log_error, log_warning
+from .log import log_error, log_warning, log_info
 from .util import find_program, backtick
 
 
@@ -107,7 +107,16 @@ def guess_mime(filename):
     """
     mime, encoding = guess_mime_file(filename)
     if mime is None:
+        # fall back to guessing archive type by file extension
         mime, encoding = guess_mime_mimedb(filename)
+    else:
+        # check if file extension detection differs.
+        mime2, encoding2 = guess_mime_mimedb(filename)
+        if mime2 != mime:
+            log_info(
+                f"Different MIME types detected for {filename}: "
+                f"{mime} by file(1), {mime2} by extension. Preferring {mime}."
+            )
     assert mime is not None or encoding is None
     return mime, encoding
 
@@ -161,6 +170,10 @@ def guess_mime_file(filename):
             if mime is None:
                 mime = guess_mime_file_text(file_prog, filename)
                 encoding = None
+        else:
+            log_info(
+                "could not find a 'file' executable, falling back to guess mime type by file extension"
+            )
     if mime in Mime2Encoding:
         # try to look inside compressed archives
         cmd = [file_prog, "--brief", "--mime", "--uncompress", "--no-sandbox", filename]
