@@ -18,6 +18,7 @@ import functools
 import os
 import mimetypes
 import subprocess
+from collections.abc import Sequence
 from . import ArchiveMimetypes, ArchiveCompressions
 from .log import log_error, log_warning, log_info
 from .util import find_program, backtick
@@ -27,7 +28,7 @@ from .util import find_program, backtick
 mimedb = None
 
 
-def init_mimedb():
+def init_mimedb() -> None:
     """Initialize the internal MIME database."""
     global mimedb
     try:
@@ -38,7 +39,7 @@ def init_mimedb():
     add_mimedb_data(mimedb)
 
 
-def add_mimedb_data(mimedb):
+def add_mimedb_data(mimedb: mimetypes.MimeTypes) -> None:
     """Add missing encodings and mimetypes to MIME database."""
     mimedb.encodings_map['.bz2'] = 'bzip2'
     mimedb.encodings_map['.lzma'] = 'lzma'
@@ -88,7 +89,7 @@ def add_mimedb_data(mimedb):
     add_mimetype(mimedb, "application/zstd", ".zst")
 
 
-def add_mimetype(mimedb, mimetype, extension):
+def add_mimetype(mimedb: mimetypes.MimeTypes, mimetype: str, extension: str) -> None:
     """Add or replace a mimetype to be used with the given extension."""
     # If extension is already a common type, strict=True must be used.
     strict = extension in mimedb.types_map[True]
@@ -98,7 +99,7 @@ def add_mimetype(mimedb, mimetype, extension):
 
 
 @functools.cache
-def guess_mime(filename):
+def guess_mime(filename: str) -> tuple[str | None, str | None]:
     """Guess the MIME type of given filename using file(1) and if that
     fails by looking at the filename extension with the Python mimetypes
     module.
@@ -121,7 +122,7 @@ def guess_mime(filename):
     return mime, encoding
 
 
-Encoding2Mime = {
+Encoding2Mime: dict[str, str] = {
     'gzip': "application/gzip",
     'bzip2': "application/x-bzip2",
     'compress': "application/x-compress",
@@ -130,12 +131,14 @@ Encoding2Mime = {
     'xz': "application/x-xz",
     "zstd": "application/zstd",
 }
-Mime2Encoding = dict([(_val, _key) for _key, _val in Encoding2Mime.items()])
+Mime2Encoding: dict[str, str] = dict(
+    [(_val, _key) for _key, _val in Encoding2Mime.items()]
+)
 # libmagic before version 5.14 identified .gz files as application/x-gzip
 Mime2Encoding['application/x-gzip'] = 'gzip'
 
 
-def guess_mime_mimedb(filename):
+def guess_mime_mimedb(filename: str) -> tuple[str | None, str | None]:
     """Guess MIME type from given filename.
     @return: tuple (mime, encoding)
     """
@@ -150,7 +153,7 @@ def guess_mime_mimedb(filename):
     return mime, encoding
 
 
-def guess_mime_file(filename):
+def guess_mime_file(filename: str) -> tuple[str | None, str | None]:
     """Determine MIME type of filename with file(1):
      (a) using `file --brief --mime-type`
      (b) using `file --brief` and look at the result string
@@ -205,7 +208,9 @@ def guess_mime_file(filename):
     return mime, encoding
 
 
-def guess_mime_file_mime(file_prog, filename):
+def guess_mime_file_mime(
+    file_prog: str, filename: str
+) -> tuple[str | None, str | None]:
     """Determine MIME type of filename with file(1) and --mime option.
     @return: tuple (mime, encoding)
     """
@@ -221,7 +226,7 @@ def guess_mime_file_mime(file_prog, filename):
     return mime, encoding
 
 
-def get_file_mime_encoding(parts):
+def get_file_mime_encoding(parts: Sequence[str]) -> str | None:
     """Get encoding value from splitted output of file --mime --uncompress."""
     for part in parts:
         for subpart in part.split(" "):
@@ -232,7 +237,7 @@ def get_file_mime_encoding(parts):
 
 
 # Match file(1) output text to mime types
-FileText2Mime = {
+FileText2Mime: dict[str, str] = {
     "7-zip archive data": "application/x-7z-compressed",
     "ACE archive data": "application/x-ace",
     "Amiga DOS disk": "application/x-adf",
@@ -267,7 +272,7 @@ FileText2Mime = {
 }
 
 
-def guess_mime_file_text(file_prog, filename):
+def guess_mime_file_text(file_prog: str, filename: str) -> str | None:
     """Determine MIME type of filename with file(1)."""
     cmd = [file_prog, "--brief", filename]
     try:
