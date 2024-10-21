@@ -16,9 +16,9 @@ MAKEFLAGS += --no-builtin-rules
 
 
 ############ Configuration ############
-VERSION:=$(shell grep "Version =" patoolib/configuration.py | cut -d '"' -f2)
-AUTHOR:=$(shell grep "MyName =" patoolib/configuration.py | cut -d '"' -f2)
-APPNAME:=$(shell grep "AppName =" patoolib/configuration.py | cut -d '"' -f2)
+VERSION:=$(shell grep "Version: str =" patoolib/configuration.py | cut -d '"' -f2)
+AUTHOR:=$(shell grep "MyName: str =" patoolib/configuration.py | cut -d '"' -f2)
+APPNAME:=$(shell grep "AppName: str =" patoolib/configuration.py | cut -d '"' -f2)
 ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
 ARCHIVE_WHEEL:=$(APPNAME)-$(VERSION)-py2.py3-none-any.whl
 GITRELEASETAG:=$(VERSION)
