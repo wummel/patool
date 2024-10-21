@@ -107,7 +107,7 @@ release-gh:	## upload a new release to github
 # anything screwed up.
 .PHONY: release
 release: distclean releasecheck ## release a new version of patool
-	$(MAKE) dist release-gh release-pypi homepage github-issues
+	$(MAKE) dist release-gh release-pypi release-homepage github-issues
 
 .PHONY: releasecheck
 releasecheck: update_webmeta checkgit checkchangelog lint test typecheck checkgitreleasetag ## check that repo is ready for release
@@ -227,6 +227,6 @@ update_webmeta: ## update package metadata for the homepage
 	sed -i -e 's/version =.*/version = "$(VERSION)"/g' $(WEBMETA)
 	sed -i -e 's/author =.*/author = "$(AUTHOR)"/g' $(WEBMETA)
 
-.PHONY: homepage
-homepage: update_webmeta ## update the homepage after a release
+.PHONY: release-homepage
+release-homepage: update_webmeta ## update the homepage after a release
 	$(MAKE) -C doc/web release
