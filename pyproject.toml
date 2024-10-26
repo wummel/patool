@@ -44,3 +44,8 @@ dev-dependencies = [
   # test optional functionality
   "patool[argcompletion]",
 ]
+
+[tool.patool]
+# pin versions of Python and uv for development
+python_version_dev = "3.12.7"
+uv_version_dev = "0.4.27"
