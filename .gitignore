@@ -17,8 +17,5 @@ __pycache__
 /.envrc
 
 # local development files
-/todo.txt
-/todo.txt.bak
-/done.txt
-/report.txt
+/bin
 /.python-version

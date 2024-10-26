@@ -3,13 +3,11 @@ Development
 
 Development for patool needs the following environment:
 
-1. Python >= 3.10 from https://www.python.org/
+1. Debian Linux or a similar distribution like Ubuntu
 
-2. uv from https://github.com/astral-sh/uv
+2. GNU make
 
-   Install the `uv` binary into a local directory in your PATH.
-
-3. GNU make
+3. A user with sudo permissions.
 
 
 To start developing, run the following commands:
@@ -20,14 +18,10 @@ To start developing, run the following commands:
 
 2. Initialize the source directory
 
-   $ make init
+   $ scripts/install_dev.sh
 
-   This creates a virtual Python environment in the directory `.venv/` and installs
-   required modules for development.
-
-   You should add the virtual Python environment binaries to PATH
-
-   $ export PATH=.venv/bin:$PATH
+   This installs required packages, creates a virtual Python environment in the directory `.venv/`
+   and installs required modules for development.
 
 3. Run the tests
 
