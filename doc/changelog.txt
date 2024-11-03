@@ -1,3 +1,6 @@
+3.0.3 (released xx.xx.xxxx)
+  *
+
 3.0.2 (released 21.10.2024)
   * When running in verbose mode (-vv), print mime and compression info.
   * Use official github command line client "gh" for releases.
