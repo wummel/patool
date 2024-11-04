@@ -32,7 +32,8 @@ GIT_MAIN_BRANCH:=master
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts
 # --log-file: write test output to file for easier inspection
-PYTESTOPTS?=-s --full-trace --log-file=build/test.log
+# --numprocesses auto: run tests in parallel on available CPU cores (uses pytest-xdist) 
+PYTESTOPTS?=-s --full-trace --log-file=build/test.log --numprocesses auto
 # which test modules to run
 TESTS ?= tests/
 # set test options

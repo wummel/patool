@@ -58,6 +58,10 @@ jobs:
       run: |
         uv tool install pytest
 
+    - name: Install pytest plugins xdist and randomly
+      run: |
+        uv pip install pytest-xdist[psutil] pytest-randomly
+
     - name: Test with pytest
       run: |
-        pytest -s tests/
+        pytest -s --full-trace --numprocesses auto tests/
