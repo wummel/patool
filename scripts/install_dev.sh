@@ -71,7 +71,7 @@ if [ ! -f bin/uv ]; then
     echo "Install uv ${UV_VER} from ${DOWNLOAD_URL_UV}"
     (cd bin; curl --location --silent "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
 elif [ "$(bin/uv version | cut -d" " -f2)" != "${UV_VER}" ]; then
-    echo "Updating $(bin/uv version) to version ${DOWNLOAD_URL_UV}"
+    echo "Updating $(bin/uv version) to ${UV_VER} from ${DOWNLOAD_URL_UV}"
     (cd bin; curl --location --silent "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
 fi
 
