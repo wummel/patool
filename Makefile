@@ -138,6 +138,10 @@ checkgitreleasetag:	## check release tag for git exists
 	  echo "ERROR: git tag \"$(GITRELEASETAG)\" does not exist, execute 'git tag -a $(GITRELEASETAG) -m \"$(GITRELEASETAG)\"'"; \
 	  false; \
 	fi
+# check that release tags is pushed to remote
+	@if ! git ls-remote --exit-code --tags origin $(GITRELEASETAG); then \
+	  echo "ERROR: git tag \"$(GITRELEASETAG)\" does not exist on remote repo, execute 'git push --tags'"; \
+	fi
 
 .PHONY: github-issues
 github-issues: ## close github issues mentioned in changelog
