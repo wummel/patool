@@ -20,7 +20,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-    - name: Checkout
+    - name: Checkout project
       uses: actions/checkout@v3
 
     # https://github.com/marketplace/actions/python-setup-uv
@@ -29,23 +29,23 @@ jobs:
       with:
         version: "latest"
 
-    - name: Set UV_PYTHON
+    - name: Set UV_PYTHON to Python ${{ matrix.python-version }}
       run: echo "UV_PYTHON=${{ matrix.python-version }}" >> $GITHUB_ENV
 
     - name: Install Python ${{ matrix.python-version }}
       run: uv python install "${{ matrix.python-version }}"
 
+    - name: Create virtual Python environment
+      run: uv venv
+
     - name: Install ruff
-      run: |
-        uv tool install ruff
+      run: uv pip install ruff
 
     - name: Check linting errors
-      run: |
-        ruff check setup.py patoolib tests doc/web/source
+      run: uv run --no-sync ruff check setup.py patoolib tests doc/web/source
 
     - name: Check code formatting
-      run: |
-        ruff format --check setup.py patoolib tests doc/web/source
+      run: uv run --no-sync ruff format --check setup.py patoolib tests doc/web/source
 
     - name: Install archive programs on Linux
       if: ${{ runner.os=='Linux' }}
@@ -53,12 +53,8 @@ jobs:
         sudo apt-get update &&
         sudo apt-get install arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress nomarch pbzip2 p7zip-full rpm2cpio unzip unace unalz unar sharutils tar xdms zip zopfli zstd
 
-    - name: Install virtual environment
-      run: uv venv
-
-    - name: Install test modules
+    - name: Install pytest and modules
       run: uv pip install pytest pytest-xdist[psutil] pytest-randomly
 
     - name: Test with pytest
-      run: |
-        uv run --no-sync pytest -s --full-trace --numprocesses auto tests/
+      run: uv run --no-sync pytest -s --full-trace --numprocesses auto tests/
