@@ -97,6 +97,10 @@ release-pypi: ## upload a new release to pypi
 release-gh:	## upload a new release to github
 	gh release create \
 	  --title "Release $(GITRELEASETAG)" \
+	  --notes "See doc/changelog.txt for release notes" \
+	  --latest \
+	  --draft=false \
+	  --prerelease=false \
 	  --verify-tag  \
 	  "$(GITRELEASETAG)" \
 	  dist/$(ARCHIVE_SOURCE) \
