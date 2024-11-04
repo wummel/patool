@@ -241,6 +241,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_mimedb("t.cpio", "application/x-cpio")
         self.mime_test_mimedb("t.deb", "application/x-debian-package")
         self.mime_test_mimedb("t.gz", "application/gzip")
+        self.mime_test_mimedb("t.GZ", "application/gzip")
         self.mime_test_mimedb("t.jar", "application/java-archive")
         self.mime_test_mimedb("t.lzma", "application/x-lzma")
         self.mime_test_mimedb("t.txt.lz", "application/x-lzip")

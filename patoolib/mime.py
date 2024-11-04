@@ -146,6 +146,11 @@ def guess_mime_mimedb(filename: str) -> tuple[str | None, str | None]:
     mime, encoding = None, None
     if mimedb is not None:
         mime, encoding = mimedb.guess_type(filename, strict=False)
+    if mime is None and encoding is None:
+        # try with lowercase extension, since we configure our mimedb entries only with lowercase
+        # this way, files like "t.GZ" are recognized
+        root, ext = os.path.splitext(filename)
+        mime, encoding = mimedb.guess_type(root + ext.lower(), strict=False)
     if mime not in ArchiveMimetypes and encoding in ArchiveCompressions:
         # Files like 't.txt.gz' are recognized with encoding as format, and
         # an unsupported mime-type like 'text/plain'. Fix this.
