@@ -54,14 +54,10 @@ jobs:
         sudo apt-get update &&
         sudo apt-get install arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress nomarch pbzip2 p7zip-full rpm2cpio unzip unace unalz unar sharutils tar xdms zip zopfli zstd
 
-    - name: Install pytest
-      run: |
-        uv tool install pytest
-
     - name: Install development dependencies
       run: |
         uv sync --only-dev
 
     - name: Test with pytest
       run: |
-        pytest -s --full-trace --numprocesses auto tests/
+        uv run pytest -s --full-trace --numprocesses auto tests/

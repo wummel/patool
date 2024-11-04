@@ -207,7 +207,7 @@ checkoutdatedgh:	## check for outedated github tools
 
 .PHONY: test
 test: ## run tests
-	pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
+	uv run pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
 
 .PHONY: typecheck
 typecheck:	## run pytype
