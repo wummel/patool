@@ -209,6 +209,12 @@ checkoutdatedgh:	## check for outedated github tools
 test: ## run tests
 	uv run pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
 
+# Needs https://nektosact.com/ and docker
+# Uses https://github.com/catthehacker/docker_images
+.PHONY: test-github
+test-github: ## run github workflow actions
+	act -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest --matrix os:ubuntu-latest
+
 .PHONY: typecheck
 typecheck:	## run pytype
 	pytype patoolib
