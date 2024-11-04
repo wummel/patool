@@ -61,6 +61,8 @@ jobs:
     - name: Install pytest plugins xdist and randomly
       run: |
         uv pip install pytest-xdist[psutil] pytest-randomly
+      env:
+        UV_SYSTEM_PYTHON: 1
 
     - name: Test with pytest
       run: |
