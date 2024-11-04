@@ -47,7 +47,7 @@ def encode_safe(*args, encoding=default_encoding):
     with the given encoding
     """
     return " ".join(
-        [str(arg).encode(encoding, errors="replace").decode() for arg in args]
+        [str(arg).encode(encoding, errors="replace").decode(encoding) for arg in args]
     )
 
 
