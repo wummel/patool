@@ -26,7 +26,7 @@ def extract_7z(
         cmdlist.append(f'-p{password}')
     elif not interactive:
         cmdlist.append('-p-')
-    cmdlist.extend([f'-o{outdir}', '--', archive])
+    cmdlist.extend(['-aou', f'-o{outdir}', '--', archive])
     return cmdlist
 
 
