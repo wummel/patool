@@ -61,16 +61,16 @@ def run(cmd: Sequence[str], verbosity: int = 0, **kwargs) -> int:
         )
     # try to prevent hangs for programs requiring input
     kwargs["input"] = ""
+    if verbosity < 1:
+        # hide command output on stdout
+        kwargs['stdout'] = subprocess.DEVNULL
     if kwargs:
-        if verbosity >= 0:
+        if verbosity > 0:
             info = ", ".join(f"{k}={shell_quote(str(v))}" for k, v in kwargs.items())
             log_info(f"    with {info}")
         if kwargs.get("shell"):
             # for shell calls the command must be a string
             cmd = " ".join(cmd)
-    if verbosity < 1:
-        # hide command output on stdout
-        kwargs['stdout'] = subprocess.DEVNULL
     res = subprocess.run(cmd, **kwargs)
     return res.returncode
 
