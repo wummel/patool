@@ -174,6 +174,8 @@ class TestMime(unittest.TestCase):
                 "application/vnd.android.package-archive",
             ),
         )
+        self.mime_test_file("t.wim", "application/x-ms-wim")
+        self.mime_test_file("t.wim.foo", "application/x-ms-wim")
         self.mime_test_file("t.zpaq", "application/zpaq")
         self.mime_test_file("t.zpaq.foo", "application/zpaq")
 
@@ -293,4 +295,5 @@ class TestMime(unittest.TestCase):
         self.mime_test_mimedb("t.epub", "application/zip")
         self.mime_test_mimedb("t.apk", "application/zip")
         self.mime_test_mimedb("t.vhd", "application/x-vhd")
+        self.mime_test_mimedb("t.wim", "application/x-ms-wim")
         self.mime_test_mimedb("t.zpaq", "application/zpaq")

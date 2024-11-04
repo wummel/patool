@@ -73,6 +73,7 @@ def add_mimedb_data(mimedb: mimetypes.MimeTypes) -> None:
     add_mimetype(mimedb, 'application/x-rzip', '.rz')
     add_mimetype(mimedb, 'application/x-zoo', '.zoo')
     add_mimetype(mimedb, 'application/x-dms', '.dms')
+    add_mimetype(mimedb, 'application/x-ms-wim', '.wim')
     add_mimetype(mimedb, 'application/x-zip-compressed', '.crx')
     add_mimetype(mimedb, 'application/x-shar', '.shar')
     add_mimetype(mimedb, 'application/x-tar', '.cbt')

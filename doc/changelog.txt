@@ -1,6 +1,7 @@
 3.0.3 (released xx.xx.xxxx)
   * Fix UnicodeDecode errors when logging, especially on windows systems.
     Closes: GH bug #170
+  * Added support for WIM (windows image) archives with 7z.
 
 3.0.2 (released 21.10.2024)
   * When running in verbose mode (-vv), print mime and compression info.

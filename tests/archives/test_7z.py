@@ -31,6 +31,7 @@ class Test7z(ArchiveTest):
         self.archive_commands('t.zip')
         self.archive_commands('t.cbz')
         self.archive_commands('t.txt.xz', check=Content.Singlefile)
+        self.archive_commands('t.wim')
         self.archive_list('t.txt.gz')
         self.archive_list('t.txt.bz2')
         self.archive_list('t.txt.lzma')
@@ -93,6 +94,7 @@ class Test7z(ArchiveTest):
         self.archive_commands(
             't.txt.xz.foo', skip_create=True, check=Content.Singlefile
         )
+        self.archive_commands('t.wim.foo', skip_create=True)
         self.archive_list('t.txt.gz.foo')
         self.archive_list('t.txt.bz2.foo')
         self.archive_list('t.jar.foo')

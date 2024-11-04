@@ -83,6 +83,7 @@ ArchiveFormats: tuple[str, ...] = (
     'shn',
     'tar',
     'vhd',
+    'wim',
     'xz',
     'zip',
     'zoo',
@@ -134,6 +135,7 @@ ArchiveMimetypes: dict[str, str] = {
     'application/x-lha': 'lzh',
     'application/x-lrzip': 'lrzip',
     'application/x-lzh': 'lzh',
+    'application/x-ms-wim': 'wim',
     'application/x-rar': 'rar',
     'application/x-redhat-package-manager': 'rpm',
     'application/x-rpm': 'rpm',
@@ -343,6 +345,9 @@ ArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
             '7zz',
             '7zzs',
         ),
+    },
+    'wim': {
+        None: ('7z', '7zz', '7zzs'),
     },
     'xz': {
         None: ('xz', '7z', '7zz', '7zzs'),
