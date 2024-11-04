@@ -5,6 +5,7 @@
   * If the MIME database cannot detect the file type, check again with a lowercase filenanme extension.
   * Use 7z option -aou to rename files when extracting instead of overwriting them.
   * Use rar option -or to rename files when extracting instead of overwriting them.
+  * Use rar option -kb to keep files when extracting broken RAR archives.
 
 3.0.2 (released 21.10.2024)
   * When running in verbose mode (-vv), print mime and compression info.

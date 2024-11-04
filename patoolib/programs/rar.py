@@ -26,7 +26,7 @@ def extract_rar(
         cmdlist.extend(['-p-', '-y'])
     if password:
         cmdlist.append(f'-p{password}')
-    cmdlist.extend(['-or', '--', os.path.abspath(archive)])
+    cmdlist.extend(['-kb', '-or', '--', os.path.abspath(archive)])
     return (cmdlist, {'cwd': outdir})
 
 
