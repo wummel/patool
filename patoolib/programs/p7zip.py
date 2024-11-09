@@ -54,7 +54,7 @@ extract_bzip2 = extract_gzip = extract_compress = extract_xz = extract_lzma = (
 
 extract_zip = extract_rar = extract_cab = extract_chm = extract_arj = extract_cpio = (
     extract_rpm
-) = extract_deb = extract_iso = extract_vhd = extract_wim = extract_7z
+) = extract_deb = extract_iso = extract_udf = extract_vhd = extract_wim = extract_7z
 
 
 def list_7z(archive, compression, cmd, verbosity, interactive, password=None):
@@ -72,9 +72,9 @@ def list_7z(archive, compression, cmd, verbosity, interactive, password=None):
 
 list_bzip2 = list_gzip = list_zip = list_compress = list_rar = list_cab = list_chm = (
     list_arj
-) = list_cpio = list_rpm = list_deb = list_iso = list_xz = list_lzma = list_vhd = (
-    list_wim
-) = list_7z
+) = list_cpio = list_rpm = list_deb = list_iso = list_xz = list_lzma = list_udf = (
+    list_vhd
+) = list_wim = list_7z
 
 
 def test_7z(archive, compression, cmd, verbosity, interactive, password=None):
@@ -92,9 +92,9 @@ def test_7z(archive, compression, cmd, verbosity, interactive, password=None):
 
 test_bzip2 = test_gzip = test_zip = test_compress = test_rar = test_cab = test_chm = (
     test_arj
-) = test_cpio = test_rpm = test_deb = test_iso = test_xz = test_lzma = test_vhd = (
-    test_wim
-) = test_7z
+) = test_cpio = test_rpm = test_deb = test_iso = test_xz = test_lzma = test_udf = (
+    test_vhd
+) = test_wim = test_7z
 
 
 def create_7z(

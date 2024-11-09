@@ -82,6 +82,7 @@ ArchiveFormats: tuple[str, ...] = (
     'shar',
     'shn',
     'tar',
+    'udf',
     'vhd',
     'wim',
     'xz',
@@ -142,6 +143,7 @@ ArchiveMimetypes: dict[str, str] = {
     'application/x-rzip': 'rzip',
     'application/x-shar': 'shar',
     'application/x-tar': 'tar',
+    'application/x-iso13346-image': 'udf',
     'application/x-vhd': 'vhd',
     'application/x-xz': 'xz',
     'application/x-zip-compressed': 'zip',
@@ -329,6 +331,11 @@ ArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
         None: ('tar', 'star', 'bsdtar', 'py_tarfile'),
         'extract': ('unar',),
     },
+    'udf': {
+        'extract': ('7z',),
+        'list': ('7z',),
+        'test': ('7z',),
+    },
     'vhd': {
         'extract': (
             '7z',
@@ -438,6 +445,13 @@ NoPasswordSupportArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] =
         )
     },
     'lzma': {
+        None: (
+            '7z',
+            '7zz',
+            '7zzs',
+        )
+    },
+    'udf': {
         None: (
             '7z',
             '7zz',

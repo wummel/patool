@@ -1,5 +1,6 @@
 3.0.4 (released xx.xx.xxxx)
-  *
+  * Added support for UDF (.udf) archives with 7z.
+  Closes: GH bug #80
 
 3.0.3 (released 04.11.2024)
   * Fix UnicodeDecode errors when logging, especially on windows systems.
