@@ -30,16 +30,16 @@ dev-dependencies = [
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.7.2",
+  "ruff==0.7.3",
 
   # for python type checking
   "pytype==2024.10.11",
 
   # for generating a Python .whl file
-  "wheel==0.44.0",
+  "wheel==0.45.0",
 
   # for generating the web page
-  "Sphinx==8.0.2",
+  "sphinx==8.1.3",
   "myst-parser==4.0.0",
 
   # for upgrading the version number
@@ -52,4 +52,4 @@ dev-dependencies = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.12.7"
-uv_version_dev = "0.4.30"
+uv_version_dev = "0.5.1"
