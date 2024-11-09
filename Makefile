@@ -201,7 +201,7 @@ checkoutdatedpy:	## Check for outdated package requirements
 	@set +e; \
 	echo "Check for outdated Python packages"; \
 	uv pip list --format=freeze |sed 's/==.*//' | uv pip compile - --color=never --quiet --no-deps --no-header --no-annotate |diff <(uv pip list --format=freeze) - --side-by-side --suppress-common-lines | \
-	grep -iE "($(shell uv pip tree -d0 | cut -f1 -d" " | sort | paste -sd '|' | sed -e 's/|/|\t/g'))"; \
+	grep -iE "($(shell grep == pyproject.toml  | cut -f1 -d= | tr -d "\"\' "| sed -e 's/\[.*\]//' |sort | paste -sd '|'))"; \
 	test $$? = 1
 
 checkoutdatedgh:	## check for outedated github tools
