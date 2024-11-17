@@ -772,7 +772,7 @@ def move_outdir_orphan(outdir: str) -> tuple[bool, str]:
     return (False, "multiple files in root")
 
 
-def run_archive_cmdlist(archive_cmdlist: Sequence[str], verbosity: int = 0) -> int:
+def run_archive_cmdlist(archive_cmdlist: Sequence[str], verbosity: int = 0,show_err: bool = True) -> int:
     """Run archive command.
 
     @return: exit code
@@ -782,6 +782,8 @@ def run_archive_cmdlist(archive_cmdlist: Sequence[str], verbosity: int = 0) -> i
         cmdlist, runkwargs = archive_cmdlist
     else:
         cmdlist, runkwargs = archive_cmdlist, {}
+    if not show_err:
+        runkwargs['stderr'] = subprocess.DEVNULL
     return util.run_checked(cmdlist, verbosity=verbosity, **runkwargs)
 
 
@@ -926,6 +928,7 @@ def _handle_archive(
     format: str | None = None,
     compression: str | None = None,
     password: str | None = None,
+    show_err: bool = True
 ) -> None:
     """Test and list archives."""
     if format is None:
@@ -950,7 +953,7 @@ def _handle_archive(
         # an empty command list means the get_archive_cmdlist() function
         # already handled the command (e.g. when it's a builtin Python
         # function)
-        run_archive_cmdlist(cmdlist, verbosity=verbosity)
+        run_archive_cmdlist(cmdlist, verbosity=verbosity,show_err = show_err)
 
 
 def get_archive_cmdlist_func(program: str, command: str, format: str) -> Callable:
@@ -1205,6 +1208,7 @@ def test_archive(
     program: str | None = None,
     interactive: bool = True,
     password: str | None = None,
+    show_err: bool = True
 ) -> None:
     """Test given archive.
 
@@ -1231,6 +1235,11 @@ def test_archive(
     :type password: str or None
     :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
          testing.
+    :param show_err: Setting false if you don't want to show the error message when test the archive file when test it.
+         For example, you just want to check the password from a lots of potential passwords.
+    :type show_err: bool , default is True
+    :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
+         testing.
     :return: None
     :rtype: None
     """
@@ -1244,6 +1253,7 @@ def test_archive(
         interactive=interactive,
         program=program,
         password=password,
+        show_err=show_err
     )
     if verbosity >= 0:
         log.log_info("... tested ok.")
