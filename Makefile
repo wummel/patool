@@ -55,10 +55,6 @@ help:	## display this help section
 
 .PHONY: init ## install python virtual env and required development packages
 init:
-	uv sync --no-install-project
-
-.PHONY: localbuild ## install patool in local environment
-localbuild:
 	uv sync
 
 

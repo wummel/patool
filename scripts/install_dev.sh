@@ -118,6 +118,3 @@ if ! grep --quiet LD_LIBRARY_PATH .envrc; then
     source .envrc
 fi
 
-# install Python module dependencies and generate local data files
-make init
-

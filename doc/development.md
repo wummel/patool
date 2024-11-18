@@ -19,6 +19,7 @@ To start developing, run the following commands:
 2. Initialize the source directory
 
    $ scripts/install_dev.sh
+   $ make init
 
    This installs required packages, creates a virtual Python environment in the directory `.venv/`
    and installs required modules for development.
