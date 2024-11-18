@@ -55,7 +55,7 @@ class ArchiveTest(unittest.TestCase):
     # default archive basename to check
     filename = 't'
     # verbosity levels in decreasing order, so that failing tests have maximum verbosity
-    verbosity_levels = (2, 1, 0, -1)
+    verbosity_levels = (2, 1, 0, -1, -2)
 
     def archive_commands(self, filename, **kwargs):
         """Run archive commands list, test, extract and create.

@@ -64,6 +64,9 @@ def run(cmd: Sequence[str], verbosity: int = 0, **kwargs) -> int:
     if verbosity < 1:
         # hide command output on stdout
         kwargs['stdout'] = subprocess.DEVNULL
+    if verbosity < -1:
+        # hide command output on stdout
+        kwargs['stderr'] = subprocess.DEVNULL
     if kwargs:
         if verbosity > 0:
             info = ", ".join(f"{k}={shell_quote(str(v))}" for k, v in kwargs.items())

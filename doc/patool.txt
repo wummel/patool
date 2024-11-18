@@ -49,7 +49,9 @@ GLOBAL OPTIONS
 
        -q, --quiet
               Work  quietly,  exept  on  commands formats and version,
-              which still print their output.
+              which still print their output.  Conflicts  with  --ver‐
+              bose.   If  given twice suppresses error output from ar‐
+              chive commands.
 
        --non-interactive
               Try to prevent any interactive user input (i.e.  prompt‐

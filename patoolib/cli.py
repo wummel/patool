@@ -197,7 +197,8 @@ def create_argparser() -> argparse.ArgumentParser:
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument(
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
         '--verbose',
         '-v',
         action='count',
@@ -205,13 +206,13 @@ def create_argparser() -> argparse.ArgumentParser:
         dest='verbosity',
         help="verbose operation; can be given multiple times",
     )
-    parser.add_argument(
+    group.add_argument(
         '--quiet',
         '-q',
-        action='store_const',
-        const=-1,
-        dest='verbosity',
-        help="quiet operation",
+        action='count',
+        default=0,
+        dest='quiet',
+        help="quiet operation; if given twice suppresses error output from archive commands",
     )
     parser.add_argument(
         '--non-interactive',
@@ -293,6 +294,8 @@ def main(args=None) -> int:
     try:
         argparser = create_argparser()
         pargs = argparser.parse_args(args=args)
+        if pargs.quiet:
+            pargs.verbosity = -pargs.quiet
         # run subcommand function
         res = globals()[f"run_{pargs.command}"](pargs)
     except KeyboardInterrupt:

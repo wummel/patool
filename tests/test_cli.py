@@ -15,6 +15,7 @@
 """Test patool command line parsing."""
 
 import unittest
+import pytest
 from patoolib import cli
 
 
@@ -35,4 +36,11 @@ class ArchiveCliTest(unittest.TestCase):
         self.assertEqual(pargs.verbosity, 2)
         args = ["-q", "extract", "t.zip"]
         pargs = parser.parse_args(args=args)
-        self.assertEqual(pargs.verbosity, -1)
+        self.assertEqual(pargs.quiet, 1)
+        args = ["-qq", "extract", "t.zip"]
+        pargs = parser.parse_args(args=args)
+        self.assertEqual(pargs.quiet, 2)
+        # conflicting options
+        with pytest.raises(SystemExit):
+            args = ["-qv", "extract", "t.zip"]
+            pargs = parser.parse_args(args=args)
