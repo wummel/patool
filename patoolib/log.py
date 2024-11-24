@@ -72,7 +72,7 @@ EnvKeys = ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG")
 
 def log_internal_error():
     """Print internal error message."""
-    now = strtime(time.time())
+    now = time.localtime()
     env = os.linesep.join(
         [f"{key}={os.getenv(key)!r}" for key in EnvKeys if os.getenv(key) is not None]
     )
@@ -92,7 +92,7 @@ I can work with ;) .
 {configuration.App}
 Python {sys.version} on {sys.platform}
 Platform: {platform.platform()}
-Local time: {now}
+Local time: {strtime(now)}
 sys.orig_argv: {sys.orig_argv}
 Environment:
 {env}
@@ -104,16 +104,7 @@ Environment:
 
 def strtime(t):
     """Return ISO 8601 formatted time."""
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t)) + strtimezone()
-
-
-def strtimezone():
-    """Return timezone info, %z on some platforms, but not supported on all."""
-    if time.daylight:
-        zone = time.altzone
-    else:
-        zone = time.timezone
-    return "%+04d" % (-zone // 3600)
+    return time.strftime("%Y-%m-%d %H:%M:%S%z", t)
 
 
 init_logging()
