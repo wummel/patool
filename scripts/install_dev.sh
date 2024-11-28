@@ -32,6 +32,7 @@ PROJECTDIR=$(dirname "${BASEDIR}")
 PY_VER=$(grep "python_version_dev =" "${PROJECTDIR}/pyproject.toml" | cut -f2 -d'"')
 UV_VER=$(grep "uv_version_dev =" "${PROJECTDIR}/pyproject.toml" | cut -f2 -d'"')
 DOWNLOAD_URL_UV=https://github.com/astral-sh/uv/releases/download/${UV_VER}/uv-x86_64-unknown-linux-gnu.tar.gz
+CURL_OPTS=("--location" "--silent" "--show-error" "--retry" "2" "--fail")
 
 
 #### helper functions
@@ -69,10 +70,10 @@ if [ ! -d bin ]; then
 fi
 if [ ! -f bin/uv ]; then
     echo "Install uv ${UV_VER} from ${DOWNLOAD_URL_UV}"
-    (cd bin; curl --location --silent "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
+    (cd bin; curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
 elif [ "$(bin/uv version | cut -d" " -f2)" != "${UV_VER}" ]; then
     echo "Updating $(bin/uv version) to ${UV_VER} from ${DOWNLOAD_URL_UV}"
-    (cd bin; curl --location --silent "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
+    (cd bin; curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
 fi
 
 # add local development environment for direnv
