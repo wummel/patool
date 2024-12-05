@@ -23,14 +23,14 @@ dev-dependencies = [
   "setuptools==75.6.0",
 
   # for testing
-  "pytest==8.3.3",
+  "pytest==8.3.4",
   # plugin to run tests in parallel
   "pytest-xdist[psutil]==3.6.1",
   # plugin to run tests in random order
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.8.0",
+  "ruff==0.8.1",
 
   # for python type checking
   "pytype==2024.10.11",
@@ -52,4 +52,4 @@ dev-dependencies = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.12.7"
-uv_version_dev = "0.5.5"
+uv_version_dev = "0.5.6"
