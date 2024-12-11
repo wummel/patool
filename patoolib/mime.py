@@ -168,10 +168,6 @@ def guess_mime_file(filename: str) -> tuple[str | None, str | None]:
     @return: tuple (mime, encoding)
     """
     mime, encoding = None, None
-    base, ext = os.path.splitext(filename)
-    if ext.lower() in ('.alz',):
-        # let mimedb recognize these extensions
-        return mime, encoding
     if os.path.isfile(filename):
         file_prog = find_program("file")
         if file_prog:
@@ -246,6 +242,7 @@ def get_file_mime_encoding(parts: Sequence[str]) -> str | None:
 FileText2Mime: dict[str, str] = {
     "7-zip archive data": "application/x-7z-compressed",
     "ACE archive data": "application/x-ace",
+    "ALZ archive data": "application/x-alzip",
     "Amiga DOS disk": "application/x-adf",
     "ARJ archive data": "application/x-arj",
     "bzip2 compressed data": "application/x-bzip2",
