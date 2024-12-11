@@ -91,10 +91,10 @@ class TestMime(unittest.TestCase):
         self.mime_test_file("t.txt.lz.foo", "application/x-lzip")
         self.mime_test_file("t.txt.lzo", "application/x-lzop")
         self.mime_test_file("t.txt.lzo.foo", "application/x-lzop")
-        self.mime_test_file("t.rar", "application/x-rar")
-        self.mime_test_file("t.rar.foo", "application/x-rar")
-        self.mime_test_file("t.cbr", "application/x-rar")
-        self.mime_test_file("t.cbr.foo", "application/x-rar")
+        self.mime_test_file("t.rar", "application/vnd.rar")
+        self.mime_test_file("t.rar.foo", "application/vnd.rar")
+        self.mime_test_file("t.cbr", "application/vnd.rar")
+        self.mime_test_file("t.cbr.foo", "application/vnd.rar")
         self.mime_test_file("t.rpm", "application/x-rpm")
         self.mime_test_file("t.rpm.foo", "application/x-rpm")
         self.mime_test_file("t.tar", "application/x-tar")
@@ -197,8 +197,8 @@ class TestMime(unittest.TestCase):
         """Test mime detection of archives with double compression"""
         # We won't extract this with rar, as it doesn't support archives wrapped in gzip
         # compression, but we will recognize the archive as a gzip-wrapped rar-file
-        self.mime_test_file("t.rar.gz", "application/x-rar", "gzip")
-        self.mime_test_file("t.rar.gz.foo", "application/x-rar", "gzip")
+        self.mime_test_file("t.rar.gz", "application/vnd.rar", "gzip")
+        self.mime_test_file("t.rar.gz.foo", "application/vnd.rar", "gzip")
 
     @needs_program('file')
     @needs_program('gzip')
@@ -237,7 +237,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_mimedb("t .bz2", "application/x-bzip2")
         self.mime_test_mimedb("t .bz3", "application/x-bzip3")
         self.mime_test_mimedb("t.cab", "application/x-cab")
-        self.mime_test_mimedb("t.cbr", ("application/rar", "application/x-rar"))
+        self.mime_test_mimedb("t.cbr", ("application/rar", "application/vnd.rar"))
         self.mime_test_mimedb("t.cpio", "application/x-cpio")
         self.mime_test_mimedb("t.deb", "application/x-debian-package")
         self.mime_test_mimedb("t.gz", "application/gzip")
@@ -247,7 +247,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_mimedb("t.txt.lz", "application/x-lzip")
         self.mime_test_mimedb("t.txt.lz4", "application/x-lz4")
         self.mime_test_mimedb("t.lzo", "application/x-lzop")
-        self.mime_test_mimedb("t.rar", ("application/rar", "application/x-rar"))
+        self.mime_test_mimedb("t.rar", ("application/rar", "application/vnd.rar"))
         self.mime_test_mimedb(
             "t.rpm", ("application/x-redhat-package-manager", "application/x-rpm")
         )

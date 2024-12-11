@@ -54,8 +54,8 @@ def add_mimedb_data(mimedb: mimetypes.MimeTypes) -> None:
     add_mimetype(mimedb, 'application/x-lzma', '.lzma')
     add_mimetype(mimedb, 'application/x-xz', '.xz')
     add_mimetype(mimedb, 'application/java-archive', '.jar')
-    add_mimetype(mimedb, 'application/x-rar', '.rar')
-    add_mimetype(mimedb, 'application/x-rar', '.cbr')
+    add_mimetype(mimedb, 'application/vnd.rar', '.rar')
+    add_mimetype(mimedb, 'application/vnd.rar', '.cbr')
     add_mimetype(mimedb, 'application/x-7z-compressed', '.7z')
     add_mimetype(mimedb, 'application/x-7z-compressed', '.cb7')
     add_mimetype(mimedb, 'application/x-cab', '.cab')
@@ -139,7 +139,10 @@ Mime2Encoding: dict[str, str] = dict(
 LegacyMimeType: dict[str, str] = {
     # libmagic before version 5.14 identified .gz files as application/x-gzip
     'application/x-gzip': "application/gzip",
+    # libmagic before version 5.46 identified .rar files as application/x-rar
+    'application/x-rar': "application/vnd.rar",
 }
+
 
 def guess_mime_mimedb(filename: str) -> tuple[str | None, str | None]:
     """Guess MIME type from given filename.
@@ -268,7 +271,7 @@ FileText2Mime: dict[str, str] = {
     "LRZIP compressed data": "application/x-lrzip",
     "lzop compressed data": "application/x-lzop",
     "Microsoft Cabinet archive data": "application/vnd.ms-cab-compressed",
-    "RAR archive data": "application/x-rar",
+    "RAR archive data": "application/vnd.rar",
     "RPM ": "application/x-redhat-package-manager",
     "POSIX tar archive": "application/x-tar",
     "xz compressed data": "application/x-xz",
