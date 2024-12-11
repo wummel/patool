@@ -248,9 +248,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_mimedb("t.txt.lz4", "application/x-lz4")
         self.mime_test_mimedb("t.lzo", "application/x-lzop")
         self.mime_test_mimedb("t.rar", "application/vnd.rar")
-        self.mime_test_mimedb(
-            "t.rpm", ("application/x-redhat-package-manager", "application/x-rpm")
-        )
+        self.mime_test_mimedb("t.rpm", "application/x-rpm")
         self.mime_test_mimedb("t.tar", "application/x-tar")
         self.mime_test_mimedb("t.cbt", "application/x-tar")
         self.mime_test_mimedb("t.tar.bz2", "application/x-tar", "bzip2")

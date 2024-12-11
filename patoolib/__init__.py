@@ -135,7 +135,6 @@ ArchiveMimetypes: dict[str, str] = {
     'application/x-lrzip': 'lrzip',
     'application/x-lzh': 'lzh',
     'application/x-ms-wim': 'wim',
-    'application/x-redhat-package-manager': 'rpm',
     'application/x-rpm': 'rpm',
     'application/x-rzip': 'rzip',
     'application/x-shar': 'shar',

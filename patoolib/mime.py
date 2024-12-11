@@ -272,7 +272,7 @@ FileText2Mime: dict[str, str] = {
     "lzop compressed data": "application/x-lzop",
     "Microsoft Cabinet archive data": "application/vnd.ms-cab-compressed",
     "RAR archive data": "application/vnd.rar",
-    "RPM ": "application/x-redhat-package-manager",
+    "RPM ": "application/x-rpm",
     "POSIX tar archive": "application/x-tar",
     "xz compressed data": "application/x-xz",
     "Zip archive data": "application/zip",
