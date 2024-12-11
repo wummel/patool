@@ -237,7 +237,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_mimedb("t .bz2", "application/x-bzip2")
         self.mime_test_mimedb("t .bz3", "application/x-bzip3")
         self.mime_test_mimedb("t.cab", "application/x-cab")
-        self.mime_test_mimedb("t.cbr", ("application/rar", "application/vnd.rar"))
+        self.mime_test_mimedb("t.cbr", "application/vnd.rar")
         self.mime_test_mimedb("t.cpio", "application/x-cpio")
         self.mime_test_mimedb("t.deb", "application/x-debian-package")
         self.mime_test_mimedb("t.gz", "application/gzip")
@@ -247,7 +247,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_mimedb("t.txt.lz", "application/x-lzip")
         self.mime_test_mimedb("t.txt.lz4", "application/x-lz4")
         self.mime_test_mimedb("t.lzo", "application/x-lzop")
-        self.mime_test_mimedb("t.rar", ("application/rar", "application/vnd.rar"))
+        self.mime_test_mimedb("t.rar", "application/vnd.rar")
         self.mime_test_mimedb(
             "t.rpm", ("application/x-redhat-package-manager", "application/x-rpm")
         )
