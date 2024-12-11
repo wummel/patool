@@ -127,7 +127,6 @@ ArchiveMimetypes: dict[str, str] = {
     'application/x-cpio': 'cpio',
     'application/x-debian-package': 'deb',
     'application/x-dms': 'dms',
-    'application/x-gzip': 'gzip',
     'application/x-iso9660-image': 'iso',
     'application/x-lz4': 'lz4',
     'application/x-lzop': 'lzop',

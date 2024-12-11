@@ -135,9 +135,11 @@ Encoding2Mime: dict[str, str] = {
 Mime2Encoding: dict[str, str] = dict(
     [(_val, _key) for _key, _val in Encoding2Mime.items()]
 )
-# libmagic before version 5.14 identified .gz files as application/x-gzip
-Mime2Encoding['application/x-gzip'] = 'gzip'
 
+LegacyMimeType: dict[str, str] = {
+    # libmagic before version 5.14 identified .gz files as application/x-gzip
+    'application/x-gzip': "application/gzip",
+}
 
 def guess_mime_mimedb(filename: str) -> tuple[str | None, str | None]:
     """Guess MIME type from given filename.
@@ -192,6 +194,10 @@ def guess_mime_file(filename: str) -> tuple[str | None, str | None]:
         except (OSError, subprocess.CalledProcessError) as err:
             log_warning(f"error executing {cmd}: {err}")
             mime2 = None
+
+        if mime2 in LegacyMimeType:
+            mime2 = LegacyMimeType[mime2]
+
         # Some file(1) implementations return an empty or unknown mime type
         # when the uncompressor program is not installed, other
         # implementation return the original file type.
@@ -227,6 +233,10 @@ def guess_mime_file_mime(
     except OSError as err:
         # ignore errors, as file(1) is only a fallback
         log_warning(f"error executing {cmd}: {err}")
+
+    if mime in LegacyMimeType:
+        mime = LegacyMimeType[mime]
+
     if mime not in ArchiveMimetypes:
         mime, encoding = None, None
     return mime, encoding
@@ -253,7 +263,7 @@ FileText2Mime: dict[str, str] = {
     "cpio archive": "application/x-cpio",
     "ASCII cpio archive": "application/x-cpio",
     "Debian binary package": "application/x-debian-package",
-    "gzip compressed data": "application/x-gzip",
+    "gzip compressed data": "application/gzip",
     "LZMA compressed data": "application/x-lzma",
     "LRZIP compressed data": "application/x-lrzip",
     "lzop compressed data": "application/x-lzop",
