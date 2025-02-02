@@ -41,7 +41,7 @@ def run_under_pythonw() -> bool:
     return (
         os.name == 'nt'
         and sys.executable is not None
-        and sys.executable.lower().endswith('pythonw.exe')
+        and (sys.executable.lower().endswith('pythonw.exe') or sys.argv[0].lower().endswith(".pyw"))
     )
 
 
