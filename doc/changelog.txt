@@ -1,5 +1,6 @@
 3.1.1 (released xx.xx.xxxx)
-  *
+  * Improved RAR support detection for the 7-Zip archiver.
+    Closes: GH bug #175, #176
 
 3.1.0 (released 19.11.2024)
   * Added support for UDF (.udf) archives with 7z.

@@ -16,6 +16,7 @@
 
 import functools
 import os
+import re
 import sys
 import shutil
 import subprocess
@@ -112,25 +113,20 @@ def shell_quote_nt(value: str) -> str:
 
 
 def p7zip_supports_rar() -> bool:
-    """Determine if the RAR codec is installed for 7z program."""
-    if os.name == 'nt':
-        # Assume RAR support is compiled into the binary.
-        return True
-    # the subdirectory and codec name
-    codecnames = ['p7zip/Codecs/Rar29.so', 'p7zip/Codecs/Rar.so']
-    # search canonical user library dirs
-    for libdir in (
-        '/usr/lib',
-        '/usr/local/lib',
-        '/usr/lib64',
-        '/usr/local/lib64',
-        '/usr/lib/i386-linux-gnu',
-        '/usr/lib/x86_64-linux-gnu',
-    ):
-        for codecname in codecnames:
-            fname = os.path.join(libdir, codecname)
-            if os.path.exists(fname):
-                return True
+    """Determine if the RAR codec is installed for 7z program.
+    If installed, `7z i` will print something like
+    ...
+    Codecs:
+    1   D    40301 Rar1
+    1   D    40302 Rar2
+    1   D    40303 Rar3
+    1   D    40305 Rar5
+    ...
+    """
+    _7z = find_program("7z")
+    if _7z:
+        formats = backtick([_7z, "i"])
+        return re.search(r" Rar\d$", formats, re.MULTILINE)
     return False
 
 
