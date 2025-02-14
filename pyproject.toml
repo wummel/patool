@@ -14,13 +14,13 @@ build-backend = "setuptools.build_meta"
 [project.optional-dependencies]
 # optional features
 argcompletion = [
-  'argcomplete==3.5.1',
+  'argcomplete==3.5.3',
 ]
 
 [tool.uv]
 dev-dependencies = [
   # for using setuptools.setup() in setup.py
-  "setuptools==75.6.0",
+  "setuptools==75.8.0",
 
   # for testing
   "pytest==8.3.4",
@@ -30,7 +30,7 @@ dev-dependencies = [
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.8.1",
+  "ruff==0.9.6",
 
   # for python type checking
   "pytype==2024.10.11",
@@ -51,5 +51,5 @@ dev-dependencies = [
 
 [tool.patool]
 # pin versions of Python and uv for development
-python_version_dev = "3.12.7"
-uv_version_dev = "0.5.6"
+python_version_dev = "3.12.9"
+uv_version_dev = "0.5.31"
