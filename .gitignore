@@ -19,3 +19,4 @@ __pycache__
 # local development files
 /bin
 /.python-version
+/tests/Unpack_*/
