@@ -137,9 +137,8 @@ class TestMime(unittest.TestCase):
         self.mime_test_file("t.lha", "application/x-lha")
         self.mime_test_file("t.lzh", "application/x-lha")
         self.mime_test_file("t.lha.foo", "application/x-lha")
-        # file(1) does not recognize .alz files
-        # self.mime_test_file("t.alz", "application/x-alzip")
-        # self.mime_test_file("t.alz.foo", "application/x-alzip")
+        self.mime_test_file("t.alz", "application/x-alzip")
+        self.mime_test_file("t.alz.foo", "application/x-alzip")
         self.mime_test_file("t.arc", "application/x-arc")
         self.mime_test_file("t.arc.foo", "application/x-arc")
         self.mime_test_file("t.txt.lz4", "application/x-lz4")
