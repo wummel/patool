@@ -36,9 +36,12 @@ help:
 ############ Build and release targets ############
 
 .PHONY: release
-release:	html
-	cp -r $(BUILDDIR)/html/* $(WEBDIR)/
+release:	sync
 	(cd $(WEBDIR); git add .; git commit -m "Updated"; git push)
+
+.PHONY: sync
+sync:	html
+	cp -r $(BUILDDIR)/html/* $(WEBDIR)/
 
 
 # Catch-all target: route all unknown targets to Sphinx using the new
