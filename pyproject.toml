@@ -9,7 +9,10 @@ dynamic = ["scripts", "authors", "keywords", "classifiers", "urls", "license", "
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-# these modules are only needed for development
+
+# work around https://github.com/astral-sh/uv/issues/9513
+[tool.setuptools]
+license-files = []
 
 [project.optional-dependencies]
 # optional features
@@ -17,6 +20,7 @@ argcompletion = [
   'argcomplete==3.5.3',
 ]
 
+# these modules are only needed for development
 [tool.uv]
 dev-dependencies = [
   # for using setuptools.setup() in setup.py
