@@ -33,6 +33,7 @@ PY_VER=$(grep "python_version_dev =" "${PROJECTDIR}/pyproject.toml" | cut -f2 -d
 UV_VER=$(grep "uv_version_dev =" "${PROJECTDIR}/pyproject.toml" | cut -f2 -d'"')
 DOWNLOAD_URL_UV=https://github.com/astral-sh/uv/releases/download/${UV_VER}/uv-x86_64-unknown-linux-gnu.tar.gz
 CURL_OPTS=("--location" "--silent" "--show-error" "--retry" "2" "--fail")
+REINSTALL_PYTHON=0
 
 
 #### helper functions
@@ -74,6 +75,7 @@ if [ ! -f bin/uv ]; then
 elif [ "$(bin/uv version | cut -d" " -f2)" != "${UV_VER}" ]; then
     echo "Updating $(bin/uv version) to ${UV_VER} from ${DOWNLOAD_URL_UV}"
     (cd bin; curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
+    REINSTALL_PYTHON=1
 fi
 
 # add local development environment for direnv
@@ -108,14 +110,7 @@ if [ ! -d .venv ]; then
     uv venv
 fi
 
-if ! grep --quiet LD_LIBRARY_PATH .envrc; then
-    uv_python_libdir=$(dirname "$(realpath .venv/bin/python)")/../lib/
-    (echo "# workaround bug https://github.com/astral-sh/uv/issues/6488"
-     echo "export CC=gcc"
-     echo "export LIBRARY_PATH=${uv_python_libdir}"
-     echo "export LD_LIBRARY_PATH=${uv_python_libdir}"
-    ) >> .envrc
-    direnv allow .
-    source .envrc
+if [ "{REINSTALL_PYTHON}"=1 ]; then
+    uv python install --reinstall
 fi
 
