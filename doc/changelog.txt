@@ -1,6 +1,8 @@
-3.1.1 (released xx.xx.xxxx)
+3.1.1 (released 14.02.2025)
   * Improved RAR support detection for the 7-Zip archiver.
     Closes: GH bug #175, #176
+  * Enable file(1) detection of ALZ archives, and improved handling of RAR detection for file 5.46.
+    Thanks Alfred Wingate for the patches!
 
 3.1.0 (released 19.11.2024)
   * Added support for UDF (.udf) archives with 7z.
