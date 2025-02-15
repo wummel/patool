@@ -112,7 +112,7 @@ def shell_quote_nt(value: str) -> str:
     return value
 
 
-def p7zip_supports_rar() -> bool:
+def p7zip_supports_rar(program: str) -> bool:
     """Determine if the RAR codec is installed for 7z program.
     If installed, `7z i` will print something like
     ...
@@ -123,7 +123,7 @@ def p7zip_supports_rar() -> bool:
     1   D    40305 Rar5
     ...
     """
-    _7z = find_program("7z")
+    _7z = find_program(program)
     if _7z:
         formats = backtick([_7z, "i"])
         return bool(re.search(r" Rar\d$", formats, re.MULTILINE))
