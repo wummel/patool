@@ -610,12 +610,11 @@ def find_archive_program(
             return program
         exe = util.find_program(program)
         if exe:
-            if (
-                program in ('7z', '7zz', '7zzs')
-                and format == 'rar'
-                and not util.p7zip_supports_rar(program)
-            ):
-                continue
+            if program in ('7z', '7zz', '7zzs', '7za'):
+                if format == 'rar' and not util.p7zip_supports_rar(program):
+                    continue
+                if format == 'compress' and not util.p7zip_supports_compress(program):
+                    continue
             if not check_program_compression(
                 command, program, exe, compression, verbosity=verbosity
             ):

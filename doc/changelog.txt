@@ -1,6 +1,8 @@
 3.1.3 (released xx.xx.xxxx)
   * Expand rar detection logic to all 7zip programs
     Thanks Alfred Wingate for the patch!
+  * Detect if 7zip programs support COMPRESS (.Z) archives, since 7za 24.09 does not support it anymore.
+    This fixes test errors on newer Ubuntu systems.
 
 3.1.2 (released 14.02.2025)
   * Add workaround for an error using uv publish.

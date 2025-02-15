@@ -130,6 +130,21 @@ def p7zip_supports_rar(program: str) -> bool:
     return False
 
 
+def p7zip_supports_compress(program: str) -> bool:
+    """Determine if COMPRESS (.Z) archives are supported for 7z program.
+    If installed, `7z i` will print something like
+    ...
+    Formats:
+    0  ......................  Z        z taz (.tar)  1F 9D
+    ...
+    """
+    _7z = find_program(program)
+    if _7z:
+        formats = backtick([_7z, "i"])
+        return bool(re.search(r"Z\s+z\s+taz", formats, re.MULTILINE))
+    return False
+
+
 def system_search_path() -> str:
     """Get the list of directories to search for executable programs."""
     path = os.environ.get("PATH", os.defpath)
