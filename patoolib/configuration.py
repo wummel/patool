@@ -2,7 +2,7 @@
 """Define basic configuration data like version or application name."""
 
 AppName: str = "patool"
-Version: str = "3.1.3"
+Version: str = "3.2.0"
 MyName: str = "Bastian Kleineidam"
 MyEmail: str = "bastian.kleineidam@web.de"
 
