@@ -1,5 +1,6 @@
 3.1.3 (released xx.xx.xxxx)
-  *
+  * Expand rar detection logic to all 7zip programs
+    Thanks Alfred Wingate for the patch!
 
 3.1.2 (released 14.02.2025)
   * Add workaround for an error using uv publish.
