@@ -1,4 +1,4 @@
-3.1.3 (released xx.xx.xxxx)
+3.1.3 (released 15.02.2025)
   * Expand rar detection logic to all 7zip programs
     Thanks Alfred Wingate for the patch!
   * Detect if 7zip programs support COMPRESS (.Z) archives, since 7za 24.09 does not support it anymore.
