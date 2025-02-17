@@ -17,6 +17,7 @@
 import functools
 import os
 import re
+import platform
 import sys
 import shutil
 import subprocess
@@ -153,6 +154,11 @@ def system_search_path() -> str:
         path = append_to_path(path, get_nt_7z_dir())
         path = append_to_path(path, get_nt_mac_dir())
         path = append_to_path(path, get_nt_winrar_dir())
+    # Add peazip add-ons
+    peazip_dir = get_peazip_addon_dir()
+    if os.path.isdir(peazip_dir):
+        for subdir in os.listdir(peazip_dir):
+            path = append_to_path(path, os.path.join(peazip_dir, subdir))
     return path
 
 
@@ -213,6 +219,17 @@ def get_nt_mac_dir() -> str:
 def get_nt_winrar_dir() -> str:
     """Return WinRAR directory."""
     return os.path.join(get_nt_program_dir(), "WinRAR")
+
+
+def get_peazip_addon_dir() -> str:
+    """Get platform-dependen directory for PeaZip add-ons."""
+    if platform.system() == 'Windows':
+        return 'C:\\Program Files\\PeaZip\\res\\bin\\'
+    if platform.system() == 'Linux':
+        return '/usr/lib/peazip/res/bin/'
+    if platform.system() == 'Darwin':
+        return '/Applications/peazip.app/Content/MacOS/bin/'
+    return ''
 
 
 def strlist_with_or(alist: Sequence[str]) -> str:
