@@ -146,21 +146,32 @@ a.button:hover {
 }
 
 a.button span {
-  padding-left: 50px;
+  padding-left: 30px;
   display: block;
   height: 23px;
 }
 
 #download-exe span {
-  background: transparent url(exe-icon.png) 12px 50% no-repeat;
+  background: transparent url(exe-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 }
 #download-tar-gz span {
-  background: transparent url(tar-gz-icon.png) 12px 50% no-repeat;
+  background: transparent url(tar-gz-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 }
-#view-on-github span {
-  background: transparent url(octocat-icon.png) 12px 50% no-repeat;
+#view-source span {
+  background: transparent url(octocat-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 }
-#view-on-github {
+#view-changelog span {
+  background: transparent url(changelog-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+}
+#view-changelog {
   margin-right: 0;
 }
 
