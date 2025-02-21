@@ -1,6 +1,8 @@
 Patool
 =======
 
+Patool is a portable archive file manager for the command line.
+
 Introduction
 -------------
 [![XKCD Tar comic](https://imgs.xkcd.com/comics/tar.png)](https://xkcd.com/1168/)
