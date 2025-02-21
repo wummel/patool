@@ -1,7 +1,7 @@
 [project]
 name = "patool"
 version = "3.2.0"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = []
 # these values are set by setup.py
 dynamic = ["scripts", "authors", "keywords", "classifiers", "urls", "license", "readme", "description"]
@@ -34,7 +34,7 @@ dev-dependencies = [
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.9.6",
+  "ruff==0.9.7",
 
   # for python type checking
   "pytype==2024.10.11",
@@ -43,7 +43,7 @@ dev-dependencies = [
   "wheel==0.45.1",
 
   # for generating the web page
-  "sphinx==8.1.3",
+  "sphinx==8.2.0",
   "myst-parser==4.0.1",
 
   # for upgrading the version number
@@ -56,4 +56,4 @@ dev-dependencies = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.12.9"
-uv_version_dev = "0.6.0"
+uv_version_dev = "0.6.2"
