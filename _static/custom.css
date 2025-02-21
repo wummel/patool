@@ -157,11 +157,14 @@ a.button span {
 #download-tar-gz span {
   background: transparent url(tar-gz-icon.png) 12px 50% no-repeat;
 }
-#view-on-github span {
+#view-source span {
   background: transparent url(octocat-icon.png) 12px 50% no-repeat;
 }
-#view-on-github {
+#view-source {
   margin-right: 0;
+}
+#view-changelog span {
+  background: transparent url(changelog-icon.png) 12px 50% no-repeat;
 }
 
 code, pre {
