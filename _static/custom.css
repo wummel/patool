@@ -166,13 +166,13 @@ a.button span {
   background-repeat: no-repeat;
   background-size: 24px 24px;
 }
-#view-source {
-  margin-right: 0;
-}
 #view-changelog span {
   background: transparent url(changelog-icon.png);
   background-repeat: no-repeat;
   background-size: 24px 24px;
+}
+#view-changelog {
+  margin-right: 0;
 }
 
 code, pre {
