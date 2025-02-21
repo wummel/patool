@@ -152,19 +152,27 @@ a.button span {
 }
 
 #download-exe span {
-  background: transparent url(exe-icon.png) 12px 50% no-repeat;
+  background: transparent url(exe-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 }
 #download-tar-gz span {
-  background: transparent url(tar-gz-icon.png) 12px 50% no-repeat;
+  background: transparent url(tar-gz-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 }
 #view-source span {
-  background: transparent url(octocat-icon.png) 12px 50% no-repeat;
+  background: transparent url(octocat-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 }
 #view-source {
   margin-right: 0;
 }
 #view-changelog span {
-  background: transparent url(changelog-icon.png) 12px 50% no-repeat;
+  background: transparent url(changelog-icon.png);
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
 }
 
 code, pre {
