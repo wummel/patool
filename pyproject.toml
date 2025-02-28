@@ -24,7 +24,7 @@ argcompletion = [
 [tool.uv]
 dev-dependencies = [
   # for using setuptools.setup() in setup.py
-  "setuptools==75.8.0",
+  "setuptools==75.8.2",
 
   # for testing
   "pytest==8.3.4",
@@ -34,7 +34,7 @@ dev-dependencies = [
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.9.7",
+  "ruff==0.9.9",
 
   # for python type checking
   "pytype==2024.10.11",
@@ -43,7 +43,7 @@ dev-dependencies = [
   "wheel==0.45.1",
 
   # for generating the web page
-  "sphinx==8.2.0",
+  "sphinx==8.2.1",
   "myst-parser==4.0.1",
 
   # for upgrading the version number
@@ -56,4 +56,4 @@ dev-dependencies = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.12.9"
-uv_version_dev = "0.6.2"
+uv_version_dev = "0.6.3"
