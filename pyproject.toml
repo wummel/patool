@@ -7,8 +7,8 @@ dependencies = []
 dynamic = ["scripts", "authors", "keywords", "classifiers", "urls", "license", "readme", "description"]
 
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["setuptools-reproducible"]
+build-backend = "setuptools_reproducible"
 
 # work around https://github.com/astral-sh/uv/issues/9513
 [tool.setuptools]
@@ -17,24 +17,24 @@ license-files = []
 [project.optional-dependencies]
 # optional features
 argcompletion = [
-  'argcomplete==3.5.3',
+  'argcomplete==3.6.0',
 ]
 
 # these modules are only needed for development
 [tool.uv]
 dev-dependencies = [
   # for using setuptools.setup() in setup.py
-  "setuptools==75.8.2",
+  "setuptools==77.0.3",
 
   # for testing
-  "pytest==8.3.4",
+  "pytest==8.3.5",
   # plugin to run tests in parallel
   "pytest-xdist[psutil]==3.6.1",
   # plugin to run tests in random order
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.9.9",
+  "ruff==0.11.2",
 
   # for python type checking
   "pytype==2024.10.11",
@@ -43,7 +43,7 @@ dev-dependencies = [
   "wheel==0.45.1",
 
   # for generating the web page
-  "sphinx==8.2.1",
+  "sphinx==8.2.3",
   "myst-parser==4.0.1",
 
   # for upgrading the version number
@@ -56,4 +56,4 @@ dev-dependencies = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.12.9"
-uv_version_dev = "0.6.3"
+uv_version_dev = "0.6.9"
