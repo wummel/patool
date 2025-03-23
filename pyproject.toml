@@ -17,7 +17,7 @@ license-files = []
 [project.optional-dependencies]
 # optional features
 argcompletion = [
-  'argcomplete==3.6.0',
+  'argcomplete==3.6.1',
 ]
 
 # these modules are only needed for development
