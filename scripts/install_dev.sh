@@ -1,7 +1,8 @@
 #!/bin/bash
 #
 # Description: set up a development environment ready for developing this software
-# Requirements: a Debian-based Linux system; a user with sudo permissions
+#  Package installation uses apt-get which requires sudo permissions
+# Requirements: a Debian-based Linux system and sudo permissions for the current user
 # Synopsis: scripts/install_dev.sh
 
 #### shell settings
@@ -57,9 +58,16 @@ install_package curl
 install_package direnv
 # lint shell
 install_package shellcheck
-# project dependencies
-for pkg in arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress nomarch pbzip2 p7zip-full rpm2cpio unzip unace unalz unar sharutils tar xdms zip zopfli zstd; do \
-  install_package "$pkg"
+# install archive handling packages for running tests locally
+# note: 7zip, 7zip-standalone and 7zip-rar are currently only available in bookworm-backports
+# add the following line to /etc/apt/sources.list make them available:
+# deb http://deb.debian.org/debian/ bookworm-backports main non-free-firmware non-free contrib
+for pkg in arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip \
+           cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress \
+           nomarch pbzip2 7zip 7zip-standalone 7zip-rar rpm2cpio unzip unace unalz \
+           unar sharutils tar xdms zip zopfli zstd; do \
+  # ignore errors, since 7zip packages are only available from backported repositories
+  install_package "$pkg" || true
 done
 
 # the rest of this scripts relies on being in the project directory
@@ -113,4 +121,3 @@ fi
 if [ "{REINSTALL_PYTHON}"=1 ]; then
     uv python install --reinstall
 fi
-
