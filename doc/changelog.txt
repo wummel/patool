@@ -1,3 +1,6 @@
+4.0.1 (released xx.xx.xxxx)
+  *
+
 4.0.0 (released 28.02.2025)
   * Detect and use archive programs from Peazip installations.
     Closes: GH bug #51
