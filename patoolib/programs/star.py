@@ -14,7 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the star program."""
 
-from .tar import get_tar_opts as get_star_opts
+import functools
+import os
 
 
 def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
@@ -42,4 +43,26 @@ def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
     cmdlist.extend(get_star_opts(cmd, compression, verbosity))
     cmdlist.append(f"file={archive}")
     cmdlist.extend(filenames)
+    return cmdlist
+
+
+@functools.cache
+def get_star_opts (cmd, compression, verbosity):
+    """Add tar options to cmdlist."""
+    cmdlist = []
+    progname = os.path.basename(cmd).lower()
+    if compression == 'gzip':
+        cmdlist.append('-z')
+    elif compression == 'compress':
+        cmdlist.append('-Z')
+    elif compression == 'bzip2':
+        cmdlist.append('-j')
+    elif compression in ('lzma', 'xz', 'lzip'):
+        # use the compression name as program name since
+        # tar is picky which programs it can use
+        program = compression
+        # set compression program
+        cmdlist.extend(['compress-program=', program])
+    if verbosity > 1:
+        cmdlist.append('-v')
     return cmdlist
