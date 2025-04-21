@@ -127,7 +127,7 @@ def p7zip_supports_rar(program: str) -> bool:
     _7z = find_program(program)
     if _7z:
         formats = backtick([_7z, "i"])
-        return bool(re.search(r" Rar\d$", formats, re.MULTILINE))
+        return bool(re.search(r" Rar\d($|\s)", formats, re.MULTILINE))
     return False
 
 
