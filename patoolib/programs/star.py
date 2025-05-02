@@ -15,7 +15,6 @@
 """Archive commands for the star program."""
 
 import functools
-import os
 
 
 def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
@@ -47,10 +46,9 @@ def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
 
 
 @functools.cache
-def get_star_opts (cmd, compression, verbosity):
+def get_star_opts(cmd, compression, verbosity):
     """Add tar options to cmdlist."""
     cmdlist = []
-    progname = os.path.basename(cmd).lower()
     if compression == 'gzip':
         cmdlist.append('-z')
     elif compression == 'compress':

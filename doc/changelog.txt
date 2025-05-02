@@ -1,5 +1,7 @@
 4.0.1 (released xx.xx.xxxx)
   * Updated dev dependencies; support reproducible builds with setuptools_reproducible.
+  * Fix command options for star.
+    Thanks Robert-André Mauchin for the patch!
 
 4.0.0 (released 28.02.2025)
   * Detect and use archive programs from Peazip installations.

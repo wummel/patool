@@ -99,11 +99,12 @@ class TestStar(ArchiveTest):
     #    """Run archive commands with renamed TAR LZMA archive."""
     #    self.archive_commands('t.tar.lzma.foo', skip_create=True)
 
-    @needs_program('file')
-    @needs_codec(program, 'lzip')
-    def test_star_lzip_file(self):
-        """Run archive commands with renamed TAR LZIP archive."""
-        self.archive_commands('t.tar.lz.foo', skip_create=True)
+    # file(1) does not recognize .lzip files
+    # @needs_program('file')
+    # @needs_codec(program, 'lzip')
+    # def test_star_lzip_file(self):
+    #    """Run archive commands with renamed TAR LZIP archive."""
+    #    self.archive_commands('t.tar.lz.foo', skip_create=True)
 
     @needs_program('file')
     @needs_codec(program, 'xz')
