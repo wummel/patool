@@ -9,7 +9,7 @@ import sys
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "patool"
-version = "4.0.0"
+version = "4.0.1"
 author = "Bastian Kleineidam"
 copyright = '2024 ' + author
 
