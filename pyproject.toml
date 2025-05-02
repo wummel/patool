@@ -17,14 +17,14 @@ license-files = []
 [project.optional-dependencies]
 # optional features
 argcompletion = [
-  'argcomplete==3.6.1',
+  'argcomplete==3.6.2',
 ]
 
 # these modules are only needed for development
 [tool.uv]
 dev-dependencies = [
   # for using setuptools.setup() in setup.py
-  "setuptools==77.0.3",
+  "setuptools==80.1.0",
 
   # for testing
   "pytest==8.3.5",
@@ -34,7 +34,7 @@ dev-dependencies = [
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.11.2",
+  "ruff==0.11.8",
 
   # for python type checking
   "pytype==2024.10.11",
@@ -55,5 +55,5 @@ dev-dependencies = [
 
 [tool.patool]
 # pin versions of Python and uv for development
-python_version_dev = "3.12.9"
-uv_version_dev = "0.6.9"
+python_version_dev = "3.12.10"
+uv_version_dev = "0.7.2"

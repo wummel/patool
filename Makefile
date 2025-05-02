@@ -204,7 +204,7 @@ checkoutdatedgh:	## check for outedated github tools
 # github-check-outdated is a local tool which compares a given version with the latest available github release version
 # see https://gist.github.com/wummel/ef14989766009effa4e262b01096fc8c for an example implementation
 	@echo "Check for outdated Github tools"
-	github-check-outdated astral-sh uv "$(shell uv version | cut -f2 -d" ")"
+	github-check-outdated astral-sh uv "$(shell uv self version | cut -f2 -d" ")"
 
 
 ############ Testing ############
