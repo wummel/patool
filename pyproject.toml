@@ -1,6 +1,6 @@
 [project]
 name = "patool"
-version = "4.0.1"
+version = "4.0.2"
 requires-python = ">=3.11"
 dependencies = []
 # these values are set by setup.py
