@@ -32,7 +32,7 @@ def list_zip(archive, compression, cmd, verbosity, interactive, password=None):
                     print(name)
     except Exception as err:
         raise util.PatoolError(f"error listing {archive}") from err
-    return None
+    return
 
 
 test_zip = list_zip
@@ -49,7 +49,7 @@ def extract_zip(
             zfile.extractall(outdir, pwd=password)
     except Exception as err:
         raise util.PatoolError(f"error extracting {archive}") from err
-    return None
+    return
 
 
 def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
@@ -63,7 +63,7 @@ def create_zip(archive, compression, cmd, verbosity, interactive, filenames):
                     zfile.write(filename)
     except Exception as err:
         raise util.PatoolError(f"error creating {archive}") from err
-    return None
+    return
 
 
 def write_directory(zfile, directory):

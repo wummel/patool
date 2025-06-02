@@ -34,7 +34,7 @@ def extract_bzip2(archive, compression, cmd, verbosity, interactive, outdir):
     except Exception as err:
         msg = f"error extracting {archive} to {targetname}"
         raise util.PatoolError(msg) from err
-    return None
+    return
 
 
 def create_bzip2(archive, compression, cmd, verbosity, interactive, filenames):
@@ -52,4 +52,4 @@ def create_bzip2(archive, compression, cmd, verbosity, interactive, filenames):
     except Exception as err:
         msg = f"error creating {archive}"
         raise util.PatoolError(msg) from err
-    return None
+    return

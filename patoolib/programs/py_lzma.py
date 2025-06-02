@@ -49,7 +49,7 @@ def _extract(archive, compression, cmd, format, verbosity, outdir):
     except Exception as err:
         msg = f"error extracting {archive} to {targetname}"
         raise util.PatoolError(msg) from err
-    return None
+    return
 
 
 def extract_lzma(archive, compression, cmd, verbosity, interactive, outdir):
@@ -76,7 +76,7 @@ def _create(archive, compression, cmd, format, verbosity, filenames):
                     data = srcfile.read(READ_SIZE_BYTES)
     except Exception as err:
         raise util.PatoolError(f"error creating {archive}") from err
-    return None
+    return
 
 
 def create_lzma(archive, compression, cmd, verbosity, interactive, filenames):

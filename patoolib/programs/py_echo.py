@@ -39,4 +39,4 @@ def stripext(cmd, archive, verbosity, extension=""):
     """Print the name without suffix."""
     if verbosity >= 0:
         print(fileutil.stripext(archive) + extension)
-    return None
+    return

@@ -27,7 +27,7 @@ def list_tar(archive, compression, cmd, verbosity, interactive):
             tfile.list(verbose=verbosity > 1)
     except Exception as err:
         raise util.PatoolError(f"error listing {archive}") from err
-    return None
+    return
 
 
 test_tar = list_tar
@@ -43,7 +43,7 @@ def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
                 safe_extract(tfile, outdir)
     except Exception as err:
         raise util.PatoolError(f"error extracting {archive}") from err
-    return None
+    return
 
 
 def is_within_directory(directory, target):
@@ -82,7 +82,7 @@ def create_tar(archive, compression, cmd, verbosity, interactive, filenames):
                 tfile.add(filename)
     except Exception as err:
         raise util.PatoolError(f"error creating {archive}") from err
-    return None
+    return
 
 
 def get_tar_mode(compression):
