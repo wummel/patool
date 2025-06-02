@@ -980,11 +980,10 @@ def get_archive_cmdlist_func(program: str, command: str, format: str) -> Callabl
             kwargs.pop('password')
         if 'password' not in kwargs:
             return archive_cmdlist_func(*args, **kwargs)
-        else:
-            if 'password' in inspect.signature(archive_cmdlist_func).parameters:
-                return archive_cmdlist_func(*args, **kwargs)
-            msg = f'There is no support for password in {program}'
-            raise util.PatoolError(msg)
+        if 'password' in inspect.signature(archive_cmdlist_func).parameters:
+            return archive_cmdlist_func(*args, **kwargs)
+        msg = f'There is no support for password in {program}'
+        raise util.PatoolError(msg)
 
     return check_for_password_before_cmdlist_func_call
 

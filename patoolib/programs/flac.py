@@ -20,14 +20,12 @@ from .. import fileutil
 def extract_flac(archive, compression, cmd, verbosity, interactive, outdir):
     """Decompress a FLAC archive to a WAV file."""
     outfile = fileutil.get_single_outfile(outdir, archive, extension=".wav")
-    cmdlist = [cmd, '--decode', archive, '--output-name', outfile]
-    return cmdlist
+    return [cmd, '--decode', archive, '--output-name', outfile]
 
 
 def create_flac(archive, compression, cmd, verbosity, interactive, filenames):
     """Compress a WAV file to a FLAC archive."""
-    cmdlist = [cmd, filenames[0], '--best', '--output-name', archive]
-    return cmdlist
+    return [cmd, filenames[0], '--best', '--output-name', archive]
 
 
 def test_flac(archive, compression, cmd, verbosity, interactive):
