@@ -28,8 +28,6 @@ from .log import log_info
 class PatoolError(Exception):
     """Raised when errors occur."""
 
-    pass
-
 
 def backtick(cmd: Sequence[str], encoding: str = 'utf-8') -> str:
     """Return decoded output from command."""
