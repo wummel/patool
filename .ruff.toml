@@ -18,9 +18,9 @@ select = [
     "PLC", # pylint convention
     "PLE", # pylint error
     "RUF", # ruff
-    "FIX", # fixme
     "PLW", # pylint warning
-#    "ARG", # flake8-unused-arguments
+   # "FIX", # fixme
+   # "ARG", # flake8-unused-arguments
 ]
 
 # Ignored rules
