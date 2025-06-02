@@ -32,7 +32,7 @@ def init_logging(stream=sys.stderr):
     """Initialize the global logger. All log messages will be
     sent to the given stream, default is sys.stderr.
     """
-    global logger
+    global logger  # noqa PLW0603
     logger = logging.getLogger(configuration.AppName)
     handler = logging.StreamHandler(stream=stream)
     format = f"%(levelname)s {configuration.AppName}: %(message)s"

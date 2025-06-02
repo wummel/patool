@@ -28,9 +28,9 @@ To start developing, run the following commands:
 
    $ make test
 
-4. Change the code, and test the new code by installing patool in the virtual Python environment
+4. Change the code, and test the new code by running the tests again
 
-   $ make localbuild
 
-   Now the `patool` binary will be installed in the `.venv/bin` directory.
-
+The Github workflow runs tests on different architectures and Python versions.
+Currently, tests are run on Windows, MacOS and Linux.
+Tested Python versions are Python 3.11, 3.12 and 3.13.

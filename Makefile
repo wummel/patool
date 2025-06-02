@@ -179,6 +179,7 @@ lint: ## lint python code
 
 .PHONY: reformat
 reformat: ## format the python code
+	ruff check --fix patoolib tests doc/web/source
 	ruff format setup.py patoolib tests doc/web/source
 
 .PHONY: checkoutdated checkoutdatedpy checkoutdatedgh

@@ -30,7 +30,7 @@ mimedb = None
 
 def init_mimedb() -> None:
     """Initialize the internal MIME database."""
-    global mimedb
+    global mimedb  # noqa PLW0603
     try:
         mimedb = mimetypes.MimeTypes(strict=False)
     except Exception as msg:

@@ -8,6 +8,19 @@ select = [
     "I", # isort
     "D", # pydocstyle
     "UP", # pyupgrade
+    "YTT", # flake8-2020
+    "FA", # future-annotation
+    "LOG", # logging
+    "INP", # PEP420
+    "PIE", # flake8-pie
+    "RSE", # flake8-raise
+    "RET", # flake8-return
+    "PLC", # pylint convention
+    "PLE", # pylint error
+    "RUF", # ruff
+    "FIX", # fixme
+    "PLW", # pylint warning
+#    "ARG", # flake8-unused-arguments
 ]
 
 # Ignored rules
@@ -22,9 +35,10 @@ ignore = ["E501", "I001", "D205", "D402", "D415", "D417"]
 # Avoid trying to fix flake8-bugbear (`B`) violations.
 unfixable = ["B"]
 
-# Ignore E402 (unused import)
+
 [lint.per-file-ignores]
-"patoolib/programs/*.py" = ["E402"]
+"patoolib/programs/*.py" = ["E402"] # Ignore E402 (unused import)
+"doc/web/source/conf.py" = ["INP001"] # Ignore missing __init__.py for namespace package
 
 [lint.isort]
 known-first-party = ["patoolib"]
