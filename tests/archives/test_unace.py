@@ -28,9 +28,11 @@ class TestUnace(ArchiveTest):
         """Run archive commands with different ACE archives."""
         self.archive_list(self.filename + '.ace')
         self.archive_test(self.filename + '.ace')
+        # the t.ace test archive is in ACE 2.0 format; unace only support ACE 1.0
         # self.archive_extract(self.filename + '.ace')
         self.archive_list(self.filename + '.cba')
         self.archive_test(self.filename + '.cba')
+        # the t.ace test archive is in ACE 2.0 format; unace only support ACE 1.0
         # self.archive_extract(self.filename + '.cba')
 
     @needs_program('file')
@@ -39,14 +41,9 @@ class TestUnace(ArchiveTest):
         """Run archive commands with different renamed ACE archives."""
         self.archive_list(self.filename + '.ace.foo')
         self.archive_test(self.filename + '.ace.foo')
+        # the t.ace test archive is in ACE 2.0 format; unace only support ACE 1.0
         # self.archive_extract(self.filename + '.ace.foo')
         self.archive_list(self.filename + '.cba.foo')
         self.archive_test(self.filename + '.cba.foo')
+        # the t.ace test archive is in ACE 2.0 format; unace only support ACE 1.0
         # self.archive_extract(self.filename + '.cba.foo')
-
-
-# TODO: add p.ace, p.ace.foo, p.cba, p.cba.foo with password to repository
-# class TestUnacePassword(TestUnace):
-#
-#     filename = 'p'
-#     password = 'thereisnotry'

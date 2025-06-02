@@ -91,7 +91,7 @@ class TestTar(ArchiveTest):
         self.archive_commands('t.tar.gz.foo', skip_create=True)
         self.archive_commands('t.tgz.foo', skip_create=True)
 
-    # fixme: broken tests
+    # file(1) does not recognize .tar.Z.foo files (at least not with --uncompress)
     # @needs_program('file')
     # @needs_program('compress')
     # @needs_codec(program, 'compress')
@@ -116,7 +116,6 @@ class TestTar(ArchiveTest):
 
     # even though clzip would support extracting .lz files, the
     # file(1) --uncompress command does not use it for archive detection
-    # fixme: broken tests
     # @needs_program('lzip')
     # @needs_program('file')
     # @needs_codec(program, 'lzip')

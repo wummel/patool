@@ -35,7 +35,7 @@ class TestBsdtar(ArchiveTest):
         self.archive_commands('t.tar.gz')
         self.archive_commands('t.tgz')
 
-    # fixme: broken tests
+    # file(1) does not recognize .tar.Z files (at least not with --uncompress)
     # @needs_program(program)
     # @needs_program('compress')
     # def test_bsdtar_z(self):
@@ -80,7 +80,7 @@ class TestBsdtar(ArchiveTest):
         self.archive_commands('t.tar.gz.foo', skip_create=True)
         self.archive_commands('t.tgz.foo', skip_create=True)
 
-    # fixme: broken tests
+    # file(1) does not recognize .tar.Z files (at least not with --uncompress)
     # @needs_program('file')
     # @needs_codec(program, 'compress')
     # def test_bsdtar_z_file(self):

@@ -178,7 +178,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_file("t.zpaq", "application/zpaq")
         self.mime_test_file("t.zpaq.foo", "application/zpaq")
 
-    # fixme: broken tests
+    # file(1) does not recognize .tar.lz files (at least not with --uncompress)
     # @needs_program('file')
     # @needs_program('lzip')
     # def test_mime_file_lzip(self):
@@ -214,14 +214,14 @@ class TestMime(unittest.TestCase):
     #    """Test mime detection of TAR XZ archives"""
     #    self.mime_test_file("t.tar.xz.foo", "application/x-tar", "xz")
 
-    # fixme: broken tests
+    # file(1) does not recognize .tar.zst files (at least not with --uncompress)
     # @needs_program("file")
     # @needs_program("zstd")
     # def test_mime_file_zstd(self):
     #    """Test mime detection of TAR ZSTD archives"""
     #    self.mime_test_file("t.tar.zst.foo", "application/x-tar", "zstd")
 
-    # fixme: broken tests
+    # file(1) does not recognize .tar.Z files (at least not with --uncompress)
     # @needs_program('file')
     # @needs_program('uncompress')
     # def test_mime_file_compress(self):
