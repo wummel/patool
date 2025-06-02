@@ -74,7 +74,7 @@ def run(cmd: Sequence[str], verbosity: int = 0, **kwargs) -> int:
         if kwargs.get("shell"):
             # for shell calls the command must be a string
             cmd = " ".join(cmd)
-    res = subprocess.run(cmd, **kwargs)
+    res = subprocess.run(cmd, check=False, **kwargs)
     return res.returncode
 
 
