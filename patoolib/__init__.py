@@ -33,16 +33,16 @@ from . import fileutil, log, util
 
 # export API functions
 __all__ = [
-    'list_formats',
-    'supported_formats',
-    'list_archive',
-    'extract_archive',
-    'test_archive',
     'create_archive',
     'diff_archives',
-    'search_archive',
-    'repack_archive',
+    'extract_archive',
     'is_archive',
+    'list_archive',
+    'list_formats',
+    'repack_archive',
+    'search_archive',
+    'supported_formats',
+    'test_archive',
 ]
 
 
