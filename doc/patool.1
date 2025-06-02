@@ -1,5 +1,5 @@
 .\"                                      -*- nroff -*-
-.\" Copyright (C) 2010-2024 Bastian Kleineidam
+.\" Copyright (C) 2010-2025 Bastian Kleineidam
 .\"
 .\" This program is free software: you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -11,7 +11,7 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.TH PATOOL "1" "October 2024" "patool"
+.TH PATOOL "1" "June 2025" "patool"
 .SH NAME
 patool - portable archive file manager for the command line
 .SH SYNOPSIS
@@ -56,8 +56,8 @@ of helper applications. Can be given multiple times to increase
 the output even more.
 .TP
 \fB\-q\fP, \fB\-\-quiet\fP
-Work quietly, exept on commands \fBformats\fP and \fBversion\fP,
-which still print their output. Conflicts with \fB\-\-verbose\fP.
+Work quietly, exept the commands \fBformats\fP and \fBversion\fP
+still print their output. Conflicts with \fB\-\-verbose\fP.
 If given twice suppresses error output from archive commands.
 .TP
 \fB\-\-non\-interactive\fP
@@ -66,7 +66,7 @@ or for overwriting duplicate files). Use this option with care since
 overwriting files or ignoring password prompts could lead to unintended
 consequences.
 .br
-This only works for programs that allow preventing user prompts. Currently
+This only works for archive programs that allow preventing user prompts. Currently
 those are \fBarj\fP, \fB7z\fP and \fBrar\fP.
 .SH COMMANDS
 The following rules apply to all commands:
@@ -105,7 +105,7 @@ current user.
 .PP
 If extracting an archive has an error in the middle of operation, patool does
 not remove the temporary extraction directory
-This directory whose name starts with "Unpack_" has all files that have been
+This directory whose name starts with \fBUnpack_\fP has all files that have been
 extracted before the error.
 .SS list
 \fBpatool\fP \fBlist\fP <\fIarchive\fP>...
@@ -166,4 +166,4 @@ When running under a Unix shell the following aliases can be defined to save som
 .SH AUTHOR
 Bastian Kleineidam <bastian.kleineidam@web.de>
 .SH COPYRIGHT
-Copyright \(co 2010-2024 Bastian Kleineidam
+Copyright \(co 2010-2025 Bastian Kleineidam
