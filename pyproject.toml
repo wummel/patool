@@ -56,4 +56,4 @@ dev-dependencies = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.12.10"
-uv_version_dev = "0.7.2"
+uv_version_dev = "0.7.9"
