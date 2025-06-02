@@ -24,17 +24,17 @@ argcompletion = [
 [tool.uv]
 dev-dependencies = [
   # for using setuptools.setup() in setup.py
-  "setuptools==80.1.0",
+  "setuptools==80.9.0",
 
   # for testing
   "pytest==8.3.5",
   # plugin to run tests in parallel
-  "pytest-xdist[psutil]==3.6.1",
+  "pytest-xdist[psutil]==3.7.0",
   # plugin to run tests in random order
   "pytest-randomly==3.16.0",
 
   # for python code linting
-  "ruff==0.11.8",
+  "ruff==0.11.12",
 
   # for python type checking
   "pytype==2024.10.11",
