@@ -51,7 +51,7 @@ And on Windows:
 py.exe -m pip install patool
 ```
 
-You will need Python 3.10 or later.
+You will need Python 3.11 or later.
 
 For more information, especially for installing additional tools on Windows, read the detailed
 [installation instructions](https://github.com/wummel/patool/blob/master/doc/install.md).

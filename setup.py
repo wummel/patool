@@ -17,8 +17,8 @@
 
 import sys
 
-if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
-    raise SystemExit("This program requires Python 3.10 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (3, 11, 0, "final", 0):
+    raise SystemExit("This program requires Python 3.11 or later.")
 import os
 
 from setuptools import setup
@@ -55,7 +55,7 @@ setup(
     author_email=configdata["AuthorEmail"],
     license=configdata["License"],
     url=configdata["Url"],
-    python_requires=">=3.10",
+    python_requires=">=3.11",
     project_urls={
         "Source": "https://github.com/wummel/patool",
     },
@@ -72,7 +72,6 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',

@@ -17,8 +17,8 @@
 import sys
 
 # check for compatible Python version before importing other packages
-if not hasattr(sys, "version_info") or sys.version_info < (3, 10, 0, "final", 0):
-    raise SystemExit("This program requires Python 3.10 or later.")
+if not hasattr(sys, "version_info") or sys.version_info < (3, 11, 0, "final", 0):
+    raise SystemExit("This program requires Python 3.11 or later.")
 import functools
 import inspect
 import os
