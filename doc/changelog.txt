@@ -1,5 +1,5 @@
 4.0.2 (released xx.xx.xxxx)
-  *
+  * Updated dev dependencies
 
 4.0.1 (released 02.05.2025)
   * Updated dev dependencies; support reproducible builds with setuptools_reproducible.

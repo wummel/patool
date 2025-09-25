@@ -21,20 +21,20 @@ argcompletion = [
 ]
 
 # these modules are only needed for development
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
   # for using setuptools.setup() in setup.py
   "setuptools==80.9.0",
 
   # for testing
-  "pytest==8.3.5",
+  "pytest==8.4.2",
   # plugin to run tests in parallel
-  "pytest-xdist[psutil]==3.7.0",
+  "pytest-xdist[psutil]==3.8.0",
   # plugin to run tests in random order
-  "pytest-randomly==3.16.0",
+  "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.11.12",
+  "ruff==0.13.1",
 
   # for python type checking
   "pytype==2024.10.11",
@@ -55,5 +55,5 @@ dev-dependencies = [
 
 [tool.patool]
 # pin versions of Python and uv for development
-python_version_dev = "3.12.10"
-uv_version_dev = "0.7.9"
+python_version_dev = "3.13.7"
+uv_version_dev = "0.8.22"
