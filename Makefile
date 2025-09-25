@@ -186,14 +186,10 @@ reformat: ## format the python code
 checkoutdated: checkoutdatedpy checkoutdatedgh
 
 checkoutdatedpy:	## Check for outdated package requirements
-# Compare the list of currently installed packages with the same list of packages with latest versions from pypi.
-# Assumes that all requirements have pinned versions with "==".
-# To check only direct dependencies, not those of further down the dependency tree,
-# the output is filtered by using `pip tree -d0` and grep with a regular
-# expression of the form
-# `grep -E "(\tpackage1\t|package2\t| ... |\tpackageN)"`.
-# The leading tab before each package prevents matching substrings.
-# When grep does not find any match, all required packages are uptodate.
+# Assumes all packages in requirements have pinned versions with "==".
+# Compare the output of "uv pip list" (the current versions) with the result of "uv pip compile" (available versions).
+# Then filter only for upgrades of direct dependencies with grep.
+# When grep does not find any match, all direct dependencies are uptodate.
 # In this case, grep exits with exitcode 1. Test for this after running grep.
 	@set +e; \
 	echo "Check for outdated Python packages"; \
@@ -207,6 +203,13 @@ checkoutdatedgh:	## check for outedated github tools
 	@echo "Check for outdated Github tools"
 	github-check-outdated astral-sh uv "$(shell uv self version | cut -f2 -d" ")"
 
+
+.PHONY: upgradeoutdated
+upgradeoutdated:	upgradeoutdatedgh
+
+.PHONY: upgradeoutdatedgh
+upgradeoutdatedgh:
+	sed -i -e 's/uv_version_dev = ".*"/uv_version_dev = "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' pyproject.toml
 
 ############ Testing ############
 
