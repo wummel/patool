@@ -179,8 +179,8 @@ def find_program(program: str) -> str | None:
 
 def get_nt_7z_dir() -> str:
     """Return 7-Zip directory from registry, or an empty string."""
-    import winreg  # type: ignore
-    import platform
+    import winreg  # noqa: PLC0415
+    import platform  # noqa: PLC0415
 
     python_bits = platform.architecture()[0]
     keyname = r"SOFTWARE\7-Zip"

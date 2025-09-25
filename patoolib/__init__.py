@@ -546,7 +546,7 @@ def is_archive(filename: str) -> bool:
     :return: True if given filename is an archive file.
     :rtype: bool
     """
-    mime, compression = guess_mime(filename)
+    mime, _compression = guess_mime(filename)
     return mime in ArchiveMimetypes
 
 

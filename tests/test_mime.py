@@ -131,7 +131,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_file("t.ace.foo", "application/x-ace")
         self.mime_test_file("t.cba", "application/x-ace")
         self.mime_test_file("t.cba.foo", "application/x-ace")
-        # fixme: test errors on windows
+        # test errors on windows
         # self.mime_test_file("t.txt.a", "application/x-archive")
         # self.mime_test_file("t.txt.a.foo", "application/x-archive")
         self.mime_test_file("t.lha", "application/x-lha")
@@ -207,7 +207,7 @@ class TestMime(unittest.TestCase):
         self.mime_test_file("t.taz.foo", "application/x-tar", "gzip")
         self.mime_test_file("t.tgz.foo", "application/x-tar", "gzip")
 
-    # fixme: broken tests
+    # broken tests
     # @needs_program('file')
     # @needs_program('xz')
     # def test_mime_file_xzip(self):

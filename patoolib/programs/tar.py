@@ -62,7 +62,7 @@ def get_tar_opts(cmd, compression, verbosity):
         # Some tar implementations (ie. Windows tar.exe, and macos)
         # do not support --force-local
         testcmdlist = [cmd, "--force-local", "--help"]
-        from .. import util
+        from .. import util  # noqa: PLC0415
 
         if util.run(testcmdlist, stderr=subprocess.DEVNULL, verbosity=-1) == 0:
             cmdlist.append('--force-local')

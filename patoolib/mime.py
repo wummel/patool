@@ -113,7 +113,7 @@ def guess_mime(filename: str) -> tuple[str | None, str | None]:
         mime, encoding = guess_mime_mimedb(filename)
     else:
         # check if file extension detection differs.
-        mime2, encoding2 = guess_mime_mimedb(filename)
+        mime2, _encoding2 = guess_mime_mimedb(filename)
         if mime2 != mime:
             log_info(
                 f"Different MIME types detected for {filename}: "

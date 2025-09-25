@@ -280,7 +280,7 @@ def create_argparser() -> argparse.ArgumentParser:
     subparsers.add_parser('version', help="print version information")
     # optional bash completion
     try:
-        import argcomplete
+        import argcomplete  # noqa: PLC0415
 
         argcomplete.autocomplete(parser)
     except ImportError:

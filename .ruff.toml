@@ -7,8 +7,7 @@ select = [
     "B", # flake8-bugbear
     "I", # isort
     "D", # pydocstyle
-    "UP", # pyupgrade
-    "YTT", # flake8-2020
+    "FIX", # fixme
     "FA", # future-annotation
     "LOG", # logging
     "INP", # PEP420
@@ -17,23 +16,21 @@ select = [
     "RET", # flake8-return
     "PLC", # pylint convention
     "PLE", # pylint error
-    "RUF", # ruff
     "PLW", # pylint warning
-   # "FIX", # fixme
-   # "ARG", # flake8-unused-arguments
+    "RUF", # ruff
+    "UP", # pyupgrade
+    "YTT", # flake8-2020
 ]
 
 # Ignored rules
-# - E501: line-too-long
-# - I001: unsorted-imports
-# - D205: blank-line-after-summary
-# - D402: no-signature
-# - D415: ends-in-punctuation
-# - D417: undocumented-param
-ignore = ["E501", "I001", "D205", "D402", "D415", "D417"]
-
-# Avoid trying to fix flake8-bugbear (`B`) violations.
-unfixable = ["B"]
+ignore = [
+    "E501", # line-too-long
+    "I001", # unsorted-imports
+    "D205", # blank-line-after-summary
+    "D402", # no-signature
+    "D415", # ends-in-punctuation
+    "D417", # undocumented-param
+]
 
 
 [lint.per-file-ignores]

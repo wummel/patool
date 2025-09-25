@@ -18,12 +18,12 @@ def add_patoolib_path():
     """Add the parent directory to sys.path to find patoolib,
     which is used by the sphinx.ext.autodoc extension.
     """
-    import pathlib
+    import pathlib  # noqa: PLC0415
 
     basepath = pathlib.Path(__file__).parents[3]
     sys.path.append(str(basepath))
     # test importing patoolib
-    import patoolib  # noqa: F401
+    import patoolib  # noqa: F401, PLC0415
 
 
 add_patoolib_path()
