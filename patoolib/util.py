@@ -45,7 +45,9 @@ def run_under_pythonw() -> bool:
     )
 
 
-def run(cmd: Sequence[str], verbosity: int = 0, **kwargs) -> int:
+def run(
+    cmd: Sequence[str], verbosity: int = 0, interactive: bool = True, **kwargs
+) -> int:
     """Run command without error checking.
     @return: command return code
     """
@@ -59,8 +61,9 @@ def run(cmd: Sequence[str], verbosity: int = 0, **kwargs) -> int:
         kwargs["creationflags"] = (
             subprocess.CREATE_NO_WINDOW  # pytype: disable=module-attr
         )
-    # try to prevent hangs for programs requiring input
-    kwargs["input"] = ""
+    if not interactive:
+        # try to prevent hangs for programs requiring input
+        kwargs["input"] = ""
     if verbosity < 1:
         # hide command output on stdout
         kwargs['stdout'] = subprocess.DEVNULL
@@ -78,9 +81,11 @@ def run(cmd: Sequence[str], verbosity: int = 0, **kwargs) -> int:
     return res.returncode
 
 
-def run_checked(cmd: Sequence[str], ret_ok: Sequence[int] = (0,), **kwargs) -> int:
+def run_checked(
+    cmd: Sequence[str], ret_ok: Sequence[int] = (0,), interactive: bool = True, **kwargs
+) -> int:
     """Run command and raise PatoolError on error."""
-    retcode = run(cmd, **kwargs)
+    retcode = run(cmd, interactive=interactive, **kwargs)
     if retcode not in ret_ok:
         msg = f"Command `{cmd}' returned non-zero exit status {retcode}"
         raise PatoolError(msg)

@@ -772,7 +772,9 @@ def move_outdir_orphan(outdir: str) -> tuple[bool, str]:
     return (False, "multiple files in root")
 
 
-def run_archive_cmdlist(archive_cmdlist: Sequence[str], verbosity: int = 0) -> int:
+def run_archive_cmdlist(
+    archive_cmdlist: Sequence[str], verbosity: int = 0, interactive: bool = True
+) -> int:
     """Run archive command.
 
     @return: exit code
@@ -782,7 +784,9 @@ def run_archive_cmdlist(archive_cmdlist: Sequence[str], verbosity: int = 0) -> i
         cmdlist, runkwargs = archive_cmdlist
     else:
         cmdlist, runkwargs = archive_cmdlist, {}
-    return util.run_checked(cmdlist, verbosity=verbosity, **runkwargs)
+    return util.run_checked(
+        cmdlist, verbosity=verbosity, interactive=interactive, **runkwargs
+    )
 
 
 def cleanup_outdir(outdir: str, archive: str) -> tuple[str, str]:
@@ -856,7 +860,7 @@ def _extract_archive(
             # an empty command list means the get_archive_cmdlist() function
             # already handled the command (e.g. when it's a builtin Python
             # function)
-            run_archive_cmdlist(cmdlist, verbosity=verbosity)
+            run_archive_cmdlist(cmdlist, verbosity=verbosity, interactive=interactive)
         if do_cleanup_outdir:
             target, msg = cleanup_outdir(outdir, archive)
         else:
@@ -914,7 +918,7 @@ def _create_archive(
         # an empty command list means the get_archive_cmdlist() function
         # already handled the command (e.g. when it's a builtin Python
         # function)
-        run_archive_cmdlist(cmdlist, verbosity=verbosity)
+        run_archive_cmdlist(cmdlist, verbosity=verbosity, interactive=interactive)
 
 
 def _handle_archive(
@@ -950,7 +954,7 @@ def _handle_archive(
         # an empty command list means the get_archive_cmdlist() function
         # already handled the command (e.g. when it's a builtin Python
         # function)
-        run_archive_cmdlist(cmdlist, verbosity=verbosity)
+        run_archive_cmdlist(cmdlist, verbosity=verbosity, interactive=interactive)
 
 
 def get_archive_cmdlist_func(program: str, command: str, format: str) -> Callable:
