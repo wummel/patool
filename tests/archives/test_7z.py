@@ -16,6 +16,7 @@
 
 from . import ArchiveTest, Content
 from .. import needs_program, needs_codec
+from patoolib.util import PatoolError
 
 
 class Test7z(ArchiveTest):
@@ -179,3 +180,36 @@ class Test7zPassword(ArchiveTest):
         self.archive_list('p.rar.foo')
         self.archive_extract('p.rar.foo')
         self.archive_test('p.rar.foo')
+
+
+class Test7zInvalidPassword(ArchiveTest):
+    """Test class for the 7z program with invalid passwords"""
+
+    program = '7z'
+    password = 'invalid'
+
+    @needs_program(program)
+    def test_7z_extract(self):
+        """Extract archive with wrong password."""
+        with self.assertRaises(PatoolError):
+            self.archive_extract('p .7z')
+
+    @needs_program(program)
+    def test_7z_test(self):
+        """Test archive with wrong password."""
+        with self.assertRaises(PatoolError):
+            self.archive_test('p .7z')
+
+    @needs_program(program)
+    @needs_codec(program, 'rar')
+    def test_7z_rar_extract(self):
+        """Extract archive with wrong password."""
+        with self.assertRaises(PatoolError):
+            self.archive_extract('p.rar')
+
+    @needs_program(program)
+    @needs_codec(program, 'rar')
+    def test_7z_rar_test(self):
+        """Test archive with wrong password."""
+        with self.assertRaises(PatoolError):
+            self.archive_test('p.rar')

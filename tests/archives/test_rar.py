@@ -16,6 +16,7 @@
 
 from . import ArchiveTest
 from .. import needs_program
+from patoolib.util import PatoolError
 
 
 class TestRar(ArchiveTest):
@@ -54,3 +55,23 @@ class TestRarPassword(ArchiveTest):
     def test_rar_file(self):
         """Run archive commands with renamed password protected RAR archive."""
         self.archive_commands(self.filename + '.rar.foo', skip_create=True)
+
+
+class TestRarInvalidPassword(ArchiveTest):
+    """Test class for the rar program with invalid passwords"""
+
+    filename = 'p'
+    password = 'invalid'
+    program = 'rar'
+
+    @needs_program(program)
+    def test_rar_extract(self):
+        """Extract archive with wrong password."""
+        with self.assertRaises(PatoolError):
+            self.archive_extract(self.filename + '.rar')
+
+    @needs_program(program)
+    def test_rar_test(self):
+        """Test archive with wrong password."""
+        with self.assertRaises(PatoolError):
+            self.archive_test(self.filename + '.rar')
