@@ -34,7 +34,7 @@ dev = [
   "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.13.1",
+  "ruff==0.13.2",
 
   # for python type checking
   "pytype==2024.10.11",
