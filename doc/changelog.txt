@@ -2,6 +2,8 @@
   * Updated dev dependencies
   * Allow stdin when interactive mode is requested.
     Closes: GH bug #184
+  * Use the Python module "compression.zstd" for Python version >= 3.14 to
+    extract and create ZSTD (.zst) files.
 
 4.0.1 (released 02.05.2025)
   * Updated dev dependencies; support reproducible builds with setuptools_reproducible.
