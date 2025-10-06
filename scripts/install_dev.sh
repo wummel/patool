@@ -33,7 +33,7 @@ PROJECTDIR=$(dirname "${BASEDIR}")
 PY_VER=$(grep "python_version_dev =" "${PROJECTDIR}/pyproject.toml" | cut -f2 -d'"')
 UV_VER=$(grep "uv_version_dev =" "${PROJECTDIR}/pyproject.toml" | cut -f2 -d'"')
 DOWNLOAD_URL_UV=https://github.com/astral-sh/uv/releases/download/${UV_VER}/uv-x86_64-unknown-linux-gnu.tar.gz
-CURL_OPTS=("--location" "--silent" "--show-error" "--retry" "2" "--fail")
+CURL_OPTS=("--location" "--silent" "--show-error" "--retry" "2" "--fail" "--tlsv1.2" "--proto" "=https")
 REINSTALL_PYTHON=0
 
 
@@ -83,6 +83,7 @@ if [ ! -f bin/uv ]; then
 elif [ "$(bin/uv --version | cut -d" " -f2)" != "${UV_VER}" ]; then
     echo "Updating $(bin/uv --version) to ${UV_VER} from ${DOWNLOAD_URL_UV}"
     (cd bin; curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
+    # new uv versions might use new versions from python-build-standalone
     REINSTALL_PYTHON=1
 fi
 
