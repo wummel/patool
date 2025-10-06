@@ -118,6 +118,6 @@ if [ ! -d .venv ]; then
     uv venv
 fi
 
-if [ "{REINSTALL_PYTHON}"=1 ]; then
+if [ "${REINSTALL_PYTHON}" = "1" ]; then
     uv python install --reinstall
 fi
