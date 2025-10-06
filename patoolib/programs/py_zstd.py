@@ -12,14 +12,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Archive commands for the lzma Python module."""
+"""Archive commands for the lzma Python module.
+Raises ImportError when neither compression.zstd nor pyzst module is found.
+"""
 
-from .. import fileutil, util
+from .. import fileutil, util, log
 
+# try importing a python zstd module
 try:
     from compression import zstd
 except ImportError:
-    zstd = None
+    import pyzstd as zstd
 
 READ_SIZE_BYTES = 1024 * 1024
 
@@ -30,6 +33,8 @@ def extract_zstd(archive, compression, cmd, verbosity, interactive, outdir):
     try:
         with zstd.ZstdFile(archive) as zstdfile:
             with open(targetname, 'wb') as targetfile:
+                if verbosity >= 1:
+                    log.log_info(f"extracting ZstdFile({archive}) to {targetname}")
                 data = zstdfile.read(READ_SIZE_BYTES)
                 while data:
                     targetfile.write(data)
@@ -48,6 +53,8 @@ def create_zstd(archive, compression, cmd, verbosity, interactive, filenames):
         with zstd.ZstdFile(archive, mode='wb') as zstdfile:
             filename = filenames[0]
             with open(filename, 'rb') as srcfile:
+                if verbosity >= 1:
+                    log.log_info("compressing {filename} to ZstdFile({archive})")
                 data = srcfile.read(READ_SIZE_BYTES)
                 while data:
                     zstdfile.write(data)

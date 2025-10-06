@@ -380,6 +380,8 @@ ArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
     },
     "zstd": {
         None: ("zstd",),
+        "create": ("py_zstd",),
+        "extract": ("py_zstd",),
     },
 }
 
@@ -606,8 +608,13 @@ def find_archive_program(
     # return the first existing program
     for program in programs:
         if program.startswith('py_'):
-            # it's a Python module and therefore always supported
-            return program
+            # it's a Python module, check if it is supported
+            try:
+                get_patool_program_module(program)
+                return program
+            except ImportError:
+                pass
+            continue
         exe = util.find_program(program)
         if exe:
             if program in ('7z', '7zz', '7zzs', '7za'):
@@ -957,16 +964,22 @@ def _handle_archive(
         run_archive_cmdlist(cmdlist, verbosity=verbosity, interactive=interactive)
 
 
+def get_patool_program_module(program):
+    """Get the patool module for given program."""
+    key = fileutil.stripext(os.path.basename(program).lower())
+    # modules are stored in "programs" submodule
+    modulename = ".programs." + ProgramModules.get(key, key)
+    # import the module
+    return importlib.import_module(modulename, __name__)
+
+
 def get_archive_cmdlist_func(program: str, command: str, format: str) -> Callable:
     """Get the Python function that executes the given program."""
     # get python module for given archive program
-    key = fileutil.stripext(os.path.basename(program).lower())
-    modulename = ".programs." + ProgramModules.get(key, key)
-    # import the module
     try:
-        module = importlib.import_module(modulename, __name__)
+        module = get_patool_program_module(program)
     except ImportError as err:
-        msg = f"cannot import module {modulename} in {__name__}"
+        msg = f"cannot import program module {program} in {__name__}"
         raise util.PatoolError(msg) from err
     # get archive handler function (e.g. patoolib.programs.star.extract_tar)
     try:

@@ -24,12 +24,14 @@ class TestPyzstd(ArchiveTest):
     program = 'py_zstd'
 
     @needs_module('compression.zstd')
+    @needs_program('zstd')
     def test_py_zstd(self):
         """Extract and create ZSTD archives."""
         self.archive_extract('t.txt.zst', check=Content.Singlefile)
         self.archive_create('t.txt.zst', check=Content.Singlefile)
 
     @needs_program('file')
+    @needs_program('zstd')
     @needs_module('compression.zstd')
     def test_py_zstd_file(self):
         """Extract renamed ZSTD archives."""
