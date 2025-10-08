@@ -17,7 +17,7 @@ jobs:
       matrix:
         # See https://github.com/actions/runner-images for available OS images
         os: ["ubuntu-24.04", "macos-15", "windows-2025"]
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
 
     runs-on: ${{ matrix.os }}
     steps:
