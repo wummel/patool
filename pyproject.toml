@@ -55,5 +55,5 @@ dev = [
 
 [tool.patool]
 # pin versions of Python and uv for development
-python_version_dev = "3.13.7"
-uv_version_dev = "0.8.23"
+python_version_dev = "3.13.8"
+uv_version_dev = "0.9.0"
