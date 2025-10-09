@@ -16,6 +16,7 @@
 
 import unittest
 import patoolib
+import patoolib.mime
 
 
 class TestConfiguration(unittest.TestCase):

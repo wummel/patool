@@ -25,7 +25,7 @@ from .util import find_program, backtick
 
 
 # internal MIME database
-mimedb = None
+mimedb: mimetypes.MimeTypes | None = None
 
 
 def init_mimedb() -> None:
@@ -151,7 +151,7 @@ def guess_mime_mimedb(filename: str) -> tuple[str | None, str | None]:
     mime, encoding = None, None
     if mimedb is not None:
         mime, encoding = mimedb.guess_type(filename, strict=False)
-    if mime is None and encoding is None:
+    if mimedb is not None and mime is None and encoding is None:
         # try with lowercase extension, since we configure our mimedb entries only with lowercase
         # this way, files like "t.GZ" are recognized
         root, ext = os.path.splitext(filename)

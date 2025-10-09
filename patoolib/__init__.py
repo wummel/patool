@@ -736,7 +736,7 @@ def list_formats() -> None:
                 # display information what programs can handle this archive format
                 handlers = programs.get(None, programs.get(command))
                 print(
-                    f"   {command:>8}: - (no program found; install {util.strlist_with_or(handlers)})"
+                    f"   {command:>8}: - (no program found; install {util.strlist_with_or(handlers)})"  # ty: ignore[invalid-argument-type]
                 )
 
 

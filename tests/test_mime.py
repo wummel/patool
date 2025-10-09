@@ -17,6 +17,7 @@
 import unittest
 import os
 import patoolib
+import patoolib.mime
 from . import needs_program, datadir
 
 

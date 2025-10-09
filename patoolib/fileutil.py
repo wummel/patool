@@ -152,14 +152,19 @@ def chdir(directory: str) -> str | None:
     return olddir
 
 
+def funcname(func: Callable) -> str:
+    """Get function name."""
+    return getattr(func, '__name__', repr(func))
+
+
 def rmtree_log_error(func: Callable, path: str, exc: str) -> None:
     """Error log function for shutil.rmtree()."""
-    log_error(f"Error in {func.__name__}({path}): {exc[1]}")
+    log_error(f"Error in {funcname(func)}({path}): {exc[1]}")
 
 
 def rmtree_log_exc(func: Callable, path: str, excinfo) -> None:
     """Error log function for shutil.rmtree()."""
-    log_error(f"Error in {func.__name__}({path}): {excinfo}")
+    log_error(f"Error in {funcname(func)}({path}): {excinfo}")
 
 
 def rmtree(path: str) -> None:

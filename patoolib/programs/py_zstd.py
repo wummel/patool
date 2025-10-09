@@ -22,7 +22,7 @@ from .. import fileutil, util, log
 try:
     from compression import zstd
 except ImportError:
-    import pyzstd as zstd
+    import pyzstd as zstd  # ty: ignore[unresolved-import]
 
 READ_SIZE_BYTES = 1024 * 1024
 

@@ -34,10 +34,10 @@ dev = [
   "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.13.3",
+  "ruff==0.14.0",
 
   # for python type checking
-  "pytype==2024.10.11",
+  "ty==0.0.1-alpha.21",
 
   # for generating a Python .whl file
   "wheel==0.45.1",
@@ -57,3 +57,10 @@ dev = [
 # pin versions of Python and uv for development
 python_version_dev = "3.13.8"
 uv_version_dev = "0.9.0"
+
+[tool.ty.environment]
+# patool uses some imports and attributes that are only available on windows
+# so set the type check platform to windows
+python-platform = "win32"
+# patool tries to import modules that are only available on Python >= 3.14
+python-version = "3.14"

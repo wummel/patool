@@ -24,7 +24,7 @@ from . import configuration
 
 
 # the global logging.Logger object, initialized by init_logging()
-logger = None
+logger: logging.Logger | None = None
 default_encoding = locale.getpreferredencoding()
 
 
@@ -53,17 +53,20 @@ def encode_safe(*args, encoding=default_encoding):
 
 def log_error(msg):
     """Log error message."""
-    logger.error(encode_safe(msg))
+    if logger is not None:
+        logger.error(encode_safe(msg))
 
 
 def log_warning(msg):
     """Log warning message."""
-    logger.warning(encode_safe(msg))
+    if logger is not None:
+        logger.warning(encode_safe(msg))
 
 
 def log_info(msg):
     """Log info message."""
-    logger.info(encode_safe(msg))
+    if logger is not None:
+        logger.info(encode_safe(msg))
 
 
 # environment keys to print for internal error info
@@ -76,9 +79,10 @@ def log_internal_error():
     env = os.linesep.join(
         [f"{key}={os.getenv(key)!r}" for key in EnvKeys if os.getenv(key) is not None]
     )
-    logger.exception(
-        encode_safe(
-            f"""********** Oops, I did it again. *************
+    if logger is not None:
+        logger.exception(
+            encode_safe(
+                f"""********** Oops, I did it again. *************
 
 You have found an internal error in {configuration.AppName}.
 Please write a bug report at
@@ -98,8 +102,8 @@ Environment:
 {env}
 ******** {configuration.AppName} internal error, over and out ********
 """
+            )
         )
-    )
 
 
 def strtime(t):
