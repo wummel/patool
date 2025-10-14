@@ -113,7 +113,7 @@ release: distclean releasecheck ## release a new version of patool
 	$(MAKE) dist release-gh release-pypi release-homepage github-issues
 
 .PHONY: releasecheck
-releasecheck: update_webmeta checkgit checkchangelog lint test typecheck checkgitreleasetag ## check that repo is ready for release
+releasecheck: update-webmeta checkgit checkchangelog lint test typecheck checkgitreleasetag ## check that repo is ready for release
 
 .PHONY: checkgit
 checkgit: ## check that git changes are all committed on the main branch
