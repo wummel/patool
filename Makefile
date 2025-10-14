@@ -16,9 +16,9 @@ MAKEFLAGS += --no-builtin-rules
 
 
 ############ Configuration ############
-VERSION:=$(shell grep "Version: str =" patoolib/configuration.py | cut -d '"' -f2)
-AUTHOR:=$(shell grep "MyName: str =" patoolib/configuration.py | cut -d '"' -f2)
-APPNAME:=$(shell grep "AppName: str =" patoolib/configuration.py | cut -d '"' -f2)
+VERSION:=$(shell grep "Version:" patoolib/configuration.py | cut -d '"' -f2)
+AUTHOR:=$(shell grep "MyName:" patoolib/configuration.py | cut -d '"' -f2)
+APPNAME:=$(shell grep "AppName:" patoolib/configuration.py | cut -d '"' -f2)
 ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
 ARCHIVE_WHEEL:=$(APPNAME)-$(VERSION)-py2.py3-none-any.whl
 GITRELEASETAG:=$(VERSION)
@@ -38,6 +38,8 @@ PYTESTOPTS?=-s --full-trace --log-file=build/test.log --numprocesses auto
 TESTS ?= tests/
 # set test options
 TESTOPTS=
+# python files and directories
+PY_FILES_DIRS:=setup.py patoolib tests doc/web/source
 
 ############ Default target ############
 
@@ -53,8 +55,8 @@ help:	## display this help section
 # these targets work best in a virtual python environment
 # see https://github.com/pyenv/pyenv for more info
 
-.PHONY: init ## install python virtual env and required development packages
-init:
+.PHONY: init
+init: ## install python virtual env and required development packages
 	uv sync
 
 
@@ -175,12 +177,12 @@ checkchangelog: ## check changelog before release
 
 .PHONY: lint
 lint: ## lint python code
-	ruff check setup.py patoolib tests doc/web/source
+	ruff check $(PY_FILES_DIRS)
 
 .PHONY: reformat
 reformat: ## format the python code
-	ruff check --fix patoolib tests doc/web/source
-	ruff format setup.py patoolib tests doc/web/source
+	ruff check --fix $(PY_FILES_DIRS)
+	ruff format $(PY_FILES_DIRS)
 
 .PHONY: checkoutdated checkoutdatedpy checkoutdatedgh
 checkoutdated: checkoutdatedpy checkoutdatedgh
@@ -197,7 +199,7 @@ checkoutdatedpy:	## Check for outdated package requirements
 	grep -iE "($(shell grep == pyproject.toml  | cut -f1 -d= | tr -d "\"\' "| sed -e 's/\[.*\]//' |sort | paste -sd '|'))"; \
 	test $$? = 1
 
-checkoutdatedgh:	## check for outedated github tools
+checkoutdatedgh:	## check for outdated github tools
 # github-check-outdated is a local tool which compares a given version with the latest available github release version
 # see https://gist.github.com/wummel/ef14989766009effa4e262b01096fc8c for an example implementation
 	@echo "Check for outdated Github tools"
@@ -236,12 +238,12 @@ doc/$(APPNAME).txt: doc/$(APPNAME).1 ## make text file from man page for wheel b
 count: ## print some code statistics
 	@sloccount patoolib
 
-.PHONY: update_webmeta
-update_webmeta: ## update package metadata for the homepage
+.PHONY: update-webmeta
+update-webmeta: ## update package metadata for the homepage
 	sed -i -e 's/project =.*/project = "$(APPNAME)"/g' $(WEBMETA)
 	sed -i -e 's/version =.*/version = "$(VERSION)"/g' $(WEBMETA)
 	sed -i -e 's/author =.*/author = "$(AUTHOR)"/g' $(WEBMETA)
 
 .PHONY: release-homepage
-release-homepage: update_webmeta ## update the homepage after a release
+release-homepage: update-webmeta ## update the homepage after a release
 	$(MAKE) -C doc/web release
