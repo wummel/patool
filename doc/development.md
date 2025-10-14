@@ -19,6 +19,7 @@ To start developing, run the following commands:
 2. Initialize the source directory
 
    $ scripts/install_dev.sh
+
    $ make init
 
    This installs required packages, creates a virtual Python environment in the directory `.venv/`
@@ -33,4 +34,4 @@ To start developing, run the following commands:
 
 The Github workflow runs tests on different architectures and Python versions.
 Currently, tests are run on Windows, MacOS and Linux.
-Tested Python versions are Python 3.11, 3.12 and 3.13.
+Tested Python versions are Python 3.11, 3.12, 3.13 and 3.14.
