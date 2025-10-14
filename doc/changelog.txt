@@ -1,4 +1,4 @@
-4.0.2 (released xx.xx.xxxx)
+4.0.2 (released 14.10.2025)
   * Allow stdin when interactive mode is requested.
     Closes: GH bug #184
   * Use the Python module "compression.zstd" for Python version >= 3.14 to
