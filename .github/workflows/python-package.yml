@@ -9,6 +9,8 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions: {}
+
 jobs:
   build:
 
@@ -23,6 +25,8 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v5
+      with:
+        persist-credentials: false
 
     # https://docs.astral.sh/uv/guides/integration/github/
     - name: Install the latest version of uv
