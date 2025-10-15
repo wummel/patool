@@ -179,6 +179,10 @@ checkchangelog: ## check changelog before release
 lint: ## lint python code
 	ruff check $(PY_FILES_DIRS)
 
+.PHONY: audit
+audit: ## run audit checks
+	zizmor --config .zizmor.yml .github/workflows/python-package.yml
+
 .PHONY: reformat
 reformat: ## format the python code
 	ruff check --fix $(PY_FILES_DIRS)

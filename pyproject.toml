@@ -49,6 +49,9 @@ dev = [
   # for upgrading the version number
   "bump2version==1.0.1",
 
+  # for auditing github actions
+  "zizmor==1.15.2",
+
   # test optional functionality
   "patool[argcompletion]",
 ]
