@@ -58,8 +58,8 @@ dev = [
 
 [tool.patool]
 # pin versions of Python and uv for development
-python_version_dev = "3.13.8"
-uv_version_dev = "0.9.2"
+python_version_dev = "3.13.9"
+uv_version_dev = "0.9.3"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
