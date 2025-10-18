@@ -203,11 +203,12 @@ checkoutdatedpy:	## Check for outdated package requirements
 	grep -iE "($(shell grep == pyproject.toml  | cut -f1 -d= | tr -d "\"\' "| sed -e 's/\[.*\]//' |sort | paste -sd '|'))"; \
 	test $$? = 1
 
-checkoutdatedgh:	## check for outdated github tools
+checkoutdatedgh:	## check for outdated github projects
 # github-check-outdated is a local tool which compares a given version with the latest available github release version
 # see https://gist.github.com/wummel/ef14989766009effa4e262b01096fc8c for an example implementation
 	@echo "Check for outdated Github tools"
-	github-check-outdated astral-sh uv "$(shell uv self version | cut -f2 -d" ")"
+	github-check-outdated astral-sh uv "$(shell uv --version | cut -f2 -d" ")"
+	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v[0-9]+\.[0-9]+\.[0-9]+$$'
 
 
 .PHONY: upgradeoutdated
