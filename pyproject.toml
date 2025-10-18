@@ -34,10 +34,10 @@ dev = [
   "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.14.0",
+  "ruff==0.14.1",
 
   # for python type checking
-  "ty==0.0.1-alpha.21",
+  "ty==0.0.1-alpha.23",
 
   # for generating a Python .whl file
   "wheel==0.45.1",

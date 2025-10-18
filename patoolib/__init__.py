@@ -1084,24 +1084,37 @@ def _repack_archive(
         return
     tmpdir = fileutil.tmpdir()
     try:
-        kwargs = dict(verbosity=verbosity, outdir=tmpdir, password=password)
         same_format = format1 == format2 and compression1 and compression2
         if same_format:
             # only decompress since the format is the same
-            kwargs['format'] = compression1
-        path = _extract_archive(archive1, **kwargs)
+            format = compression1
+        else:
+            format = None
+        path = _extract_archive(
+            archive1,
+            verbosity=verbosity,
+            outdir=tmpdir,
+            password=password,
+            format=format,
+        )
         archive = os.path.abspath(archive2)
         files = tuple(os.listdir(path))
         olddir = os.getcwd()
         os.chdir(path)
         try:
-            kwargs = dict(
-                verbosity=verbosity, interactive=interactive, password=password
-            )
             if same_format:
                 # only compress since the format is the same
-                kwargs['format'] = compression2
-            _create_archive(archive, files, **kwargs)
+                format = compression2
+            else:
+                format = None
+            _create_archive(
+                archive,
+                files,
+                verbosity=verbosity,
+                interactive=interactive,
+                password=password,
+                format=format,
+            )
         finally:
             os.chdir(olddir)
     finally:
