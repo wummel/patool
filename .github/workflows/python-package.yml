@@ -53,10 +53,14 @@ jobs:
       run: uv run --no-sync ruff format --check setup.py patoolib tests doc/web/source
 
     - name: Install archive programs on Linux
-      if: ${{ runner.os=='Linux' }}
+      if: runner.os == 'Linux'
       run: >
         sudo apt-get update &&
         sudo apt-get install --no-install-recommends --yes arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress nomarch pbzip2 p7zip-full rar rpm2cpio unzip unace unalz unar unrar sharutils tar xdms zip zopfli zstd
+
+    - name: Install archive programs on Windows
+      if: runner.os == 'Windows'
+      run: winget install --id=Giorgiotani.Peazip --exact --disable-interactivity --accept-source-agreements --accept-package-agreements
 
     - name: Install pytest and modules
       run: uv pip install pytest pytest-xdist[psutil] pytest-randomly
