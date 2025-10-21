@@ -27,4 +27,4 @@ class TestFreeArc(ArchiveTest):
     @needs_codec(program, 'freearc')
     def test_freearc(self):
         """Run archive commands with FREEARC archive."""
-        self.archive_commands(self.filename + 'freearc.arc', check=Content.Multifile)
+        self.archive_commands(self.filename + '.freearc.arc', check=Content.Multifile)
