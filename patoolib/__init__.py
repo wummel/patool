@@ -68,6 +68,7 @@ ArchiveFormats: tuple[str, ...] = (
     'deb',
     'dms',
     'flac',
+    'freearc',
     'gzip',
     'iso',
     'lrzip',
@@ -126,6 +127,7 @@ ArchiveMimetypes: dict[str, str] = {
     'application/x-cpio': 'cpio',
     'application/x-debian-package': 'deb',
     'application/x-dms': 'dms',
+    'application/x-freearc': 'freearc',
     'application/x-iso9660-image': 'iso',
     'application/x-lz4': 'lz4',
     'application/x-lzop': 'lzop',
@@ -185,11 +187,18 @@ ArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
     'ar': {
         None: ('ar',),
     },
+    # Note:
+    # ".arc" files can be in ARC or FREEARC format
+    # https://en.wikipedia.org/wiki/ARC_(file_format)
+    # https://en.wikipedia.org/wiki/FreeArc
     'arc': {
         None: ('arc',),
         'extract': ('nomarch',),
         'test': ('nomarch',),
         'list': ('nomarch',),
+    },
+    'freearc': {
+        None: ('arc',),
     },
     'arj': {
         None: ('arj',),

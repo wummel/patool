@@ -1,37 +1,36 @@
-PATOOL(1)               General Commands Manual              PATOOL(1)
+PATOOL(1)               General Commands Manual               PATOOL(1)
 
 NAME
        patool - portable archive file manager for the command line
 
 SYNOPSIS
-        patool         [global-options]        (list|test|extract|cre‐
-       ate|diff|search|repack|formats|version) [command-options] [com‐
+        patool         [global-options]         (list|test|extract|cre‐
+       ate|diff|search|repack|formats|version) [command-options]  [com‐
        mand-arguments]...
 
 DESCRIPTION
-       Various  archive  formats  can  be  created, extracted, tested,
-       listed, searched, repacked and compared by patool.  The  advan‐
-       tage  of  patool  is  its  simplicity in handling archive files
-       without having to remember a myriad of programs and options.
+       Various  archive  formats  can  be  created,  extracted, tested,
+       listed, searched, repacked and compared by patool. The advantage
+       of patool is its simplicity in handling  archive  files  without
+       having to remember a myriad of programs and options.
 
-       The archive format is determined by the file(1) program and  as
-       a fallback by the archive file extension.
+       The archive format is determined by the file(1) program and as a
+       fallback by the archive file extension.
 
-       patool  supports  7z (.7z, .cb7), ACE (.ace, .cba), ADF (.adf),
-       ALZIP (.alz), APE (.ape), AR  (.a),  ARC  (.arc),  ARJ  (.arj),
-       BZIP2  (.bz2),  BZIP3  (.bz3), CAB (.cab), CHM (.chm), COMPRESS
-       (.Z), CPIO (.cpio), DEB (.deb), DMS (.dms), FLAC (.flac),  GZIP
-       (.gz),  ISO (.iso), LRZIP (.lrz), LZH (.lha, .lzh), LZIP (.lz),
-       LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar,  .cbr),  RZIP
-       (.rz),  SHN (.shn), TAR (.tar, .cbt), UDF (.udf), XZ (.xz), ZIP
-       (.zip, .jar, .cbz), ZOO  (.zoo),  ZPAQ  (.zpaq)  and  ZSTANDARD
-       (.zst) archive formats.
-       It  relies  on helper applications to handle those archive for‐
-       mats (for example xz for XZ (.xz) archives).
+       patool  supports  7z  (.7z, .cb7), ACE (.ace, .cba), ADF (.adf),
+       ALZIP (.alz), APE (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2
+       (.bz2), BZIP3 (.bz3), CAB (.cab),  CHM  (.chm),  COMPRESS  (.Z),
+       CPIO  (.cpio),  DEB  (.deb),  DMS  (.dms), FLAC (.flac), FREEARC
+       (.arc), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha,  .lzh),
+       LZIP  (.lz),  LZMA  (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar,
+       .cbr), RZIP (.rz), SHN (.shn), TAR (.tar, .cbt), UDF (.udf),  XZ
+       (.xz),  ZIP (.zip, .jar, .cbz), ZOO (.zoo), ZPAQ (.zpaq) and ZS‐
+       TANDARD (.zst) archive formats.
+       It relies on helper applications to handle those archive formats
+       (for example xz for XZ (.xz) archives).
 
-       The archive formats BZIP2, GZIP, TAR, XZ and ZIP are  supported
-       natively  and  do  not  require  helper  applications to be in‐
-       stalled.
+       The archive formats BZIP2, GZIP, TAR, XZ and ZIP  are  supported
+       natively and do not require helper applications to be installed.
 
 EXAMPLES
          patool extract archive.zip otherarchive.rar
@@ -44,23 +43,22 @@ EXAMPLES
 
 GLOBAL OPTIONS
        -v, --verbose
-              Display more info about what patool  does,  and  display
-              the output of helper applications. Can be given multiple
+              Display more info about what patool does, and display the
+              output  of  helper  applications.  Can  be given multiple
               times to increase the output even more.
 
        -q, --quiet
-              Work quietly, exept the  commands  formats  and  version
-              still  print their output. Conflicts with --verbose.  If
-              given twice suppresses error output  from  archive  com‐
+              Work quietly, exept  the  commands  formats  and  version
+              still  print  their output. Conflicts with --verbose.  If
+              given twice suppresses error  output  from  archive  com‐
               mands.
 
        --non-interactive
-              Try  to prevent any interactive user input (i.e. prompt‐
-              ing for passwords or for overwriting  duplicate  files).
-              Use this option with care since overwriting files or ig‐
-              noring password prompts could lead to unintended  conse‐
-              quences.
-              This only works for archive programs that allow prevent‐
+              Try to prevent any interactive user input (i.e. prompting
+              for  passwords  or  for overwriting duplicate files). Use
+              this option with care since overwriting files or ignoring
+              password prompts could lead to unintended consequences.
+              This only works for archive programs that allow  prevent‐
               ing user prompts. Currently those are arj, 7z and rar.
 
 COMMANDS
@@ -70,38 +68,38 @@ COMMANDS
 
        •   The original archive will never be removed.
 
-       •   Files outside the output directory will never  be  created.
-           This relies on archive program options to prevent unpacking
-           of files  with  an  absolute  path  name  (e.g.  --no-abso‐
-           lute-filenames for cpio(1)).
+       •   Files  outside  the  output directory will never be created.
+           This relies on archive program options to prevent  unpacking
+           of   files   with  an  absolute  path  name  (e.g.  --no-ab‐
+           solute-filenames for cpio(1)).
 
        The following commands are available.
 
    extract
        patool extract [--outdir directory] <archive>...
 
-       Extract  files  from given archives. The original archives will
+       Extract files from given archives. The  original  archives  will
        never be removed and are left as is.
 
        --outdir directory
-              Extract to the given output directory. Default is to ex‐
+              Extract  to the given output directory. Default is to ex‐
               tract to the current working directory.
 
-       If  the archive contains exactly one file or directory, the ar‐
-       chive contents are extracted directly to the output  directory.
-       Else the files are extracted in a newly created subdirectory of
-       the output directory. The new directory is named after the  ar‐
-       chive filename without the extension.
-       This  prevents  cluttering  the  output directory with a lot of
+       If the archive contains  exactly  one  file  or  directory,  the
+       archive contents are extracted directly to the output directory.
+       Else  the files are extracted in a newly created subdirectory of
+       the output directory. The  new  directory  is  named  after  the
+       archive filename without the extension.
+       This  prevents  cluttering  the  output  directory with a lot of
        files from the extracted archive.
 
-       All extracted files are ensured that they are readable  by  the
+       All extracted files are ensured that they are  readable  by  the
        current user.
 
-       If  extracting  an archive has an error in the middle of opera‐
-       tion, patool does not remove the temporary extraction directory
-       This  directory  whose  name  starts with Unpack_ has all files
-       that have been extracted before the error.
+       If  extracting  an  archive has an error in the middle of opera‐
+       tion, patool does not remove the temporary extraction  directory
+       This directory whose name starts with Unpack_ has all files that
+       have been extracted before the error.
 
    list
        patool list <archive>...
@@ -111,43 +109,43 @@ COMMANDS
    create
        patool create <archive> <file-or-directory>...
 
-       Create an archive from given files. All of the given  files  to
-       add  to  the archive must be readable by the current user.  The
-       format of the archive to create is determined  by  the  archive
-       file  extension. If the archive program has options to maximize
+       Create  an  archive  from given files. All of the given files to
+       add to the archive must be readable by the  current  user.   The
+       format  of  the  archive  to create is determined by the archive
+       file extension. If the archive program has options  to  maximize
        file compression, patool uses those options.
 
    test
        patool test <archive>...
 
-       Test the given archives. If the  helper  application  does  not
-       support testing, the archive contents are listed instead.
+       Test the given archives. If the helper application does not sup‐
+       port testing, the archive contents are listed instead.
 
    diff
        patool diff <archive1> <archive2>
 
-       Show differences between two archives with the diff(1) program.
+       Show  differences between two archives with the diff(1) program.
        The diff options used are -urN.
 
    search
        patool search <pattern> <archive>
 
-       Unpack the given archive in a temporary directory and search in
-       archive  contents  for given pattern using the grep(1) program.
-       The grep options used are -r; additional options  can  be  sup‐
-       plied with the GREP_OPTIONS environment variable.
+       Unpack the given archive in a temporary directory and search  in
+       archive  contents  for  given pattern using the grep(1) program.
+       The grep options used are -r; additional options can be supplied
+       with the GREP_OPTIONS environment variable.
 
    repack
        patool repack <archive> <archive_new>
 
-       Extract  and  re-compress  archive  to a different format.  The
-       target archive format is determined by the  file  extension  of
+       Extract and re-compress archive to a different format.  The tar‐
+       get archive format  is  determined  by  the  file  extension  of
        archive_new.
 
    formats
        patool formats
 
-       Show  all supported archive formats (i.e. which helper applica‐
+       Show  all  supported archive formats (i.e. which helper applica‐
        tions are available).
 
    version
@@ -156,15 +154,15 @@ COMMANDS
        Print version information.
 
 HELP OPTION
-       Specifying the help option displays help for patool itself,  or
-       a command.
+       Specifying the help option displays help for patool itself, or a
+       command.
        For example:
          patool --help - display help for patool
          patool extract --help - display help for the extract command
 
 SHELL ALIASES
-       When  running  under  a Unix shell the following aliases can be
-       defined to save some typing:
+       When running under a Unix shell the following aliases can be de‐
+       fined to save some typing:
          alias pl='patool list'
          alias px='patool extract'
          alias pc='patool create'
@@ -176,4 +174,4 @@ AUTHOR
 COPYRIGHT
        Copyright © 2010-2025 Bastian Kleineidam
 
-patool                         June 2025                     PATOOL(1)
+patool                         June 2025                      PATOOL(1)

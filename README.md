@@ -14,7 +14,7 @@ a fallback by the archive file extension.
 patool supports 7z (.7z, .cb7), ACE (.ace, .cba), ADF (.adf), ALZIP (.alz),
 APE (.ape), AR (.a), ARC (.arc), ARJ (.arj), BZIP2 (.bz2), BZIP3 (.bz3),
 CAB (.cab), CHM (.chm), COMPRESS (.Z), CPIO (.cpio), DEB (.deb), DMS (.dms),
-FLAC (.flac), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha, .lzh),
+FLAC (.flac), FREEARC (.arc), GZIP (.gz), ISO (.iso), LRZIP (.lrz), LZH (.lha, .lzh),
 LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar, .cbr),
 RZIP (.rz), SHN (.shn), TAR (.tar, .cbt), UDF (.udf), XZ (.xz),
 ZIP (.zip, .jar, .cbz), ZOO (.zoo) and ZSTANDARD (.zst) archive formats.
@@ -22,8 +22,9 @@ ZIP (.zip, .jar, .cbz), ZOO (.zoo) and ZSTANDARD (.zst) archive formats.
 It relies on helper applications to handle those archive formats
 (for example `xz` for XZ (.xz) archives).
 
-The archive formats TAR, ZIP, BZIP2 and GZIP are supported natively
+The archive formats TAR, ZIP, BZIP2, LZMA and GZIP are supported natively
 and do not require helper applications to be installed.
+When using Python >= 3.14 the ZSTANDARD archive format is also supported natively.
 
 Examples
 ---------

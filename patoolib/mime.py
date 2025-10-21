@@ -66,6 +66,7 @@ def add_mimedb_data(mimedb: mimetypes.MimeTypes) -> None:
     add_mimetype(mimedb, 'application/x-archive', '.a')
     add_mimetype(mimedb, 'application/x-alzip', '.alz')
     add_mimetype(mimedb, 'application/x-arc', '.arc')
+    # note: application/x-freearc is not added to mimedb since it uses the same file extension .arc as application/x-arc
     add_mimetype(mimedb, 'application/x-lrzip', '.lrz')
     add_mimetype(mimedb, 'application/x-lha', '.lha')
     add_mimetype(mimedb, 'application/x-lzh', '.lzh')
@@ -263,6 +264,7 @@ FileText2Mime: dict[str, str] = {
     "cpio archive": "application/x-cpio",
     "ASCII cpio archive": "application/x-cpio",
     "Debian binary package": "application/x-debian-package",
+    "FreeArc archive": "application/x-freearc",
     "gzip compressed data": "application/gzip",
     "LZMA compressed data": "application/x-lzma",
     "LRZIP compressed data": "application/x-lrzip",

@@ -1,5 +1,5 @@
 4.0.3 (released xx.xx.xxxx)
-  *
+  * Added support for FREEARC (.arc) archives. Peazip can create and extract these.
 
 4.0.2 (released 14.10.2025)
   * Allow stdin when interactive mode is requested.
