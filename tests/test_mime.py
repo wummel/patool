@@ -74,9 +74,8 @@ class TestMime(unittest.TestCase):
         self.mime_test_file("t.arj.foo", "application/x-arj")
         self.mime_test_file("t.txt.bz2", "application/x-bzip2")
         self.mime_test_file("t.txt.bz2.foo", "application/x-bzip2")
-        # fails on ubuntu-latest github ci
-        # self.mime_test_file("t.txt.bz3", "application/x-bzip3")
-        # self.mime_test_file("t.txt.bz3.foo", "application/x-bzip3")
+        self.mime_test_file("t.txt.bz3", "application/x-bzip3")
+        self.mime_test_file("t.txt.bz3.foo", "application/x-bzip3")
         self.mime_test_file("t.cab", "application/vnd.ms-cab-compressed")
         self.mime_test_file("t.cab.foo", "application/vnd.ms-cab-compressed")
         self.mime_test_file("t.cpio", "application/x-cpio")
