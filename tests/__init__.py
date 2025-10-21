@@ -109,4 +109,6 @@ def has_codec(command, program, exe, codec):
             return patoolib.util.p7zip_supports_rar(program)
         if codec == 'compress':
             return patoolib.util.p7zip_supports_compress(program)
+    elif program == 'arc':
+        return patoolib.util.get_arc_format(exe) == codec
     return patoolib.program_supports_compression(command, program, exe, codec)

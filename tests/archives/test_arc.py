@@ -15,7 +15,7 @@
 """Test the arc program"""
 
 from . import ArchiveTest, Content
-from .. import needs_program
+from .. import needs_program, needs_codec
 
 
 class TestArc(ArchiveTest):
@@ -24,12 +24,14 @@ class TestArc(ArchiveTest):
     program = 'arc'
 
     @needs_program(program)
+    @needs_codec(program, 'arc')
     def test_arc(self):
         """Run archive commands with ARC archive."""
         self.archive_commands(self.filename + '.arc', check=Content.Multifile)
 
     @needs_program('file')
     @needs_program(program)
+    @needs_codec(program, 'arc')
     def test_arc_file(self):
         """Run archive commands with renamed ARC archive."""
         self.archive_commands(
