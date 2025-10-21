@@ -29,10 +29,10 @@ class PatoolError(Exception):
     """Raised when errors occur."""
 
 
-def backtick(cmd: Sequence[str], encoding: str = 'utf-8') -> str:
+def backtick(cmd: Sequence[str], encoding: str = 'utf-8', check: bool = True) -> str:
     """Return decoded output from command."""
     return subprocess.run(
-        cmd, stdout=subprocess.PIPE, check=True, encoding=encoding, errors="replace"
+        cmd, stdout=subprocess.PIPE, check=check, encoding=encoding, errors="replace"
     ).stdout
 
 
@@ -233,6 +233,14 @@ def get_peazip_addon_dir() -> str:
     if platform.system() == 'Darwin':
         return '/Applications/peazip.app/Content/MacOS/bin/'
     return ''
+
+
+def get_arc_format(arc_exe: str) -> str:
+    """If running arc_exe without options prints "FreeArc" in its output assume
+    the given arc_exe supports the freearc format. Else assume arc format support.
+    """
+    helptext = backtick([arc_exe], check=False)
+    return "freearc" if "FreeArc" in helptext else "arc"
 
 
 def strlist_with_or(alist: Sequence[str]) -> str:

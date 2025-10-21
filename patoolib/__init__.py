@@ -158,6 +158,7 @@ ArchiveMimetypes: dict[str, str] = {
 # List of programs supporting the given archive format and command.
 # If command is None, the program supports all commands (list, extract, ...)
 # Programs starting with "py_" are Python modules.
+# {<format>: {<command>: (<program>,...)}
 ArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
     '7z': {
         None: ('7z', '7za', '7zr', '7zz', '7zzs'),
@@ -630,6 +631,11 @@ def find_archive_program(
                 if format == 'rar' and not util.p7zip_supports_rar(program):
                     continue
                 if format == 'compress' and not util.p7zip_supports_compress(program):
+                    continue
+            elif program == 'arc':
+                # arc program supports either ARC or FREEARC formats
+                # find out if it's the one we need
+                if util.get_arc_format(exe) != format:
                     continue
             if not check_program_compression(
                 command, program, exe, compression, verbosity=verbosity
