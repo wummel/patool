@@ -62,3 +62,9 @@ def create_arc(
     cmdlist = [cmd, _add_password_to_options('a', password), archive]
     cmdlist.extend(filenames)
     return cmdlist
+
+
+extract_freearc = extract_arc
+list_freearc = list_arc
+test_freearc = test_arc
+create_freearc = create_arc
