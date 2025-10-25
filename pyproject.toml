@@ -17,7 +17,7 @@ license-files = []
 [project.optional-dependencies]
 # optional features
 argcompletion = [
-  'argcomplete==3.6.2',
+  'argcomplete==3.6.3',
 ]
 
 # these modules are only needed for development
@@ -34,10 +34,10 @@ dev = [
   "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.14.1",
+  "ruff==0.14.2",
 
   # for python type checking
-  "ty==0.0.1-alpha.23",
+  "ty==0.0.1-alpha.24",
 
   # for generating a Python .whl file
   "wheel==0.45.1",
@@ -62,7 +62,7 @@ dev = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.13.9"
-uv_version_dev = "0.9.3"
+uv_version_dev = "0.9.5"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
