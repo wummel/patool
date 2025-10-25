@@ -206,7 +206,7 @@ checkoutdatedgh:	## check for outdated github projects
 # see https://gist.github.com/wummel/ef14989766009effa4e262b01096fc8c for an example implementation
 	@echo "Check for outdated Github tools"
 	github-check-outdated astral-sh uv "$(shell uv --version | cut -f2 -d" ")"
-	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v[0-9]+\.[0-9]+\.[0-9]+$$'
+	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v3\.13\.[0-9]+$$'
 
 
 .PHONY: upgradeoutdated
