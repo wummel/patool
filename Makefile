@@ -52,9 +52,6 @@ help:	## display this help section
 
 ############ Installation and provisioning  ############
 
-# these targets work best in a virtual python environment
-# see https://github.com/pyenv/pyenv for more info
-
 .PHONY: init
 init: ## install python virtual env and required development packages
 	uv sync
@@ -84,7 +81,7 @@ dist: ## build source and wheel distribution file
 release-pypi: ## upload a new release to pypi
 	uv publish dist/$(ARCHIVE_SOURCE) dist/$(ARCHIVE_WHEEL)
 
-# export GITHUB_TOKEN for the hub command
+# export GITHUB_TOKEN for the gh command
 # Generate a fine grained access token with:
 # - Restricted to this repository (patool)
 # - Repository permission: Metadata -> Read (displayed as "Read access to metadata" in token view)
