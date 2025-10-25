@@ -179,6 +179,7 @@ lint: ## lint python code
 .PHONY: audit
 audit: ## run audit checks
 	zizmor --config .zizmor.yml .github/workflows/python-package.yml
+	pip-audit
 
 .PHONY: reformat
 reformat: ## format the python code

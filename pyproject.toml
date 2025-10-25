@@ -50,7 +50,10 @@ dev = [
   "bump2version==1.0.1",
 
   # for auditing github actions
-  "zizmor==1.15.2",
+  "zizmor==1.16.0",
+
+  # for auditing python packages
+  "pip-audit==2.9.0",
 
   # test optional functionality
   "patool[argcompletion]",
