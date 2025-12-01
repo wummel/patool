@@ -215,6 +215,7 @@ upgradeoutdated:	upgradeoutdatedgh
 .PHONY: upgradeoutdatedgh
 upgradeoutdatedgh:
 	sed -i -e 's/uv_version_dev = ".*"/uv_version_dev = "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' pyproject.toml
+	sed -i -e 's/ version: ".*"/ version: "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' .github/workflows/python-package.yml
 
 ############ Testing ############
 
