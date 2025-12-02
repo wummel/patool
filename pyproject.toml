@@ -53,7 +53,7 @@ dev = [
   "zizmor==1.18.0",
 
   # for auditing python packages
-  "pip-audit==2.9.0",
+  "pip-audit==2.10.0",
 
   # test optional functionality
   "patool[argcompletion]",
@@ -62,7 +62,7 @@ dev = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.13.9"
-uv_version_dev = "0.9.13"
+uv_version_dev = "0.9.14"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
