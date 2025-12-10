@@ -75,7 +75,7 @@ distclean:	clean ## run clean and additionally remove all build and dist files
 
 .PHONY: dist
 dist: ## build source and wheel distribution file
-	uv build
+	env SOURCE_DATE_EPOCH=$(shell git log -1 --pretty=%ct) uv build
 
 .PHONY: release-pypi
 release-pypi: ## upload a new release to pypi
