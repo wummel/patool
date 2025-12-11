@@ -186,10 +186,10 @@ reformat: ## format the python code
 	ruff check --fix $(PY_FILES_DIRS)
 	ruff format $(PY_FILES_DIRS)
 
-.PHONY: checkoutdated checkoutdatedpy checkoutdatedgh
-checkoutdated: checkoutdatedpy checkoutdatedgh
+.PHONY: checkoutdated checkoutdated-py checkoutdated-gh
+checkoutdated: checkoutdated-py checkoutdated-gh
 
-checkoutdatedpy:	## Check for outdated package requirements
+checkoutdated-py:	## Check for outdated package requirements
 # Assumes all packages in requirements have pinned versions with "==".
 # Compare the output of "uv pip list" (the current versions) with the result of "uv pip compile" (available versions).
 # Then filter only for upgrades of direct dependencies with grep.
@@ -201,24 +201,24 @@ checkoutdatedpy:	## Check for outdated package requirements
 	grep -iE "($(shell grep == pyproject.toml  | cut -f1 -d= | tr -d "\"\' "| sed -e 's/\[.*\]//' |sort | paste -sd '|'))"; \
 	test $$? = 1
 
-checkoutdatedgh:	## check for outdated github projects
+checkoutdated-gh:	## check for outdated github projects
 # github-check-outdated is a local tool which compares a given version with the latest available github release version
 # see https://gist.github.com/wummel/ef14989766009effa4e262b01096fc8c for an example implementation
 	@echo "Check for outdated Github tools"
 	github-check-outdated astral-sh uv "$(shell uv --version | cut -f2 -d" ")"
-	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v3\.13\.[0-9]+$$'
+	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v3\.14\.[0-9]+$$'
 
 
 .PHONY: upgradeoutdated
-upgradeoutdated:	upgradeoutdatedgh upgradeoutdatedpy
+upgradeoutdated:	upgradeoutdated-gh upgradeoutdated-py
 
-.PHONY: upgradeoutdatedgh
-upgradeoutdatedgh:
+.PHONY: upgradeoutdated-gh
+upgradeoutdated-gh:
 	sed -i -e 's/uv_version_dev = ".*"/uv_version_dev = "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' pyproject.toml
 	sed -i -e 's/ version: ".*"/ version: "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' .github/workflows/python-package.yml
 
-.PHONY: upgradeoutdatedpy
-upgradeoutdatedpy:	## upgrade dependencies in uv.lock
+.PHONY: upgradeoutdated-py
+upgradeoutdated-py:	## upgrade dependencies in uv.lock
 	uv lock --upgrade
 
 
