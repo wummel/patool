@@ -28,7 +28,7 @@ logger: logging.Logger | None = None
 default_encoding = locale.getpreferredencoding()
 
 
-def init_logging(stream=sys.stderr):
+def init_logging(stream=sys.stderr) -> None:
     """Initialize the global logger. All log messages will be
     sent to the given stream, default is sys.stderr.
     """
@@ -41,7 +41,7 @@ def init_logging(stream=sys.stderr):
     logger.setLevel(logging.INFO)
 
 
-def encode_safe(*args, encoding=default_encoding):
+def encode_safe(*args, encoding=default_encoding) -> str:
     """Replacing unknown characters in args for the given encoding.
     @return: a space-separated string that will not have encoding errors
     with the given encoding
@@ -51,19 +51,19 @@ def encode_safe(*args, encoding=default_encoding):
     )
 
 
-def log_error(msg):
+def log_error(msg) -> None:
     """Log error message."""
     if logger is not None:
         logger.error(encode_safe(msg))
 
 
-def log_warning(msg):
+def log_warning(msg) -> None:
     """Log warning message."""
     if logger is not None:
         logger.warning(encode_safe(msg))
 
 
-def log_info(msg):
+def log_info(msg) -> None:
     """Log info message."""
     if logger is not None:
         logger.info(encode_safe(msg))
@@ -73,7 +73,7 @@ def log_info(msg):
 EnvKeys = ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG")
 
 
-def log_internal_error():
+def log_internal_error() -> None:
     """Print internal error message."""
     now = time.localtime()
     env = os.linesep.join(
@@ -106,7 +106,7 @@ Environment:
         )
 
 
-def strtime(t):
+def strtime(t: time.struct_time) -> str:
     """Return ISO 8601 formatted time."""
     return time.strftime("%Y-%m-%d %H:%M:%S%z", t)
 
