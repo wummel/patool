@@ -27,17 +27,17 @@ dev = [
   "setuptools==80.9.0",
 
   # for testing
-  "pytest==9.0.1",
+  "pytest==9.0.2",
   # plugin to run tests in parallel
   "pytest-xdist[psutil]==3.8.0",
   # plugin to run tests in random order
   "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.14.7",
+  "ruff==0.14.8",
 
   # for python type checking
-  "ty==0.0.1a29",
+  "ty==0.0.1a33",
 
   # for generating a Python .whl file
   "wheel==0.45.1",
@@ -61,8 +61,8 @@ dev = [
 
 [tool.patool]
 # pin versions of Python and uv for development
-python_version_dev = "3.13.9"
-uv_version_dev = "0.9.14"
+python_version_dev = "3.14.2"
+uv_version_dev = "0.9.17"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
