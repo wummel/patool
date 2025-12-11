@@ -1,8 +1,9 @@
-4.0.3 (released xx.xx.xxxx)
+4.0.3 (released 11.12.2025)
   * Added support for FREEARC (.arc) archives. Peazip can create and extract these.
   * Set SOURCE_DATE_EPOCH to latest git commit date instead of zero.
     Fixes test failures on some platforms.
     Closes: GH bug #186
+  * Updated dev dependencies
     
 
 4.0.2 (released 14.10.2025)
