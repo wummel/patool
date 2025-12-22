@@ -176,7 +176,7 @@ def guess_mime_file(filename: str) -> tuple[str | None, str | None]:
     mime, encoding = None, None
     if os.path.isfile(filename):
         file_prog = find_program("file")
-        if file_prog:
+        if file_prog is not None:
             mime, encoding = guess_mime_file_mime(file_prog, filename)
             if mime is None:
                 mime = guess_mime_file_text(file_prog, filename)
@@ -187,13 +187,14 @@ def guess_mime_file(filename: str) -> tuple[str | None, str | None]:
             )
     if mime in Mime2Encoding:
         # try to look inside compressed archives
-        cmd = [file_prog, "--brief", "--mime", "--uncompress", "--no-sandbox", filename]
-        try:
-            outparts = backtick(cmd).strip().split(";")
-            mime2 = outparts[0].split(" ", 1)[0]
-        except (OSError, subprocess.CalledProcessError) as err:
-            log_warning(f"error executing {cmd}: {err}")
-            mime2 = None
+        mime2 = None
+        if file_prog is not None:
+            cmd = [file_prog, "--brief", "--mime", "--uncompress", "--no-sandbox", filename]
+            try:
+                outparts = backtick(cmd).strip().split(";")
+                mime2 = outparts[0].split(" ", 1)[0]
+            except (OSError, subprocess.CalledProcessError) as err:
+                log_warning(f"error executing {cmd}: {err}")
 
         if mime2 in LegacyMimeType:
             mime2 = LegacyMimeType[mime2]

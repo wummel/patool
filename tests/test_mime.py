@@ -54,8 +54,11 @@ class TestMime(unittest.TestCase):
         """
         archive = os.path.join(datadir, filename)
         file_prog = patoolib.util.find_program("file")
-        info = patoolib.mime.guess_mime_file_text(file_prog, archive)
-        self.mime_test(patoolib.mime.guess_mime_file, archive, mime, encoding, info)
+        if file_prog is None:
+            self.assertTrue(False, "could not find program 'file' in path")
+        else:
+            info = patoolib.mime.guess_mime_file_text(file_prog, archive)
+            self.mime_test(patoolib.mime.guess_mime_file, archive, mime, encoding, info)
 
     def mime_test_mimedb(self, filename, mime, encoding=None):
         """Test that file has given mime and encoding as determined by the
