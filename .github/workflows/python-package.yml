@@ -32,7 +32,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
       with:
-        version: "0.9.17"
+        version: "0.9.18"
 
     - name: Set UV_PYTHON to Python ${{ matrix.python-version }}
       run: echo "UV_PYTHON=${{ matrix.python-version }}" >> $GITHUB_ENV

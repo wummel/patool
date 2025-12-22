@@ -34,10 +34,10 @@ dev = [
   "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.14.8",
+  "ruff==0.14.10",
 
   # for python type checking
-  "ty==0.0.1a33",
+  "ty==0.0.5",
 
   # for generating a Python .whl file
   "wheel==0.45.1",
@@ -50,7 +50,7 @@ dev = [
   "bump2version==1.0.1",
 
   # for auditing github actions
-  "zizmor==1.18.0",
+  "zizmor==1.19.0",
 
   # for auditing python packages
   "pip-audit==2.10.0",
@@ -62,7 +62,7 @@ dev = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.14.2"
-uv_version_dev = "0.9.17"
+uv_version_dev = "0.9.18"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
