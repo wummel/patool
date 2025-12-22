@@ -11,7 +11,7 @@ import sys
 project = "patool"
 version = "4.0.3"
 author = "Bastian Kleineidam"
-copyright = '2024 ' + author
+copyright = '2025 ' + author
 
 
 def add_patoolib_path():
