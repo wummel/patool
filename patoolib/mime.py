@@ -189,7 +189,14 @@ def guess_mime_file(filename: str) -> tuple[str | None, str | None]:
         # try to look inside compressed archives
         mime2 = None
         if file_prog is not None:
-            cmd = [file_prog, "--brief", "--mime", "--uncompress", "--no-sandbox", filename]
+            cmd = [
+                file_prog,
+                "--brief",
+                "--mime",
+                "--uncompress",
+                "--no-sandbox",
+                filename,
+            ]
             try:
                 outparts = backtick(cmd).strip().split(";")
                 mime2 = outparts[0].split(" ", 1)[0]

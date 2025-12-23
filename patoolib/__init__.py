@@ -795,7 +795,9 @@ def move_outdir_orphan(outdir: str) -> tuple[bool, str]:
 
 
 def run_archive_cmdlist(
-    archive_cmdlist: Sequence[str] | tuple[Sequence[str], dict], verbosity: int = 0, interactive: bool = True
+    archive_cmdlist: Sequence[str] | tuple[Sequence[str], dict],
+    verbosity: int = 0,
+    interactive: bool = True,
 ) -> int:
     """Run archive command.
 
@@ -807,7 +809,10 @@ def run_archive_cmdlist(
     else:
         cmdlist, runkwargs = archive_cmdlist, {}
     return util.run_checked(
-        cmdlist, verbosity=verbosity, interactive=interactive, **runkwargs  # ty: ignore[invalid-argument-type]
+        cmdlist,
+        verbosity=verbosity,
+        interactive=interactive,
+        **runkwargs,  # ty: ignore[invalid-argument-type]
     )
 
 
