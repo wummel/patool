@@ -2,6 +2,7 @@
   * Do not propagate log messages.
     Thanks MatteoH2O1999 for the bug report and suggested fix.
     Closes: GH bug #187
+  * Updated dev dependencies, now requires Python >= 3.12
 
 4.0.3 (released 11.12.2025)
   * Added support for FREEARC (.arc) archives. Peazip can create and extract these.

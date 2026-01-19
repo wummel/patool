@@ -19,7 +19,7 @@ jobs:
       matrix:
         # See https://github.com/actions/runner-images for available OS images
         os: ["ubuntu-24.04", "macos-15", "windows-2025"]
-        python-version: ["3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.12", "3.13", "3.14"]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -32,7 +32,7 @@ jobs:
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v7
       with:
-        version: "0.9.18"
+        version: "0.9.26"
 
     - name: Set UV_PYTHON to Python ${{ matrix.python-version }}
       run: echo "UV_PYTHON=${{ matrix.python-version }}" >> $GITHUB_ENV

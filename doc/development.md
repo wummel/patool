@@ -34,4 +34,4 @@ To start developing, run the following commands:
 
 The Github workflow runs tests on different architectures and Python versions.
 Currently, tests are run on Windows, MacOS and Linux.
-Tested Python versions are Python 3.11, 3.12, 3.13 and 3.14.
+Tested Python versions are Python 3.12, 3.13 and 3.14.

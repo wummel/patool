@@ -3,7 +3,7 @@ Installation
 
 First, install the required software.
 
-1. Python >= 3.11 from https://www.python.org/
+1. Python >= 3.12 from https://www.python.org/
 
 
 Now install the application.
