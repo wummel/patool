@@ -1,4 +1,4 @@
-4.0.4 (released xx.xx.xxxx)
+4.0.4 (released 19.01.2026)
   * Do not propagate log messages.
     Thanks MatteoH2O1999 for the bug report and suggested fix.
     Closes: GH bug #187
