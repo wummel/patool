@@ -34,10 +34,15 @@ def init_logging(stream=sys.stderr) -> None:
     """
     global logger  # noqa PLW0603
     logger = logging.getLogger(configuration.AppName)
+    # do not propagate log message to higher log level handlers (in our case the root level),
+    # since patoolib handles those messages by printing them on the given stream
+    logger.propagate = False
     handler = logging.StreamHandler(stream=stream)
     format = f"%(levelname)s {configuration.AppName}: %(message)s"
     handler.setFormatter(logging.Formatter(format))
     logger.addHandler(handler)
+    # the log level is set to INFO, and not changed any more since the verbosity parameter handles
+    # log message printing instead (increased verbosity prints more messages).
     logger.setLevel(logging.INFO)
 
 
