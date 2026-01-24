@@ -24,7 +24,7 @@ argcompletion = [
 [dependency-groups]
 dev = [
   # for using setuptools.setup() in setup.py
-  "setuptools==80.9.0",
+  "setuptools==80.10.1",
 
   # for testing
   "pytest==9.0.2",
@@ -34,13 +34,13 @@ dev = [
   "pytest-randomly==4.0.1",
 
   # for python code linting
-  "ruff==0.14.13",
+  "ruff==0.14.14",
 
   # for python type checking
-  "ty==0.0.12",
+  "ty==0.0.13",
 
   # for generating a Python .whl file
-  "wheel==0.45.1",
+  "wheel==0.46.3",
 
   # for generating the web page
   "sphinx==9.1.0",
