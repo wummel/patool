@@ -13,7 +13,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Command line usage:
+"""This is the main command line interface.
+It will be made available as a script called "patool" on installation by setup.py.
+The script will call the main_cli() function below on start.
+
+Usage:
 patool
    [global-options]
    {extract|list|create|repack|diff|search|formats}

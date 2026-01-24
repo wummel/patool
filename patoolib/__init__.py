@@ -12,7 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""Main package providing archive functions."""
+"""Main package providing archive functions for the patoolib package.
+See __all__ for all exported functions.
+"""
 
 import sys
 
@@ -541,7 +543,13 @@ def program_supports_compression(
             return True
     elif program in ('py_tarfile',):
         # the python tarfile module has a fixed list of supported compression modules
-        return compression in ('gzip', 'bzip2', 'lzma', 'xz')
+        try:
+            from compression import zstd  # noqa: F401, PLC0415
+
+            # Python >= 3.14 has zstd support and can extract tar.zst files.
+            return compression in ('gzip', 'bzip2', 'lzma', 'xz', 'zstd')
+        except ImportError:
+            return compression in ('gzip', 'bzip2', 'lzma', 'xz')
     return False
 
 
@@ -692,9 +700,7 @@ def check_program_compression(
 def _remove_command_without_password_support(
     programs: Sequence[str], format: str, command: str
 ) -> Sequence[str]:
-    """Remove programs if they don't support work with password for current
-    format and command.
-    """
+    """Remove programs if they don't support passwords for current format and command."""
     if format not in NoPasswordSupportArchivePrograms:
         return programs
     no_password_support_commands = NoPasswordSupportArchivePrograms[format]

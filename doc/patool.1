@@ -1,5 +1,5 @@
 .\"                                      -*- nroff -*-
-.\" Copyright (C) 2010-2025 Bastian Kleineidam
+.\" Copyright (C) 2010-2026 Bastian Kleineidam
 .\"
 .\" This program is free software: you can redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as published by
@@ -11,7 +11,7 @@
 .\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 .\" GNU General Public License for more details.
 .\"
-.TH PATOOL "1" "June 2025" "patool"
+.TH PATOOL "1" "January 2026" "patool"
 .SH NAME
 patool - portable archive file manager for the command line
 .SH SYNOPSIS
@@ -40,6 +40,8 @@ It relies on helper applications to handle those archive formats
 The archive formats BZIP2, GZIP, TAR, XZ and ZIP
 are supported natively and do not require helper applications to be
 installed.
+When using Python >= 3.14 the ZSTANDARD archive format is also supported natively.
+
 .SH EXAMPLES
   \fBpatool extract archive.zip otherarchive.rar\fP
   \fBpatool \-\-verbose test dist.tar.gz\fP
@@ -56,7 +58,7 @@ of helper applications. Can be given multiple times to increase
 the output even more.
 .TP
 \fB\-q\fP, \fB\-\-quiet\fP
-Work quietly, exept the commands \fBformats\fP and \fBversion\fP
+Work quietly, except the commands \fBformats\fP and \fBversion\fP
 still print their output. Conflicts with \fB\-\-verbose\fP.
 If given twice suppresses error output from archive commands.
 .TP
@@ -81,7 +83,7 @@ path name (e.g. \fB\-\-no\-absolute\-filenames\fP for \fBcpio(1)\fP).
 .PP
 The following commands are available.
 .SS extract
-\fBpatool\fP \fBextract\fP [\fB\-\-outdir\fP \fIdirectory\fP] <\fIarchive\fP>...
+\fBpatool\fP \fBextract\fP [\fB\-\-outdir\fP \fIdirectory\fP] [\fB\-\-password\fP \fIpassword\fP] <\fIarchive\fP>...
 .PP
 Extract files from given archives. The original archives will never
 be removed and are left as is.
@@ -89,6 +91,9 @@ be removed and are left as is.
 \fB\-\-outdir\fP \fIdirectory\fP
 Extract to the given output directory. Default is to extract to
 the current working directory.
+.TP
+\fB\-\-password\fP \fIpassword\fP
+Use given password for password-protected archives.
 .PP
 If the archive contains exactly one
 file or directory, the archive contents are extracted directly to the
@@ -108,11 +113,17 @@ not remove the temporary extraction directory
 This directory whose name starts with \fBUnpack_\fP has all files that have been
 extracted before the error.
 .SS list
-\fBpatool\fP \fBlist\fP <\fIarchive\fP>...
+\fBpatool\fP \fBlist\fP [\fB\-\-password\fP \fIpassword\fP] <\fIarchive\fP>...
+.TP
+\fB\-\-password\fP \fIpassword\fP
+Use given password for password-protected archives.
 .PP
 List files in archives.
 .SS create
-\fBpatool\fP \fBcreate\fP <\fIarchive\fP> <\fIfile-or-directory\fP>...
+\fBpatool\fP \fBcreate\fP [\fB\-\-password\fP \fIpassword\fP] <\fIarchive\fP> <\fIfile-or-directory\fP>...
+.TP
+\fB\-\-password\fP \fIpassword\fP
+Use given password for password-protected archives.
 .PP
 Create an archive from given files. All of the given files to add
 to the archive must be readable by the current user.
@@ -120,7 +131,10 @@ The format of the archive to create is determined by the archive file
 extension. If the archive program has options to maximize file compression,
 \fBpatool\fP uses those options.
 .SS test
-\fBpatool\fP \fBtest\fP <\fIarchive\fP>...
+\fBpatool\fP \fBtest\fP [\fB\-\-password\fP \fIpassword\fP] <\fIarchive\fP>...
+.TP
+\fB\-\-password\fP \fIpassword\fP
+Use given password for password-protected archives.
 .PP
 Test the given archives. If the helper application does not support
 testing, the archive contents are listed instead.
@@ -130,7 +144,10 @@ testing, the archive contents are listed instead.
 Show differences between two archives with the \fBdiff(1)\fP program.
 The diff options used are \fB\-urN\fP.
 .SS search
-\fBpatool\fP \fBsearch\fP <\fIpattern\fP> <\fIarchive\fP>
+\fBpatool\fP \fBsearch\fP [\fB\-\-password\fP \fIpassword\fP] <\fIpattern\fP> <\fIarchive\fP>
+.TP
+\fB\-\-password\fP \fIpassword\fP
+Use given password for password-protected archives.
 .PP
 Unpack the given archive in a temporary directory and search in archive
 contents for given pattern using the \fBgrep(1)\fP program.
@@ -151,19 +168,13 @@ are available).
 .PP
 Print version information.
 .SH HELP OPTION
-Specifying the help option displays help for patool itself, or a
-command.
+Specifying the help option \fB\-h\fP or \fB\-\-help\fP displays help for patool itself,
+or a command.
 .br
 For example:
-  \fBpatool \-\-help\fP - display help for patool
+  \fBpatool \-h\fP - display help for patool
   \fBpatool extract \-\-help\fP - display help for the extract command
-.SH SHELL ALIASES
-When running under a Unix shell the following aliases can be defined to save some typing:
-  \fBalias pl='patool list'\fP
-  \fBalias px='patool extract'\fP
-  \fBalias pc='patool create'\fP
-  \fBalias pd='patool diff'\fP
 .SH AUTHOR
 Bastian Kleineidam <bastian.kleineidam@web.de>
 .SH COPYRIGHT
-Copyright \(co 2010-2025 Bastian Kleineidam
+Copyright \(co 2010-2026 Bastian Kleineidam

@@ -31,6 +31,8 @@ DESCRIPTION
 
        The archive formats BZIP2, GZIP, TAR, XZ and ZIP  are  supported
        natively and do not require helper applications to be installed.
+       When  using  Python >= 3.14 the ZSTANDARD archive format is also
+       supported natively.
 
 EXAMPLES
          patool extract archive.zip otherarchive.rar
@@ -44,21 +46,21 @@ EXAMPLES
 GLOBAL OPTIONS
        -v, --verbose
               Display more info about what patool does, and display the
-              output  of  helper  applications.  Can  be given multiple
+              output of helper  applications.  Can  be  given  multiple
               times to increase the output even more.
 
        -q, --quiet
-              Work quietly, exept  the  commands  formats  and  version
-              still  print  their output. Conflicts with --verbose.  If
-              given twice suppresses error  output  from  archive  com‐
+              Work  quietly,  except  the  commands formats and version
+              still print their output. Conflicts with  --verbose.   If
+              given  twice  suppresses  error  output from archive com‐
               mands.
 
        --non-interactive
               Try to prevent any interactive user input (i.e. prompting
-              for  passwords  or  for overwriting duplicate files). Use
+              for passwords or for overwriting  duplicate  files).  Use
               this option with care since overwriting files or ignoring
               password prompts could lead to unintended consequences.
-              This only works for archive programs that allow  prevent‐
+              This  only works for archive programs that allow prevent‐
               ing user prompts. Currently those are arj, 7z and rar.
 
 COMMANDS
@@ -68,15 +70,16 @@ COMMANDS
 
        •   The original archive will never be removed.
 
-       •   Files  outside  the  output directory will never be created.
-           This relies on archive program options to prevent  unpacking
-           of   files   with  an  absolute  path  name  (e.g.  --no-ab‐
+       •   Files outside the output directory will  never  be  created.
+           This  relies on archive program options to prevent unpacking
+           of  files  with  an  absolute  path  name   (e.g.   --no-ab‐
            solute-filenames for cpio(1)).
 
        The following commands are available.
 
    extract
-       patool extract [--outdir directory] <archive>...
+       patool   extract   [--outdir  directory]  [--password  password]
+       <archive>...
 
        Extract files from given archives. The  original  archives  will
        never be removed and are left as is.
@@ -84,6 +87,9 @@ COMMANDS
        --outdir directory
               Extract  to the given output directory. Default is to ex‐
               tract to the current working directory.
+
+       --password password
+              Use given password for password-protected archives.
 
        If the archive contains  exactly  one  file  or  directory,  the
        archive contents are extracted directly to the output directory.
@@ -102,21 +108,31 @@ COMMANDS
        have been extracted before the error.
 
    list
-       patool list <archive>...
+       patool list [--password password] <archive>...
+
+       --password password
+              Use given password for password-protected archives.
 
        List files in archives.
 
    create
-       patool create <archive> <file-or-directory>...
+       patool  create  [--password  password] <archive> <file-or-direc‐
+       tory>...
 
-       Create  an  archive  from given files. All of the given files to
-       add to the archive must be readable by the  current  user.   The
-       format  of  the  archive  to create is determined by the archive
-       file extension. If the archive program has options  to  maximize
+       --password password
+              Use given password for password-protected archives.
+
+       Create an archive from given files. All of the  given  files  to
+       add  to  the  archive must be readable by the current user.  The
+       format of the archive to create is  determined  by  the  archive
+       file  extension.  If the archive program has options to maximize
        file compression, patool uses those options.
 
    test
-       patool test <archive>...
+       patool test [--password password] <archive>...
+
+       --password password
+              Use given password for password-protected archives.
 
        Test the given archives. If the helper application does not sup‐
        port testing, the archive contents are listed instead.
@@ -124,14 +140,17 @@ COMMANDS
    diff
        patool diff <archive1> <archive2>
 
-       Show  differences between two archives with the diff(1) program.
+       Show differences between two archives with the diff(1)  program.
        The diff options used are -urN.
 
    search
-       patool search <pattern> <archive>
+       patool search [--password password] <pattern> <archive>
 
-       Unpack the given archive in a temporary directory and search  in
-       archive  contents  for  given pattern using the grep(1) program.
+       --password password
+              Use given password for password-protected archives.
+
+       Unpack  the given archive in a temporary directory and search in
+       archive contents for given pattern using  the  grep(1)  program.
        The grep options used are -r; additional options can be supplied
        with the GREP_OPTIONS environment variable.
 
@@ -139,13 +158,13 @@ COMMANDS
        patool repack <archive> <archive_new>
 
        Extract and re-compress archive to a different format.  The tar‐
-       get archive format  is  determined  by  the  file  extension  of
+       get  archive  format  is  determined  by  the  file extension of
        archive_new.
 
    formats
        patool formats
 
-       Show  all  supported archive formats (i.e. which helper applica‐
+       Show all supported archive formats (i.e. which  helper  applica‐
        tions are available).
 
    version
@@ -154,24 +173,16 @@ COMMANDS
        Print version information.
 
 HELP OPTION
-       Specifying the help option displays help for patool itself, or a
-       command.
+       Specifying the help option -h or --help displays help for patool
+       itself, or a command.
        For example:
-         patool --help - display help for patool
+         patool -h - display help for patool
          patool extract --help - display help for the extract command
-
-SHELL ALIASES
-       When running under a Unix shell the following aliases can be de‐
-       fined to save some typing:
-         alias pl='patool list'
-         alias px='patool extract'
-         alias pc='patool create'
-         alias pd='patool diff'
 
 AUTHOR
        Bastian Kleineidam <bastian.kleineidam@web.de>
 
 COPYRIGHT
-       Copyright © 2010-2025 Bastian Kleineidam
+       Copyright © 2010-2026 Bastian Kleineidam
 
-patool                         June 2025                      PATOOL(1)
+patool                        January 2026                    PATOOL(1)
