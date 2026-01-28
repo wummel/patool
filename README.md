@@ -104,4 +104,4 @@ lists available options and commands.
 
 Development
 ------------
-See doc/development.md.
+See [doc/development.md](https://github.com/wummel/patool/blob/master/doc/development.md).
