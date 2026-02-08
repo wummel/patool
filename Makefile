@@ -218,7 +218,8 @@ upgradeoutdated-gh:
 	sed -i -e 's/ version: ".*"/ version: "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' .github/workflows/python-package.yml
 
 .PHONY: upgradeoutdated-py
-upgradeoutdated-py:	## upgrade dependencies in uv.lock
+upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
+	uv run scripts/update_pyproject_toml_deps.py pyproject.toml
 	uv lock --upgrade
 
 
