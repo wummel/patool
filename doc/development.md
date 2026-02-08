@@ -7,6 +7,7 @@ Development for patool is done with the following environment:
 
 2. A user with sudo permissions to install required system packages.
 
+MacOS or Windows should also be ok to develop patool, but the scripts below have been tested only on Debian Linux.
 
 To start developing, run the following commands:
 
@@ -20,15 +21,15 @@ To start developing, run the following commands:
 
    This script installs required system packages and a lot of archive programs for testing
    with `sudo apt-get install <package>`.
-   It also downloads the uv tool to `./bin/uv` and configures the PATH variable in `.envrc`
+   It also downloads the [uv tool](https://docs.astral.sh/uv/) to `./bin/uv` and configures the PATH variable in `.envrc`
    for `direnv` to find it.
 
 3. Create the Python virtual environment
 
    `make init`
 
-   This command creates a virtual Python environment in the directory `.venv/`
-   and installs required Python modules for development with `uv`.
+   This command uses `uv` to create a virtual Python environment in the directory `.venv/`
+   and installs required Python modules for development.
    Rerun this when changing dependencies in pyproject.toml
 
 3. Run the tests
@@ -69,3 +70,25 @@ Tests are run on Windows, MacOS and Linux, tested Python versions are Python 3.1
 
 A useful tool to test your github workflow on a local system is https://github.com/nektos/act,
 though it only supports Linux systems.
+
+
+Dependencies
+--------------
+Dependencies are specified in `pyproject.toml`.
+All dependencies are pinned to a specific version by using the `==x.y.z` version specifier.
+
+1. Optional dependencies are specified under `[project.optional-dependencies]`.
+2. Development dependencies are specified under `[dependency-groups]` in the group `dev`.
+3. Python and uv versions are specified unter `[tool.patool]`.
+
+The command `make checkoutdated` checks for new version of python, uv and optional and development dependencies.
+
+The command `make upgradedoutdated` updates all dependencies in pyproject.toml and installs them.
+
+
+Webpage
+--------
+The webpage of patool is written with [Sphinx](https://www.sphinx-doc.org/en/master/).
+The index page is in `doc/web/source/index.md`.
+When releasing a new version, the webpage is automatically updated.
+See the `release-homepage` target in `Makefile`.
