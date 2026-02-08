@@ -56,7 +56,7 @@ def needs_os(name):
 
 def needs_program(name):
     """Decorator skipping test if given program is not available."""
-    return _need_func(lambda x: patoolib.util.find_program(x), name, 'program')
+    return _need_func(patoolib.util.find_program, name, 'program')
 
 
 def needs_one_program(programs):
