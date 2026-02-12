@@ -147,7 +147,11 @@ github-issues: ## close github issues mentioned in changelog
 
 ############ Versioning ############
 
-bumpversion-%: ## shortcut target for bumpversion: bumpversion-{major,minor,patch}
+bumpversion-major: _bumpversion-major	## bump major version
+bumpversion-minor: _bumpversion-minor	## bump minor version
+bumpversion-patch: _bumpversion-patch	## bump patch version
+
+_bumpversion-%:	## shortcut target for bumpversion
 	bumpversion $*
 	$(MAKE) bumpchangelog
 
@@ -216,7 +220,8 @@ upgradeoutdated:	upgradeoutdated-gh upgradeoutdated-py
 upgradeoutdated-gh:
 	sed -i -e 's/uv_version_dev = ".*"/uv_version_dev = "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' pyproject.toml
 	sed -i -e 's/ version: ".*"/ version: "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' .github/workflows/python-package.yml
-	scripts/install-dev.sh
+	sed -i -e 's/python_version_dev = ".*"/python_version_dev = "$(shell github-check-outdated python cpython 0 '^v3\.14\.[0-9]+$$' | cut -f4 -d" " | cut -b2-)"/' pyproject.toml
+	scripts/install_dev.sh
 
 .PHONY: upgradeoutdated-py
 upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
