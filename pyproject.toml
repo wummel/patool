@@ -20,7 +20,7 @@ argcompletion = [
 [dependency-groups]
 dev = [
   # for using setuptools.setup() in setup.py
-  "setuptools==82.0.0",
+  "setuptools==82.0.1",
   # for testing
   "pytest==9.0.2",
   # plugin to run tests in parallel
@@ -28,9 +28,9 @@ dev = [
   # plugin to run tests in random order
   "pytest-randomly==4.0.1",
   # for python code linting
-  "ruff==0.15.0",
+  "ruff==0.15.6",
   # for python type checking
-  "ty==0.0.16",
+  "ty==0.0.23",
   # for generating a Python .whl file
   "wheel==0.46.3",
   # for generating the web page
@@ -39,7 +39,7 @@ dev = [
   # for upgrading the version number
   "bump2version==1.0.1",
   # for auditing github actions
-  "zizmor==1.22.0",
+  "zizmor==1.23.1",
   # for auditing python packages
   "pip-audit==2.10.0",
   # test optional functionality
@@ -49,7 +49,7 @@ dev = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.14.3"
-uv_version_dev = "0.10.2"
+uv_version_dev = "0.10.10"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows

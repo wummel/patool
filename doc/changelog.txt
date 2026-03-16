@@ -11,7 +11,6 @@
     Closes: GH bug #186
   * Updated dev dependencies
     
-
 4.0.2 (released 14.10.2025)
   * Allow stdin when interactive mode is requested.
     Closes: GH bug #184
