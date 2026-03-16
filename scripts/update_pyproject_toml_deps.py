@@ -47,7 +47,7 @@ def main(args):
     update_dependencies(None, pyproject["project"]["dependencies"], projectdir)
     # update optional dependencies
     for group, dependencies in (
-        pyproject["project"].get("optional-dependencies", []).items()
+        pyproject["project"].get("optional-dependencies", {}).items()
     ):
         update_dependencies(group, dependencies, projectdir, optional=True)
     # update dependency groups
