@@ -53,6 +53,7 @@ def run_extract(args: argparse.Namespace) -> int:
                 interactive=args.interactive,
                 outdir=args.outdir,
                 password=args.password,
+                format=args.format,
             )
         except PatoolError as msg:
             log_error(f"error extracting {archive}: {msg}")
@@ -74,6 +75,7 @@ def run_list(args: argparse.Namespace) -> int:
                 verbosity=verbosity,
                 interactive=args.interactive,
                 password=args.password,
+                format=args.format,
             )
         except PatoolError as msg:
             log_error(f"error listing {archive}: {msg}")
@@ -91,6 +93,7 @@ def run_test(args: argparse.Namespace) -> int:
                 verbosity=args.verbosity,
                 interactive=args.interactive,
                 password=args.password,
+                format=args.format,
             )
         except PatoolError as msg:
             log_error(f"error testing {archive}: {msg}")
@@ -108,6 +111,7 @@ def run_create(args: argparse.Namespace) -> int:
             verbosity=args.verbosity,
             interactive=args.interactive,
             password=args.password,
+            format=args.format,
         )
     except PatoolError as msg:
         log_error(f"error creating {args.archive}: {msg}")
@@ -236,16 +240,19 @@ def create_argparser() -> argparse.ArgumentParser:
     )
     parser_extract.add_argument('--outdir', help="output directory to extract to")
     parser_extract.add_argument('--password', help="password for encrypted files")
+    parser_extract.add_argument('--format', help="archive format (e.g., 7z, tar, rar) - auto detected if not provided")
     parser_extract.add_argument('archive', nargs='+', help="an archive file")
     # list
     parser_list = subparsers.add_parser(
         'list', help='list members or one or more archives'
     )
     parser_list.add_argument('--password', help="password for encrypted files")
+    parser_list.add_argument('--format', help="archive format (e.g., 7z, tar, rar) - auto detected if not provided")
     parser_list.add_argument('archive', nargs='+', help="an archive file")
     # create
     parser_create = subparsers.add_parser('create', help='create an archive')
     parser_create.add_argument('--password', help="password to encrypt files")
+    parser_create.add_argument('--format', help="archive format (e.g., 7z, tar, rar) - auto detected if not provided")
     parser_create.add_argument(
         'archive',
         help="the archive file; the file extension determines the archive program",
@@ -258,6 +265,7 @@ def create_argparser() -> argparse.ArgumentParser:
     # test
     parser_test = subparsers.add_parser('test', help='test an archive')
     parser_test.add_argument('--password', help="password for encrypted files")
+    parser_test.add_argument('--format', help="archive format (e.g., 7z, tar, rar) - auto detected if not provided")
     parser_test.add_argument('archive', nargs='+', help='an archive file')
     # repack
     parser_repack = subparsers.add_parser(
