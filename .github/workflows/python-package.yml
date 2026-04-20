@@ -44,14 +44,19 @@ jobs:
         version: "0.11.7"
 
     - name: Set UV_PYTHON to Python ${{ matrix.python-version }}
+      if: runner.os == 'Linux'
       run: echo "UV_PYTHON=${PYTHON_VERSION}" >> $GITHUB_ENV
       env:
         PYTHON_VERSION: ${{ matrix.python-version }}
 
-    - name: Install Python ${{ matrix.python-version }}
-      run: uv python install "${PYTHON_VERSION}"
+    - name: Set UV_PYTHON to Python ${{ matrix.python-version }}
+      if: runner.os == 'Windows'
+      run: echo "UV_PYTHON=${PYTHON_VERSION}" >> $env:GITHUB_ENV
       env:
         PYTHON_VERSION: ${{ matrix.python-version }}
+
+    - name: Install Python ${{ matrix.python-version }}
+      run: uv python install
 
     - name: Create virtual Python environment
       run: uv venv
