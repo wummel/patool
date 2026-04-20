@@ -194,16 +194,7 @@ reformat: ## format the python code
 checkoutdated: checkoutdated-py checkoutdated-gh
 
 checkoutdated-py:	## Check for outdated package requirements
-# Assumes all packages in requirements have pinned versions with "==".
-# Compare the output of "uv pip list" (the current versions) with the result of "uv pip compile" (available versions).
-# Then filter only for upgrades of direct dependencies with grep.
-# When grep does not find any match, all direct dependencies are uptodate.
-# In this case, grep exits with exitcode 1. Test for this after running grep.
-	@set +e; \
-	echo "Check for outdated Python packages"; \
-	uv pip list --format=freeze |sed 's/==.*//' | uv pip compile - --color=never --quiet --no-deps --no-header --no-annotate |diff <(uv pip list --format=freeze) - --side-by-side --suppress-common-lines | \
-	grep -iE "($(shell grep == pyproject.toml  | cut -f1 -d= | tr -d "\"\' "| sed -e 's/\[.*\]//' |sort | paste -sd '|'))"; \
-	test $$? = 1
+	pcu --exclude-newer="7 days" check pyproject.toml
 
 checkoutdated-gh:	## check for outdated github projects
 # github-check-outdated is a local tool which compares a given version with the latest available github release version
@@ -225,15 +216,16 @@ upgradeoutdated-gh:
 
 .PHONY: upgradeoutdated-py
 upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
-	uv run scripts/update_pyproject_toml_deps.py pyproject.toml
+	pcu --exclude-newer="7 days" update pyproject.toml
 	uv lock --upgrade
+	$(MAKE) init
 
 
 ############ Testing ############
 
 .PHONY: test
 test: ## run tests
-	uv run pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
+	uv run --isolated -- pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
 
 # Needs https://nektosact.com/ and docker
 # Uses https://github.com/catthehacker/docker_images
