@@ -51,7 +51,7 @@ jobs:
 
     - name: Set UV_PYTHON to Python ${{ matrix.python-version }}
       if: runner.os == 'Windows'
-      run: echo "UV_PYTHON=${PYTHON_VERSION}" >> $env:GITHUB_ENV
+      run: echo "UV_PYTHON=${env:PYTHON_VERSION}" >> $env:GITHUB_ENV
       env:
         PYTHON_VERSION: ${{ matrix.python-version }}
 
