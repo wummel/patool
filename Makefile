@@ -183,7 +183,7 @@ lint: ## lint python code
 .PHONY: audit
 audit: ## run audit checks
 	zizmor --pedantic .github/workflows/python-package.yml
-	pip-audit
+	uv audit
 
 .PHONY: reformat
 reformat: ## format the python code
