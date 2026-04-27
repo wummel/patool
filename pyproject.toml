@@ -28,9 +28,9 @@ dev = [
   # plugin to run tests in random order
   "pytest-randomly==4.0.1",
   # for python code linting
-  "ruff==0.15.10",
+  "ruff==0.15.11",
   # for python type checking
-  "ty==0.0.30",
+  "ty==0.0.31",
   # for generating a Python .whl file
   "wheel==0.46.3",
   # for generating the web page
