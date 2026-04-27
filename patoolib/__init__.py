@@ -1157,6 +1157,7 @@ def extract_archive(
     program: str | None = None,
     interactive: bool = True,
     password: str | None = None,
+    format: str | None = None,
 ) -> str:
     """Extract an archive file.
 
@@ -1187,6 +1188,8 @@ def extract_archive(
          Note that the password might be written to logs that keep track of your command line
          history. If an archive program does not support passwords this option is ignored by patool.
     :type password: str or None
+    :param format: If given, use this archive format instead of auto-detection.
+    :type format: str or None
     :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
          extracting.
     :return: The directory where the archive has been extracted.
@@ -1202,6 +1205,7 @@ def extract_archive(
         outdir=outdir,
         program=program,
         password=password,
+        format=format,
     )
 
 
@@ -1211,6 +1215,7 @@ def list_archive(
     program: str | None = None,
     interactive: bool = True,
     password: str | None = None,
+    format: str | None = None,
 ) -> None:
     """List given archive.
 
@@ -1235,6 +1240,8 @@ def list_archive(
          Note that the password might be written to logs that keep track of your command line
          history. If an archive program does not support passwords this option is ignored by patool.
     :type password: str or None
+    :param format: If given, use this archive format instead of auto-detection.
+    :type format: str or None
     :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
          listing.
     :return: None
@@ -1251,6 +1258,7 @@ def list_archive(
         interactive=interactive,
         program=program,
         password=password,
+        format=format,
     )
 
 
@@ -1260,6 +1268,7 @@ def test_archive(
     program: str | None = None,
     interactive: bool = True,
     password: str | None = None,
+    format: str | None = None,
 ) -> None:
     """Test given archive.
 
@@ -1284,6 +1293,8 @@ def test_archive(
          Note that the password might be written to logs that keep track of your command line
          history. If an archive program does not support passwords this option is ignored by patool.
     :type password: str or None
+    :param format: If given, use this archive format instead of auto-detection.
+    :type format: str or None
     :raise patoolib.PatoolError: If an archive does not exist or is not a regular file, or on errors while
          testing.
     :return: None
@@ -1299,6 +1310,7 @@ def test_archive(
         interactive=interactive,
         program=program,
         password=password,
+        format=format,
     )
     if verbosity >= 0:
         log.log_info("... tested ok.")
@@ -1312,6 +1324,7 @@ def create_archive(
     program: str | None = None,
     interactive: bool = True,
     password: str | None = None,
+    format: str | None = None,
 ) -> None:
     """Create given archive with given files.
 
@@ -1339,6 +1352,8 @@ def create_archive(
          Note that the password might be written to logs that keep track of your command line
          history. If an archive program does not support passwords this option is ignored by patool.
     :type password: str or None
+    :param format: If given, use this archive format instead of auto-detection.
+    :type format: str or None
     :raise patoolib.PatoolError: on errors while creating the archive
     :return: None
     :rtype: None
@@ -1354,6 +1369,7 @@ def create_archive(
         interactive=interactive,
         program=program,
         password=password,
+        format=format,
     )
     if verbosity >= 0:
         log.log_info(f"... {archive} created.")
