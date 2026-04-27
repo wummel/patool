@@ -54,7 +54,7 @@ py.exe -m pip install patool
 You will need Python 3.12 or later.
 
 For more information, especially for installing additional tools on Windows, read the detailed
-[installation instructions](https://github.com/wummel/patool/blob/master/doc/install.md).
+[installation instructions](https://github.com/wummel/patool/blob/main/doc/install.md).
 
 
 Running

@@ -27,7 +27,7 @@ GITREPO:=$(APPNAME)
 HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
 WEBMETA:=doc/web/source/conf.py
 CHANGELOG:=doc/changelog.txt
-GIT_MAIN_BRANCH:=master
+GIT_MAIN_BRANCH:=main
 # Pytest options:
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts

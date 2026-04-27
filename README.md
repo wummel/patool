@@ -60,13 +60,13 @@ patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 Website and installation
 -------------------------
 See https://wummel.github.io/patool/ for more info and downloads.
-See [doc/install.md](https://github.com/wummel/patool/blob/master/doc/install.md) for detailed install instructions.
+See [doc/install.md](https://github.com/wummel/patool/blob/main/doc/install.md) for detailed install instructions.
 
 API
 ----
 You can use patool functions from other Python applications.
 Log output uses a Python logging handler named "patool" and
-is [configured](https://github.com/wummel/patool/blob/master/patoolib/log.py)
+is [configured](https://github.com/wummel/patool/blob/main/patoolib/log.py)
 to print output to sys.stderr.
 On errors, `PatoolError` will be raised.
 Note that extra options or customization
@@ -104,4 +104,4 @@ lists available options and commands.
 
 Development
 ------------
-See [doc/development.md](https://github.com/wummel/patool/blob/master/doc/development.md).
+See [doc/development.md](https://github.com/wummel/patool/blob/main/doc/development.md).
