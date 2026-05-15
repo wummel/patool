@@ -19,15 +19,9 @@ MAKEFLAGS += --no-builtin-rules
 VERSION:=$(shell grep "Version:" patoolib/configuration.py | cut -d '"' -f2)
 AUTHOR:=$(shell grep "MyName:" patoolib/configuration.py | cut -d '"' -f2)
 APPNAME:=$(shell grep "AppName:" patoolib/configuration.py | cut -d '"' -f2)
-ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
-ARCHIVE_WHEEL:=$(APPNAME)-$(VERSION)-py2.py3-none-any.whl
-GITRELEASETAG:=$(VERSION)
-GITUSER:=wummel
-GITREPO:=$(APPNAME)
-HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
-WEBMETA:=doc/web/source/conf.py
-CHANGELOG:=doc/changelog.txt
-GIT_MAIN_BRANCH:=main
+
+# exclude packages that are newer than this
+EXCLUDE_NEWER:="7 days"
 # Pytest options:
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts
@@ -40,6 +34,17 @@ TESTS ?= tests/
 TESTOPTS=
 # python files and directories
 PY_FILES_DIRS:=setup.py patoolib tests doc/web/source
+
+# Release configuration
+ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
+ARCHIVE_WHEEL:=$(APPNAME)-$(VERSION)-py2.py3-none-any.whl
+GITRELEASETAG:=$(VERSION)
+GITUSER:=wummel
+GITREPO:=$(APPNAME)
+HOMEPAGE:=$(HOME)/public_html/patool-webpage.git
+WEBMETA:=doc/web/source/conf.py
+CHANGELOG:=doc/changelog.txt
+GIT_MAIN_BRANCH:=main
 
 ############ Default target ############
 
@@ -194,7 +199,10 @@ reformat: ## format the python code
 checkoutdated: checkoutdated-py checkoutdated-gh
 
 checkoutdated-py:	## Check for outdated package requirements
-	pcu --exclude-newer="7 days" check pyproject.toml
+	puc \
+	  --exclude-newer $(EXCLUDE_NEWER) \
+	  --exclude-newer-package "python-update-checker=1 minute" \
+	  check pyproject.toml uv.lock
 
 checkoutdated-gh:	## check for outdated github projects
 # github-check-outdated is a local tool which compares a given version with the latest available github release version
@@ -216,7 +224,10 @@ upgradeoutdated-gh:
 
 .PHONY: upgradeoutdated-py
 upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
-	pcu --exclude-newer="7 days" update pyproject.toml
+	puc \
+	  --exclude-newer $(EXCLUDE_NEWER) \
+	  --exclude-newer-package "python-update-checker=1 minute" \
+	  update pyproject.toml
 	uv lock --upgrade
 	$(MAKE) init
 
@@ -226,12 +237,6 @@ upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
 .PHONY: test
 test: ## run tests
 	uv run --isolated -- pytest $(PYTESTOPTS) $(TESTOPTS) $(TESTS)
-
-# Needs https://nektosact.com/ and docker
-# Uses https://github.com/catthehacker/docker_images
-.PHONY: test-github
-test-github: ## run github workflow actions
-	act -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest --matrix os:ubuntu-latest
 
 .PHONY: typecheck
 typecheck:	## run the ty type checker
