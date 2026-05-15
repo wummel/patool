@@ -1,5 +1,7 @@
 4.0.5 (released xx.xx.xxxx)
-  *
+  * Expose the format option in CLI and API to bypass automatic
+    format detection, ie. "patool list archive --format 7z".
+    Thanks jpsnyder for the patch and pull request.
 
 4.0.4 (released 19.01.2026)
   * Do not propagate log messages.
