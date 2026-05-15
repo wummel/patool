@@ -7,13 +7,13 @@ dependencies = []
 dynamic = ["scripts", "authors", "keywords", "classifiers", "urls", "license", "readme", "description"]
 
 [build-system]
-requires = ["setuptools-reproducible"]
+requires = ["setuptools-reproducible>=0.1"]
 build-backend = "setuptools_reproducible"
 
 [project.optional-dependencies]
 # optional features
 argcompletion = [
-  "argcomplete==3.6.3",
+  "argcomplete>=3.6.2",
 ]
 
 # these modules are only needed for development
