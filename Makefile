@@ -228,7 +228,10 @@ upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
 	  --exclude-newer $(EXCLUDE_NEWER) \
 	  --exclude-newer-package "python-update-checker=1 minute" \
 	  update pyproject.toml
-	uv lock --upgrade
+	uv lock \
+	  --exclude-newer $(EXCLUDE_NEWER) \
+	  --exclude-newer-package "python-update-checker=1 minute" \
+	  --upgrade
 	$(MAKE) init
 
 
