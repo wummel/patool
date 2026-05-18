@@ -1,5 +1,8 @@
-4.0.5 (released xx.xx.xxxx)
-  * Expose the format option in CLI and API to bypass automatic
+4.0.5 (released 18.05.2026)
+  * [Security] Fix generation of files and directories outside
+    the given extraction directory when extracting TAR (.tar) archives
+    with the Python tarfile module for Python < 3.12.
+  * [Feature] Expose the format option in CLI and API to bypass automatic
     format detection, ie. "patool list archive --format 7z".
     Thanks jpsnyder for the patch and pull request.
 

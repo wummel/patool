@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the tarfile Python module."""
 
-from .. import util
+from .. import util, fileutil
 import os
 import sys
 import tarfile
@@ -46,14 +46,6 @@ def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     return
 
 
-def is_within_directory(directory, target):
-    """Check that given target path is a subdirectory inside the directory."""
-    abs_directory = os.path.abspath(directory)
-    abs_target = os.path.abspath(target)
-    prefix = os.path.commonprefix([abs_directory, abs_target])
-    return prefix == abs_directory
-
-
 def safe_extract(tfile, path):
     """Helper function to ensure that TAR members will be extracted inside
     the given path.
@@ -63,7 +55,7 @@ def safe_extract(tfile, path):
     bad_members = []
     for member in tfile.getmembers():
         member_path = os.path.join(path, member.name)
-        if is_within_directory(path, member_path):
+        if fileutil.is_within_directory(path, member_path):
             safe_members.append(member)
         else:
             bad_members.append(member)

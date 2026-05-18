@@ -198,3 +198,13 @@ def make_user_readable(directory: str) -> None:
             make_file_readable(os.path.join(root, filename))
         for dirname in dirs:
             make_dir_readable(os.path.join(root, dirname))
+
+
+def is_within_directory(directory, target):
+    """Check that given target path is a subdirectory inside the directory."""
+    abs_directory = os.path.realpath(os.path.abspath(directory))
+    abs_target = os.path.realpath(os.path.abspath(target))
+    try:
+        return os.path.commonpath([abs_directory, abs_target]) == abs_directory
+    except ValueError:
+        return False

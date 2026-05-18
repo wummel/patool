@@ -63,3 +63,12 @@ class UtilTest(unittest.TestCase):
             f.write("42")
         fileutil.rmtree(existing_dir)
         self.assertFalse(os.path.exists(existing_dir))
+
+    def test_is_within_directory(self):
+        """Test is_within_directory()"""
+        curdir = os.getcwd()
+        dest = os.path.join(curdir, "outputdir")
+        member = os.path.join("outputdir2", "test.txt")
+        self.assertFalse(fileutil.is_within_directory(dest, member))
+        member = os.path.join("outputdir", "test.txt")
+        self.assertTrue(fileutil.is_within_directory(dest, member))
