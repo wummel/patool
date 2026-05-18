@@ -30,7 +30,7 @@ dev = [
   # for python code linting
   "ruff==0.15.12",
   # for python type checking
-  "ty==0.0.34",
+  "ty==0.0.35",
   # for generating a Python .whl file
   "wheel==0.47.0",
   # for generating the web page
