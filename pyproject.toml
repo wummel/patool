@@ -28,18 +28,18 @@ dev = [
   # plugin to run tests in random order
   "pytest-randomly==4.1.0",
   # for python code linting
-  "ruff==0.15.12",
+  "ruff==0.15.16",
   # for python type checking
-  "ty==0.0.35",
+  "ty==0.0.44",
   # for generating a Python .whl file
   "wheel==0.47.0",
   # for generating the web page
   "sphinx==9.1.0",
-  "myst-parser==5.0.0",
+  "myst-parser==5.1.0",
   # for upgrading the version number
   "bump2version==1.0.1",
   # for auditing github actions
-  "zizmor==1.24.1",
+  "zizmor==1.25.2",
   # check for new packages
   "python-update-checker==0.6",
   # test optional functionality
