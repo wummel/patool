@@ -204,19 +204,27 @@ checkoutdated-py:	## Check for outdated package requirements
 	  --exclude-newer-package "python-update-checker=1 minute" \
 	  check pyproject.toml uv.lock
 
-checkoutdated-gh:	## check for outdated github projects
+checkoutdated-gh: checkratelimit-gh	## check for outdated github projects
 # github-check-outdated is a local tool which compares a given version with the latest available github release version
 # see https://gist.github.com/wummel/ef14989766009effa4e262b01096fc8c for an example implementation
 	@echo "Check for outdated Github tools"
 	github-check-outdated astral-sh uv "$(shell uv --version | cut -f2 -d" ")"
 	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v3\.14\.[0-9]+$$'
 
+.PHONY: checkratelimit-gh
+checkratelimit-gh: ## test for rate limiting
+	(
+		set +e
+		github-check-outdated astral-sh uv 0
+	    [ "$$?" == 2 ] && exit 1
+	)
+
 
 .PHONY: upgradeoutdated
 upgradeoutdated:	upgradeoutdated-gh upgradeoutdated-py
 
 .PHONY: upgradeoutdated-gh
-upgradeoutdated-gh:
+upgradeoutdated-gh:	checkratelimit-gh ## upgrade github project versions
 	sed -i -e 's/uv_version_dev = ".*"/uv_version_dev = "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' pyproject.toml
 	sed -i -e 's/ version: ".*"/ version: "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' .github/workflows/python-package.yml
 	sed -i -e 's/python_version_dev = ".*"/python_version_dev = "$(shell github-check-outdated python cpython 0 '^v3\.14\.[0-9]+$$' | cut -f4 -d" " | cut -b2-)"/' pyproject.toml
