@@ -212,11 +212,11 @@ checkoutdated-gh: checkratelimit-gh	## check for outdated github projects
 	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v3\.14\.[0-9]+$$'
 
 .PHONY: checkratelimit-gh
-checkratelimit-gh: ## test for rate limiting
+checkratelimit-gh: ## check for rate limiting
 	(
 		set +e
-		github-check-outdated astral-sh uv 0
-	    [ "$$?" == 2 ] && exit 1
+		github-check-outdated --check astral-sh uv 0
+		if [ "$$?" == 2 ]; then exit 1; fi
 	)
 
 
