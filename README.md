@@ -19,12 +19,13 @@ LZIP (.lz), LZMA (.lzma), LZOP (.lzo), RPM (.rpm), RAR (.rar, .cbr),
 RZIP (.rz), SHN (.shn), TAR (.tar, .cbt), UDF (.udf), XZ (.xz),
 ZIP (.zip, .jar, .cbz), ZOO (.zoo) and ZSTANDARD (.zst) archive formats.
 
-It relies on helper applications to handle those archive formats
-(for example `xz` for XZ (.xz) archives).
-
-The archive formats TAR, ZIP, BZIP2, LZMA and GZIP are supported natively
-and do not require helper applications to be installed.
+The archive formats TAR, ZIP, BZIP2, LZMA and GZIP are supported natively.
 When using Python >= 3.14 the ZSTANDARD archive format is also supported natively.
+
+Other formats require archive programs as helper applications to handle those
+formats (for example `xz` for XZ (.xz) archives).
+The installation instructions (see below) list suggested archive programs. 
+
 
 Examples
 ---------
@@ -57,10 +58,16 @@ patool search "def urlopen" python-3.3.tar.gz
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 ```
 
-Website and installation
--------------------------
+
+Website
+--------
 See https://wummel.github.io/patool/ for more info and downloads.
-See [doc/install.md](https://github.com/wummel/patool/blob/main/doc/install.md) for detailed install instructions.
+
+
+Installation and archive programs
+-------------------------------------
+See [doc/install.md](https://github.com/wummel/patool/blob/main/doc/install.md) for detailed install instructions and a list of suggested archive programs.
+
 
 API
 ----
@@ -86,10 +93,11 @@ patoolib.is_archive("package.deb")
 
 See https://wummel.github.io/patool/ for detailed API documentation.
 
+
 Test suite
 -----------
-Patool has [extensive unit tests](https://github.com/wummel/patool/tree/master/tests) to ensure the code quality.
-The tests are run on each code push by a github runner.
+Patool has [extensive unit tests](https://github.com/wummel/patool/tree/master/tests) to ensure code quality.
+The tests are run on each code push on different platforms and python versions.
 
 
 Bash completion

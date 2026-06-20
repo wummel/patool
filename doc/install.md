@@ -10,27 +10,23 @@ Now install the application.
 
 1. Installation with pip
 
-   If you have pip installed: ``pip install patool``
+   If you have pip installed, run ``pip install patool``.
+   To install pip, run ``python -m ensurepip``.
 
-2. Installation from source
+2. Installation on Linux
 
-   a) Installation as root
+   Several Linux distributions have packaged patool, for example
+   [Debian](https://packages.debian.org/patool),
+   [Arch](https://aur.archlinux.org/packages/patool) or
+   [Fedora](https://packages.fedoraproject.org/pkgs/patool/patool/).
 
-      Run ``sudo python setup.py install`` to install patool.
+   Look at the installation instructions for the patool package of
+   your distribution.
+   But you can also use the pip installation above.
 
-   b) Installation as a normal user
+3. Installation on Windows
 
-      Run ``python setup.py install --home $HOME``. Note that you have
-      to adjust your PATH and PYTHONPATH environment variables, e.g. by
-      adding the commands ``export PYTHONPATH=$HOME/lib/python`` and
-      ``export PATH=$PATH:$HOME/bin`` to your shell configuration
-      file.
-
-      For more information look at the
-      [Modifying Python's search path](http://docs.python.org/inst/search-path.html#SECTION000410000000000000000)
-      documentation.
-
-3. Optional: install cygwin file, grep and diff packages on Windows
+   See installation with pip above.
 
    On Windows systems, the archive type is only detectable through file extensions.
    To be able to detect archives with missing or non-standard file extensions,
@@ -43,9 +39,31 @@ Now install the application.
 
    b) Run `setup-x86_64.exe -q -p file,grep,diff`
 
-   c) Add the `c:\cygwin64\bin` directory to your PATH
+   c) Add `c:\cygwin64\bin` directory to your PATH
+
+4. Installation in MacOS
+
+   See installation with pip above.
+   There is not yet a homebrew formula for patool that I know of.
 
 
-After installation
-------------------
-Patool is now installed. Have fun!
+Suggested archive programs
+---------------------------
+
+Installing the following programs lets patool support a wide variety
+of archive formats.
+
+[7-zip](https://www.7-zip.org/) supports a lot of formats, installing
+it is often sufficient for most users.
+
+[Peazip](https://peazip.github.io/) also supports a lot of
+archive formats.
+
+To handle RAR files install either peazip or the
+[7zip-rar](https://packages.debian.org/trixie/7zip-rar) package.
+
+For more unusual formats (eg. bzip3) see the ArchivePrograms configuration
+at
+[patoolib/__init__.py](https://github.com/wummel/patool/blob/3255e723f2bb88f8d4ee43d384b4a05131664991/patoolib/__init__.py#L164).
+For each archive format the programs that support extracting,
+listing or creating archive files are listed.
