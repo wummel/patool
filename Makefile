@@ -213,9 +213,9 @@ checkoutdated-gh: checkratelimit-gh	## check for outdated github projects
 
 .PHONY: checkratelimit-gh
 checkratelimit-gh: ## check for rate limiting
-	(
+	@(
 		set +e
-		github-check-outdated --check astral-sh uv 0
+		github-check-outdated --check astral-sh uv 0 >/dev/null
 		if [ "$$?" == 2 ]; then exit 1; fi
 	)
 
@@ -235,13 +235,8 @@ upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
 	puc \
 	  --exclude-newer $(EXCLUDE_NEWER) \
 	  --exclude-newer-package "python-update-checker=1 minute" \
-	  update pyproject.toml
-	uv lock \
-	  --exclude-newer $(EXCLUDE_NEWER) \
-	  --exclude-newer-package "python-update-checker=1 minute" \
-	  --upgrade
+	  update pyproject.toml uv.lock
 	$(MAKE) init
-
 
 ############ Testing ############
 
