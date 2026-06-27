@@ -22,15 +22,15 @@ dev = [
   # for using setuptools.setup() in setup.py
   "setuptools==82.0.1",
   # for testing
-  "pytest==9.0.3",
+  "pytest==9.1.1",
   # plugin to run tests in parallel
   "pytest-xdist[psutil]==3.8.0",
   # plugin to run tests in random order
   "pytest-randomly==4.1.0",
   # for python code linting
-  "ruff==0.15.17",
+  "ruff==0.15.18",
   # for python type checking
-  "ty==0.0.49",
+  "ty==0.0.51",
   # for generating a Python .whl file
   "wheel==0.47.0",
   # for generating the web page
@@ -49,7 +49,7 @@ dev = [
 [tool.patool]
 # pin versions of Python and uv for development
 python_version_dev = "3.14.6"
-uv_version_dev = "0.11.21"
+uv_version_dev = "0.11.25"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
