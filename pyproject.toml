@@ -20,7 +20,7 @@ argcompletion = [
 [dependency-groups]
 dev = [
   # for using setuptools.setup() in setup.py
-  "setuptools==82.0.1",
+  "setuptools==83.0.0",
   # for testing
   "pytest==9.1.1",
   # plugin to run tests in parallel
