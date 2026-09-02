@@ -15,6 +15,10 @@ __pycache__
 /patool.egg-info/
 # configuration for direnv(1)
 /.envrc
+# todo files
+/todo.txt
+/done.txt
+/report.txt
 
 # local development files
 /bin
