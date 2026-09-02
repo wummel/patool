@@ -108,12 +108,17 @@ def shell_quote_unix(value: str) -> str:
 
 
 def shell_quote_nt(value: str) -> str:
-    """Quote argument for Windows system. Modeled after distutils
-    _nt_quote_args() function.
-    """
-    if " " in value:
-        return f'"{value}"'
-    return value
+    """Quote argument for Windows systems."""
+    quoted_value = value
+    # meta characters for windows systems
+    nt_meta_chars = '^:&|<>()"!'
+    # quote all meta characters with ^
+    for c in nt_meta_chars:
+        quoted_value = quoted_value.replace(c, f"^{c}")
+    # quote percent with percent
+    quoted_value = quoted_value.replace('%', '%%')
+    # finally wrap in double quotes
+    return f'"{quoted_value}"'
 
 
 def p7zip_supports_rar(program: str) -> bool:

@@ -8,6 +8,7 @@
     of running patool and how to report vulnerabilities.
     Closes: GH bug #191
     Closes: GH bug #194
+  * [Security] Fix quoting of shell arguments on Windows systems 
 
 4.0.5 (released 18.05.2026)
   * [Security] Fix generation of files and directories outside

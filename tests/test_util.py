@@ -32,9 +32,16 @@ class UtilTest(unittest.TestCase):
         except Exception as exc:
             log.log_internal_error(exc)
 
-    def test_quote(self):
+    def test_quote_unix(self):
         """Test util.shell_quote_unix()"""
         self.assertEqual(util.shell_quote_unix("a b"), "'a b'")
+
+    def test_quote_nt(self):
+        """Test util.shell_quote_nt()"""
+        self.assertEqual(util.shell_quote_nt("a b"), '"a b"')
+        for c in ':&|<>()^"!':
+            self.assertEqual(util.shell_quote_nt(f"a{c}{c} b"), f'"a^{c}^{c} b"')
+        self.assertEqual(util.shell_quote_nt("a%USER%b"), '"a%%USER%%b"')
 
     def test_strlist_with_or(self):
         """Test util.strlist()"""
