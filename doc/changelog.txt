@@ -4,6 +4,9 @@
     Closes: GH bug #195
   * [Docs] Document dependencies in doc/install.md.
     Closes: GH bug #192
+  * [Security] Added SECURITY.md documenting the security implications
+    of running patool and how to report vulnerabilities.
+    Closes: GH bug #191
 
 4.0.5 (released 18.05.2026)
   * [Security] Fix generation of files and directories outside
