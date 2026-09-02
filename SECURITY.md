@@ -4,7 +4,7 @@
 patool is essentially a convenience wrapper script and calls other archive
 programs to handle archive files.
 
-Due to the design of those archive programs, patool might do the following:
+Due to the design of those archive programs, consider the following points:
 
 1. patool might extract files outside the current or given
    extraction directory. It does its best to avoid this, eg. by
@@ -15,13 +15,17 @@ Due to the design of those archive programs, patool might do the following:
 2. Archive programs that are called from patool might have
    vulnerabilities. These are outside the scope of patool.
 
-These are not considered vulnerabilities in patool. If you think
-patool's behaviour in these areas can be hardened or improved,
-please file an issue for a new feature.
+3. Patool uses the file(1) program to determine the archive file type.
+   In order to detect compressed archives (ie. `tar.bz2`), file(1)
+   must uncompress the archive files which only works when disabling
+   the file(1) sandboxing with `--no-sandbox`.
 
 If you handle untrusted archives with patool and want reduce the
-risk of the above points, you should use a hardened and sandboxed
-environment.
+risk of the above points, consider running patool inside a
+hardened and/or sandboxed environment.
+
+If you think patool's behaviour in these areas can be hardened
+or improved, please file an issue for a new feature.
 
 ## Reporting a vulnerability
 

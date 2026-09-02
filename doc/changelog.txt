@@ -7,6 +7,7 @@
   * [Security] Added SECURITY.md documenting the security implications
     of running patool and how to report vulnerabilities.
     Closes: GH bug #191
+    Closes: GH bug #194
 
 4.0.5 (released 18.05.2026)
   * [Security] Fix generation of files and directories outside
