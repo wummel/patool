@@ -182,8 +182,15 @@ checkchangelog: ## check changelog before release
 ############ Linting and syntax checks ############
 
 .PHONY: lint
-lint: ## lint python code
+lint: lint-py lint-md ## run various linters
+
+.PHONY: lint-py
+lint-py:	## lint python files
 	ruff check $(PY_FILES_DIRS)
+
+.PHONY: lint-md
+lint-md:	## lint markdown files
+	rumdl check *.md doc/*.md
 
 .PHONY: audit
 audit: ## run audit checks
@@ -194,14 +201,16 @@ audit: ## run audit checks
 reformat: ## format the python code
 	ruff check --fix $(PY_FILES_DIRS)
 	ruff format $(PY_FILES_DIRS)
+	shfmt -w scripts/
+	tombi format pyproject.toml
 
 .PHONY: checkoutdated checkoutdated-py checkoutdated-gh
-checkoutdated: checkoutdated-py checkoutdated-gh
+checkoutdated: checkoutdated-gh checkoutdated-py
 
 checkoutdated-py:	## Check for outdated package requirements
 	puc \
 	  --exclude-newer $(EXCLUDE_NEWER) \
-	  --exclude-newer-package "python-update-checker=1 minute" \
+	  --constraint constraints.txt \
 	  check pyproject.toml uv.lock
 
 checkoutdated-gh: checkratelimit-gh	## check for outdated github projects
@@ -234,7 +243,6 @@ upgradeoutdated-gh:	checkratelimit-gh ## upgrade github project versions
 upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
 	puc \
 	  --exclude-newer $(EXCLUDE_NEWER) \
-	  --exclude-newer-package "python-update-checker=1 minute" \
 	  update pyproject.toml uv.lock
 	$(MAKE) init
 
