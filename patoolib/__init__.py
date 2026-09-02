@@ -388,7 +388,10 @@ ArchivePrograms: dict[str, dict[str | None, tuple[str, ...]]] = {
         'extract': ('unar',),
     },
     'zpaq': {
-        None: ('zpaq',),
+        None: (
+            'zpaqfranz',
+            'zpaq',
+        ),
     },
     "zstd": {
         None: ("zstd",),

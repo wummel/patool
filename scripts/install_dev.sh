@@ -63,7 +63,7 @@ install_package shfmt
 for pkg in arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip \
            cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress \
            nomarch pbzip2 7zip 7zip-standalone 7zip-rar rpm2cpio unzip unace unalz \
-           unar sharutils tar xdms zip zopfli zstd; do
+           unar sharutils tar xdms zip zopfli zpaq zpaqfranz zstd; do
   install_package "$pkg"
 done
 
