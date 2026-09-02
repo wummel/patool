@@ -4,11 +4,7 @@ version = "4.0.5"
 requires-python = ">=3.12"
 dependencies = []
 # these values are set by setup.py
-dynamic = ["scripts", "authors", "keywords", "classifiers", "urls", "license", "readme", "description"]
-
-[build-system]
-requires = ["setuptools-reproducible>=0.1"]
-build-backend = "setuptools_reproducible"
+dynamic = ["authors", "classifiers", "description", "keywords", "license", "readme", "scripts", "urls"]
 
 [project.optional-dependencies]
 # optional features
@@ -19,37 +15,45 @@ argcompletion = [
 # these modules are only needed for development
 [dependency-groups]
 dev = [
-  # for using setuptools.setup() in setup.py
-  "setuptools==82.0.1",
-  # for testing
-  "pytest==9.1.1",
-  # plugin to run tests in parallel
-  "pytest-xdist[psutil]==3.8.0",
-  # plugin to run tests in random order
-  "pytest-randomly==4.1.0",
-  # for python code linting
-  "ruff==0.15.18",
-  # for python type checking
-  "ty==0.0.51",
-  # for generating a Python .whl file
-  "wheel==0.47.0",
-  # for generating the web page
-  "sphinx==9.1.0",
-  "myst-parser==5.1.0",
   # for upgrading the version number
   "bump2version==1.0.1",
-  # for auditing github actions
-  "zizmor==1.25.2",
-  # check for new packages
-  "python-update-checker==0.6",
+  "myst-parser==5.1.0",
   # test optional functionality
   "patool[argcompletion]",
+  # for testing
+  "pytest==9.1.1",
+  # plugin to run tests in random order
+  "pytest-randomly==4.1.0",
+  # plugin to run tests in parallel
+  "pytest-xdist[psutil]==3.8.0",
+  # check for new packages
+  "python-update-checker==0.6",
+  # for python code linting
+  "ruff==0.16.4",
+  # Markdown style checking and formatting
+  "rumdl==0.2.58",
+  # for using setuptools.setup() in setup.py
+  "setuptools==84.0.0",
+  # for generating the web page
+  "sphinx==9.1.0",
+  # reformat toml files
+  "tombi==1.4.1",
+  # for python type checking
+  "ty==0.0.74",
+  # for generating a Python .whl file
+  "wheel==0.48.0",
+  # for auditing github actions
+  "zizmor==1.29.0",
 ]
+
+[build-system]
+requires = ["setuptools-reproducible>=0.1"]
+build-backend = "setuptools_reproducible"
 
 [tool.patool]
 # pin versions of Python and uv for development
-python_version_dev = "3.14.6"
-uv_version_dev = "0.11.25"
+python_version_dev = "3.14.7"
+uv_version_dev = "0.12.9"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows

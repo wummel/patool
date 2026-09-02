@@ -36,15 +36,14 @@ DOWNLOAD_URL_UV=https://github.com/astral-sh/uv/releases/download/${UV_VER}/uv-x
 CURL_OPTS=("--location" "--silent" "--show-error" "--retry" "2" "--fail" "--tlsv1.2" "--proto" "=https")
 REINSTALL_PYTHON=0
 
-
 #### helper functions
 
 # Install a debian package
 install_package() {
   local pkg=$1
-  if ! dpkg --status "${pkg}" >/dev/null 2>&1; then
+  if ! dpkg --status "${pkg}" > /dev/null 2>&1; then
     echo "Installing ${pkg}"
-    sudo apt-get install "${pkg}"
+    sudo apt-get install --assume-yes "${pkg}"
   fi
 }
 
@@ -58,11 +57,13 @@ install_package curl
 install_package direnv
 # lint shell
 install_package shellcheck
+# for formatting shell scripts (used by make reformat)
+install_package shfmt
 # install archive handling packages for running tests locally
 for pkg in arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip \
            cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress \
            nomarch pbzip2 7zip 7zip-standalone 7zip-rar rpm2cpio unzip unace unalz \
-           unar sharutils tar xdms zip zopfli zstd; do \
+           unar sharutils tar xdms zip zopfli zstd; do
   install_package "$pkg"
 done
 
@@ -75,16 +76,22 @@ if [ ! -d bin ]; then
 fi
 if [ ! -f bin/uv ]; then
     echo "Install uv ${UV_VER} from ${DOWNLOAD_URL_UV}"
-    (cd bin; curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
+    (
+     cd bin
+             curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1
+  )
 elif [ "$(bin/uv --version | cut -d" " -f2)" != "${UV_VER}" ]; then
     echo "Updating $(bin/uv --version) to ${UV_VER} from ${DOWNLOAD_URL_UV}"
-    (cd bin; curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1)
+    (
+     cd bin
+             curl "${CURL_OPTS[@]}" "${DOWNLOAD_URL_UV}" | tar xzv --strip-components 1
+  )
     # new uv versions might use new versions from python-build-standalone
     REINSTALL_PYTHON=1
 fi
 
 # add local development environment for direnv
-if ! declare -F _direnv_hook >/dev/null; then
+if ! declare -F _direnv_hook > /dev/null; then
     eval "$(direnv hook bash)"
 fi
 if [ ! -f .envrc ]; then
@@ -92,7 +99,7 @@ if [ ! -f .envrc ]; then
     echo "# to find local tools"
     echo "export PATH=${PROJECTDIR}/bin\${PATH:+:\$PATH}"
     echo "export PATH=${PROJECTDIR}/.venv/bin\${PATH:+:\$PATH}"
-    ) > .envrc
+  )   > .envrc
     direnv allow .
     source .envrc
 fi
@@ -102,7 +109,7 @@ if [ ! -f .python-version ]; then
   echo "Generating $PROJECTDIR/.python-version"
   echo "${PY_VER}" > .python-version
 else
-  PROJ_PY_VER=$(<.python-version)
+  PROJ_PY_VER=$(< .python-version)
   if [ ".$PROJ_PY_VER" != ".$PY_VER" ]; then
     echo "Updating $PROJECTDIR/.python-version (${PROJ_PY_VER} -> ${PY_VER})"
     echo "${PY_VER}" >| .python-version
