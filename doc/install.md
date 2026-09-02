@@ -1,17 +1,15 @@
-Installation
-============
+# Installation
 
 First, install the required software.
 
-1. Python >= 3.12 from https://www.python.org/
-
+1. Python >= 3.12 from [https://www.python.org/]
 
 Now install the application.
 
 1. Installation with pip
 
-   If you have pip installed, run ``pip install patool``.
-   To install pip, run ``python -m ensurepip``.
+   If you have pip installed, run `pip install patool`.
+   To install pip, run `python -m ensurepip`.
 
 2. Installation on Linux
 
@@ -46,9 +44,7 @@ Now install the application.
    See installation with pip above.
    There is not yet a homebrew formula for patool that I know of.
 
-
-Suggested archive programs
----------------------------
+## Suggested archive programs
 
 Installing the following programs lets patool support a wide variety
 of archive formats.

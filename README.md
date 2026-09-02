@@ -1,5 +1,4 @@
-Patool
-=======
+# Patool
 
 Patool is a portable archive file manager for the command line.
 
@@ -24,12 +23,11 @@ When using Python >= 3.14 the ZSTANDARD archive format is also supported nativel
 
 Other formats require archive programs as helper applications to handle those
 formats (for example `xz` for XZ (.xz) archives).
-The installation instructions (see below) list suggested archive programs. 
+The installation instructions (see below) list suggested archive programs.
 
+## Examples
 
-Examples
----------
-```
+```bash
 # Extract several archives with different formats
 patool extract archive.zip otherarchive.rar
 
@@ -58,19 +56,17 @@ patool search "def urlopen" python-3.3.tar.gz
 patool repack linux-2.6.33.tar.gz linux-2.6.33.tar.bz2
 ```
 
+## Website
 
-Website
---------
-See https://wummel.github.io/patool/ for more info and downloads.
+See [https://wummel.github.io/patool/] for more info and downloads.
 
+## Installation and archive programs
 
-Installation and archive programs
--------------------------------------
-See [doc/install.md](https://github.com/wummel/patool/blob/main/doc/install.md) for detailed install instructions and a list of suggested archive programs.
+See [doc/install.md](https://github.com/wummel/patool/blob/main/doc/install.md)
+for detailed install instructions and a list of suggested archive programs.
 
+## API
 
-API
-----
 You can use patool functions from other Python applications.
 Log output uses a Python logging handler named "patool" and
 is [configured](https://github.com/wummel/patool/blob/main/patoolib/log.py)
@@ -79,7 +75,7 @@ On errors, `PatoolError` will be raised.
 Note that extra options or customization
 for specific archive programs are not supported.
 
-```
+```python
 import patoolib
 patoolib.extract_archive("archive.zip", outdir="/tmp")
 patoolib.test_archive("dist.tar.gz", verbosity=1)
@@ -91,17 +87,15 @@ patoolib.repack_archive("linux-2.6.33.tar.gz", "linux-2.6.33.tar.bz2")
 patoolib.is_archive("package.deb")
 ```
 
-See https://wummel.github.io/patool/ for detailed API documentation.
+See [https://wummel.github.io/patool/] for detailed API documentation.
 
+## Test suite
 
-Test suite
------------
 Patool has [extensive unit tests](https://github.com/wummel/patool/tree/master/tests) to ensure code quality.
 The tests are run on each code push on different platforms and python versions.
 
+## Bash completion
 
-Bash completion
-----------------
 Install the argcomplete python package eg. on Debian/Ubuntu with
 `apt-get install python3-argcomplete`,
 then run
@@ -109,7 +103,6 @@ then run
 After that typing `patool`, a `<SPACE>` and then `<TAB>`
 lists available options and commands.
 
+## Development
 
-Development
-------------
 See [doc/development.md](https://github.com/wummel/patool/blob/main/doc/development.md).
