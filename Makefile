@@ -34,6 +34,8 @@ TESTS ?= tests/
 TESTOPTS=
 # python files and directories
 PY_FILES_DIRS:=setup.py patoolib tests doc/web/source
+# python files and directories
+SH_FILES_DIRS:=scripts/*.sh
 
 # Release configuration
 ARCHIVE_SOURCE:=$(APPNAME)-$(VERSION).tar.gz
@@ -182,7 +184,7 @@ checkchangelog: ## check changelog before release
 ############ Linting and syntax checks ############
 
 .PHONY: lint
-lint: lint-py lint-md ## run various linters
+lint: lint-py lint-md lint-sh ## run various linters
 
 .PHONY: lint-py
 lint-py:	## lint python files
@@ -191,6 +193,10 @@ lint-py:	## lint python files
 .PHONY: lint-md
 lint-md:	## lint markdown files
 	rumdl check *.md doc/*.md
+
+.PHONY: lint-sh
+lint-sh:        ## lint shell scripts
+	shellcheck -x $(SH_FILES_DIRS)
 
 .PHONY: audit
 audit: ## run audit checks
