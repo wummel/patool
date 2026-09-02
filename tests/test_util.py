@@ -29,8 +29,8 @@ class UtilTest(unittest.TestCase):
         log.log_error(msg)
         try:
             raise Exception(msg)
-        except Exception:
-            log.log_internal_error()
+        except Exception as exc:
+            log.log_internal_error(exc)
 
     def test_quote(self):
         """Test util.shell_quote_unix()"""

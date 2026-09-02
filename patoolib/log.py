@@ -78,14 +78,14 @@ def log_info(msg) -> None:
 EnvKeys = ("LANGUAGE", "LC_ALL", "LC_CTYPE", "LANG")
 
 
-def log_internal_error() -> None:
+def log_internal_error(exception) -> None:
     """Print internal error message."""
     now = time.localtime()
     env = os.linesep.join(
         [f"{key}={os.getenv(key)!r}" for key in EnvKeys if os.getenv(key) is not None]
     )
     if logger is not None:
-        logger.exception(
+        logger.error(
             encode_safe(
                 f"""********** Oops, I did it again. *************
 
@@ -107,7 +107,8 @@ Environment:
 {env}
 ******** {configuration.AppName} internal error, over and out ********
 """
-            )
+            ),
+            exc_info=exception,
         )
 
 

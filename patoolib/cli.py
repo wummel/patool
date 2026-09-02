@@ -325,8 +325,8 @@ def main(args=None) -> int:
     except KeyboardInterrupt:
         log_error("aborted")
         res = 1
-    except Exception:
-        log_internal_error()
+    except Exception as exc:
+        log_internal_error(exc)
         res = 2
     return res
 
