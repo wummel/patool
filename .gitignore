@@ -17,6 +17,7 @@ __pycache__
 /.envrc
 # todo files
 /todo.txt
+/todo.txt.bak
 /done.txt
 /report.txt
 
