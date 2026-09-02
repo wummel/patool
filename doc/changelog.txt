@@ -1,3 +1,6 @@
+4.0.6 (released xx.xx.xxxx)
+  *
+
 4.0.5 (released 18.05.2026)
   * [Security] Fix generation of files and directories outside
     the given extraction directory when extracting TAR (.tar) archives
