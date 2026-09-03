@@ -1,3 +1,6 @@
+4.0.7 (released xx.xx.xxxx)
+  *
+
 4.0.6 (released 03.09.2026)
   * [Feature] Added zpaqfranz as preferred archive program to handle
     ZPAQ (.zpaq) archives.
