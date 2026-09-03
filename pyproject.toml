@@ -17,6 +17,7 @@ argcompletion = [
 dev = [
   # for upgrading the version number
   "bump2version==1.0.1",
+  # Sphinx plugin for markdown parsing
   "myst-parser==5.1.0",
   # test optional functionality
   "patool[argcompletion]",
@@ -27,11 +28,11 @@ dev = [
   # plugin to run tests in parallel
   "pytest-xdist[psutil]==3.8.0",
   # check for new packages
-  "python-update-checker==0.6",
+  "python-update-checker==0.7",
   # for python code linting
   "ruff==0.16.4",
   # Markdown style checking and formatting
-  "rumdl==0.2.58",
+  "rumdl==0.2.62",
   # for using setuptools.setup() in setup.py
   "setuptools==84.0.0",
   # for generating the web page
@@ -39,7 +40,7 @@ dev = [
   # reformat toml files
   "tombi==1.4.1",
   # for python type checking
-  "ty==0.0.74",
+  "ty==0.0.75",
   # for generating a Python .whl file
   "wheel==0.48.0",
   # for auditing github actions
@@ -50,7 +51,7 @@ dev = [
 requires = ["setuptools-reproducible>=0.1"]
 build-backend = "setuptools_reproducible"
 
-[tool.patool]
+[tool.project]
 # pin versions of Python and uv for development
 python_version_dev = "3.14.7"
 uv_version_dev = "0.12.9"
