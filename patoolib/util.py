@@ -111,7 +111,7 @@ def shell_quote_nt(value: str) -> str:
     """Quote argument for Windows systems."""
     quoted_value = value
     # meta characters for windows systems
-    nt_meta_chars = '^:&|<>()"!'
+    nt_meta_chars = '^&|<>()"!'
     # quote all meta characters with ^
     for c in nt_meta_chars:
         quoted_value = quoted_value.replace(c, f"^{c}")
