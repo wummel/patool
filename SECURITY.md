@@ -20,7 +20,7 @@ Due to the design of those archive programs, consider the following points:
    must uncompress the archive files which only works when disabling
    the file(1) sandboxing with `--no-sandbox`.
 
-If you handle untrusted archives with patool and want reduce the
+If you handle untrusted archives with patool and want to reduce the
 risk of the above points, consider running patool inside a
 hardened and/or sandboxed environment.
 
