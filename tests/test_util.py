@@ -39,8 +39,10 @@ class UtilTest(unittest.TestCase):
     def test_quote_nt(self):
         """Test util.shell_quote_nt()"""
         self.assertEqual(util.shell_quote_nt("a b"), '"a b"')
-        for c in '&|<>()^"!':
-            self.assertEqual(util.shell_quote_nt(f"a{c}{c} b"), f'"a^{c}^{c} b"')
+        for c in '&()^!':
+            self.assertEqual(util.shell_quote_nt(f"a{c}{c} b"), f'"a{c}{c} b"')
+        for c in '"<>|?*\n':
+            self.assertRaises(ValueError, util.shell_quote_nt, c)
         self.assertEqual(util.shell_quote_nt("a%USER%b"), '"a%%USER%%b"')
 
     def test_strlist_with_or(self):

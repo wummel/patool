@@ -28,11 +28,11 @@ class ShellQuotingTest(unittest.TestCase):
     def test_shell_quoting(self):
         """Extract files with special characters in the filename."""
         basename = "test_"
-        for c in "&|<>()^\"`'\n\t!%;$\\":
+        for c in "&()^`'\t!%;$\\":
             self._extract(basename + c)
 
     def _extract(self, filename):
-        """Run cli function to extract a 7Z archive."""
+        """Run cli function to extract a gzip archive."""
         tmpdir_in = fileutil.tmpdir(dir=basedir)
         tmpdir_out = fileutil.tmpdir(dir=basedir)
         try:

@@ -51,10 +51,8 @@ def run(
     """Run command without error checking.
     @return: command return code
     """
-    # Note that shell_quote_nt() result is not suitable for copy-paste
-    # (especially on Unix systems), but it looks nicer than shell_quote().
     if verbosity >= 0:
-        info = " ".join(map(shell_quote_nt, cmd))
+        info = " ".join(map(repr, cmd))
         log_info(f"running {info}")
     if run_under_pythonw():
         # prevent opening of additional consoles when running with pythonw.exe
@@ -72,7 +70,7 @@ def run(
         kwargs['stderr'] = subprocess.DEVNULL
     if kwargs:
         if verbosity > 0:
-            info = ", ".join(f"{k}={shell_quote(str(v))}" for k, v in kwargs.items())
+            info = ", ".join(f"{k}={v!r}" for k, v in kwargs.items())
             log_info(f"    with {info}")
         if kwargs.get("shell"):
             # for shell calls the command must be a string
@@ -102,20 +100,21 @@ def shell_quote(value: str) -> str:
 
 
 def shell_quote_unix(value: str) -> str:
-    """Quote argument for Unix system."""
+    """Quote argument for Unix system, suitable for filename creation."""
     value = value.replace("'", r"'\''")
     return f"'{value}'"
 
 
 def shell_quote_nt(value: str) -> str:
-    """Quote argument for Windows systems."""
+    """Quote argument for Windows systems, suitable for filename creation."""
+    illegal_chars = '"<>|?*\n'
+    for c in illegal_chars:
+        if c in value:
+            raise ValueError(f"Cannot quote invalid character {c} in value {value!r}")
+    if value.endswith("\\"):
+        raise ValueError(f"Cannot quote invalid ending backslash in value {value!r}")
     quoted_value = value
-    # meta characters for windows systems
-    nt_meta_chars = '^&|<>()"!'
-    # quote all meta characters with ^
-    for c in nt_meta_chars:
-        quoted_value = quoted_value.replace(c, f"^{c}")
-    # quote percent with percent
+    # quote percent with leading percent
     quoted_value = quoted_value.replace('%', '%%')
     # finally wrap in double quotes
     return f'"{quoted_value}"'

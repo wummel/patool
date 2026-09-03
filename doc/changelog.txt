@@ -1,5 +1,5 @@
 4.0.7 (released xx.xx.xxxx)
-  *
+  * [Bugfix] Fix quoting of shell arguments on Windows systems.
 
 4.0.6 (released 03.09.2026)
   * [Feature] Added zpaqfranz as preferred archive program to handle
