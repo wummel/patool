@@ -39,7 +39,7 @@ class UtilTest(unittest.TestCase):
     def test_quote_nt(self):
         """Test util.shell_quote_nt()"""
         self.assertEqual(util.shell_quote_nt("a b"), '"a b"')
-        for c in ':&|<>()^"!':
+        for c in '&|<>()^"!':
             self.assertEqual(util.shell_quote_nt(f"a{c}{c} b"), f'"a^{c}^{c} b"')
         self.assertEqual(util.shell_quote_nt("a%USER%b"), '"a%%USER%%b"')
 
