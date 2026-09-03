@@ -17,7 +17,6 @@ MAKEFLAGS += --no-builtin-rules
 # Minimal makefile for Sphinx documentation
 # You can set these variables from the command line, and also
 # from the environment for the first two.
-O             ?=
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
@@ -30,7 +29,7 @@ WEBDIR        = $(HOME)/public_html/patool-webpage.git
 ############ Default target ############
 .PHONY: help
 help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
 
 
 ############ Build and release targets ############
@@ -47,4 +46,4 @@ sync:	html
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %:
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
