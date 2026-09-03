@@ -20,8 +20,6 @@ VERSION:=$(shell grep "Version:" patoolib/configuration.py | cut -d '"' -f2)
 AUTHOR:=$(shell grep "MyName:" patoolib/configuration.py | cut -d '"' -f2)
 APPNAME:=$(shell grep "AppName:" patoolib/configuration.py | cut -d '"' -f2)
 
-# exclude packages that are newer than this
-EXCLUDE_NEWER:="7 days"
 # Pytest options:
 # -s: do not capture stdout/stderr (some tests fail otherwise)
 # --full-trace: print full stacktrace on keyboard interrupts
@@ -215,7 +213,6 @@ checkoutdated: checkoutdated-gh checkoutdated-py
 
 checkoutdated-py:	## Check for outdated package requirements
 	puc \
-	  --exclude-newer $(EXCLUDE_NEWER) \
 	  --constraint constraints.txt \
 	  check pyproject.toml uv.lock
 
@@ -248,7 +245,6 @@ upgradeoutdated-gh:	checkratelimit-gh ## upgrade github project versions
 .PHONY: upgradeoutdated-py
 upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
 	puc \
-	  --exclude-newer $(EXCLUDE_NEWER) \
 	  update pyproject.toml uv.lock
 	$(MAKE) init
 

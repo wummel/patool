@@ -1,0 +1,2 @@
+exclude-newer = "7 days"
+exclude-newer-package = {"python-update-checker" = "1 minute"}
