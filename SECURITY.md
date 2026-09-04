@@ -16,7 +16,7 @@ Due to the design of those archive programs, consider the following points:
    vulnerabilities. These are outside the scope of patool.
 
 3. Patool uses the file(1) program to determine the archive file type.
-   In order to detect compressed archives (ie. `tar.bz2`), file(1)
+   In order to detect compressed archives (ie. `.tar.bz2`), file(1)
    must uncompress the archive files which only works when disabling
    the file(1) sandboxing with `--no-sandbox`.
 
