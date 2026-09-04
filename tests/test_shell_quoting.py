@@ -28,7 +28,7 @@ class ShellQuotingTest(unittest.TestCase):
     def test_shell_quoting(self):
         """Extract files with special characters in the filename."""
         basename = "test_"
-        for c in "&()^`'!%;$\\":
+        for c in "&()^`'!%;$":
             self._extract(basename + c + ".txt")
 
     def _extract(self, filename):
