@@ -14,9 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Archive commands for the tarfile Python module."""
 
-from .. import util, fileutil
-import os
-import sys
+from .. import util
 import tarfile
 
 
@@ -37,32 +35,10 @@ def extract_tar(archive, compression, cmd, verbosity, interactive, outdir):
     """Extract a TAR archive with the tarfile Python module."""
     try:
         with tarfile.open(archive) as tfile:
-            if sys.version_info >= (3, 12, 0, "final", 0):
-                tfile.extractall(path=outdir, filter='data')
-            else:
-                safe_extract(tfile, outdir)
+            tfile.extractall(path=outdir, filter='data')
     except Exception as err:
         raise util.PatoolError(f"error extracting {archive}") from err
     return
-
-
-def safe_extract(tfile, path):
-    """Helper function to ensure that TAR members will be extracted inside
-    the given path.
-    If a member will be extracted outside the path an Exception is raised.
-    """
-    safe_members = []
-    bad_members = []
-    for member in tfile.getmembers():
-        member_path = os.path.join(path, member.name)
-        if fileutil.is_within_directory(path, member_path):
-            safe_members.append(member)
-        else:
-            bad_members.append(member)
-    tfile.extractall(path, safe_members)
-    if bad_members:
-        filelist = ", ".join(member.name for member in bad_members)
-        raise Exception(f"Unsafe tarfile entries: {filelist}.")
 
 
 def create_tar(archive, compression, cmd, verbosity, interactive, filenames):

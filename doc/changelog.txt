@@ -1,5 +1,7 @@
-4.1.0 (released xx.xx.xxxx)
+4.1.0 (released 04.09.2026)
   * [Bugfix] Add more invalid characters for Windows filenames.
+  * [Security] Require Python >= 3.12 in order to use Pythons
+    native extraction filters for tarfiles.
 
 4.0.7 (released 03.09.2026)
   * [Bugfix] Fix quoting of shell arguments on Windows systems.

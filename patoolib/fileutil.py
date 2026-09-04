@@ -15,7 +15,6 @@
 """File and directory utility functions."""
 
 import os
-import sys
 import shutil
 import stat
 import tempfile
@@ -157,11 +156,6 @@ def funcname(func: Callable) -> str:
     return getattr(func, '__name__', repr(func))
 
 
-def rmtree_log_error(func: Callable, path: str, exc: str) -> None:
-    """Error log function for shutil.rmtree()."""
-    log_error(f"Error in {funcname(func)}({path}): {exc[1]}")
-
-
 def rmtree_log_exc(func: Callable, path: str, excinfo) -> None:
     """Error log function for shutil.rmtree()."""
     log_error(f"Error in {funcname(func)}({path}): {excinfo}")
@@ -172,10 +166,7 @@ def rmtree(path: str) -> None:
     Errors will be logged.
     """
     make_user_readable(path)
-    if sys.version_info >= (3, 12, 0, "final", 0):
-        shutil.rmtree(path, onexc=rmtree_log_exc)
-    else:
-        shutil.rmtree(path, onerror=rmtree_log_error)
+    shutil.rmtree(path, onexc=rmtree_log_exc)
 
 
 def make_file_readable(filename: str) -> None:
