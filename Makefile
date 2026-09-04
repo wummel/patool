@@ -115,30 +115,28 @@ release: distclean releasecheck ## release a new version of patool
 	$(MAKE) dist release-gh release-pypi release-homepage github-issues
 
 .PHONY: releasecheck
-releasecheck: update-webmeta checkgit checkchangelog lint test typecheck checkgitreleasetag ## check that repo is ready for release
+releasecheck: update-webmeta checkchangelog lint test typecheck checkgit ## check that repo is ready for release
 
 .PHONY: checkgit
 checkgit: ## check that git changes are all committed on the main branch
-# check that branch is the main branch
+	# check that branch is the main branch
 	@if [ "$(shell git rev-parse --abbrev-ref HEAD)" != "$(GIT_MAIN_BRANCH)" ]; then \
 	  echo "ERROR: current git branch is not '$(GIT_MAIN_BRANCH)'"; \
 	  git rev-parse --abbrev-ref HEAD; \
 	  false; \
 	fi
-# check for uncommitted versions
+	# check for uncommitted versions
 	@if [ -n "$(shell git status --porcelain --untracked-files=all)" ]; then \
 	  echo "ERROR: uncommitted git changes"; \
 	  git status --porcelain --untracked-files=all; \
 	  false; \
 	fi
-
-.PHONY: checkgitreleasetag
-checkgitreleasetag:	## check release tag for git exists
+	# check release tag for git exists
 	@if [ -z "$(shell git tag -l -- $(GITRELEASETAG))" ]; then \
 	  echo "ERROR: git tag \"$(GITRELEASETAG)\" does not exist, execute 'git tag -a $(GITRELEASETAG) -m \"$(GITRELEASETAG)\"'"; \
 	  false; \
 	fi
-# check that release tags is pushed to remote
+	# check that release tags is pushed to remote
 	@if ! git ls-remote --exit-code --tags origin $(GITRELEASETAG); then \
 	  echo "ERROR: git tag \"$(GITRELEASETAG)\" does not exist on remote repo, execute 'git push --tags'"; \
 	fi
@@ -244,8 +242,11 @@ upgradeoutdated-gh:	checkratelimit-gh ## upgrade github project versions
 
 .PHONY: upgradeoutdated-py
 upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
-	puc \
-	  update pyproject.toml uv.lock
+	# upgrade pyproject.toml dependencies
+	puc update pyproject.toml
+	# upgrade depencencies in uv lock file
+	uv lock --upgrade
+	# install upgraded package versions in virtual environment
 	$(MAKE) init
 
 ############ Testing ############
