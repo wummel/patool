@@ -1,3 +1,6 @@
+4.1.0 (released xx.xx.xxxx)
+  * [Bugfix] Add more invalid characters for Windows filenames.
+
 4.0.7 (released 03.09.2026)
   * [Bugfix] Fix quoting of shell arguments on Windows systems.
 
