@@ -107,7 +107,7 @@ def shell_quote_unix(value: str) -> str:
 
 def shell_quote_nt(value: str) -> str:
     """Quote argument for Windows systems, suitable for filename creation."""
-    illegal_chars = '"<>|?*\n'
+    illegal_chars = '"<>|?*\t\n'
     for c in illegal_chars:
         if c in value:
             raise ValueError(f"Cannot quote invalid character {c} in value {value!r}")
