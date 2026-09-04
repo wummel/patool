@@ -28,9 +28,9 @@ dev = [
   # plugin to run tests in parallel
   "pytest-xdist[psutil]==3.8.0",
   # check for new packages
-  "python-update-checker==0.7",
+  "python-update-checker==0.9.0",
   # for python code linting
-  "ruff==0.16.4",
+  "ruff==0.16.5",
   # Markdown style checking and formatting
   "rumdl==0.2.62",
   # for using setuptools.setup() in setup.py
