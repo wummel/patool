@@ -206,6 +206,15 @@ reformat: ## format the python code
 	shfmt -w scripts/
 	tombi format pyproject.toml
 
+.PHONY: checkratelimit-gh
+checkratelimit-gh: ## check for rate limiting
+	@(
+		set +e
+		if ! hash github-check-outdated; then echo "missing github-check-outdated"; exit 1; fi
+		github-check-outdated --check astral-sh uv 0 >/dev/null
+		if [ "$$?" == 2 ]; then exit 1; fi
+	)
+
 .PHONY: checkoutdated checkoutdated-py checkoutdated-gh
 checkoutdated: checkoutdated-gh checkoutdated-py
 
@@ -220,15 +229,6 @@ checkoutdated-gh: checkratelimit-gh	## check for outdated github projects
 	@echo "Check for outdated Github tools"
 	github-check-outdated astral-sh uv "$(shell uv --version | cut -f2 -d" ")"
 	github-check-outdated python cpython v$(shell python --version | cut -f2 -d" ") '^v3\.14\.[0-9]+$$'
-
-.PHONY: checkratelimit-gh
-checkratelimit-gh: ## check for rate limiting
-	@(
-		set +e
-		github-check-outdated --check astral-sh uv 0 >/dev/null
-		if [ "$$?" == 2 ]; then exit 1; fi
-	)
-
 
 .PHONY: upgradeoutdated
 upgradeoutdated:	upgradeoutdated-gh upgradeoutdated-py
