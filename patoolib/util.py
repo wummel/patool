@@ -21,6 +21,8 @@ import platform
 import sys
 import shutil
 import subprocess
+import tarfile
+import zipfile
 from collections.abc import Sequence
 from .log import log_info
 
@@ -245,6 +247,65 @@ def get_arc_format(arc_exe: str) -> str:
     """
     helptext = backtick([arc_exe], check=False)
     return "freearc" if "FreeArc" in helptext else "arc"
+
+
+def _get_tar_member_names(archive: str) -> Sequence[str] | None:
+    """Return the member names of a TAR archive, without extracting it.
+
+    Return None if the Python tarfile module cannot open the archive at all,
+    eg. a compression variant it does not support (.Z, or .zst before
+    Python 3.14) that an external tar-like program can still handle.
+    """
+    try:
+        with tarfile.open(archive) as tfile:
+            return [member.name for member in tfile.getmembers()]
+    except Exception:
+        return None
+
+
+def _get_zip_member_names(archive: str) -> Sequence[str] | None:
+    """Return the member names of a ZIP archive, without extracting it.
+
+    Return None if the Python zipfile module cannot open the archive at all.
+    """
+    try:
+        with zipfile.ZipFile(archive) as zfile:
+            return zfile.namelist()
+    except Exception:
+        return None
+
+
+def get_unsafe_archive_member(format: str, archive: str, outdir: str) -> str | None:
+    """Check a TAR or ZIP archive for member names that would be written
+    outside of outdir when extracted, eg. via '..' path components or an
+    absolute path.
+
+    Archive formats other than 'tar' and 'zip' are not checked and always
+    return None: those formats are extracted exclusively by external helper
+    programs which patool does not have a uniform way to inspect first.
+    The same applies if the archive uses a compression variant the Python
+    tarfile/zipfile modules cannot open at all (eg. .tar.Z): in that case
+    extraction falls back on the backend program's own protections, same
+    as before this check existed.
+
+    :return: the name of the first unsafe member found, or None if the
+        archive is safe, could not be inspected, or its format is not
+        checked by this function.
+    """
+    if format == 'tar':
+        member_names = _get_tar_member_names(archive)
+    elif format == 'zip':
+        member_names = _get_zip_member_names(archive)
+    else:
+        return None
+    if member_names is None:
+        return None
+    abs_outdir = os.path.abspath(outdir)
+    for name in member_names:
+        target = os.path.abspath(os.path.join(abs_outdir, name))
+        if target != abs_outdir and not target.startswith(abs_outdir + os.sep):
+            return name
+    return None
 
 
 def strlist_with_or(alist: Sequence[str]) -> str:
