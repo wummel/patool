@@ -59,7 +59,7 @@ help:	## display this help section
 
 .PHONY: init
 init: ## install python virtual env and required development packages
-	uv sync
+	@scripts/install_dev.sh
 
 
 ############ Build and release targets ############
@@ -238,7 +238,7 @@ upgradeoutdated-gh:	checkratelimit-gh ## upgrade github project versions
 	sed -i -e 's/uv_version_dev = ".*"/uv_version_dev = "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' pyproject.toml
 	sed -i -e 's/ version: ".*"/ version: "$(shell github-check-outdated astral-sh uv 0 | cut -f4 -d" ")"/' .github/workflows/python-package.yml
 	sed -i -e 's/python_version_dev = ".*"/python_version_dev = "$(shell github-check-outdated python cpython 0 '^v3\.14\.[0-9]+$$' | cut -f4 -d" " | cut -b2-)"/' pyproject.toml
-	scripts/install_dev.sh
+	$(MAKE) init
 
 .PHONY: upgradeoutdated-py
 upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
@@ -247,7 +247,7 @@ upgradeoutdated-py:	## upgrade dependencies in pyproject.toml and uv.lock
 	# upgrade depencencies in uv lock file
 	uv lock --upgrade
 	# install upgraded package versions in virtual environment
-	$(MAKE) init
+	uv sync
 
 ############ Testing ############
 
