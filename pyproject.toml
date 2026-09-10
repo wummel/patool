@@ -24,23 +24,23 @@ dev = [
   # for testing
   "pytest==9.1.1",
   # plugin to run tests in random order
-  "pytest-randomly==4.1.0",
+  "pytest-randomly==5.0.0",
   # plugin to run tests in parallel
   "pytest-xdist[psutil]==3.8.0",
   # check for new packages
-  "python-update-checker==0.11.0",
+  "python-update-checker==1.4.0",
   # for python code linting
   "ruff==0.16.5",
   # Markdown style checking and formatting
-  "rumdl==0.2.62",
+  "rumdl==0.2.64",
   # for using setuptools.setup() in setup.py
   "setuptools==84.0.0",
   # for generating the web page
   "sphinx==9.1.0",
   # reformat toml files
-  "tombi==1.5.0",
+  "tombi==1.5.1",
   # for python type checking
-  "ty==0.0.75",
+  "ty==0.0.78",
   # for generating a Python .whl file
   "wheel==0.48.0",
   # for auditing github actions
@@ -54,7 +54,7 @@ build-backend = "setuptools_reproducible"
 [tool.project]
 # pin versions of Python and uv for development
 python_version_dev = "3.14.7"
-uv_version_dev = "0.12.10"
+uv_version_dev = "0.12.12"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
