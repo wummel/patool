@@ -30,15 +30,15 @@ dev = [
   # check for new packages
   "python-update-checker==1.4.0",
   # for python code linting
-  "ruff==0.16.5",
+  "ruff==0.16.6",
   # Markdown style checking and formatting
-  "rumdl==0.2.64",
+  "rumdl==0.2.68",
   # for using setuptools.setup() in setup.py
   "setuptools==84.0.0",
   # for generating the web page
   "sphinx==9.1.0",
   # reformat toml files
-  "tombi==1.5.1",
+  "tombi==1.5.2",
   # for python type checking
   "ty==0.0.78",
   # for generating a Python .whl file
@@ -54,7 +54,7 @@ build-backend = "setuptools_reproducible"
 [tool.project]
 # pin versions of Python and uv for development
 python_version_dev = "3.14.7"
-uv_version_dev = "0.12.12"
+uv_version_dev = "0.12.13"
 
 [tool.ty.environment]
 # patool uses some imports and attributes that are only available on windows
