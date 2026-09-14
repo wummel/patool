@@ -58,6 +58,8 @@ install_package direnv
 install_package shellcheck
 # for formatting shell scripts (used by make reformat)
 install_package shfmt
+# fix missing dependency for archmage
+install_package python3-pkg-resources
 # install archive handling packages for running tests locally
 for pkg in arc archmage arj binutils bzip2 cabextract lzip lz4 plzip clzip pdlzip \
            cpio flac genisoimage lbzip2 libarchive-tools lhasa lrzip lzop ncompress \
