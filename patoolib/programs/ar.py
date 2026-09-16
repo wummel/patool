@@ -39,7 +39,7 @@ test_ar = list_ar
 
 def create_ar(archive, compression, cmd, verbosity, interactive, filenames):
     """Create a AR archive."""
-    opts = 'rc'
+    opts = 'rcS'
     if verbosity > 1:
         opts += 'v'
     cmdlist = [cmd, opts, archive]
