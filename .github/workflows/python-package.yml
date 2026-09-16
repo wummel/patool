@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         # See https://github.com/actions/runner-images#available-images for available OS images
-        os: ["ubuntu-24.04", "ubuntu-26.04", "macos-15", "windows-2025"]
+        os: ["ubuntu-24.04", "ubuntu-26.04", "macos-26", "windows-2025"]
         python-version: ["3.12", "3.13", "3.14"]
 
     runs-on: ${{ matrix.os }}
@@ -80,6 +80,14 @@ jobs:
 
     - name: Install pytest and modules
       run: uv pip install pytest pytest-xdist[psutil] pytest-randomly
+
+    # Debug macos-26 errors
+    - name: Setup debug session
+      if: runner.os == 'macOS'
+      uses: owenthereal/action-upterm@47652056242288ccbebd30f836e9885d09a75365 # v1.15.0
+      with:
+        limit-access-to-actor: true
+        limit-access-to-users: wummel
 
     - name: Test with pytest
       run: uv run --no-sync pytest -s --full-trace --numprocesses auto tests/
