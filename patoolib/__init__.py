@@ -883,6 +883,13 @@ def _extract_archive(
                 log.log_info(f"... creating output directory `{outdir}'.")
             os.makedirs(outdir)
     try:
+        unsafe_member = util.get_unsafe_archive_member(format, archive, outdir)
+        if unsafe_member is not None:
+            msg = (
+                f"refusing to extract `{archive}': member `{unsafe_member}' "
+                f"would be written outside of the extraction directory `{outdir}'"
+            )
+            raise util.PatoolError(msg)
         cmdlist = get_archive_cmdlist(
             archive,
             compression,
