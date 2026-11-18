@@ -16,6 +16,7 @@
 
 from . import ArchiveTest
 from .. import needs_program
+from patoolib import util
 
 
 class TestCpio(ArchiveTest):
@@ -33,3 +34,17 @@ class TestCpio(ArchiveTest):
     def test_cpio_file(self):
         """Run archive commands with renamed CPIO archive."""
         self.archive_commands('t.cpio.foo', skip_create=True)
+
+    @needs_program('file')
+    @needs_program(program)
+    def test_cpio_compressed(self):
+        """Run archive commands with compressed CPIO archives."""
+        for compression, filename in (
+            ('gzip', 't.cpio.gz'),
+            ('xz', 't.cpio.xz'),
+            ('zstd', 't.cpio.zst'),
+        ):
+            with self.subTest(compression=compression):
+                if not util.find_program(compression):
+                    self.skipTest(f"program `{compression}' not available")
+                self.archive_commands(filename, skip_create=True)
