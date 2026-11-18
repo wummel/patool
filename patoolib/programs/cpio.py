@@ -33,12 +33,21 @@ def extract_cpio(archive, compression, cmd, verbosity, interactive, outdir):
         )
     if verbosity > 1:
         cmdlist.append('-v')
-    cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
+    if compression:
+        cmdlist[0:0] = get_decompress_pipe(archive, compression)
+    else:
+        cmdlist.extend(['<', util.shell_quote(os.path.abspath(archive))])
     return (cmdlist, {'cwd': outdir, 'shell': True})
 
 
 def list_cpio(archive, compression, cmd, verbosity, interactive):
     """List a CPIO archive."""
+    if compression:
+        cmdlist = get_decompress_pipe(archive, compression)
+        cmdlist.extend([util.shell_quote(cmd), '-i', '-t'])
+        if verbosity > 1:
+            cmdlist.append('-v')
+        return (cmdlist, {'shell': True})
     cmdlist = [cmd, '-i', '-t']
     if verbosity > 1:
         cmdlist.append('-v')
@@ -47,6 +56,17 @@ def list_cpio(archive, compression, cmd, verbosity, interactive):
 
 
 test_cpio = list_cpio
+
+
+def get_decompress_pipe(archive, compression):
+    """Get a shell command list that pipes the decompressed archive into the
+    next command, since cpio cannot read compressed archives itself.
+    """
+    decompressor = util.find_program(compression)
+    if not decompressor:
+        raise util.PatoolError(f"could not find program {compression}")
+    archive = util.shell_quote(os.path.abspath(archive))
+    return [util.shell_quote(decompressor), '-c', '-d', archive, '|']
 
 
 def create_cpio(archive, compression, cmd, verbosity, interactive, filenames):
